@@ -80,7 +80,7 @@ export default function Members() {
     queryFn: () => fetchVehicleAmenities(),
   });
 
-  console.log("members data", members);
+  // console.log("members data", members);
   //   useEffect(() => {
   //     fetchVehicleAmenities();
   //   }, []);

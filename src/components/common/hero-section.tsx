@@ -14,6 +14,8 @@ import { supabase } from "@/lib/supabase";
 import KeyValueGrid from "./key-value-grid";
 import { Json, Tables } from "../../../database.types";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import { fetchVehicleAmenitiesA } from "@/lib/services";
 
 // types/vehicle.ts
 export type AmenityItem = {
@@ -77,13 +79,18 @@ export const HeroSection = () => {
   const [amenitiesData, setAmenitiesData] = useState<AmenityItem[]>([]);
   const [boatData, setBoatData] = useState<any>({});
 
-  useEffect(() => {
-    fetchVehicleAmenities();
-  }, []);
+  const { data } = useQuery({
+    queryKey: ["amenities-details"],
+    queryFn: () => fetchVehicleAmenitiesA(),
+  });
+
+  // useEffect(() => {
+  //   fetchVehicleAmenities();
+  // }, []);
 
   // Define the cached function
   const fetchVehicleAmenities = cache(async () => {
-    console.log("Fetching vehicle amenities");
+    // console.log("Fetching vehicle amenities");
 
     try {
       // Perform the asynchronous operation to fetch data
@@ -92,7 +99,7 @@ export const HeroSection = () => {
         .select("content")
 
         .single();
-      console.log("data of new vehicle ", data);
+      // console.log("data of new vehicle ", data);
       // Handle errors
       if (error) {
         console.error("Error fetching vehicle:", error);
@@ -176,7 +183,7 @@ export const HeroSection = () => {
   //     setBoatData(data?.content?.boat_details);
   //   }
   // }
-  console.log("specification , boatData", amenitiesData, boatData);
+  // console.log("specification , boatData", amenitiesData, boatData);
   return (
     // <div className="bg-white py-12">
     //   <div className="container mx-auto px-4">
@@ -387,9 +394,11 @@ export const HeroSection = () => {
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="lg:w-2/3">
             <h1 className="text-4xl font-bold text-[#1e40af] mb-4">
-              {boatData?.title}
+              {data?.boat_details?.title}
             </h1>
-            <p className="mb-4 text-gray-700">{boatData?.description}</p>
+            <p className="mb-4 text-gray-700">
+              {data?.boat_details?.description}
+            </p>
             <p className="mb-4 text-gray-700"></p>
             <p className="mb-4 text-gray-700"></p>
             <p className="mb-4 text-gray-700"></p>
@@ -397,10 +406,10 @@ export const HeroSection = () => {
           </div>
 
           <div className="lg:w-1/3">
-            {amenitiesData && (
+            {data?.amenities && (
               <KeyValueGrid
                 title="Vessel Amenities"
-                data={amenitiesData}
+                data={data?.amenities}
                 maxHeight="300px"
                 columns={2}
               />

@@ -59,43 +59,49 @@ export type VehicleDetails = {
 //     ],
 //   },
 // ];
-function convertSpecificationData(
-  data: RawSpecificationData
-): SpecificationCategory[] {
-  return Object.entries(data).map(([title, specs]) => ({
-    title,
-    specs: Array.isArray(specs) ? specs : [],
-  }));
-}
-const SpecificationsSection = async () => {
-  const [specificationData, setSpecificationData] = useState<
-    SpecificationCategory[]
-  >([]);
-  useEffect(() => {
-    fetchVehicleAmenities();
-  }, []);
+// function convertSpecificationData(
+//   data: RawSpecificationData
+// ): SpecificationCategory[] {
+//   return Object.entries(data).map(([title, specs]) => ({
+//     title,
+//     specs: Array.isArray(specs) ? specs : [],
+//   }));
+// }
+const SpecificationsSection = () => {
+  // const [specificationData, setSpecificationData] = useState<
+  //   SpecificationCategory[]
+  // >([]);
+  // useEffect(() => {
+  //   fetchVehicleAmenitiesSpec();
+  // }, []);
 
-  async function fetchVehicleAmenities() {
-    console.log("in the fetchVehicle function");
-    const { data, error } = await supabase
-      .from("vehicle_details")
-      .select("content")
-      .eq("section_type", "specifications")
+  const { data: specificationData } = useQuery({
+    queryKey: ["specification-details"],
+    queryFn: () => fetchVehicleAmenitiesSpec(),
+  });
 
-      .single();
+  // async function fetchVehicleAmenities() {
+  //   // console.log("in the fetchVehicle function");
 
-    if (error) {
-      console.error("Error fetching vehicle:", error);
-    } else {
-      // console.log("checking data in else", data.id);
-      const convertedData = convertSpecificationData(
-        data.content as RawSpecificationData
-      );
+  //   const { data, error } = await supabase
+  //     .from("vehicle_details")
+  //     .select("content")
+  //     .eq("section_type", "specifications")
 
-      setSpecificationData(convertedData);
-    }
-  }
-  console.log("specification", specificationData);
+  //     .single();
+
+  //   if (error) {
+  //     console.error("Error fetching vehicle:", error);
+  //   } else {
+  //     // console.log("checking data in else", data.id);
+  //     const convertedData = convertSpecificationData(
+  //       data.content as RawSpecificationData
+  //     );
+
+  //     setSpecificationData(convertedData);
+  //   }
+  // }
+  // console.log("specification", specificationData);
   return (
     <div className="mb-8 px-4 sm:px-6 lg:px-8">
       <h2 className="text-3xl font-bold mb-8 text-black dark:text-white">
@@ -398,204 +404,206 @@ const VesselOverview = () => {
 
 // import React, { useState } from "react";
 
-import { SwiperSlide, Swiper } from "swiper/react";
+// import { SwiperSlide, Swiper } from "swiper/react";
 // import "swiper/swiper-bundle.min.css"; // Swiper styles
 
-const VirtualTour = () => {
-  const images = [
-    "d.jpg",
-    "e.jpg",
-    "f.jpeg",
-    "c.jpg",
-    "d.jpg",
-    "e.jpg",
-    "f.jpeg",
-    "c.jpg",
-    "d.jpg",
-    "e.jpg",
-    "f.jpeg",
-    "c.jpg",
-  ];
+// const VirtualTour = () => {
+//   const images = [
+//     "d.jpg",
+//     "e.jpg",
+//     "f.jpeg",
+//     "c.jpg",
+//     "d.jpg",
+//     "e.jpg",
+//     "f.jpeg",
+//     "c.jpg",
+//     "d.jpg",
+//     "e.jpg",
+//     "f.jpeg",
+//     "c.jpg",
+//   ];
 
-  return (
-    <div className="bg-[#f0f8ff] py-8">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-[#00008b] mb-6 flex items-center justify-center">
-          <span className="mr-2">📸</span> Virtual Tour
-        </h2>
-        <div className="relative">
-          <Swiper
-            spaceBetween={30}
-            slidesPerView={1}
-            loop={true}
-            pagination={{ clickable: true }}
-            navigation
-            className="mySwiper"
-          >
-            {images.map((img, index) => (
-              <SwiperSlide key={index}>
-                <img
-                  src={`/images/${img}`}
-                  alt={`Virtual tour image ${index + 1}`}
-                  className="object-cover w-full h-full rounded-lg shadow-lg"
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-      </div>
-    </div>
-  );
-};
+//   return (
+//     <div className="bg-[#f0f8ff] py-8">
+//       <div className="container mx-auto px-4">
+//         <h2 className="text-3xl font-bold text-[#00008b] mb-6 flex items-center justify-center">
+//           <span className="mr-2">📸</span> Virtual Tour
+//         </h2>
+//         <div className="relative">
+//           <Swiper
+//             spaceBetween={30}
+//             slidesPerView={1}
+//             loop={true}
+//             pagination={{ clickable: true }}
+//             navigation
+//             className="mySwiper"
+//           >
+//             {images.map((img, index) => (
+//               <SwiperSlide key={index}>
+//                 <img
+//                   src={`/images/${img}`}
+//                   alt={`Virtual tour image ${index + 1}`}
+//                   className="object-cover w-full h-full rounded-lg shadow-lg"
+//                 />
+//               </SwiperSlide>
+//             ))}
+//           </Swiper>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
-const ExteriorPhotos = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const images = [
-    "d.jpg",
-    "e.jpg",
-    "f.jpeg",
-    "c.jpg",
-    "d.jpg",
-    "e.jpg",
-    "f.jpeg",
-    "c.jpg",
-    "d.jpg",
-    "e.jpg",
-    "f.jpeg",
-    "c.jpg",
-  ];
-  const totalImages = images.length;
+// const ExteriorPhotos = () => {
+//   const [currentIndex, setCurrentIndex] = useState(0);
+//   const images = [
+//     "d.jpg",
+//     "e.jpg",
+//     "f.jpeg",
+//     "c.jpg",
+//     "d.jpg",
+//     "e.jpg",
+//     "f.jpeg",
+//     "c.jpg",
+//     "d.jpg",
+//     "e.jpg",
+//     "f.jpeg",
+//     "c.jpg",
+//   ];
+//   const totalImages = images.length;
 
-  const slideLeft = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? totalImages - 1 : prevIndex - 1
-    );
-  };
+//   const slideLeft = () => {
+//     setCurrentIndex((prevIndex) =>
+//       prevIndex === 0 ? totalImages - 1 : prevIndex - 1
+//     );
+//   };
 
-  const slideRight = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === totalImages - 1 ? 0 : prevIndex + 1
-    );
-  };
-  return (
-    <div className="bg-[#f0f8ff] py-8">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-[#00008b] mb-6 flex items-center justify-center">
-          <span className="mr-2">📸</span> Virtual Tour
-        </h2>
-        <div className="relative">
-          {/* Slider Container */}
-          <div className="overflow-hidden">
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-            >
-              {images.map((img, index) => (
-                <div
-                  key={index}
-                  className="flex-shrink-0 w-full lg:w-1/4 aspect-w-16 aspect-h-9"
-                >
-                  <img
-                    src={`/images/${img}`}
-                    alt={`Virtual tour image ${index + 1}`}
-                    className="object-cover w-full h-full rounded-lg shadow-lg"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* Navigation Buttons */}
-          <button
-            className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black text-white rounded-full p-2 shadow-lg focus:outline-none"
-            onClick={slideLeft}
-          >
-            &lt;
-          </button>
-          <button
-            className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black text-white rounded-full p-2 shadow-lg focus:outline-none"
-            onClick={slideRight}
-          >
-            &gt;
-          </button>
-        </div>
-      </div>
-    </div>
+//   const slideRight = () => {
+//     setCurrentIndex((prevIndex) =>
+//       prevIndex === totalImages - 1 ? 0 : prevIndex + 1
+//     );
+//   };
+//   return (
+//     <div className="bg-[#f0f8ff] py-8">
+//       <div className="container mx-auto px-4">
+//         <h2 className="text-3xl font-bold text-[#00008b] mb-6 flex items-center justify-center">
+//           <span className="mr-2">📸</span> Virtual Tour
+//         </h2>
+//         <div className="relative">
+//           {/* Slider Container */}
+//           <div className="overflow-hidden">
+//             <div
+//               className="flex transition-transform duration-500 ease-in-out"
+//               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+//             >
+//               {images.map((img, index) => (
+//                 <div
+//                   key={index}
+//                   className="flex-shrink-0 w-full lg:w-1/4 aspect-w-16 aspect-h-9"
+//                 >
+//                   <img
+//                     src={`/images/${img}`}
+//                     alt={`Virtual tour image ${index + 1}`}
+//                     className="object-cover w-full h-full rounded-lg shadow-lg"
+//                   />
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+//           {/* Navigation Buttons */}
+//           <button
+//             className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black text-white rounded-full p-2 shadow-lg focus:outline-none"
+//             onClick={slideLeft}
+//           >
+//             &lt;
+//           </button>
+//           <button
+//             className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black text-white rounded-full p-2 shadow-lg focus:outline-none"
+//             onClick={slideRight}
+//           >
+//             &gt;
+//           </button>
+//         </div>
+//       </div>
+//     </div>
 
-    // <div className="bg-[#f0f8ff] py-8">
-    //   <div className="container mx-auto px-4">
-    //     <h2 className="text-3xl font-bold text-[#00008b] mb-6 flex items-center justify-center">
-    //       <span className="mr-2">📸</span> Virtual Tour
-    //     </h2>
-    //     <div className="relative">
-    //       {/* Slider Container */}
-    //       <div className="overflow-hidden">
-    //         <div className="flex space-x-4 transition-transform duration-500 ease-in-out">
-    //           {["d.jpg", "e.jpg", "f.jpeg", "c.jpg"].map((img, index) => (
-    //             <div
-    //               key={index}
-    //               className="flex-shrink-0 w-full lg:w-1/4 aspect-w-16 aspect-h-9"
-    //             >
-    //               <img
-    //                 src={`/images/${img}`}
-    //                 alt={`Virtual tour image ${index + 1}`}
-    //                 className="object-cover w-full h-full rounded-lg shadow-lg"
-    //               />
-    //             </div>
-    //           ))}
-    //         </div>
-    //       </div>
-    //       {/* Navigation Buttons */}
-    //       <button
-    //         className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black text-white rounded-full p-2 shadow-lg focus:outline-none"
-    //         onClick={() => {
-    //           // Logic to slide left
-    //         }}
-    //       >
-    //         &lt;
-    //       </button>
-    //       <button
-    //         className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black text-white rounded-full p-2 shadow-lg focus:outline-none"
-    //         onClick={() => {
-    //           // Logic to slide right
-    //         }}
-    //       >
-    //         &gt;
-    //       </button>
-    //     </div>
-    //   </div>
-    // </div>
+//     // <div className="bg-[#f0f8ff] py-8">
+//     //   <div className="container mx-auto px-4">
+//     //     <h2 className="text-3xl font-bold text-[#00008b] mb-6 flex items-center justify-center">
+//     //       <span className="mr-2">📸</span> Virtual Tour
+//     //     </h2>
+//     //     <div className="relative">
+//     //       {/* Slider Container */}
+//     //       <div className="overflow-hidden">
+//     //         <div className="flex space-x-4 transition-transform duration-500 ease-in-out">
+//     //           {["d.jpg", "e.jpg", "f.jpeg", "c.jpg"].map((img, index) => (
+//     //             <div
+//     //               key={index}
+//     //               className="flex-shrink-0 w-full lg:w-1/4 aspect-w-16 aspect-h-9"
+//     //             >
+//     //               <img
+//     //                 src={`/images/${img}`}
+//     //                 alt={`Virtual tour image ${index + 1}`}
+//     //                 className="object-cover w-full h-full rounded-lg shadow-lg"
+//     //               />
+//     //             </div>
+//     //           ))}
+//     //         </div>
+//     //       </div>
+//     //       {/* Navigation Buttons */}
+//     //       <button
+//     //         className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black text-white rounded-full p-2 shadow-lg focus:outline-none"
+//     //         onClick={() => {
+//     //           // Logic to slide left
+//     //         }}
+//     //       >
+//     //         &lt;
+//     //       </button>
+//     //       <button
+//     //         className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black text-white rounded-full p-2 shadow-lg focus:outline-none"
+//     //         onClick={() => {
+//     //           // Logic to slide right
+//     //         }}
+//     //       >
+//     //         &gt;
+//     //       </button>
+//     //     </div>
+//     //   </div>
+//     // </div>
 
-    // <div className="bg-white py-8">
-    //   <div className="container mx-auto px-4">
-    //     <h2 className="text-3xl font-bold text-[#00008b] mb-6 flex items-center">
-    //       <Anchor className="mr-2" />
-    //       Exterior Photos
-    //     </h2>
-    //     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-    //       {[
-    //         "WINDWARD_28_EVENING_STAR1",
-    //         "WINDWARD_28_EVENING_STAR2",
-    //         "WINDWARD_28_EVENING_STAR3",
-    //         "WINDWARD_28_EVENING_S",
-    //       ].map((img, index) => (
-    //         <div
-    //           key={index}
-    //           className="relative aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg"
-    //         >
-    //           <div className="absolute inset-0 flex items-center justify-center text-gray-500">
-    //             {img}
-    //           </div>
-    //         </div>
-    //       ))}
-    //     </div>
-    //   </div>
-    // </div>
-  );
-};
+//     // <div className="bg-white py-8">
+//     //   <div className="container mx-auto px-4">
+//     //     <h2 className="text-3xl font-bold text-[#00008b] mb-6 flex items-center">
+//     //       <Anchor className="mr-2" />
+//     //       Exterior Photos
+//     //     </h2>
+//     //     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+//     //       {[
+//     //         "WINDWARD_28_EVENING_STAR1",
+//     //         "WINDWARD_28_EVENING_STAR2",
+//     //         "WINDWARD_28_EVENING_STAR3",
+//     //         "WINDWARD_28_EVENING_S",
+//     //       ].map((img, index) => (
+//     //         <div
+//     //           key={index}
+//     //           className="relative aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg"
+//     //         >
+//     //           <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+//     //             {img}
+//     //           </div>
+//     //         </div>
+//     //       ))}
+//     //     </div>
+//     //   </div>
+//     // </div>
+//   );
+// };
 
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { fetchVehicleAmenitiesSpec } from "@/lib/services";
+import { useQuery } from "@tanstack/react-query";
 
 const images = [
   {
@@ -803,7 +811,8 @@ export default function YachtGallery() {
     </div>
   );
 }
-export { SpecificationsSection, VesselOverview, VirtualTour, ExteriorPhotos };
+export { SpecificationsSection, VesselOverview };
+// , VirtualTour, ExteriorPhotos
 
 // import React from "react";
 // import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
