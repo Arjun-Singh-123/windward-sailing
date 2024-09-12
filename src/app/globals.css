@@ -90,3 +90,28 @@ body {
     @apply bg-background text-foreground;
   }
 }
+/* styles.css */
+.bg-custom {
+  background-position: center;
+  background-size: cover;
+  background-image: linear-gradient(
+      90deg,
+      rgba(12, 36, 66, 0.79) 0%,
+      rgba(11, 71, 119, 0.79) 100%
+    ),
+    url("/images/highlight-banner.jpg");
+}
+.border-30 {
+  border-width: 30px;
+}
+
+.triangle {
+  position: absolute;
+  top: -30px; /* Position it just above the top border */
+  left: 20px; /* Adjust based on your layout */
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 30px solid #2d2d2d; /* Same color as the border */
+}

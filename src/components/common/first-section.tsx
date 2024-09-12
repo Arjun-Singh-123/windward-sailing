@@ -2,7 +2,7 @@ import React from "react";
 
 const HeroSection1 = () => {
   return (
-    <section className="relative w-full h-[400px] overflow-hidden">
+    <section className="relative w-full h-[400px] overflow-hidden   -top-20">
       <img
         src="/images/boat.jpeg"
         alt="Hero Image"

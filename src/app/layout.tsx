@@ -4,6 +4,7 @@ import "./globals.css";
 import { Footer, Header } from "@/components/common/header";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Providers from "./providers";
+import ScrollToTop from "@/components/common/scroll-to-top";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -36,6 +37,7 @@ export default function RootLayout({
           {children}
           {/* The rest of your application */}
           <ReactQueryDevtools initialIsOpen={false} />
+          <ScrollToTop />
           <Footer />
         </Providers>
       </body>
