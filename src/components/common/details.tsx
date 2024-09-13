@@ -245,12 +245,23 @@ const Detail: React.FC<DetailProps> = ({
       <h1 className="text-4xl font-bold text-[#00008b] mb-8">{title}</h1>
 
       <div className="flex items-center mb-4 relative">
+        {/* <div className="flex-grow border-t-2 absolute border-black w-[50px] left-10"></div> */}
+        {/* <div
+          className="flex-grow border-t-2 border-black mr-2"
+          style={{ maxWidth: "100px" }}
+        ></div> */}
+
         <img
-          src="/images/favicon.ico"
+          src="/images/Logo-Icon.png"
           alt="icon"
           className="h-8 w-8 text-sky-500 mr-4"
         />
-        <div className="flex-grow border-t-2 absolute border-black w-[50px] left-10"></div>
+        <div
+          className="flex-grow border-t-2 border-black "
+          style={{ maxWidth: "100px" }}
+        ></div>
+
+        {/* <div className="flex-grow border-t-2 absolute border-black w-[50px] left-10"></div> */}
       </div>
 
       {(heading || description || mediaUrl) && (
@@ -276,7 +287,7 @@ const Detail: React.FC<DetailProps> = ({
                     isVideo && "border-[30px] border-slate-900"
                   }`}
                 >
-                  {isVideo && showVideo ? (
+                  {isVideo ? (
                     <video
                       src={mediaUrl}
                       className="w-full h-full object-cover"

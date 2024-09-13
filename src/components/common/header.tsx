@@ -711,10 +711,25 @@ const Header = () => {
 
 const Footer: React.FC = () => {
   return (
-    <footer className="relative py-8 text-white">
+    <footer
+      className="relative py-8 text-white "
+      style={{
+        position: "relative",
+        background:
+          "linear-gradient(90deg,#072f6cc9 0%,#072f6cc9 100%), url(/images/footer-bg.jpg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        // color: "var(--white)",
+        fontSize: "18px",
+        padding: "15px 0",
+      }}
+    >
       <div
-        className="absolute inset-0 bg-gradient-to-t from-[#00008b] via-[#00008b] to-transparent"
-        style={{ zIndex: -1 }}
+        className="absolute inset-0"
+        style={{
+          background: "linear-gradient(to top, #00008b, #00008b, transparent)",
+          zIndex: -1,
+        }}
       />
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -736,7 +751,7 @@ const Footer: React.FC = () => {
         />
       </div>
       <div className="container mx-auto px-4 relative left-[200px]">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ab ">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ab">
           <div>
             <div>
               <Link href="/" className="flex items-center space-x-2 mb-4">
@@ -786,6 +801,82 @@ const Footer: React.FC = () => {
         </div>
       </div>
     </footer>
+
+    // <footer className="relative py-8 text-white">
+    //   <div
+    //     className="absolute inset-0 bg-gradient-to-t from-[#00008b] via-[#00008b] to-transparent"
+    //     style={{ zIndex: -1 }}
+    //   />
+    //   <div
+    //     className="absolute inset-0 bg-cover bg-center"
+    //     style={{
+    //       backgroundImage: 'url("/images/footer-bg.jpg")',
+    //       zIndex: -2,
+    //     }}
+    //   />
+    //   <div
+    //     className="absolute -top-[180px] left-20 bottom-4 z-[3]"
+    //     style={{ width: "227px", height: "394px", overflow: "hidden" }}
+    //   >
+    //     <Image
+    //       src="/images/footer-boat.png"
+    //       alt="Footer decoration"
+    //       className="object-cover w-full h-full"
+    //       height={227}
+    //       width={394}
+    //     />
+    //   </div>
+    //   <div className="container mx-auto px-4 relative left-[200px]">
+    //     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ab ">
+    //       <div>
+    //         <div>
+    //           <Link href="/" className="flex items-center space-x-2 mb-4">
+    //             <Image
+    //               src="/images/logoo.png"
+    //               alt="Windward Sailing Club"
+    //               className="h-[85px] w-auto"
+    //               width={277.75}
+    //               height={84.984}
+    //             />
+    //           </Link>
+    //         </div>
+    //         <h3 className="text-xl font-bold mb-4">WINDWARD SAILING CLUB</h3>
+    //         <p>3300 Via Lido, Windward Beach, CA 92663</p>
+    //         <p className="mt-4">
+    //           <strong>Service Area:</strong>
+    //           <br />
+    //           Windward Beach, California, and the Surrounding Areas
+    //         </p>
+    //       </div>
+    //       <div className="grid grid-cols-2 gap-4">
+    //         {[
+    //           "Home",
+    //           "About Us",
+    //           "Membership Fees",
+    //           "Rental Fees",
+    //           "Boats",
+    //           "Basic Sailing Certificate",
+    //           "Advanced Sailing",
+    //           "Coastal Navigation",
+    //           "Privacy Policy",
+    //           "Terms of Conditions",
+    //         ].map((item) => (
+    //           <Link
+    //             key={item}
+    //             href={`/${item.toLowerCase().replace(" ", "-")}`}
+    //             className="hover:underline"
+    //           >
+    //             {item}
+    //           </Link>
+    //         ))}
+    //       </div>
+    //     </div>
+    //     <Separator className="my-8 bg-white/20" />
+    //     <div className="text-center">
+    //       <p>Copyright © 2023 Windward Sailing Club. All rights reserved.</p>
+    //     </div>
+    //   </div>
+    // </footer>
   );
 };
 

@@ -633,9 +633,33 @@ export default function TestimonialsSlider() {
 
   return (
     <div className="relative max-w-[800px] mx-auto py-16 px-4 overflow-visible  ">
-      <h2 className="text-3xl font-bold text-center mb-12 text-blue-900">
+      <div className="text-center ">
+        <h3 className="text-xl font-great-vibes text-blue-900">
+          Our Testimonials
+        </h3>
+      </div>
+      <h2 className="text-3xl font-bold text-center  text-blue-900">
         Client&apos;s Feedback
       </h2>
+      <div className="flex items-center  mb-16 relative">
+        {/* <div className="flex-grow border-t-2 absolute border-black w-[50px] left-10"></div> */}
+        <div
+          className="flex-grow border-t-2 border-black mr-2"
+          style={{ maxWidth: "100px" }}
+        ></div>
+
+        <img
+          src="/images/Logo-Icon.png"
+          alt="icon"
+          className="h-8 w-8 text-sky-500 mr-4"
+        />
+        <div
+          className="flex-grow border-t-2 border-black "
+          style={{ maxWidth: "100px" }}
+        ></div>
+
+        {/* <div className="flex-grow border-t-2 absolute border-black w-[50px] left-10"></div> */}
+      </div>
       <div className="relative h-[400px]   ">
         {/* <AnimatePresence initial={false}> */}
         {getVisibleTestimonials().map((testimonial, index) => (
