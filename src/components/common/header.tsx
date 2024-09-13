@@ -46,7 +46,7 @@ const Header = () => {
       {/* First Row */}
       <div className="bg-[#f0f8ff] text-[#00008b]">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center py-2">
+          <div className="flex justify-between items-center md:py-2">
             <Link
               href="mailto:support@windwardsailingclub.com"
               className="text-sm hover:underline hidden md:block"
