@@ -33,7 +33,8 @@ export default function StatsSlider() {
             className="flex items-center h-full transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${offset * 33.33}%)` }}
           >
-            {stats.concat(stats.slice(0, 2)).map((stat, index) => (
+            {/* {stats.concat(stats.slice(0, 2)).map((stat, index) => ( */}
+            {[...stats, ...stats, ...stats].map((stat, index) => (
               <div
                 key={index}
                 className={`flex-shrink-0 w-1/3 flex gap-2 items-center justify-center px-4 transition-all duration-300 ${

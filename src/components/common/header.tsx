@@ -12,10 +12,18 @@ import {
   Phone,
   Clock,
   MapPin,
+  X,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Menu, MoreHorizontal, ChevronRight } from "lucide-react";
 import Image from "next/image";
 
@@ -31,69 +39,95 @@ const navItems = [
 const Header = () => {
   const pathname = usePathname();
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   return (
-    <header className="bg-[#f0f8ff] text-[#00008b]">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center py-2">
-          <Link
-            href="mailto:support@windwardsailingclub.com"
-            className="text-sm hover:underline hidden md:block"
-          >
-            support@windwardsailingclub.com
-          </Link>
-          <div className="flex items-center space-x-4">
-            <div className="hidden md:flex space-x-2">
-              <Link href="#" aria-label="Facebook">
-                <Facebook
-                  size={20}
-                  className="text-[#00008b] hover:text-[#4267B2] transition-colors"
-                />
-              </Link>
-              <Link href="#" aria-label="Twitter">
-                <Twitter
-                  size={20}
-                  className="text-[#00008b] hover:text-[#1DA1F2] transition-colors"
-                />
-              </Link>
-              <Link href="#" aria-label="Instagram">
-                <Instagram
-                  size={20}
-                  className="text-[#00008b] hover:text-[#E1306C] transition-colors"
-                />
-              </Link>
-              <Link href="#" aria-label="Pinterest">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-[#00008b] hover:text-[#E60023] transition-colors"
-                >
-                  <path d="M8 12a4 4 0 1 0 8 0a4 4 0 0 0-8 0"></path>
-                  <path d="M12 2v6"></path>
-                  <path d="M12 22v-6"></path>
-                  <path d="M6 12H2"></path>
-                  <path d="M22 12h-4"></path>
-                </svg>
-              </Link>
-            </div>
-            <Separator orientation="vertical" className="h-6 hidden md:block" />
-            <Button
-              variant="default"
-              size="sm"
-              className="bg-[#00bfff] hover:bg-[#0080ff] text-white"
+    <header className="sticky top-0 z-50 md:relative md:top-auto">
+      {/* First Row */}
+      <div className="bg-[#f0f8ff] text-[#00008b]">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center py-2">
+            <Link
+              href="mailto:support@windwardsailingclub.com"
+              className="text-sm hover:underline hidden md:block"
             >
-              Login
-            </Button>
+              support@windwardsailingclub.com
+            </Link>
+            <div className="flex items-center space-x-4">
+              <div className="hidden md:flex space-x-2">
+                <div className="flex items-center space-x-4">
+                  <div className="hidden md:flex space-x-2">
+                    <Link href="#" aria-label="Facebook">
+                      <Facebook
+                        size={20}
+                        className="text-[#00008b] hover:text-[#4267B2] transition-colors"
+                      />
+                    </Link>
+                    <Link href="#" aria-label="Twitter">
+                      <Twitter
+                        size={20}
+                        className="text-[#00008b] hover:text-[#1DA1F2] transition-colors"
+                      />
+                    </Link>
+                    <Link href="#" aria-label="Instagram">
+                      <Instagram
+                        size={20}
+                        className="text-[#00008b] hover:text-[#E1306C] transition-colors"
+                      />
+                    </Link>
+                    <Link href="#" aria-label="Pinterest">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="text-[#00008b] hover:text-[#E60023] transition-colors"
+                      >
+                        <path d="M8 12a4 4 0 1 0 8 0a4 4 0 0 0-8 0"></path>
+                        <path d="M12 2v6"></path>
+                        <path d="M12 22v-6"></path>
+                        <path d="M6 12H2"></path>
+                        <path d="M22 12h-4"></path>
+                      </svg>
+                    </Link>
+                  </div>
+                  {/* <Separator
+                    orientation="vertical"
+                    className="h-6 hidden md:block"
+                  /> */}
+                  {/* <Button
+                    variant="default"
+                    size="sm"
+                    className="bg-[#00bfff] hover:bg-[#0080ff] text-white"
+                  >
+                    Login
+                  </Button> */}
+                </div>
+                {/* Social Media Icons */}
+                {/* ... your existing social media links ... */}
+              </div>
+              <Separator
+                orientation="vertical"
+                className="h-6 hidden md:block"
+              />
+              <Button
+                variant="default"
+                size="sm"
+                className="bg-[#00bfff] hover:bg-[#0080ff] text-white hidden md:block"
+              >
+                Login
+              </Button>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Second Row */}
       <div className="bg-[#052449] text-white py-4">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
@@ -107,6 +141,7 @@ const Header = () => {
               />
             </Link>
             <div className="hidden md:flex items-center space-x-6">
+              {/* Contact Info Section */}
               <div className="flex items-center space-x-2">
                 <Phone className="w-6 h-6" />
                 <div>
@@ -134,20 +169,31 @@ const Header = () => {
                 </div>
               </div>
             </div>
+
+            {/* Mobile Hamburger Menu */}
             <div className="md:hidden flex items-center space-x-4">
-              <Sheet>
+              <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="icon">
                     <Menu className="h-6 w-6 text-white" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="bg-white">
-                  <nav className="flex flex-col space-y-4">
+                <SheetContent side="left" className="bg-white w-64">
+                  <SheetHeader className="flex items-center justify-between">
+                    <SheetTitle>Menu</SheetTitle>
+                    {/* <SheetClose asChild>
+                      <Button variant="ghost" size="icon">
+                        <X className="h-6 w-6" />
+                      </Button>
+                    </SheetClose> */}
+                  </SheetHeader>
+                  <nav className="flex flex-col space-y-4 mt-4">
                     {navItems.map(({ label, path }) => (
                       <Link
                         key={label}
                         href={path}
-                        className={`flex items-center justify-between py-2 ${
+                        onClick={() => setIsSheetOpen(false)}
+                        className={`flex items-center justify-between py-2 px-4 ${
                           pathname === path ? "text-[#00bfff]" : "text-black"
                         }`}
                       >
@@ -169,6 +215,8 @@ const Header = () => {
           </div>
         </div>
       </div>
+
+      {/* Details Section for Mobile View */}
       {isDetailsOpen && (
         <div className="md:hidden bg-[#052449] text-white py-4">
           <div className="container mx-auto px-4">
@@ -203,9 +251,11 @@ const Header = () => {
           </div>
         </div>
       )}
-      <nav className="bg-[#c5dfff] text-[#00008b] py-2">
+
+      {/* Main Navigation Bar */}
+      <nav className="hidden md:block bg-[#c5dfff] text-[#00008b] py-2 md:sticky md:top-0 md:z-50">
         <div className="container mx-auto px-4">
-          <div className="hidden md:flex justify-between items-center">
+          <div className="flex justify-between items-center">
             <div className="flex space-x-4">
               {navItems.map(({ label, path }) => (
                 <Link
@@ -231,6 +281,533 @@ const Header = () => {
     </header>
   );
 };
+
+export default Header;
+
+// const navItems = [
+//   { label: "Home", path: "/" },
+//   { label: "About Us", path: "/about-us" },
+//   { label: "Membership Fees", path: "/membership-fees" },
+//   { label: "Rental Fees", path: "/rental-fees" },
+//   { label: "Boats", path: "/boats" },
+//   { label: "Members", path: "/members" },
+// ];
+
+// const Header = () => {
+//   const pathname = usePathname();
+//   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+//   const [isSheetOpen, setIsSheetOpen] = useState(false);
+
+//   return (
+//     <header className="sticky top-0 z-50 bg-[#f0f8ff] text-[#00008b]">
+//       {/* First Row */}
+//       <div className="container mx-auto px-4">
+//         {/* ... your existing content ... */}
+//       </div>
+
+//       {/* Second Row */}
+//       <div className="bg-[#052449] text-white py-4">
+//         <div className="container mx-auto px-4">
+//           {/* ... your existing content ... */}
+
+//           {/* Mobile Hamburger Menu */}
+//           <div className="md:hidden flex items-center space-x-4">
+//             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+//               <SheetTrigger asChild>
+//                 <Button variant="ghost" size="icon">
+//                   <Menu className="h-6 w-6 text-white" />
+//                 </Button>
+//               </SheetTrigger>
+//               <SheetContent side="left" className="bg-white w-64">
+//                 <SheetHeader className="flex items-center justify-between">
+//                   <SheetTitle>Menu</SheetTitle>
+//                   {/* <SheetClose asChild>
+//                     <Button variant="ghost" size="icon">
+//                       <X className="h-6 w-6" />
+//                     </Button>
+//                   </SheetClose> */}
+//                 </SheetHeader>
+//                 <nav className="flex flex-col space-y-4 mt-4">
+//                   {navItems.map(({ label, path }) => (
+//                     <Link
+//                       key={label}
+//                       href={path}
+//                       onClick={() => setIsSheetOpen(false)}
+//                       className={`flex items-center justify-between py-2 ${
+//                         pathname === path ? "text-[#00bfff]" : "text-black"
+//                       }`}
+//                     >
+//                       {label}
+//                       <ChevronRight className="h-4 w-4" />
+//                     </Link>
+//                   ))}
+//                 </nav>
+//               </SheetContent>
+//             </Sheet>
+//             <Button
+//               variant="ghost"
+//               size="icon"
+//               onClick={() => setIsDetailsOpen(!isDetailsOpen)}
+//             >
+//               <MoreHorizontal className="h-6 w-6 text-white" />
+//             </Button>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Details Section for Mobile View */}
+//       {isDetailsOpen && (
+//         <div className="md:hidden bg-[#052449] text-white py-4">
+//           {/* ... your existing content ... */}
+//         </div>
+//       )}
+
+//       {/* Main Navigation Bar */}
+//       <nav className="bg-[#c5dfff] text-[#00008b] py-2">
+//         <div className="container mx-auto px-4">
+//           {/* ... your existing content ... */}
+//         </div>
+//       </nav>
+//     </header>
+//   );
+// };
+
+// export default Header;
+
+// const navItems = [
+//   { label: "Home", path: "/" },
+//   { label: "About Us", path: "/about-us" },
+//   { label: "Membership Fees", path: "/membership-fees" },
+//   { label: "Rental Fees", path: "/rental-fees" },
+//   { label: "Boats", path: "/boats" },
+//   { label: "Members", path: "/members" },
+// ];
+
+// const Header = () => {
+//   const pathname = usePathname();
+//   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+
+//   return (
+//     <header className="bg-[#f0f8ff] text-[#00008b]">
+// <div className="container mx-auto px-4">
+//   <div className="flex justify-between items-center py-2">
+//     <Link
+//       href="mailto:support@windwardsailingclub.com"
+//       className="text-sm hover:underline hidden md:block"
+//     >
+//       support@windwardsailingclub.com
+//     </Link>
+//     <div className="flex items-center space-x-4">
+//       <div className="hidden md:flex space-x-2">
+//         <Link href="#" aria-label="Facebook">
+//           <Facebook
+//             size={20}
+//             className="text-[#00008b] hover:text-[#4267B2] transition-colors"
+//           />
+//         </Link>
+//         <Link href="#" aria-label="Twitter">
+//           <Twitter
+//             size={20}
+//             className="text-[#00008b] hover:text-[#1DA1F2] transition-colors"
+//           />
+//         </Link>
+//         <Link href="#" aria-label="Instagram">
+//           <Instagram
+//             size={20}
+//             className="text-[#00008b] hover:text-[#E1306C] transition-colors"
+//           />
+//         </Link>
+//         <Link href="#" aria-label="Pinterest">
+//           <svg
+//             xmlns="http://www.w3.org/2000/svg"
+//             width="20"
+//             height="20"
+//             viewBox="0 0 24 24"
+//             fill="none"
+//             stroke="currentColor"
+//             strokeWidth="2"
+//             strokeLinecap="round"
+//             strokeLinejoin="round"
+//             className="text-[#00008b] hover:text-[#E60023] transition-colors"
+//           >
+//             <path d="M8 12a4 4 0 1 0 8 0a4 4 0 0 0-8 0"></path>
+//             <path d="M12 2v6"></path>
+//             <path d="M12 22v-6"></path>
+//             <path d="M6 12H2"></path>
+//             <path d="M22 12h-4"></path>
+//           </svg>
+//         </Link>
+//       </div>
+//       <Separator orientation="vertical" className="h-6 hidden md:block" />
+//       <Button
+//         variant="default"
+//         size="sm"
+//         className="bg-[#00bfff] hover:bg-[#0080ff] text-white"
+//       >
+//         Login
+//       </Button>
+//     </div>
+//   </div>
+// </div>
+
+//       {/* Second Row: Logo, Contact Info, and Icons */}
+//       <div className="bg-[#052449] text-white py-4">
+//         <div className="container mx-auto px-4">
+//           <div className="flex justify-between items-center">
+//             <Link href="/" className="flex items-center space-x-2">
+//               <Image
+//                 src="/images/logoo.png"
+//                 alt="Windward Sailing Club"
+//                 className="h-16 w-auto"
+//                 width={277.75}
+//                 height={84.984}
+//               />
+//             </Link>
+// <div className="hidden md:flex items-center space-x-6">
+//   {/* Contact Info Section */}
+//   <div className="flex items-center space-x-2">
+//     <Phone className="w-6 h-6" />
+//     <div>
+//       <div className="text-sm">CALL US</div>
+//       <div className="font-bold">(949) 675-9060</div>
+//     </div>
+//   </div>
+//   <Separator orientation="vertical" className="h-10" />
+//   <div className="flex items-center space-x-2">
+//     <Clock className="w-6 h-6" />
+//     <div>
+//       <div className="text-sm">HOURS OF OPERATION</div>
+//       <div className="font-bold">Monday — Sunday</div>
+//       <div className="text-sm">9:00 a.m. — 5:00 p.m.</div>
+//     </div>
+//   </div>
+//   <Separator orientation="vertical" className="h-10" />
+//   <div className="flex items-center space-x-2">
+//     <MapPin className="w-6 h-6" />
+//     <div>
+//       <div className="text-sm">COMPANY / LOCATION</div>
+//       <div className="font-bold">
+//         3300 Via Lido, Windward Beach, CA 92663
+//       </div>
+//     </div>
+//   </div>
+// </div>
+
+//             {/* Mobile Hamburger Menu */}
+//             <div className="md:hidden flex items-center space-x-4   ">
+//               <Sheet>
+//                 <SheetTrigger asChild>
+//                   <Button variant="ghost" size="icon">
+//                     <Menu className="h-6 w-6 text-white" />
+//                   </Button>
+//                 </SheetTrigger>
+//                 <SheetContent side="left" className="bg-white">
+//                   <nav className="flex flex-col space-y-4">
+//                     {navItems.map(({ label, path }) => (
+//                       <Link
+//                         key={label}
+//                         href={path}
+//                         className={`flex items-center justify-between py-2 ${
+//                           pathname === path ? "text-[#00bfff]" : "text-black"
+//                         }`}
+//                       >
+//                         {label}
+//                         <ChevronRight className="h-4 w-4" />
+//                       </Link>
+//                     ))}
+//                   </nav>
+//                 </SheetContent>
+//               </Sheet>
+//               <Button
+//                 variant="ghost"
+//                 size="icon"
+//                 onClick={() => setIsDetailsOpen(!isDetailsOpen)}
+//               >
+//                 <MoreHorizontal className="h-6 w-6 text-white" />
+//               </Button>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Details Section for Mobile View */}
+//       {isDetailsOpen && (
+//         <div className="md:hidden bg-[#052449] text-white py-4">
+//           <div className="container mx-auto px-4">
+//             <div className="flex flex-col space-y-4">
+//               <div className="flex items-center space-x-2">
+//                 <Phone className="w-6 h-6" />
+//                 <div>
+//                   <div className="text-sm">CALL US</div>
+//                   <div className="font-bold">(949) 675-9060</div>
+//                 </div>
+//               </div>
+//               <Separator className="bg-white/20" />
+//               <div className="flex items-center space-x-2">
+//                 <Clock className="w-6 h-6" />
+//                 <div>
+//                   <div className="text-sm">HOURS OF OPERATION</div>
+//                   <div className="font-bold">Monday — Sunday</div>
+//                   <div className="text-sm">9:00 a.m. — 5:00 p.m.</div>
+//                 </div>
+//               </div>
+//               <Separator className="bg-white/20" />
+//               <div className="flex items-center space-x-2">
+//                 <MapPin className="w-6 h-6" />
+//                 <div>
+//                   <div className="text-sm">COMPANY / LOCATION</div>
+//                   <div className="font-bold">
+//                     3300 Via Lido, Windward Beach, CA 92663
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+
+//       {/* Main Navigation Bar */}
+//       <nav className="bg-[#c5dfff] text-[#00008b] py-2">
+//         <div className="container mx-auto px-4">
+//           <div className="hidden md:flex justify-between items-center">
+//             <div className="flex space-x-4">
+//               {navItems.map(({ label, path }) => (
+//                 <Link
+//                   key={label}
+//                   href={path}
+//                   className={`hover:underline px-3 py-2 rounded ${
+//                     pathname === path ? "bg-[#00bfff] text-white" : ""
+//                   }`}
+//                 >
+//                   {label}
+//                 </Link>
+//               ))}
+//             </div>
+//             <Button
+//               variant="default"
+//               className="bg-[#00bfff] hover:bg-[#0080ff] text-white"
+//             >
+//               BOOKING NOW
+//             </Button>
+//           </div>
+//         </div>
+//       </nav>
+//     </header>
+//   );
+// };
+
+// const navItems = [
+//   { label: "Home", path: "/" },
+//   { label: "About Us", path: "/about-us" },
+//   { label: "Membership Fees", path: "/membership-fees" },
+//   { label: "Rental Fees", path: "/rental-fees" },
+//   { label: "Boats", path: "/boats" },
+//   { label: "Members", path: "/members" },
+// ];
+
+// const Header = () => {
+//   const pathname = usePathname();
+//   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+
+//   return (
+//     <header className="bg-[#f0f8ff] text-[#00008b]">
+//       <div className="container mx-auto px-4">
+//         <div className="flex justify-between items-center py-2">
+//           <Link
+//             href="mailto:support@windwardsailingclub.com"
+//             className="text-sm hover:underline hidden md:block"
+//           >
+//             support@windwardsailingclub.com
+//           </Link>
+//           <div className="flex items-center space-x-4">
+//             <div className="hidden md:flex space-x-2">
+//               <Link href="#" aria-label="Facebook">
+//                 <Facebook
+//                   size={20}
+//                   className="text-[#00008b] hover:text-[#4267B2] transition-colors"
+//                 />
+//               </Link>
+//               <Link href="#" aria-label="Twitter">
+//                 <Twitter
+//                   size={20}
+//                   className="text-[#00008b] hover:text-[#1DA1F2] transition-colors"
+//                 />
+//               </Link>
+//               <Link href="#" aria-label="Instagram">
+//                 <Instagram
+//                   size={20}
+//                   className="text-[#00008b] hover:text-[#E1306C] transition-colors"
+//                 />
+//               </Link>
+//               <Link href="#" aria-label="Pinterest">
+//                 <svg
+//                   xmlns="http://www.w3.org/2000/svg"
+//                   width="20"
+//                   height="20"
+//                   viewBox="0 0 24 24"
+//                   fill="none"
+//                   stroke="currentColor"
+//                   strokeWidth="2"
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                   className="text-[#00008b] hover:text-[#E60023] transition-colors"
+//                 >
+//                   <path d="M8 12a4 4 0 1 0 8 0a4 4 0 0 0-8 0"></path>
+//                   <path d="M12 2v6"></path>
+//                   <path d="M12 22v-6"></path>
+//                   <path d="M6 12H2"></path>
+//                   <path d="M22 12h-4"></path>
+//                 </svg>
+//               </Link>
+//             </div>
+//             <Separator orientation="vertical" className="h-6 hidden md:block" />
+//             <Button
+//               variant="default"
+//               size="sm"
+//               className="bg-[#00bfff] hover:bg-[#0080ff] text-white"
+//             >
+//               Login
+//             </Button>
+//           </div>
+//         </div>
+//       </div>
+//       <div className="bg-[#052449] text-white py-4">
+//         <div className="container mx-auto px-4">
+//           <div className="flex justify-between items-center">
+//             <Link href="/" className="flex items-center space-x-2">
+//               <Image
+//                 src="/images/logoo.png"
+//                 alt="Windward Sailing Club"
+//                 className="h-16 w-auto"
+//                 width={277.75}
+//                 height={84.984}
+//               />
+//             </Link>
+//             <div className="hidden md:flex items-center space-x-6">
+//               <div className="flex items-center space-x-2">
+//                 <Phone className="w-6 h-6" />
+//                 <div>
+//                   <div className="text-sm">CALL US</div>
+//                   <div className="font-bold">(949) 675-9060</div>
+//                 </div>
+//               </div>
+//               <Separator orientation="vertical" className="h-10" />
+//               <div className="flex items-center space-x-2">
+//                 <Clock className="w-6 h-6" />
+//                 <div>
+//                   <div className="text-sm">HOURS OF OPERATION</div>
+//                   <div className="font-bold">Monday — Sunday</div>
+//                   <div className="text-sm">9:00 a.m. — 5:00 p.m.</div>
+//                 </div>
+//               </div>
+//               <Separator orientation="vertical" className="h-10" />
+//               <div className="flex items-center space-x-2">
+//                 <MapPin className="w-6 h-6" />
+//                 <div>
+//                   <div className="text-sm">COMPANY / LOCATION</div>
+//                   <div className="font-bold">
+//                     3300 Via Lido, Windward Beach, CA 92663
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//             <div className="md:hidden flex items-center space-x-4">
+//               <Sheet>
+//                 <SheetTrigger asChild>
+//                   <Button variant="ghost" size="icon">
+//                     <Menu className="h-6 w-6 text-white" />
+//                   </Button>
+//                 </SheetTrigger>
+//                 <SheetContent side="left" className="bg-white">
+//                   <nav className="flex flex-col space-y-4">
+//                     {navItems.map(({ label, path }) => (
+//                       <Link
+//                         key={label}
+//                         href={path}
+//                         className={`flex items-center justify-between py-2 ${
+//                           pathname === path ? "text-[#00bfff]" : "text-black"
+//                         }`}
+//                       >
+//                         {label}
+//                         <ChevronRight className="h-4 w-4" />
+//                       </Link>
+//                     ))}
+//                   </nav>
+//                 </SheetContent>
+//               </Sheet>
+//               <Button
+//                 variant="ghost"
+//                 size="icon"
+//                 onClick={() => setIsDetailsOpen(!isDetailsOpen)}
+//               >
+//                 <MoreHorizontal className="h-6 w-6 text-white" />
+//               </Button>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+// {isDetailsOpen && (
+//   <div className="md:hidden bg-[#052449] text-white py-4">
+//     <div className="container mx-auto px-4">
+//       <div className="flex flex-col space-y-4">
+//         <div className="flex items-center space-x-2">
+//           <Phone className="w-6 h-6" />
+//           <div>
+//             <div className="text-sm">CALL US</div>
+//             <div className="font-bold">(949) 675-9060</div>
+//           </div>
+//         </div>
+//         <Separator className="bg-white/20" />
+//         <div className="flex items-center space-x-2">
+//           <Clock className="w-6 h-6" />
+//           <div>
+//             <div className="text-sm">HOURS OF OPERATION</div>
+//             <div className="font-bold">Monday — Sunday</div>
+//             <div className="text-sm">9:00 a.m. — 5:00 p.m.</div>
+//           </div>
+//         </div>
+//         <Separator className="bg-white/20" />
+//         <div className="flex items-center space-x-2">
+//           <MapPin className="w-6 h-6" />
+//           <div>
+//             <div className="text-sm">COMPANY / LOCATION</div>
+//             <div className="font-bold">
+//               3300 Via Lido, Windward Beach, CA 92663
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   </div>
+// )}
+//       <nav className="bg-[#c5dfff] text-[#00008b] py-2">
+//         <div className="container mx-auto px-4">
+//           <div className="hidden md:flex justify-between items-center">
+//             <div className="flex space-x-4">
+//               {navItems.map(({ label, path }) => (
+//                 <Link
+//                   key={label}
+//                   href={path}
+//                   className={`hover:underline px-3 py-2 rounded ${
+//                     pathname === path ? "bg-[#00bfff] text-white" : ""
+//                   }`}
+//                 >
+//                   {label}
+//                 </Link>
+//               ))}
+//             </div>
+//             <Button
+//               variant="default"
+//               className="bg-[#00bfff] hover:bg-[#0080ff] text-white"
+//             >
+//               BOOKING NOW
+//             </Button>
+//           </div>
+//         </div>
+//       </nav>
+//     </header>
+//   );
+// };
 
 // const navItems = [
 //   { label: "Home", path: "/" },
@@ -712,14 +1289,13 @@ const Header = () => {
 const Footer: React.FC = () => {
   return (
     <footer
-      className="relative py-8 text-white "
+      className="relative py-8 text-white"
       style={{
         position: "relative",
         background:
           "linear-gradient(90deg,#072f6cc9 0%,#072f6cc9 100%), url(/images/footer-bg.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        // color: "var(--white)",
         fontSize: "18px",
         padding: "15px 0",
       }}
@@ -739,19 +1315,24 @@ const Footer: React.FC = () => {
         }}
       />
       <div
-        className="absolute -top-[180px] left-20 bottom-4 z-[3]"
-        style={{ width: "227px", height: "394px", overflow: "hidden" }}
+        className="absolute -top-[180px] left-5 lg:left-20 bottom-4 z-[3] w-[14.1875rem] h-[24.625rem] overflow-hidden  hidden md:block  "
+        // style={{
+        //   width: "227px",
+        //   height: "394px",
+        //   overflow: "hidden",
+        //   display: "none",
+        // }}
       >
         <Image
           src="/images/footer-boat.png"
           alt="Footer decoration"
-          className="object-cover w-full h-full"
+          className="object-cover w-full h-full  "
           height={227}
           width={394}
         />
       </div>
-      <div className="container mx-auto px-4 relative left-[200px]">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ab">
+      <div className="container mx-auto px-4 relative lg:left-[200px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <div>
               <Link href="/" className="flex items-center space-x-2 mb-4">
@@ -801,84 +1382,180 @@ const Footer: React.FC = () => {
         </div>
       </div>
     </footer>
-
-    // <footer className="relative py-8 text-white">
-    //   <div
-    //     className="absolute inset-0 bg-gradient-to-t from-[#00008b] via-[#00008b] to-transparent"
-    //     style={{ zIndex: -1 }}
-    //   />
-    //   <div
-    //     className="absolute inset-0 bg-cover bg-center"
-    //     style={{
-    //       backgroundImage: 'url("/images/footer-bg.jpg")',
-    //       zIndex: -2,
-    //     }}
-    //   />
-    //   <div
-    //     className="absolute -top-[180px] left-20 bottom-4 z-[3]"
-    //     style={{ width: "227px", height: "394px", overflow: "hidden" }}
-    //   >
-    //     <Image
-    //       src="/images/footer-boat.png"
-    //       alt="Footer decoration"
-    //       className="object-cover w-full h-full"
-    //       height={227}
-    //       width={394}
-    //     />
-    //   </div>
-    //   <div className="container mx-auto px-4 relative left-[200px]">
-    //     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ab ">
-    //       <div>
-    //         <div>
-    //           <Link href="/" className="flex items-center space-x-2 mb-4">
-    //             <Image
-    //               src="/images/logoo.png"
-    //               alt="Windward Sailing Club"
-    //               className="h-[85px] w-auto"
-    //               width={277.75}
-    //               height={84.984}
-    //             />
-    //           </Link>
-    //         </div>
-    //         <h3 className="text-xl font-bold mb-4">WINDWARD SAILING CLUB</h3>
-    //         <p>3300 Via Lido, Windward Beach, CA 92663</p>
-    //         <p className="mt-4">
-    //           <strong>Service Area:</strong>
-    //           <br />
-    //           Windward Beach, California, and the Surrounding Areas
-    //         </p>
-    //       </div>
-    //       <div className="grid grid-cols-2 gap-4">
-    //         {[
-    //           "Home",
-    //           "About Us",
-    //           "Membership Fees",
-    //           "Rental Fees",
-    //           "Boats",
-    //           "Basic Sailing Certificate",
-    //           "Advanced Sailing",
-    //           "Coastal Navigation",
-    //           "Privacy Policy",
-    //           "Terms of Conditions",
-    //         ].map((item) => (
-    //           <Link
-    //             key={item}
-    //             href={`/${item.toLowerCase().replace(" ", "-")}`}
-    //             className="hover:underline"
-    //           >
-    //             {item}
-    //           </Link>
-    //         ))}
-    //       </div>
-    //     </div>
-    //     <Separator className="my-8 bg-white/20" />
-    //     <div className="text-center">
-    //       <p>Copyright © 2023 Windward Sailing Club. All rights reserved.</p>
-    //     </div>
-    //   </div>
-    // </footer>
   );
 };
+
+//  below one
+// const Footer: React.FC = () => {
+//   return (
+//     <footer
+//       className="relative py-8 text-white "
+//       style={{
+//         position: "relative",
+//         background:
+//           "linear-gradient(90deg,#072f6cc9 0%,#072f6cc9 100%), url(/images/footer-bg.jpg)",
+//         backgroundSize: "cover",
+//         backgroundPosition: "center",
+//         // color: "var(--white)",
+//         fontSize: "18px",
+//         padding: "15px 0",
+//       }}
+//     >
+//       <div
+//         className="absolute inset-0"
+//         style={{
+//           background: "linear-gradient(to top, #00008b, #00008b, transparent)",
+//           zIndex: -1,
+//         }}
+//       />
+//       <div
+//         className="absolute inset-0 bg-cover bg-center"
+//         style={{
+//           backgroundImage: 'url("/images/footer-bg.jpg")',
+//           zIndex: -2,
+//         }}
+//       />
+//       <div
+//         className="absolute -top-[180px] left-20 bottom-4 z-[3]"
+//         style={{ width: "227px", height: "394px", overflow: "hidden" }}
+//       >
+//         <Image
+//           src="/images/footer-boat.png"
+//           alt="Footer decoration"
+//           className="object-cover w-full h-full"
+//           height={227}
+//           width={394}
+//         />
+//       </div>
+//       <div className="container mx-auto px-4 relative left-[200px]">
+//         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ab">
+//           <div>
+//             <div>
+//               <Link href="/" className="flex items-center space-x-2 mb-4">
+//                 <Image
+//                   src="/images/logoo.png"
+//                   alt="Windward Sailing Club"
+//                   className="h-[85px] w-auto"
+//                   width={277.75}
+//                   height={84.984}
+//                 />
+//               </Link>
+//             </div>
+//             <h3 className="text-xl font-bold mb-4">WINDWARD SAILING CLUB</h3>
+//             <p>3300 Via Lido, Windward Beach, CA 92663</p>
+//             <p className="mt-4">
+//               <strong>Service Area:</strong>
+//               <br />
+//               Windward Beach, California, and the Surrounding Areas
+//             </p>
+//           </div>
+//           <div className="grid grid-cols-2 gap-4">
+//             {[
+//               "Home",
+//               "About Us",
+//               "Membership Fees",
+//               "Rental Fees",
+//               "Boats",
+//               "Basic Sailing Certificate",
+//               "Advanced Sailing",
+//               "Coastal Navigation",
+//               "Privacy Policy",
+//               "Terms of Conditions",
+//             ].map((item) => (
+//               <Link
+//                 key={item}
+//                 href={`/${item.toLowerCase().replace(" ", "-")}`}
+//                 className="hover:underline"
+//               >
+//                 {item}
+//               </Link>
+//             ))}
+//           </div>
+//         </div>
+//         <Separator className="my-8 bg-white/20" />
+//         <div className="text-center">
+//           <p>Copyright © 2023 Windward Sailing Club. All rights reserved.</p>
+//         </div>
+//       </div>
+//     </footer>
+
+//     // <footer className="relative py-8 text-white">
+//     //   <div
+//     //     className="absolute inset-0 bg-gradient-to-t from-[#00008b] via-[#00008b] to-transparent"
+//     //     style={{ zIndex: -1 }}
+//     //   />
+//     //   <div
+//     //     className="absolute inset-0 bg-cover bg-center"
+//     //     style={{
+//     //       backgroundImage: 'url("/images/footer-bg.jpg")',
+//     //       zIndex: -2,
+//     //     }}
+//     //   />
+//     //   <div
+//     //     className="absolute -top-[180px] left-20 bottom-4 z-[3]"
+//     //     style={{ width: "227px", height: "394px", overflow: "hidden" }}
+//     //   >
+//     //     <Image
+//     //       src="/images/footer-boat.png"
+//     //       alt="Footer decoration"
+//     //       className="object-cover w-full h-full"
+//     //       height={227}
+//     //       width={394}
+//     //     />
+//     //   </div>
+//     //   <div className="container mx-auto px-4 relative left-[200px]">
+//     //     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ab ">
+//     //       <div>
+//     //         <div>
+//     //           <Link href="/" className="flex items-center space-x-2 mb-4">
+//     //             <Image
+//     //               src="/images/logoo.png"
+//     //               alt="Windward Sailing Club"
+//     //               className="h-[85px] w-auto"
+//     //               width={277.75}
+//     //               height={84.984}
+//     //             />
+//     //           </Link>
+//     //         </div>
+//     //         <h3 className="text-xl font-bold mb-4">WINDWARD SAILING CLUB</h3>
+//     //         <p>3300 Via Lido, Windward Beach, CA 92663</p>
+//     //         <p className="mt-4">
+//     //           <strong>Service Area:</strong>
+//     //           <br />
+//     //           Windward Beach, California, and the Surrounding Areas
+//     //         </p>
+//     //       </div>
+//     //       <div className="grid grid-cols-2 gap-4">
+//     //         {[
+//     //           "Home",
+//     //           "About Us",
+//     //           "Membership Fees",
+//     //           "Rental Fees",
+//     //           "Boats",
+//     //           "Basic Sailing Certificate",
+//     //           "Advanced Sailing",
+//     //           "Coastal Navigation",
+//     //           "Privacy Policy",
+//     //           "Terms of Conditions",
+//     //         ].map((item) => (
+//     //           <Link
+//     //             key={item}
+//     //             href={`/${item.toLowerCase().replace(" ", "-")}`}
+//     //             className="hover:underline"
+//     //           >
+//     //             {item}
+//     //           </Link>
+//     //         ))}
+//     //       </div>
+//     //     </div>
+//     //     <Separator className="my-8 bg-white/20" />
+//     //     <div className="text-center">
+//     //       <p>Copyright © 2023 Windward Sailing Club. All rights reserved.</p>
+//     //     </div>
+//     //   </div>
+//     // </footer>
+//   );
+// };
 
 export { Header, Footer };
 

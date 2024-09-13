@@ -104,7 +104,7 @@ const SpecificationsSection = () => {
   // console.log("specification", specificationData);
   return (
     <div className="mb-8 px-4 sm:px-6 lg:px-8">
-      <h2 className="text-3xl font-bold mb-8 text-black dark:text-white">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-black dark:text-white">
         Specifications
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -116,18 +116,18 @@ const SpecificationsSection = () => {
             <div className="bg-black dark:bg-gray-900 text-white p-4">
               <h3 className="text-lg font-semibold">{section.title}</h3>
             </div>
-            <div className="p-4">
-              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <div className="p-4 overflow-x-auto">
+              <table className="w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                   {section?.specs?.map((spec, specIndex) => (
                     <tr
                       key={specIndex}
                       className="hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
-                      <td className="px-6 py-3 text-sm font-medium text-gray-900 dark:text-white">
+                      <td className="px-4 py-2 sm:px-6 sm:py-3 text-sm font-medium text-gray-900 dark:text-white">
                         {spec.name}
                       </td>
-                      <td className="px-6 py-3 text-sm text-gray-500 dark:text-gray-300">
+                      <td className="px-4 py-2 sm:px-6 sm:py-3 text-sm text-gray-500 dark:text-gray-300">
                         {spec.value}
                       </td>
                     </tr>
@@ -139,6 +139,80 @@ const SpecificationsSection = () => {
         ))}
       </div>
     </div>
+
+    // <div className="mb-8 px-4 sm:px-6 lg:px-8">
+    //   <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-black dark:text-white">
+    //     Specifications
+    //   </h2>
+    //   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    //     {specificationData?.map((section, index) => (
+    //       <div
+    //         key={index}
+    //         className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden"
+    //       >
+    //         <div className="bg-black dark:bg-gray-900 text-white p-4">
+    //           <h3 className="text-lg font-semibold">{section.title}</h3>
+    //         </div>
+    //         <div className="p-4 overflow-x-auto">
+    //           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+    //             <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+    //               {section?.specs?.map((spec, specIndex) => (
+    //                 <tr
+    //                   key={specIndex}
+    //                   className="hover:bg-gray-100 dark:hover:bg-gray-700"
+    //                 >
+    //                   <td className="px-6 py-3 text-sm font-medium text-gray-900 dark:text-white">
+    //                     {spec.name}
+    //                   </td>
+    //                   <td className="px-6 py-3 text-sm text-gray-500 dark:text-gray-300">
+    //                     {spec.value}
+    //                   </td>
+    //                 </tr>
+    //               ))}
+    //             </tbody>
+    //           </table>
+    //         </div>
+    //       </div>
+    //     ))}
+    //   </div>
+    // </div>
+
+    // <div className="mb-8 px-4 sm:px-6 lg:px-8">
+    //   <h2 className="text-3xl font-bold mb-8 text-black dark:text-white">
+    //     Specifications
+    //   </h2>
+    //   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    //     {specificationData?.map((section, index) => (
+    //       <div
+    //         key={index}
+    //         className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden"
+    //       >
+    //         <div className="bg-black dark:bg-gray-900 text-white p-4">
+    //           <h3 className="text-lg font-semibold">{section.title}</h3>
+    //         </div>
+    //         <div className="p-4">
+    // <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+    //   <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+    //     {section?.specs?.map((spec, specIndex) => (
+    //       <tr
+    //         key={specIndex}
+    //         className="hover:bg-gray-100 dark:hover:bg-gray-700"
+    //       >
+    //         <td className="px-6 py-3 text-sm font-medium text-gray-900 dark:text-white">
+    //           {spec.name}
+    //         </td>
+    //         <td className="px-6 py-3 text-sm text-gray-500 dark:text-gray-300">
+    //           {spec.value}
+    //         </td>
+    //       </tr>
+    //     ))}
+    //   </tbody>
+    // </table>
+    //         </div>
+    //       </div>
+    //     ))}
+    //   </div>
+    // </div>
 
     // <div className="mb-8 px-[300px]">
     //   <h2 className="text-2xl font-bold mb-4 text-[#1e40af]">Specifications</h2>
@@ -766,14 +840,17 @@ export default function YachtGallery() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-3xl font-bold mb-4 text-[#1e3a8a] flex items-center">
-        <Compass className="mr-2" />
+      <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-[#1e3a8a] flex items-center">
+        <Compass className="mr-2 h-6 w-6 sm:h-8 sm:w-8" />
         Exterior Photos
       </h2>
       <div className="relative">
-        <div className="flex space-x-4 overflow-hidden">
+        <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 overflow-hidden">
           {images.slice(startIndex, startIndex + 4).map((image, index) => (
-            <div key={index} className="flex-none w-1/4">
+            <div
+              key={index}
+              className="flex-none w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+            >
               <div className="relative aspect-[4/3] mb-2">
                 <Image
                   src={image.src}
@@ -792,7 +869,7 @@ export default function YachtGallery() {
         <Button
           variant="outline"
           size="icon"
-          className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white/80 hover:bg-white"
+          className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white/80 hover:bg-white hidden sm:flex"
           onClick={prevSlide}
           aria-label="Previous slide"
         >
@@ -801,16 +878,97 @@ export default function YachtGallery() {
         <Button
           variant="outline"
           size="icon"
-          className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white/80 hover:bg-white"
+          className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white/80 hover:bg-white hidden sm:flex"
           onClick={nextSlide}
           aria-label="Next slide"
         >
           <ChevronRight className="h-6 w-6" />
         </Button>
       </div>
+      <div className="flex justify-center space-x-4 mt-4 sm:hidden">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={prevSlide}
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="h-4 w-4 mr-2" />
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={nextSlide}
+          aria-label="Next slide"
+        >
+          Next
+          <ChevronRight className="h-4 w-4 ml-2" />
+        </Button>
+      </div>
     </div>
   );
 }
+
+// export default function YachtGallery() {
+//   const [startIndex, setStartIndex] = useState(0);
+
+//   const nextSlide = () => {
+//     setStartIndex((prevIndex) => (prevIndex + 1) % (images.length - 3));
+//   };
+
+//   const prevSlide = () => {
+//     setStartIndex(
+//       (prevIndex) => (prevIndex - 1 + (images.length - 3)) % (images.length - 3)
+//     );
+//   };
+
+//   return (
+//     <div className="container mx-auto px-4 py-8">
+//       <h2 className="text-3xl font-bold mb-4 text-[#1e3a8a] flex items-center">
+//         <Compass className="mr-2" />
+//         Exterior Photos
+//       </h2>
+//       <div className="relative">
+//         <div className="flex space-x-4 overflow-hidden">
+//           {images.slice(startIndex, startIndex + 4).map((image, index) => (
+//             <div key={index} className="flex-none w-1/4">
+//               <div className="relative aspect-[4/3] mb-2">
+//                 <Image
+//                   src={image.src}
+//                   alt={image.alt}
+//                   layout="fill"
+//                   objectFit="cover"
+//                   className="rounded-lg"
+//                 />
+//               </div>
+//               <p className="text-sm text-center text-gray-600">
+//                 {image.caption}
+//               </p>
+//             </div>
+//           ))}
+//         </div>
+//         <Button
+//           variant="outline"
+//           size="icon"
+//           className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white/80 hover:bg-white"
+//           onClick={prevSlide}
+//           aria-label="Previous slide"
+//         >
+//           <ChevronLeft className="h-6 w-6" />
+//         </Button>
+//         <Button
+//           variant="outline"
+//           size="icon"
+//           className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white/80 hover:bg-white"
+//           onClick={nextSlide}
+//           aria-label="Next slide"
+//         >
+//           <ChevronRight className="h-6 w-6" />
+//         </Button>
+//       </div>
+//     </div>
+//   );
+// }
 export { SpecificationsSection, VesselOverview };
 // , VirtualTour, ExteriorPhotos
 

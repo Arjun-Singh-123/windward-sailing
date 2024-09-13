@@ -244,24 +244,16 @@ const Detail: React.FC<DetailProps> = ({
     <div className="container mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold text-[#00008b] mb-8">{title}</h1>
 
-      <div className="flex items-center mb-4 relative">
-        {/* <div className="flex-grow border-t-2 absolute border-black w-[50px] left-10"></div> */}
-        {/* <div
-          className="flex-grow border-t-2 border-black mr-2"
-          style={{ maxWidth: "100px" }}
-        ></div> */}
-
+      <div className="flex items-center mb-4">
         <img
           src="/images/Logo-Icon.png"
           alt="icon"
           className="h-8 w-8 text-sky-500 mr-4"
         />
         <div
-          className="flex-grow border-t-2 border-black "
+          className="flex-grow border-t-2 border-black"
           style={{ maxWidth: "100px" }}
         ></div>
-
-        {/* <div className="flex-grow border-t-2 absolute border-black w-[50px] left-10"></div> */}
       </div>
 
       {(heading || description || mediaUrl) && (
@@ -269,7 +261,7 @@ const Detail: React.FC<DetailProps> = ({
           <CardContent className="p-0">
             <div className="flex flex-col md:flex-row">
               {(heading || description) && (
-                <div className="md:w-1/2 p-8">
+                <div className="w-full md:w-1/2 p-8">
                   {heading && (
                     <h2 className="text-2xl font-semibold mb-4">{heading}</h2>
                   )}
@@ -283,7 +275,7 @@ const Detail: React.FC<DetailProps> = ({
               )}
               {mediaUrl && (
                 <div
-                  className={`md:w-1/2 relative ${
+                  className={`w-full md:w-1/2 relative ${
                     isVideo && "border-[30px] border-slate-900"
                   }`}
                 >
@@ -302,6 +294,7 @@ const Detail: React.FC<DetailProps> = ({
                       alt="Sailing at Windward Sailing Club"
                       width={460}
                       height={689}
+                      // className="w-full h-auto object-cover"
                     />
                   )}
                 </div>
@@ -347,8 +340,8 @@ const Detail: React.FC<DetailProps> = ({
           <h2 className="text-2xl font-bold mb-4 text-[#1e40af]">
             What You Get
           </h2>
-          <div className="flex flex-wrap">
-            <div className="flex-1 p-8 bg-[#bfdbfe] rounded-lg">
+          <div className="flex flex-col md:flex-row">
+            <div className="w-full md:w-1/2 p-8 bg-[#bfdbfe] rounded-lg">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {benefitsData.map((benefit, index) => (
                   <div key={index} className="flex items-start space-x-4">
@@ -367,20 +360,161 @@ const Detail: React.FC<DetailProps> = ({
                 ))}
               </div>
             </div>
-            <div className="flex-1">
+            <div className="w-full md:w-1/2 mt-8 md:mt-0 md:ml-8">
               <Image
                 src="/images/benefits.jpg"
                 alt="benefits"
                 layout="responsive"
                 width={500}
                 height={500}
-                className="object-cover h-full"
+                className="object-cover w-full h-auto rounded-lg"
               />
             </div>
           </div>
         </div>
       )}
     </div>
+
+    // <div className="container mx-auto px-4 py-12">
+    //   <h1 className="text-4xl font-bold text-[#00008b] mb-8">{title}</h1>
+
+    //   <div className="flex items-center mb-4 relative">
+    //     {/* <div className="flex-grow border-t-2 absolute border-black w-[50px] left-10"></div> */}
+    //     {/* <div
+    //       className="flex-grow border-t-2 border-black mr-2"
+    //       style={{ maxWidth: "100px" }}
+    //     ></div> */}
+
+    //     <img
+    //       src="/images/Logo-Icon.png"
+    //       alt="icon"
+    //       className="h-8 w-8 text-sky-500 mr-4"
+    //     />
+    //     <div
+    //       className="flex-grow border-t-2 border-black "
+    //       style={{ maxWidth: "100px" }}
+    //     ></div>
+
+    //     {/* <div className="flex-grow border-t-2 absolute border-black w-[50px] left-10"></div> */}
+    //   </div>
+
+    //   {(heading || description || mediaUrl) && (
+    //     <Card className="mb-8 overflow-hidden">
+    //       <CardContent className="p-0">
+    //         <div className="flex flex-col md:flex-row">
+    //           {(heading || description) && (
+    //             <div className="md:w-1/2 p-8">
+    //               {heading && (
+    //                 <h2 className="text-2xl font-semibold mb-4">{heading}</h2>
+    //               )}
+    //               {description && <p className="mb-4">{description}</p>}
+    //               {membershipFees && (
+    //                 <button className="bg-blue-500 text-white px-4 py-2 rounded">
+    //                   Join Membership
+    //                 </button>
+    //               )}
+    //             </div>
+    //           )}
+    //           {mediaUrl && (
+    //             <div
+    //               className={`md:w-1/2 relative ${
+    //                 isVideo && "border-[30px] border-slate-900"
+    //               }`}
+    //             >
+    //               {isVideo ? (
+    //                 <video
+    //                   src={mediaUrl}
+    //                   className="w-full h-full object-cover"
+    //                   autoPlay
+    //                   muted
+    //                   loop
+    //                   playsInline
+    //                 />
+    //               ) : (
+    //                 <CustomImage
+    //                   src={mediaUrl}
+    //                   alt="Sailing at Windward Sailing Club"
+    //                   width={460}
+    //                   height={689}
+    //                 />
+    //               )}
+    //             </div>
+    //           )}
+    //         </div>
+    //       </CardContent>
+    //     </Card>
+    //   )}
+
+    //   {specificationData && (
+    //     <div className="mb-8">
+    //       <h2 className="text-2xl font-bold mb-4 text-[#1e40af]">
+    //         Specifications
+    //       </h2>
+    //       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    //         {specificationData.map((section, index) => (
+    //           <Card key={index} className="border-[#1e40af]">
+    //             <CardHeader className="bg-[#1e40af] text-white">
+    //               <CardTitle>{section.title}</CardTitle>
+    //             </CardHeader>
+    //             <CardContent>
+    //               <Table>
+    //                 <TableBody>
+    //                   {section.specs.map((spec, specIndex) => (
+    //                     <TableRow key={specIndex}>
+    //                       <TableCell className="font-medium text-[#1e40af]">
+    //                         {spec.name}
+    //                       </TableCell>
+    //                       <TableCell>{spec.value}</TableCell>
+    //                     </TableRow>
+    //                   ))}
+    //                 </TableBody>
+    //               </Table>
+    //             </CardContent>
+    //           </Card>
+    //         ))}
+    //       </div>
+    //     </div>
+    //   )}
+
+    //   {benefitsData && (
+    //     <div className="mb-8">
+    //       <h2 className="text-2xl font-bold mb-4 text-[#1e40af]">
+    //         What You Get
+    //       </h2>
+    //       <div className="flex flex-wrap">
+    //         <div className="flex-1 p-8 bg-[#bfdbfe] rounded-lg">
+    //           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    //             {benefitsData.map((benefit, index) => (
+    //               <div key={index} className="flex items-start space-x-4">
+    //                 <div className="flex-shrink-0">
+    //                   <span>{benefit.icon}</span>
+    //                 </div>
+    //                 <div>
+    //                   <h3 className="text-lg font-semibold text-[#1e40af] mb-2">
+    //                     {benefit.title}
+    //                   </h3>
+    //                   <p className="text-sm text-gray-600">
+    //                     {benefit.description}
+    //                   </p>
+    //                 </div>
+    //               </div>
+    //             ))}
+    //           </div>
+    //         </div>
+    //         <div className="flex-1">
+    //           <Image
+    //             src="/images/benefits.jpg"
+    //             alt="benefits"
+    //             layout="responsive"
+    //             width={500}
+    //             height={500}
+    //             className="object-cover h-full"
+    //           />
+    //         </div>
+    //       </div>
+    //     </div>
+    //   )}
+    // </div>
   );
 };
 
