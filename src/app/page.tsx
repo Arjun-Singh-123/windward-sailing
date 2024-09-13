@@ -28,9 +28,11 @@ export default function Home() {
   return (
     // <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
     //   <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-0 gap-16 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full">
+    // grid-rows-[20px_1fr_20px]
+    // <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-0 gap-16 font-[family-name:var(--font-geist-sans)]">
+    <div className="grid  items-center justify-items-center min-h-screen p-0   font-[family-name:var(--font-geist-sans)]">
+      {/* <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start "> */}
+      <main className="flex flex-col   row-start-2 items-center sm:items-start">
         <HeroSection1 />
         <HeroSection />
 
@@ -97,13 +99,13 @@ export default function Home() {
             // ... other benefits
           ]}
         />
-        <StatsSlider />
-        <TestimonialSlider />
+        {/* <StatsSlider /> */}
+        {/* <TestimonialSlider /> */}
         {/* <Detail
           title="About Us"
           heading="What We Do"
           description={description}
-          video = {video}
+          video={video}
         /> */}
 
         <Detail
