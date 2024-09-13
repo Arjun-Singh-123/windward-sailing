@@ -577,7 +577,8 @@
 //   );
 // }
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 
 const testimonials = [
   {
@@ -638,6 +639,93 @@ export default function TestimonialsSlider() {
   };
 
   return (
+    <div className="relative max-w-[800px] mx-auto py-8 sm:py-16 px-4 overflow-hidden">
+      <div className="text-center">
+        <h3 className="text-xl great-vibes-regular text-blue-900">
+          Our Testimonials
+        </h3>
+      </div>
+      <h2 className="text-2xl sm:text-3xl font-bold text-center text-blue-900 mt-2">
+        Client&apos;s Feedback
+      </h2>
+      <div className="flex items-center mb-8 sm:mb-16 relative mt-4">
+        <div
+          className="flex-grow border-t-2 border-black mr-2"
+          style={{ maxWidth: "100px" }}
+        ></div>
+        <Image
+          src="/images/Logo-Icon.png"
+          alt="icon"
+          width={32}
+          height={32}
+          className="text-sky-500 mr-4"
+        />
+        <div
+          className="flex-grow border-t-2 border-black"
+          style={{ maxWidth: "100px" }}
+        ></div>
+      </div>
+      <div className="relative h-[400px] sm:h-[300px]">
+        <AnimatePresence initial={false}>
+          {getVisibleTestimonials().map((testimonial, index) => (
+            <motion.div
+              key={testimonial.id}
+              className="absolute w-full sm:w-[250px] h-full mx-auto sm:mx-4"
+              initial={{
+                opacity: 0,
+                x: index === 2 ? 300 : index === 0 ? -300 : 0,
+              }}
+              animate={{
+                opacity: 1,
+                x: index === 1 ? "0%" : index === 0 ? "-110%" : "110%",
+                y: index === 1 ? 0 : 20,
+                scale: index === 1 ? 1 : 0.9,
+              }}
+              exit={{
+                opacity: 0,
+                x: index === 0 ? -300 : index === 2 ? 300 : 0,
+              }}
+              transition={{ duration: 0.5 }}
+            >
+              <div
+                className={`bg-white rounded-sm shadow-lg p-6 h-full flex flex-col justify-between border-2 ${
+                  index === 1 ? "border-blue-500" : "border-gray-300"
+                }`}
+              >
+                <div>
+                  <div className="relative -mt-16 mb-4">
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      width={80}
+                      height={80}
+                      className={`w-20 h-20 rounded-full border-2 mx-auto ${
+                        index === 1 ? "border-blue-500" : "border-gray-300"
+                      }`}
+                    />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2 text-blue-800">
+                    {testimonial.name}
+                  </h3>
+                  <p className="text-gray-600">{testimonial.text}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+      <div className="flex justify-center mt-4">
+        {testimonials.map((_, index) => (
+          <button
+            key={index}
+            className={`w-3 h-3 rounded-full mx-1 transition-colors duration-300 ${
+              index === currentIndex ? "bg-blue-500" : "bg-gray-300"
+            }`}
+            onClick={() => setCurrentIndex(index)}
+          />
+        ))}
+      </div>
+    </div>
     // <div className="relative max-w-[800px] mx-auto py-16 px-4 overflow-visible">
     //   <div className="text-center">
     //     <h3 className="text-xl font-script text-blue-900">Our Testimonials</h3>
@@ -722,87 +810,87 @@ export default function TestimonialsSlider() {
     //   </div>
     // </div>
 
-    <div className="relative max-w-[800px] mx-auto py-16 px-4 overflow-visible  ">
-      <div className="text-center ">
-        <h3 className="text-xl great-vibes-regular  text-blue-900">
-          Our Testimonials
-        </h3>
-      </div>
-      <h2 className="text-3xl font-bold text-center  text-blue-900">
-        Client&apos;s Feedback
-      </h2>
-      <div className="flex items-center  mb-16 relative">
-        {/* <div className="flex-grow border-t-2 absolute border-black w-[50px] left-10"></div> */}
-        <div
-          className="flex-grow border-t-2 border-black mr-2"
-          style={{ maxWidth: "100px" }}
-        ></div>
+    // <div className="relative max-w-[800px] mx-auto py-16 px-4 overflow-visible  ">
+    //   <div className="text-center ">
+    //     <h3 className="text-xl great-vibes-regular  text-blue-900">
+    //       Our Testimonials
+    //     </h3>
+    //   </div>
+    //   <h2 className="text-3xl font-bold text-center  text-blue-900">
+    //     Client&apos;s Feedback
+    //   </h2>
+    //   <div className="flex items-center  mb-16 relative">
+    //     {/* <div className="flex-grow border-t-2 absolute border-black w-[50px] left-10"></div> */}
+    //     <div
+    //       className="flex-grow border-t-2 border-black mr-2"
+    //       style={{ maxWidth: "100px" }}
+    //     ></div>
 
-        <img
-          src="/images/Logo-Icon.png"
-          alt="icon"
-          className="h-8 w-8 text-sky-500 mr-4"
-        />
-        <div
-          className="flex-grow border-t-2 border-black "
-          style={{ maxWidth: "100px" }}
-        ></div>
+    //     <img
+    //       src="/images/Logo-Icon.png"
+    //       alt="icon"
+    //       className="h-8 w-8 text-sky-500 mr-4"
+    //     />
+    //     <div
+    //       className="flex-grow border-t-2 border-black "
+    //       style={{ maxWidth: "100px" }}
+    //     ></div>
 
-        {/* <div className="flex-grow border-t-2 absolute border-black w-[50px] left-10"></div> */}
-      </div>
-      <div className="relative h-[400px]   ">
-        {/* <AnimatePresence initial={false}> */}
-        {getVisibleTestimonials().map((testimonial, index) => (
-          <motion.div
-            key={testimonial.id}
-            className="absolute w-[250px]   h-full mx-4 "
-            initial={{
-              opacity: 0,
-              x: index === 2 ? 300 : index === 0 ? -300 : 0,
-            }}
-            animate={{ opacity: 1, x: (index - 1) * 110 + "%" }}
-            exit={{
-              opacity: 0,
-              x: index === 0 ? -300 : index === 2 ? 300 : 0,
-            }}
-            transition={{ duration: 0.5 }}
-          >
-            <div
-              className={`bg-white rounded-sm shadow-lg p-6 h-full flex flex-col justify-between border-2 ${
-                index === 1 ? "border-blue-500" : "border-gray-300"
-              }`}
-            >
-              <div>
-                <div className="relative -mt-16 mb-4">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className={`w-20 h-20 rounded-full border-2 mx-auto ${
-                      index === 1 ? "border-blue-500" : "border-gray-300"
-                    }`}
-                  />
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-blue-800">
-                  {testimonial.name}
-                </h3>
-                <p className="text-gray-600">{testimonial.text}</p>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-        {/* </AnimatePresence> */}
-      </div>
-      <div className="flex justify-center mt-4">
-        {testimonials?.slice(0, 5)?.map((_, index) => (
-          <button
-            key={index}
-            className={`w-3 h-3 rounded-full mx-1 transition-colors duration-300 ${
-              index === currentIndex ? "bg-blue-500" : "bg-gray-300"
-            }`}
-            onClick={() => setCurrentIndex(index)}
-          />
-        ))}
-      </div>
-    </div>
+    //     {/* <div className="flex-grow border-t-2 absolute border-black w-[50px] left-10"></div> */}
+    //   </div>
+    //   <div className="relative h-[400px]   ">
+    //     {/* <AnimatePresence initial={false}> */}
+    //     {getVisibleTestimonials().map((testimonial, index) => (
+    //       <motion.div
+    //         key={testimonial.id}
+    //         className="absolute w-[250px]   h-full mx-4 "
+    //         initial={{
+    //           opacity: 0,
+    //           x: index === 2 ? 300 : index === 0 ? -300 : 0,
+    //         }}
+    //         animate={{ opacity: 1, x: (index - 1) * 110 + "%" }}
+    //         exit={{
+    //           opacity: 0,
+    //           x: index === 0 ? -300 : index === 2 ? 300 : 0,
+    //         }}
+    //         transition={{ duration: 0.5 }}
+    //       >
+    //         <div
+    //           className={`bg-white rounded-sm shadow-lg p-6 h-full flex flex-col justify-between border-2 ${
+    //             index === 1 ? "border-blue-500" : "border-gray-300"
+    //           }`}
+    //         >
+    //           <div>
+    //             <div className="relative -mt-16 mb-4">
+    //               <img
+    //                 src={testimonial.image}
+    //                 alt={testimonial.name}
+    //                 className={`w-20 h-20 rounded-full border-2 mx-auto ${
+    //                   index === 1 ? "border-blue-500" : "border-gray-300"
+    //                 }`}
+    //               />
+    //             </div>
+    //             <h3 className="text-xl font-semibold mb-2 text-blue-800">
+    //               {testimonial.name}
+    //             </h3>
+    //             <p className="text-gray-600">{testimonial.text}</p>
+    //           </div>
+    //         </div>
+    //       </motion.div>
+    //     ))}
+    //     {/* </AnimatePresence> */}
+    //   </div>
+    //   <div className="flex justify-center mt-4">
+    //     {testimonials?.slice(0, 5)?.map((_, index) => (
+    //       <button
+    //         key={index}
+    //         className={`w-3 h-3 rounded-full mx-1 transition-colors duration-300 ${
+    //           index === currentIndex ? "bg-blue-500" : "bg-gray-300"
+    //         }`}
+    //         onClick={() => setCurrentIndex(index)}
+    //       />
+    //     ))}
+    //   </div>
+    // </div>
   );
 }

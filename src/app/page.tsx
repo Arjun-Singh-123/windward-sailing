@@ -100,7 +100,7 @@ export default function Home() {
           ]}
         />
         {/* <StatsSlider /> */}
-        {/* <TestimonialSlider /> */}
+        <TestimonialSlider />
         {/* <Detail
           title="About Us"
           heading="What We Do"
