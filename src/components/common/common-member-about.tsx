@@ -23,8 +23,8 @@ const CommonMembershipAbout = ({
   return (
     <>
       <div className="container mx-auto w-full">
-        <section className="relative flex flex-col-reverse md:flex-row items-start w-full justify-between p-1">
-          <div className="flex flex-col w-full md:max-w-[40.625rem] md:h-[43.06rem] p-4 overflow-y-auto">
+        <section className="relative flex flex-col-reverse md:flex-row items-center justify-center w-full   p-1">
+          <div className="flex flex-col w-full md:max-w-[40.625rem] md:h-[47.06rem] p-4 overflow-y-auto">
             <h2
               className={`mt-10 text-2xl text-flatBlue ${cursiveHeadingFont.className}`}
             >
