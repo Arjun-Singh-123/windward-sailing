@@ -9,6 +9,30 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      categories: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          slug: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+          slug: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          slug?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       members: {
         Row: {
           about: string | null
@@ -38,6 +62,82 @@ export type Database = {
           profession?: string | null
         }
         Relationships: []
+      }
+      navigation_items: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_category: boolean | null
+          name: string
+          order_index: number
+          parent_id: string | null
+          slug: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_category?: boolean | null
+          name: string
+          order_index: number
+          parent_id?: string | null
+          slug: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_category?: boolean | null
+          name?: string
+          order_index?: number
+          parent_id?: string | null
+          slug?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "navigation_items_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "navigation_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subcategories: {
+        Row: {
+          category_id: string
+          created_at: string | null
+          id: string
+          name: string
+          slug: string
+          updated_at: string | null
+        }
+        Insert: {
+          category_id: string
+          created_at?: string | null
+          id?: string
+          name: string
+          slug: string
+          updated_at?: string | null
+        }
+        Update: {
+          category_id?: string
+          created_at?: string | null
+          id?: string
+          name?: string
+          slug?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subcategories_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       vehicle_details: {
         Row: {
@@ -75,6 +175,27 @@ export type Database = {
           content?: Json | null
           id?: number
           vehicle_id?: number | null
+        }
+        Relationships: []
+      }
+      vehicle_detailss: {
+        Row: {
+          created_at: string | null
+          id: number
+          vehicle_name: string
+          vehicle_type: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          vehicle_name: string
+          vehicle_type?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          vehicle_name?: string
+          vehicle_type?: string | null
         }
         Relationships: []
       }

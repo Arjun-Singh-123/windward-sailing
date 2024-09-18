@@ -6,6 +6,9 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Providers from "./providers";
 import ScrollToTop from "@/components/common/scroll-to-top";
 import type { Viewport } from "next";
+import { inter } from "@/app/ui/fonts";
+import { Toaster } from "sonner";
+import StickyHeader from "@/components/common/sticky-header";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -39,14 +42,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.className} antialiased`}
       >
         <Providers>
+          <StickyHeader />
+
           <Header />
           {children}
           {/* The rest of your application */}
           <ReactQueryDevtools initialIsOpen={false} />
           <ScrollToTop />
+          <Toaster richColors={true} duration={3000} position="top-right" />
           <Footer />
         </Providers>
       </body>

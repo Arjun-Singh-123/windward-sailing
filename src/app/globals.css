@@ -53,6 +53,54 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --sky: #c5dfff;
+    --lightSky: #ebf8fc;
+    --black: #232323;
+    --deepBlack: #000000;
+    --flatBlue: #13afe2;
+    --darkBlue: #052449;
+    --fontColor: #052449;
+    --grayColor: #b2b1b1;
+    --grayColor2: #636363;
+    --white: #ffffff;
+    --ceo: #4aae4f;
+    --admin: #2095f3;
+    --cfuser: #fdbb00;
+    --buttonGrd1: #6edcfc;
+    --buttonGrd2: #4facfe;
+    --blueGrd1: #4285ec;
+    --blueGrd2: #0bbafb;
+    --darkblueGrd1: #001135;
+    --darkblueGrd2: #133f83;
+    --contentFont: "Roboto", sans-serif;
+    --mainHeadingFont: "Prata", serif;
+    --cursiveHeadingFont: "Great Vibes", cursive;
+    --thin100: 100;
+    --light300: 300;
+    --regular400: 400;
+    --mid500: 500;
+    --bold700: 700;
+    --bold900: 900;
+    --primary: #007bff;
+    --secondary: #6c757d;
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --info: #17a2b8;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --light_primary: #cce5ff;
+    --light_secondary: #e2e3e5;
+    --light_success: #d4edda;
+    --light_danger: #f8d7da;
+    --light_warning: #fff3cd;
+    --light_info: #d1ecf1;
+    --light_light: #fefefe;
+    --light_dark: #d6d8d9;
+    /* --newportIcon: url(../img/NewportLogo/Logo-Icon.png);
+    --windwardIcon: url(../img/Windward/Logo-Icon.png);
+    --logoIcon: var(--windwardIcon);
+    */
   }
   .dark {
     --background: 222.2 84% 4.9%;
@@ -83,9 +131,9 @@ body {
 }
 
 @layer base {
-  * {
+  /* * {
     @apply border-border;
-  }
+  } */
   body {
     @apply bg-background text-foreground;
   }
@@ -125,4 +173,33 @@ body {
   font-family: "Great Vibes", system-ui;
   font-weight: 400;
   font-style: normal;
+}
+/* App.css */
+:root {
+  --background-color: #fff; /* Default background color */
+  --text-color: #000; /* Default text color */
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+.theme-toggle {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--text-color);
+  color: var(--background-color);
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+.theme-toggle:hover {
+  opacity: 0.8; /* Slightly fade on hover */
 }

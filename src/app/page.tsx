@@ -3,6 +3,7 @@ import Detail from "@/components/common/details";
 import HeroSection1 from "@/components/common/first-section";
 import { HeroSection } from "@/components/common/hero-section";
 import ImageGallery from "@/components/common/image-gallery";
+import ImageCarousel from "@/components/common/image-slider";
 import StatsSlider from "@/components/common/stats";
 import TestimonialSlider from "@/components/common/testimonials";
 import YachtGallery, {
@@ -30,7 +31,7 @@ export default function Home() {
     //   <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
     // grid-rows-[20px_1fr_20px]
     // <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-0 gap-16 font-[family-name:var(--font-geist-sans)]">
-    <div className="grid  items-center justify-items-center min-h-screen p-0   font-[family-name:var(--font-geist-sans)]">
+    <div className=" grid  items-center justify-items-center min-h-screen p-0 overflow-hidden  font-[family-name:var(--font-geist-sans)]">
       {/* <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start "> */}
       <main className="flex flex-col   row-start-2 items-center sm:items-start">
         <HeroSection1 />
@@ -110,13 +111,13 @@ export default function Home() {
 
         <Detail
           title="What We Do "
-          heading=""
+          heading="Welcome to Windward Sailing Club"
           description={description}
           // membershipFees={true}
           mediaUrl="/images/Sailboat_Videos_2.mp4"
           isVideo={true}
         />
-
+        <ImageCarousel />
         {/* <Swipe /> */}
         {/* <YachtGallery/> */}
       </main>

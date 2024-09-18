@@ -1,7 +1,19 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: ["class"],
+  darkMode: ["class"], // Enable dark mode using class
+  // usage
+  //   <div className="bg-lightBackground dark:bg-darkBackground">
+  //   This div will have a light background in light mode and dark in dark mode.
+  // </div>
+
+  // extend: {
+  //   colors: {
+  //     // Define dark mode colors
+  //     darkBackground: '#1a1a1a',
+  //     lightBackground: '#ffffff',
+  //   },
+  // },
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -16,6 +28,23 @@ const config: Config = {
         logoIcon: "url('/images/favicon.ico')",
       },
       colors: {
+        sky: "var(--sky)",
+        lightSky: "var(--lightSky)",
+        black: "var(--black)",
+        deepBlack: "var(--deepBlack)",
+        flatBlue: "var(--flatBlue)",
+        darkBlue: "var(--darkBlue)",
+        fontColor: "var(--fontColor)",
+        grayColor: "var(--grayColor)",
+        white: "var(--white)",
+        // primary: "var(--primary)",
+        // secondary: "var(--secondary)",
+        success: "var(--success)",
+        danger: "var(--danger)",
+        warning: "var(--warning)",
+        info: "var(--info)",
+        light: "var(--light)",
+        dark: "var(--dark)",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -61,6 +90,12 @@ const config: Config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontSize: {
+        pp: "5rem",
+      },
+      screens: {
+        "3xl": "1600px",
       },
     },
   },

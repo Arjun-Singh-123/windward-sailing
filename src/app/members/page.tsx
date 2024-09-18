@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchVehicleAmenities } from "@/lib/services";
 import Image from "next/image";
 import { SkeletonCard } from "@/components/skeleton";
+import MemberCard from "@/components/common/member-card";
 
 // const members = [
 //   {
@@ -94,6 +95,20 @@ export default function Members() {
        */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr">
         {members ? (
+          members.map((member, index) => (
+            <MemberCard
+              key={index}
+              name={member.name}
+              image={member.image ?? ""}
+              about={member?.about ?? ""}
+              email={member?.email}
+              phone={member?.phone ?? ""}
+            />
+          ))
+        ) : (
+          <SkeletonCard />
+        )}
+        {/* {members ? (
           members?.map((member, index) => (
             <Card
               key={index}
@@ -118,7 +133,7 @@ export default function Members() {
                   {member.name}
                 </h2>
                 {/* <p className="text-gray-500 text-center mb-4">{member.role}</p> */}
-                <p className="text-sm mb-4">{member.about}</p>
+        {/* <p className="text-sm mb-4">{member.about}</p>
                 <div className="flex items-center justify-center space-x-4">
                   <a
                     href={`mailto:${member.email}`}
@@ -140,7 +155,7 @@ export default function Members() {
           ))
         ) : (
           <SkeletonCard />
-        )}
+        )}  */}
       </div>
     </div>
   );

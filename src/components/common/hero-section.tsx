@@ -396,7 +396,7 @@ export const HeroSection = () => {
             <h1 className="text-4xl font-bold text-[#1e40af] mb-4">
               {data?.boat_details?.title}
             </h1>
-            <p className="mb-4 text-gray-700">
+            <p className="line-clamp-5 mb-4 text-gray-700">
               {data?.boat_details?.description}
             </p>
             <p className="mb-4 text-gray-700"></p>

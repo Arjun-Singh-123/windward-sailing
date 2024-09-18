@@ -194,6 +194,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Image from "next/image";
 import CustomImage from "../custom-image";
+import { cursiveHeadingFont } from "@/app/ui/fonts";
+import DecoratorLine from "./decorator-icon-line";
 
 interface Specification {
   name: string;
@@ -233,6 +235,7 @@ const Detail: React.FC<DetailProps> = ({
   benefitsData,
 }) => {
   const [showVideo, setShowVideo] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     if (isVideo) {
@@ -240,68 +243,147 @@ const Detail: React.FC<DetailProps> = ({
     }
   }, [isVideo]);
 
-  return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold text-[#00008b] mb-8">{title}</h1>
+  useEffect(() => {
+    // Function to detect if the screen width is mobile size (typically 768px and below)
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
-      <div className="flex items-center mb-4">
-        <img
-          src="/images/Logo-Icon.png"
-          alt="icon"
-          className="h-8 w-8 text-sky-500 mr-4"
-        />
-        <div
-          className="flex-grow border-t-2 border-black"
-          style={{ maxWidth: "100px" }}
-        ></div>
-      </div>
+    // Run the function on mount and on resize
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  // return (
+  //   <div>
+  //     {isMobile ? (
+  //       <p>You are on a mobile device!</p>
+  //     ) : (
+  //       <p>You are on a desktop version!</p>
+  //     )}
+  //   </div>
+  // );
+
+  return (
+    // <div className="container mx-auto px-4 py-12 bg-[#ebf8fc]">
+    <div className="container mx-auto   bg-[#ebf8fc]">
+      {/* {isMobile ? (
+        ""
+      ) : (
+        <>
+          <h1
+            className={`text-4xl font-bold text-[#00008b] mb-8 ${cursiveHeadingFont.className}`}
+          >
+            About Us
+          </h1>
+          <h1 className="text-4xl font-bold text-[#00008b] mb-8">{title}</h1>
+
+          <DecoratorLine />
+        </>
+      )} */}
 
       {(heading || description || mediaUrl) && (
-        <Card className="mb-8 overflow-hidden">
-          <CardContent className="p-0">
-            <div className="flex flex-col md:flex-row">
-              {(heading || description) && (
-                <div className="w-full md:w-1/2 p-8">
-                  {heading && (
-                    <h2 className="text-2xl font-semibold mb-4">{heading}</h2>
+        <>
+          <Card className="mb-8      overflow-hidden bg-[#ebf8fc] border-none">
+            <CardContent className="p-1 ">
+              <div className="flex   flex-col-reverse md:flex-row ">
+                {isMobile ? (
+                  ""
+                ) : (
+                  <div className="flex flex-col">
+                    <h1
+                      className={`text-4xl font-bold text-[#00008b] mb-8 ${cursiveHeadingFont.className}`}
+                    >
+                      {heading && heading}
+                    </h1>
+                    <h1 className="text-4xl font-bold text-[#00008b] mb-8">
+                      {title}
+                    </h1>
+
+                    <DecoratorLine />
+
+                    {description && <p className="mb-4">{description}</p>}
+                  </div>
+                )}
+                {!isMobile && (heading || description) && (
+                  <div className="w-full md:w-1/2 p-8">
+                    {/* {heading && (
+                      <h2 className="text-2xl font-semibold mb-4">{heading}</h2>
+                    )} */}
+                    {/* {description && <p className="mb-4">{description}</p>} */}
+                    {membershipFees && (
+                      <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                        Join Membership
+                      </button>
+                    )}
+                  </div>
+                )}
+                {mediaUrl && (
+                  <div
+                    className={`w-full  md:w-1/2 relative ${
+                      isVideo && "border-[30px] border-slate-900"
+                    }`}
+                  >
+                    {isVideo ? (
+                      <video
+                        src={mediaUrl}
+                        className="w-full h-full object-cover"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      />
+                    ) : (
+                      <CustomImage
+                        src={mediaUrl}
+                        alt="Sailing at Windward Sailing Club"
+                        width={460}
+                        height={689}
+                        // className="w-full h-auto object-cover"
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+              {!isMobile ? (
+                ""
+              ) : (
+                <>
+                  <h1
+                    className={`text-4xl font-bold text-[#00008b] mt-10 mb-1 ${cursiveHeadingFont.className}`}
+                  >
+                    About Us
+                  </h1>
+                  <h1 className="text-4xl font-bold text-[#00008b] mb-2">
+                    {title}
+                  </h1>
+                  b
+                  <DecoratorLine />
+                  {(heading || description) && (
+                    <div className="w-full md:w-1/2 p-2">
+                      {heading && (
+                        <h2 className="text-2xl font-semibold mb-1">
+                          {heading}
+                        </h2>
+                      )}
+                      {description && <p className="mb-2">{description}</p>}
+                      {membershipFees && (
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                          Join Membership
+                        </button>
+                      )}
+                    </div>
                   )}
-                  {description && <p className="mb-4">{description}</p>}
-                  {membershipFees && (
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded">
-                      Join Membership
-                    </button>
-                  )}
-                </div>
+                </>
               )}
-              {mediaUrl && (
-                <div
-                  className={`w-full md:w-1/2 relative ${
-                    isVideo && "border-[30px] border-slate-900"
-                  }`}
-                >
-                  {isVideo ? (
-                    <video
-                      src={mediaUrl}
-                      className="w-full h-full object-cover"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                    />
-                  ) : (
-                    <CustomImage
-                      src={mediaUrl}
-                      alt="Sailing at Windward Sailing Club"
-                      width={460}
-                      height={689}
-                      // className="w-full h-auto object-cover"
-                    />
-                  )}
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </>
       )}
 
       {specificationData && (
