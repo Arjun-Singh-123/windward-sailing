@@ -10,6 +10,8 @@ const About = () => {
         subtitle=" Windward Sailing Club"
         title="About Us"
         description={description}
+        imageUrl="/images/about.jpg"
+        image={true}
       />
     </>
   );

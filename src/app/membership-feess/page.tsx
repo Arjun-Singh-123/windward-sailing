@@ -1,3 +1,4 @@
+import BoatFeatures from "@/components/common/boat-features";
 import Detail from "@/components/common/details";
 import MembershipSection from "@/components/common/to-join";
 
@@ -14,6 +15,7 @@ export default function MemberShipFees() {
         description={description}
         membershipFees={membershipFees}
       />
+      <BoatFeatures />
     </>
   );
 }

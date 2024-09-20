@@ -4,6 +4,7 @@ import MembershipSection from "@/components/common/to-join";
 import { contentFont, cursiveHeadingFont, mainHeadingFont } from "../ui/fonts";
 import BoatClubPricing from "@/components/common/membership-tojoin";
 import CommonMembershipAbout from "@/components/common/common-member-about";
+import BoatFeatures from "@/components/common/boat-features";
 
 const description =
   " Become a Windward Sailing Club member to take advantage of all our great Sailing opportunities. Don't hesitate to contact us with any questions about membership.";
@@ -17,7 +18,7 @@ export default function MemberShipFees() {
         description={description}
         membership={true}
       />
-
+      {/* <BoatFeatures /> */}
       {/* <div className="container mx-auto w-full">
         <section className=" flex flex-col-reverse md:flex-row items-start     p-1">
           <div className="flex flex-col w-full md:max-w-[40.625rem] md:h-[47.06rem] p-4 overflow-y-auto">

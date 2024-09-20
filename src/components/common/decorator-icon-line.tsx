@@ -24,7 +24,7 @@ const DecoratorLine = ({ showLines = false }) => {
   return (
     <div
       className={`flex ${showLines && "justify-center"} items-center  
-        mb-8 sm:mb-16 relative mt-1`}
+        mb-4 sm:mb-16 relative mt-1`}
     >
       {showLines && (
         <div

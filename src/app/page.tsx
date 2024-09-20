@@ -1,3 +1,5 @@
+import Test from "@/components/common/check";
+import CommonMembershipAbout from "@/components/common/common-member-about";
 import Component from "@/components/common/corner";
 import Detail from "@/components/common/details";
 import HeroSection1 from "@/components/common/first-section";
@@ -5,7 +7,10 @@ import { HeroSection } from "@/components/common/hero-section";
 import ImageGallery from "@/components/common/image-gallery";
 import ImageCarousel from "@/components/common/image-slider";
 import StatsSlider from "@/components/common/stats";
+import TestimonialsCarousel from "@/components/common/testi";
 import TestimonialSlider from "@/components/common/testimonials";
+import Heroo from "@/components/sections/heroo";
+import SailingServices from "@/components/sections/sailing-services";
 import YachtGallery, {
   SpecificationsSection,
 } from "@/components/sections/specification";
@@ -31,16 +36,18 @@ export default function Home() {
     //   <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
     // grid-rows-[20px_1fr_20px]
     // <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-0 gap-16 font-[family-name:var(--font-geist-sans)]">
-    <div className=" grid  items-center justify-items-center min-h-screen p-0 overflow-hidden  font-[family-name:var(--font-geist-sans)]">
+    <div className="flex flex-col items-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)]">
       {/* <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start "> */}
-      <main className="flex flex-col   row-start-2 items-center sm:items-start">
-        <HeroSection1 />
+      <main className="w-full flex flex-col items-center sm:items-start gap-4">
+        {/* <HeroSection1 /> */}
+        <Heroo />
+        <SailingServices />
         <HeroSection />
 
         {/* <ImageGallery images={images} title="virtual tour" /> */}
         {/* <ImageGallery images={images} title="ExteriorPhotos" /> */}
-        <YachtGallery />
-        <YachtGallery />
+        {/* <YachtGallery /> */}
+        {/* <YachtGallery /> */}
 
         {/* <ExteriorPhotos /> */}
         <SpecificationsSection />
@@ -101,7 +108,7 @@ export default function Home() {
           ]}
         />
         {/* <StatsSlider /> */}
-        <TestimonialSlider />
+        {/* <TestimonialSlider /> */}
         {/* <Detail
           title="About Us"
           heading="What We Do"
@@ -109,17 +116,27 @@ export default function Home() {
           video={video}
         /> */}
 
-        <Detail
+        {/* <Detail
           title="What We Do "
           heading="Welcome to Windward Sailing Club"
           description={description}
           // membershipFees={true}
           mediaUrl="/images/Sailboat_Videos_2.mp4"
           isVideo={true}
+        /> */}
+
+        {/* <TestimonialsCarousel /> */}
+        <CommonMembershipAbout
+          subtitle="What We Do"
+          title="Welcome to Windward Sailing Club"
+          description={description}
+          video={true}
         />
-        <ImageCarousel />
+
+        {/* <ImageCarousel /> */}
         {/* <Swipe /> */}
         {/* <YachtGallery/> */}
+        {/* <Test /> */}
       </main>
     </div>
   );

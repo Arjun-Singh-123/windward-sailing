@@ -362,7 +362,7 @@ const Detail: React.FC<DetailProps> = ({
                   <h1 className="text-4xl font-bold text-[#00008b] mb-2">
                     {title}
                   </h1>
-                  b
+
                   <DecoratorLine />
                   {(heading || description) && (
                     <div className="w-full md:w-1/2 p-2">

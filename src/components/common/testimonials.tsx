@@ -1591,7 +1591,7 @@ export default function ImprovedTestimonialsCarousel() {
 
   return (
     // max-w-[300px]
-    <div className="  max-w-full overflow-hidden  ">
+    <div className="  max-w-full overflow-hidden mt-96  ">
       <div className="text-center">
         <h3
           className={`${cursiveHeadingFont.className} text-2xl text-[#13afe2]`}
@@ -1691,7 +1691,7 @@ export default function ImprovedTestimonialsCarousel() {
         </div>
       </div>
 
-      <div className="flex justify-center mt-6">
+      <div className="flex justify-center mt-6 mb-20">
         {testimonials.map((_, index) => (
           <Button
             key={index}

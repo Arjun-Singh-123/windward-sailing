@@ -1,5 +1,6 @@
 import { contentFont, mainHeadingFont } from "@/app/ui/fonts";
 import React from "react";
+import { ToJoinHeader } from "./to-join-header";
 
 // Assume this data is coming from a database
 const pricingData = {
@@ -40,25 +41,17 @@ const PricingItem = ({
 //     <span className="absolute bottom-[-7px] left-[7px] w-0 h-0 border-t-[7px] border-l-[7px] border-t-black border-l-black"></span>
 //   </div>
 // );
-export const ToJoinHeader = () => (
-  <div className="relative overflow-visible -left-6">
-    <h3
-      className={`${mainHeadingFont.className} relative inline-block bg-[#00A3E0] text-white py-2 px-2 font-bold
-                     before:content-[''] before:absolute before:bottom-[-14px] before:left-0 before:border-[7px]
-                     before:border-t-black before:border-r-black before:border-b-transparent before:border-l-transparent
-                     after:content-[''] after:absolute after:top-0 after:right-[-40px] after:border-[20px]
-                     after:border-t-transparent after:border-b-transparent after:border-r-transparent  after:border-l-[#00A3E0]`}
-    >
-      <span>To Join</span>
-    </h3>
-  </div>
-);
 
 export default function BoatClubPricing() {
   return (
-    <div className="w-full mx-auto ">
-      <div className="overflow-visible bg-white border-2 border-black  w-full p-2 shadow-lg rounded-lg  ">
-        <ToJoinHeader />
+    <div className="  w-full mx-auto  ">
+      <div className="     overflow-visible bg-white border-2 border-black  w-full p-2 shadow-lg rounded-lg  ">
+        <ToJoinHeader
+          membershipFee={true}
+          specification={false}
+          text="To Join"
+        />
+
         <div className="p-6">
           <PricingItem
             label="One-Time Initial Fee"

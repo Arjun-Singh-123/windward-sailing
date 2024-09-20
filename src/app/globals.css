@@ -163,6 +163,7 @@ body {
   border-right: 15px solid transparent;
   border-bottom: 30px solid #2d2d2d; /* Same color as the border */
 }
+
 .footer-background {
   background: linear-gradient(90deg, #072f6cc9 0%, #072f6cc9 100%),
     url("/images/footer-bg.jpg");

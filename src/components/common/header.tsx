@@ -43,9 +43,9 @@ const Header = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 md:relative md:top-auto">
+    <header className="sticky top-0 z-50 lg:relative md:top-auto  ">
       {/* First Row */}
-      <div className="bg-[#f0f8ff] text-[#00008b]">
+      <div className="bg-[#f0f8ff] text-[#00008b] sm:hidden md:hidden lg:block">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center md:py-2">
             <Link
@@ -141,7 +141,7 @@ const Header = () => {
                 height={84.984}
               />
             </Link>
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden md:hidden lg:flex items-center space-x-6">
               {/* Contact Info Section */}
               <div className="flex items-center space-x-2">
                 <Phone className="w-6 h-6" />
@@ -172,7 +172,7 @@ const Header = () => {
             </div>
 
             {/* Mobile Hamburger Menu */}
-            <div className="md:hidden flex items-center space-x-4">
+            <div className="md:block lg:hidden flex items-center space-x-4">
               <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="icon">
@@ -219,7 +219,7 @@ const Header = () => {
 
       {/* Details Section for Mobile View */}
       {isDetailsOpen && (
-        <div className="md:hidden bg-[#052449] text-white py-4">
+        <div className="md:block lg:hidden bg-[#052449] text-white py-4">
           <div className="container mx-auto px-4">
             <div className="flex flex-col space-y-4">
               <div className="flex items-center space-x-2">
@@ -254,7 +254,7 @@ const Header = () => {
       )}
 
       {/* Main Navigation Bar */}
-      <nav className="hidden fixed md:block bg-sky text-[#00008b] py-2 md:sticky md:top-0 md:z-50">
+      <nav className="hidden fixed  md:hidden lg:block bg-sky text-[#00008b] py-2 md:sticky md:top-0 md:z-50">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             <div className="flex space-x-4">
@@ -289,7 +289,7 @@ const Header = () => {
 const Footer: React.FC = () => {
   return (
     <footer
-      className="relative py-8 text-white"
+      className="relative py-8 text-white "
       style={{
         position: "relative",
         background:
@@ -308,14 +308,14 @@ const Footer: React.FC = () => {
         }}
       />
       <div
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 bg-cover bg-center  "
         style={{
           backgroundImage: 'url("/images/footer-bg.jpg")',
           zIndex: -2,
         }}
       />
       <div
-        className="absolute -top-[180px] left-5 lg:left-20 bottom-4 z-[3] w-[14.1875rem] h-[24.625rem] overflow-hidden  hidden md:block  "
+        className="absolute -top-[180px] left-5 lg:left-20 bottom-4 z-[3] w-[14.1875rem] h-[24.625rem] overflow-hidden  hidden   md:hidden 4xl:block   "
         // style={{
         //   width: "227px",
         //   height: "394px",
@@ -335,7 +335,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <div>
-              <Link href="/" className="flex items-center space-x-2 mb-4">
+              <Link href="/" className="flex items-center space-x-2 mb-4  ">
                 <Image
                   src="/images/logoo.png"
                   alt="Windward Sailing Club"
@@ -365,7 +365,7 @@ const Footer: React.FC = () => {
               "Coastal Navigation",
               "Privacy Policy",
               "Terms of Conditions",
-            ].map((item) => (
+            ]?.map((item) => (
               <Link
                 key={item}
                 href={`/${item.toLowerCase().replace(" ", "-")}`}

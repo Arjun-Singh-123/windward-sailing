@@ -26,6 +26,9 @@ const config: Config = {
       },
       backgroundImage: {
         logoIcon: "url('/images/favicon.ico')",
+        footerIcon: "/images/logoo.png",
+        "hero-pattern": "url('/img/hero-pattern.svg')",
+        " gradient-to-br": "linear-gradient(to bottom right, #ff7e5f, #feb47b)",
       },
       colors: {
         sky: "var(--sky)",
@@ -37,6 +40,16 @@ const config: Config = {
         fontColor: "var(--fontColor)",
         grayColor: "var(--grayColor)",
         white: "var(--white)",
+
+        ceo: "var(--ceo)",
+        admin: "var(--admin)",
+        cfuser: "var(--cfuser)",
+        buttonGrd1: "var(--buttonGrd1)",
+        buttonGrd2: "var(--buttonGrd2)",
+        blueGrd1: "var(--blueGrd1)",
+        blueGrd2: "var(--blueGrd2)",
+        darkblueGrd1: "var(--darkblueGrd1)",
+        darkblueGrd2: "var(--darkblueGrd2)",
         // primary: "var(--primary)",
         // secondary: "var(--secondary)",
         success: "var(--success)",
@@ -93,9 +106,12 @@ const config: Config = {
       },
       fontSize: {
         pp: "5rem",
+        "4.5xl": "40px",
       },
       screens: {
         "3xl": "1600px",
+        "4xl": "1750px",
+        "big-laptop": "1380px",
       },
     },
   },

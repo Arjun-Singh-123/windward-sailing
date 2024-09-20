@@ -73,13 +73,13 @@ export default function StickyHeader() {
   };
 
   return (
-    isSticky && (
-      <header
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          isSticky ? "bg-[#c5dfff] shadow-md" : "bg-transparent"
-        )}
-      >
+    <header
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 sm:hidden hidden md:block lg:block",
+        isSticky ? "bg-[#c5dfff] shadow-md" : "bg-transparent"
+      )}
+    >
+      {isSticky && (
         <nav className="container mx-auto px-4 py-4">
           <ul className="flex justify-center space-x-8">
             {menuItems?.map((item) => (
@@ -144,8 +144,8 @@ export default function StickyHeader() {
             ))}
           </ul>
         </nav>
-      </header>
-    )
+      )}
+    </header>
   );
 }
 
