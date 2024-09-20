@@ -9,6 +9,7 @@ import type { Viewport } from "next";
 import { inter } from "@/app/ui/fonts";
 import { Toaster } from "sonner";
 import StickyHeader from "@/components/common/sticky-header";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -50,7 +51,7 @@ export default function RootLayout({
 
           <Header />
           {/* <HeaderNew /> */}
-
+          <SpeedInsights />
           {children}
           {/* The rest of your application */}
           <ReactQueryDevtools initialIsOpen={false} />
