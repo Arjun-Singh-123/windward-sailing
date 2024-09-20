@@ -194,7 +194,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Image from "next/image";
 import CustomImage from "../custom-image";
-import { cursiveHeadingFont } from "@/app/ui/fonts";
+import { cursiveHeadingFont, mainHeadingFont } from "@/app/ui/fonts";
 import DecoratorLine from "./decorator-icon-line";
 
 interface Specification {
@@ -214,7 +214,7 @@ interface Benefit {
 }
 
 interface DetailProps {
-  title: string;
+  title?: string;
   heading?: string;
   description?: string;
   membershipFees?: boolean;
@@ -222,6 +222,7 @@ interface DetailProps {
   isVideo?: boolean;
   specificationData?: SpecificationCategory[];
   benefitsData?: Benefit[];
+  benefits?: boolean;
 }
 
 const Detail: React.FC<DetailProps> = ({
@@ -233,6 +234,7 @@ const Detail: React.FC<DetailProps> = ({
   isVideo = false,
   specificationData,
   benefitsData,
+  benefits = true,
 }) => {
   const [showVideo, setShowVideo] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -271,7 +273,7 @@ const Detail: React.FC<DetailProps> = ({
 
   return (
     // <div className="container mx-auto px-4 py-12 bg-[#ebf8fc]">
-    <div className="container mx-auto   bg-[#ebf8fc]">
+    <div className={`  container mx-auto  bg-[#ebf8fc]`}>
       {/* {isMobile ? (
         ""
       ) : (
@@ -419,9 +421,22 @@ const Detail: React.FC<DetailProps> = ({
 
       {benefitsData && (
         <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-4 text-[#1e40af]">
+          {/* <h2 className="text-2xl font-bold mb-4 text-[#1e40af]">
             What You Get
-          </h2>
+          </h2> */}
+
+          <div className="text-start space-y-2">
+            <h1
+              className={` text-start  text-xl text-flatBlue ${cursiveHeadingFont.className}`}
+              style={{ marginTop: "1.25rem" }}
+            >
+              Benefits
+            </h1>
+            <h2 className={`text-4xl ${mainHeadingFont.className}`}>
+              What You Get
+            </h2>
+            <DecoratorLine />
+          </div>
           <div className="flex flex-col md:flex-row">
             <div className="w-full md:w-1/2 p-8 bg-[#bfdbfe] rounded-lg">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

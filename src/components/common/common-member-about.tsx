@@ -21,6 +21,7 @@ interface AboutProps {
   boatFeatures?: boolean;
   image?: boolean; // New prop for video
   imageUrl?: string;
+  rentalFeesBg?: boolean;
 }
 
 const CommonMembershipAbout = ({
@@ -32,6 +33,7 @@ const CommonMembershipAbout = ({
   boatFeatures,
   image,
   imageUrl,
+  rentalFeesBg,
 }: AboutProps) => {
   const { isMobile } = useMobileCheck();
   // console.log("image url", imageUrl);
@@ -86,9 +88,15 @@ const CommonMembershipAbout = ({
     //   </section>
     // </div>
 
-    <div className="   w-full">
+    <div
+      className={` ${
+        rentalFeesBg ? "w-full" : "container mx-auto md:w-[70%]"
+      }  `}
+    >
       <section
-        className={` flex flex-col-reverse md:flex-row  first-letter: w-full p-1 bg-lightSky  `}
+        className={` flex flex-col-reverse md:flex-row      p-1  ${
+          rentalFeesBg && "bg-lightSky w-full"
+        }  `}
       >
         {/* <div className="flex flex-col w-full md:max-w-[32.625rem] md:h-[50.06rem] p-4 overflow-y-auto"> */}
         <div className=" relative flex flex-col w-full md:w-1/2 p-4 md:p-8">

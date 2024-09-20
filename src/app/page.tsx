@@ -53,7 +53,7 @@ export default function Home() {
         <SpecificationsSection />
 
         <Detail
-          title="Yacht Amenities"
+          benefits={false}
           benefitsData={[
             {
               icon: <Bath />,

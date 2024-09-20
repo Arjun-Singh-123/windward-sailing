@@ -1,3 +1,4 @@
+"use client";
 import BoatFeatures from "@/components/common/boat-features";
 import CommonMembershipAbout from "@/components/common/common-member-about";
 import RentalFeesTable from "@/components/common/rental-fees";
@@ -303,6 +304,7 @@ export default function RentalFees() {
         boatFeatures={true}
         imageUrl="/images/boat-features (1).jpg"
         image={true}
+        rentalFeesBg={true}
       />
     </div>
   );
