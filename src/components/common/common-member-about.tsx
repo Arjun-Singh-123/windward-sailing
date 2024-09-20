@@ -33,7 +33,7 @@ const CommonMembershipAbout = ({
   boatFeatures,
   image,
   imageUrl,
-  rentalFeesBg,
+  rentalFeesBg = false,
 }: AboutProps) => {
   const { isMobile } = useMobileCheck();
   // console.log("image url", imageUrl);
@@ -95,10 +95,11 @@ const CommonMembershipAbout = ({
     >
       <section
         className={` flex flex-col-reverse md:flex-row      p-1  ${
-          rentalFeesBg && "bg-lightSky w-full"
+          rentalFeesBg && " bg-lightSky w-full  "
         }  `}
       >
         {/* <div className="flex flex-col w-full md:max-w-[32.625rem] md:h-[50.06rem] p-4 overflow-y-auto"> */}
+
         <div className=" relative flex flex-col w-full md:w-1/2 p-4 md:p-8">
           <h2
             className={`mt-4  md:mt-10    text-2xl text-flatBlue ${cursiveHeadingFont.className}`}

@@ -383,7 +383,161 @@ export default function RentalFeesTable() {
   const CompareTable = () => (
     <Card className="w-full">
       <CardContent className="p-0">
-        <ScrollArea className="w-full h-[500px]">
+        {/* mobile  */}
+        <div className="block md:hidden">
+          <ScrollArea className="w-full h-[500px]">
+            <Table className="w-full">
+              <TableHeader>
+                {/* <TableRow>
+                <TableHead className="w-[150px] bg-white sticky left-0 z-20">
+                  Compare Fees
+                </TableHead>
+                <TableHead colSpan={2}>Member Rental Fees</TableHead>
+                <TableHead colSpan={2}>Non-Member Rental Fees</TableHead>
+              </TableRow> */}
+              </TableHeader>
+              <TableBody>
+                <TableRow className="whitespace-nowrap">
+                  <TableCell className="font-bold bg-white sticky left-0 z-20   "></TableCell>
+                  <TableCell colSpan={2}> Member Rental Fees</TableCell>
+                  <TableCell colSpan={2}>Non-Member Rental Fees</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-bold bg-white sticky left-0 z-20">
+                    Vessel Name
+                  </TableCell>
+                  <TableCell colSpan={2}>Sail Boat</TableCell>
+                  <TableCell colSpan={2}>Sail Boat</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-bold bg-white sticky left-0 z-20">
+                    Length
+                  </TableCell>
+                  <TableCell colSpan={2}></TableCell>
+                  <TableCell colSpan={2}></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-bold bg-white sticky left-0 z-20">
+                    Half-Day
+                  </TableCell>
+                  <TableCell colSpan={2}></TableCell>
+                  <TableCell colSpan={2}></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-bold bg-white sticky left-0 z-20">
+                    Weekday
+                  </TableCell>
+                  <TableCell colSpan={2}></TableCell>
+                  <TableCell colSpan={2}></TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-bold bg-white sticky left-0 z-20">
+                    Sat/Sun/Holidays
+                  </TableCell>
+                  <TableCell colSpan={2}></TableCell>
+                  <TableCell colSpan={2}></TableCell>
+                </TableRow>
+                {/* {rentalData.member.map((memberRow, index) => {
+                const nonMemberRow = rentalData.nonMember[index];
+                return (
+                  <TableRow key={index}>
+                    <TableCell className="font-medium bg-white sticky left-0 z-20  whitespace-nowrap">
+                      {memberRow.vesselName}
+                    </TableCell>
+                    <TableCell className=" whitespace-nowrap">
+                      {memberRow.length}
+                    </TableCell>
+                    <TableCell className="py-2 md:py-4 text-sm md:text-base">
+                      {memberRow.halfDay}
+                    </TableCell>
+                    <TableCell className=" whitespace-nowrap">
+                      {nonMemberRow.length}
+                    </TableCell>
+                    <TableCell className=" whitespace-nowrap">
+                      {nonMemberRow.halfDay}
+                    </TableCell>
+                  </TableRow>
+                );
+              })} */}
+
+                {rentalData.member.map((memberRow, index) => {
+                  const nonMemberRow = rentalData.nonMember[index];
+                  return (
+                    <React.Fragment key={index}>
+                      <TableRow>
+                        <TableCell className="font-bold bg-white sticky left-0 z-20 whitespace-nowrap">
+                          Vessel Name
+                        </TableCell>
+                        <TableCell colSpan={2} className="whitespace-nowrap">
+                          {memberRow.vesselName}
+                        </TableCell>
+                        <TableCell colSpan={2} className="whitespace-nowrap">
+                          {nonMemberRow.vesselName}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold bg-white sticky left-0 z-20 whitespace-nowrap">
+                          Length
+                        </TableCell>
+                        <TableCell colSpan={2} className="whitespace-nowrap">
+                          {memberRow.length}
+                        </TableCell>
+                        <TableCell colSpan={2} className="whitespace-nowrap">
+                          {nonMemberRow.length}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold bg-white sticky left-0 z-20 whitespace-nowrap">
+                          Half-Day
+                        </TableCell>
+                        <TableCell colSpan={2} className="whitespace-nowrap">
+                          {memberRow.halfDay}
+                        </TableCell>
+                        <TableCell colSpan={2} className="whitespace-nowrap">
+                          {nonMemberRow.halfDay}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold bg-white sticky left-0 z-20 whitespace-nowrap">
+                          Weekday
+                        </TableCell>
+                        <TableCell colSpan={2} className="whitespace-nowrap">
+                          {memberRow.weekday}
+                        </TableCell>
+                        <TableCell colSpan={2} className="whitespace-nowrap">
+                          {nonMemberRow.weekday}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-bold bg-white sticky left-0 z-20 whitespace-nowrap">
+                          Sat/Sun/Holidays
+                        </TableCell>
+                        <TableCell colSpan={2} className="whitespace-nowrap">
+                          {memberRow.weekend}
+                        </TableCell>
+                        <TableCell colSpan={2} className="whitespace-nowrap">
+                          {nonMemberRow.weekend}
+                        </TableCell>
+                      </TableRow>
+                      {index < rentalData.member.length - 1 && (
+                        <TableRow>
+                          <TableCell
+                            colSpan={5}
+                            className="h-4 bg-gray-100"
+                          ></TableCell>
+                        </TableRow>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+              </TableBody>
+            </Table>
+            <ScrollBar orientation="vertical" />
+          </ScrollArea>
+        </div>
+
+        {/* desktop  */}
+        <div className="hidden md:block">
           <Table className="w-full">
             <TableHeader>
               {/* <TableRow>
@@ -530,8 +684,7 @@ export default function RentalFeesTable() {
               })}
             </TableBody>
           </Table>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
+        </div>
       </CardContent>
     </Card>
   );
