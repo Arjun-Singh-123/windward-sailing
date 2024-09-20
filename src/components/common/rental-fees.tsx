@@ -395,6 +395,11 @@ export default function RentalFeesTable() {
               </TableRow> */}
             </TableHeader>
             <TableBody>
+              <TableRow className="whitespace-nowrap">
+                <TableCell className="font-bold bg-white sticky left-0 z-20   "></TableCell>
+                <TableCell colSpan={2}> Member Rental Fees</TableCell>
+                <TableCell colSpan={2}>Non-Member Rental Fees</TableCell>
+              </TableRow>
               <TableRow>
                 <TableCell className="font-bold bg-white sticky left-0 z-20">
                   Vessel Name
@@ -525,7 +530,7 @@ export default function RentalFeesTable() {
               })}
             </TableBody>
           </Table>
-          <ScrollBar orientation="vertical" />
+          <ScrollBar orientation="horizontal" />
         </ScrollArea>
       </CardContent>
     </Card>
