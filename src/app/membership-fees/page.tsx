@@ -17,6 +17,8 @@ export default function MemberShipFees() {
         title="About Us"
         description={description}
         membership={true}
+        imageUrl="/images/about.jpg"
+        image={true}
       />
       {/* <BoatFeatures /> */}
       {/* <div className="container mx-auto w-full">

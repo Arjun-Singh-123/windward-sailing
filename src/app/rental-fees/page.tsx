@@ -140,7 +140,7 @@ const feeData = {
 
 export default function RentalFees() {
   return (
-    <>
+    <div className="py-4 px-1">
       {/* <div className="w-full max-w-4xl mx-auto p-6">
         <h1 className="text-3xl font-semibold text-gray-900 mb-2">
           Windward Sailing Club
@@ -289,12 +289,12 @@ export default function RentalFees() {
           </TabsContent>
         </Tabs>
       </div> */}
-      <CommonMembershipAbout
+      {/* <CommonMembershipAbout
         subtitle="Windward Sailing Club"
         title="Rental Fees"
         image={false}
         description={description}
-      />
+      /> */}
       <RentalFeesTable />
       <CommonMembershipAbout
         subtitle="Windward Sailing Club"
@@ -304,6 +304,6 @@ export default function RentalFees() {
         imageUrl="/images/boat-features (1).jpg"
         image={true}
       />
-    </>
+    </div>
   );
 }

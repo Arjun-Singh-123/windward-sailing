@@ -10,6 +10,7 @@ import BoatClubPricing from "./membership-tojoin";
 import CustomImage from "../custom-image";
 import useMobileCheck from "@/hooks/mobile-check";
 import BoatFeatures from "./boat-features";
+import Image from "next/image";
 
 interface AboutProps {
   subtitle: string;
@@ -87,12 +88,12 @@ const CommonMembershipAbout = ({
 
     <div className="   w-full">
       <section
-        className={` flex flex-col-reverse md:flex-row items-center justify-center w-full p-1 bg-lightSky  `}
+        className={` flex flex-col-reverse md:flex-row  first-letter: w-full p-1 bg-lightSky  `}
       >
         {/* <div className="flex flex-col w-full md:max-w-[32.625rem] md:h-[50.06rem] p-4 overflow-y-auto"> */}
         <div className=" relative flex flex-col w-full md:w-1/2 p-4 md:p-8">
           <h2
-            className={`mt-4  md:mt-10   text-2xl text-flatBlue ${cursiveHeadingFont.className}`}
+            className={`mt-4  md:mt-10    text-2xl text-flatBlue ${cursiveHeadingFont.className}`}
           >
             {subtitle && subtitle}
           </h2>
@@ -105,7 +106,7 @@ const CommonMembershipAbout = ({
           </p>
           {membership && <BoatClubPricing />} */}
           <div className={`${contentFont.className}  mb-4     `}>
-            <p>{description && description}</p>
+            <p className="mb-2">{description && description}</p>
             {membership && <BoatClubPricing />}
             {boatFeatures && <BoatFeatures />}
           </div>
@@ -128,15 +129,18 @@ const CommonMembershipAbout = ({
             </div>
           ) : (
             image && (
-              <img
+              <Image
                 src={imageUrl ?? ""}
                 alt="Side"
                 className=" w-full h-full object-cover border-spacing-12 border-blue-500"
+                height={863}
+                width={576}
               />
             )
           )}
 
-          <style jsx>{`
+          {!image && (
+            <style jsx>{`
             div::before {
               content: "";
               position: absolute;
@@ -150,6 +154,7 @@ const CommonMembershipAbout = ({
               display:   ${isMobile} ? "block" : "none"};
             }
           `}</style>
+          )}
         </div>
       </section>
     </div>

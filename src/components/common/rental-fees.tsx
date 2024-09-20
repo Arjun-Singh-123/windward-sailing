@@ -260,6 +260,12 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import {
+  contentFont,
+  cursiveHeadingFont,
+  mainHeadingFont,
+} from "@/app/ui/fonts";
+import DecoratorLine from "./decorator-icon-line";
 // Define the interface for a rental entry
 interface RentalEntry {
   vesselName: string;
@@ -527,20 +533,25 @@ export default function RentalFeesTable() {
 
   return (
     <div className="w-full max-w-7xl mx-auto p-4 space-y-6">
-      {/* <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold text-blue-600">
+      <div className="text-start space-y-2">
+        <h1
+          className={` text-start  text-xl text-flatBlue ${cursiveHeadingFont.className}`}
+          style={{ marginTop: "1.25rem" }}
+        >
           Windward Sailing Club
         </h1>
-        <h2 className="text-4xl font-bold">Rental Fees</h2>
+        <h2 className={`text-4xl ${mainHeadingFont.className}`}>Rental Fees</h2>
+        <DecoratorLine />
+        <p
+          className={`text-start mt-8   mx-auto text-sm ${contentFont.className}`}
+        >
+          Enjoy a day out on the waves—without owning your own boat! Our rental
+          services are perfect for people looking to experience the joys of
+          sailing without worrying about the upkeep, capital investment, and
+          ownership of an expensive sailboat. All prices below include insurance
+          and cleanup after your charter.
+        </p>
       </div>
-
-      <p className="text-center max-w-3xl mx-auto text-sm">
-        Enjoy a day out on the waves—without owning your own boat! Our rental
-        services are perfect for people looking to experience the joys of
-        sailing without worrying about the upkeep, capital investment, and
-        ownership of an expensive sailboat. All prices below include insurance
-        and cleanup after your charter.
-      </p> */}
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 gap-4 mb-4">
