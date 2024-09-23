@@ -4,7 +4,13 @@ import React, { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import AutoPlay from "embla-carousel-autoplay";
-
+interface Destination {
+  emoji: string;
+  value: number;
+  label: string;
+  bgColor: string;
+  isCenter: boolean;
+}
 const stats = [
   { emoji: "🌍", value: 775, label: "DESTINATION", bgColor: "bg-blue-200" },
   { emoji: "😊", value: 5125, label: "SATISFIED", bgColor: "bg-green-200" },
@@ -13,7 +19,7 @@ const stats = [
   { emoji: "🏴", value: 50, label: "COUNTRIES", bgColor: "bg-purple-200" },
 ];
 
-const StatItem = ({ emoji, value, label, bgColor, isCenter }) => (
+const StatItem = ({ emoji, value, label, bgColor, isCenter }: Destination) => (
   <div
     className={`flex gap-3  items-center justify-center transition-all duration-300 ${
       isCenter ? "scale-110" : "scale-100 opacity-70"
