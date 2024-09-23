@@ -1,21 +1,11 @@
-import Test from "@/components/common/check";
 import CommonMembershipAbout from "@/components/common/common-member-about";
-import Component from "@/components/common/corner";
 import Detail from "@/components/common/details";
-import HeroSection1 from "@/components/common/first-section";
 import { HeroSection } from "@/components/common/hero-section";
-import ImageGallery from "@/components/common/image-gallery";
-import ImageCarousel from "@/components/common/image-slider";
 import StatsSlider from "@/components/common/stats";
 
-// import TestimonialsCarousel from "@/components/common/testi";
-import TestimonialSlider from "@/components/common/testimonials";
 import Heroo from "@/components/sections/heroo";
 import SailingServices from "@/components/sections/sailing-services";
-import YachtGallery, {
-  SpecificationsSection,
-} from "@/components/sections/specification";
-import Swipe from "@/components/sections/swiper";
+import { SpecificationsSection } from "@/components/sections/specification";
 import { Bath, Bed } from "lucide-react";
 import ResponsiveCarousel from "./slick/page";
 
