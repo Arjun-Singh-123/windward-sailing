@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: ["class"], // Enable dark mode using class
+  darkMode: "media", // Enable dark mode using class
   // usage
   //   <div className="bg-lightBackground dark:bg-darkBackground">
   //   This div will have a light background in light mode and dark in dark mode.

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -42,6 +42,10 @@ const Header = () => {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
+  // Close the sheet when the route changes
+  useEffect(() => {
+    setIsSheetOpen(false);
+  }, [pathname]);
   return (
     <header className="sticky top-0 z-50 lg:relative md:top-auto  ">
       {/* First Row */}
@@ -139,6 +143,7 @@ const Header = () => {
                 className="h-16 w-auto"
                 width={277.75}
                 height={84.984}
+                onClick={() => setIsDetailsOpen(false)}
               />
             </Link>
             <div className="hidden md:hidden lg:flex items-center space-x-6">
@@ -175,8 +180,13 @@ const Header = () => {
             <div className="md:block lg:hidden flex items-center space-x-4">
               <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <Menu className="h-6 w-6 text-white" />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="bg-transparent"
+                    onClick={() => setIsDetailsOpen(false)}
+                  >
+                    <Menu className="h-6 w-6 bg-transparent" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="bg-[#c5dfff] w-64">
@@ -193,13 +203,15 @@ const Header = () => {
                       <Link
                         key={label}
                         href={path}
-                        onClick={() => setIsSheetOpen(false)}
+                        onClick={() => {
+                          setIsSheetOpen(false);
+                        }}
                         className={`flex items-center justify-between py-2 px-4 ${
                           pathname === path ? "text-[#00bfff]" : "text-black"
                         }`}
                       >
                         {label}
-                        <ChevronRight className="h-4 w-4" />
+                        <ChevronRight className="h-4 w-4 " />
                       </Link>
                     ))}
                   </nav>
@@ -210,7 +222,7 @@ const Header = () => {
                 size="icon"
                 onClick={() => setIsDetailsOpen(!isDetailsOpen)}
               >
-                <MoreHorizontal className="h-6 w-6 text-white" />
+                <MoreHorizontal className="h-6 w-6 " />
               </Button>
             </div>
           </div>

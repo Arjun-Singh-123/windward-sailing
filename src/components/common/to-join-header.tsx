@@ -13,6 +13,12 @@ export const ToJoinHeader = ({
 }) => {
   const divRef = useRef<HTMLHeadingElement | null>(null);
   const [headerHeight, setHeaderHeight] = useState(40);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const displayText = (text: string) => {
+    const words = text.split(" ");
+    return words.length <= 7 ? text : words.slice(0, 7).join(" ") + "...";
+  };
 
   // const updateHeight = () => {
   //   if (divRef.current) {
@@ -66,10 +72,18 @@ export const ToJoinHeader = ({
                       before:z-10 before:border-t-black before:border-r-black before:border-b-transparent before:border-l-transparent
                        after:content-[''] after:absolute after:top-0 after:right-[-40px] after:border-[20px]
                        after:border-t-transparent after:border-b-transparent after:border-r-transparent  after:border-l-[#00A3E0] after:z-10`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
-        <span className=" text-[14px]">{text} </span>
+        <span className=" text-[14px]">{displayText(text)}</span>
         {/* <span className="whitespace-nowrap ">{text}</span> */}
       </h3>
+
+      {isHovered && (
+        <div className="absolute bg-white text-black p-2 rounded shadow-lg z-20">
+          {text} {/* Full text shown on hover */}
+        </div>
+      )}
     </div>
   );
 };
