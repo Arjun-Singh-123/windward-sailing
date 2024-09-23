@@ -1,251 +1,3 @@
-// "use client";
-
-// import React, { useState } from "react";
-// import {
-//   Table,
-//   TableBody,
-//   TableCell,
-//   TableHead,
-//   TableHeader,
-//   TableRow,
-// } from "@/components/ui/table";
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import { Card, CardContent } from "@/components/ui/card";
-// import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-
-// const rentalData = {
-//   member: [
-//     {
-//       vesselName: "Evening Star",
-//       length: "28'",
-//       halfDay: "$105 + $25 Billed",
-//       weekday: "$155 + $25 Billed",
-//       weekend: "$180 + $25 Billed",
-//     },
-//     {
-//       vesselName: "Sand Dollar",
-//       length: "30'",
-//       halfDay: "$130 + $35 Billed",
-//       weekday: "$165 + $35 Billed",
-//       weekend: "$200 + $35 Billed",
-//     },
-//     {
-//       vesselName: "Teewinot",
-//       length: "30'",
-//       halfDay: "$150 + $40 Billed",
-//       weekday: "$180 + $40 Billed",
-//       weekend: "$210 + $40 Billed",
-//     },
-//   ],
-//   nonMember: [
-//     {
-//       vesselName: "Evening Star",
-//       length: "28'",
-//       halfDay: "-",
-//       weekday: "$300",
-//       weekend: "$345",
-//     },
-//     {
-//       vesselName: "Sand Dollar",
-//       length: "30'",
-//       halfDay: "-",
-//       weekday: "$350",
-//       weekend: "$400",
-//     },
-//     {
-//       vesselName: "Teewinot",
-//       length: "30'",
-//       halfDay: "-",
-//       weekday: "$375",
-//       weekend: "$425",
-//     },
-//   ],
-// };
-
-// export default function RentalFeesTable() {
-//   const [activeTab, setActiveTab] = useState("member");
-
-//   const RentalTable = ({ data, type }) => (
-//     <Card className="w-full">
-//       <CardContent className="p-0">
-//         <ScrollArea className="w-full whitespace-nowrap">
-//           <Table className="w-full">
-//             <TableHeader>
-//               <TableRow>
-//                 <TableHead className="w-[150px] bg-white sticky left-0 z-20">
-//                   {type} Rental Fees
-//                 </TableHead>
-//                 <TableHead className="text-center">Vessel Name</TableHead>
-//                 <TableHead className="text-center">Length</TableHead>
-//                 <TableHead className="text-center">Half-Day</TableHead>
-//                 <TableHead className="text-center">Weekday</TableHead>
-//                 <TableHead className="text-center">Sat/Sun/Holidays</TableHead>
-//               </TableRow>
-//             </TableHeader>
-//             <TableBody>
-//               <TableRow>
-//                 <TableCell className="font-bold bg-white sticky left-0 z-20">
-//                   Sail Boat
-//                 </TableCell>
-//                 <TableCell colSpan={5}></TableCell>
-//               </TableRow>
-//               {data.map((row, index) => (
-//                 <TableRow key={index}>
-//                   <TableCell className="font-medium bg-white sticky left-0 z-20">
-//                     {row.vesselName}
-//                   </TableCell>
-//                   <TableCell className="text-center">{row.length}</TableCell>
-//                   <TableCell className="text-center">{row.halfDay}</TableCell>
-//                   <TableCell className="text-center">{row.weekday}</TableCell>
-//                   <TableCell className="text-center">{row.weekend}</TableCell>
-//                 </TableRow>
-//               ))}
-//             </TableBody>
-//           </Table>
-//           <ScrollBar orientation="horizontal" />
-//         </ScrollArea>
-//       </CardContent>
-//     </Card>
-//   );
-
-//   const CompareTable = () => (
-//     <Card className="w-full">
-//       <CardContent className="p-0">
-//         <ScrollArea className="w-full whitespace-nowrap">
-//           <Table className="w-full">
-//             <TableHeader>
-//               <TableRow>
-//                 <TableHead className="w-[150px] bg-white sticky left-0 z-20">
-//                   Compare Fees
-//                 </TableHead>
-//                 <TableHead className="text-center" colSpan={2}>
-//                   Vessel Name
-//                 </TableHead>
-//                 <TableHead className="text-center" colSpan={2}>
-//                   Length
-//                 </TableHead>
-//                 <TableHead className="text-center" colSpan={2}>
-//                   Half-Day
-//                 </TableHead>
-//                 <TableHead className="text-center" colSpan={2}>
-//                   Weekday
-//                 </TableHead>
-//                 <TableHead className="text-center" colSpan={2}>
-//                   Sat/Sun/Holidays
-//                 </TableHead>
-//               </TableRow>
-//               <TableRow>
-//                 <TableHead className="bg-white sticky left-0 z-20"></TableHead>
-//                 <TableHead className="text-center">Member</TableHead>
-//                 <TableHead className="text-center">Non-Member</TableHead>
-//                 <TableHead className="text-center">Member</TableHead>
-//                 <TableHead className="text-center">Non-Member</TableHead>
-//                 <TableHead className="text-center">Member</TableHead>
-//                 <TableHead className="text-center">Non-Member</TableHead>
-//                 <TableHead className="text-center">Member</TableHead>
-//                 <TableHead className="text-center">Non-Member</TableHead>
-//                 <TableHead className="text-center">Member</TableHead>
-//                 <TableHead className="text-center">Non-Member</TableHead>
-//               </TableRow>
-//             </TableHeader>
-//             <TableBody>
-//               <TableRow>
-//                 <TableCell className="font-bold bg-white sticky left-0 z-20">
-//                   Sail Boat
-//                 </TableCell>
-//                 <TableCell colSpan={10}></TableCell>
-//               </TableRow>
-//               {rentalData.member.map((memberRow, index) => {
-//                 const nonMemberRow = rentalData.nonMember[index];
-//                 return (
-//                   <TableRow key={index}>
-//                     <TableCell className="font-medium bg-white sticky left-0 z-20">
-//                       {memberRow.vesselName}
-//                     </TableCell>
-//                     <TableCell className="text-center">
-//                       {memberRow.vesselName}
-//                     </TableCell>
-//                     <TableCell className="text-center">
-//                       {nonMemberRow.vesselName}
-//                     </TableCell>
-//                     <TableCell className="text-center">
-//                       {memberRow.length}
-//                     </TableCell>
-//                     <TableCell className="text-center">
-//                       {nonMemberRow.length}
-//                     </TableCell>
-//                     <TableCell className="text-center">
-//                       {memberRow.halfDay}
-//                     </TableCell>
-//                     <TableCell className="text-center">
-//                       {nonMemberRow.halfDay}
-//                     </TableCell>
-//                     <TableCell className="text-center">
-//                       {memberRow.weekday}
-//                     </TableCell>
-//                     <TableCell className="text-center">
-//                       {nonMemberRow.weekday}
-//                     </TableCell>
-//                     <TableCell className="text-center">
-//                       {memberRow.weekend}
-//                     </TableCell>
-//                     <TableCell className="text-center">
-//                       {nonMemberRow.weekend}
-//                     </TableCell>
-//                   </TableRow>
-//                 );
-//               })}
-//             </TableBody>
-//           </Table>
-//           <ScrollBar orientation="horizontal" />
-//         </ScrollArea>
-//       </CardContent>
-//     </Card>
-//   );
-
-//   return (
-//     <div className="w-full max-w-7xl mx-auto p-4 space-y-6">
-//       {/* <div className="text-center space-y-2">
-//         <h1 className="text-3xl font-bold text-blue-600">
-//           Windward Sailing Club
-//         </h1>
-//         <h2 className="text-4xl font-bold">Rental Fees</h2>
-//       </div>
-
-//       <p className="text-center max-w-3xl mx-auto text-sm">
-//         Enjoy a day out on the waves—without owning your own boat! Our rental
-//         services are perfect for people looking to experience the joys of
-//         sailing without worrying about the upkeep, capital investment, and
-//         ownership of an expensive sailboat. All prices below include insurance
-//         and cleanup after your charter.
-//       </p> */}
-
-//       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-//         <TabsList className="flex flex-col w-full sm:w-auto">
-//           <TabsTrigger value="member" className="w-full">
-//             Member Rental Fees
-//           </TabsTrigger>
-//           <TabsTrigger value="nonMember" className="w-full">
-//             Non-Member Rental Fees
-//           </TabsTrigger>
-//           <TabsTrigger value="compare" className="w-full">
-//             Compare Fees
-//           </TabsTrigger>
-//         </TabsList>
-//         <TabsContent value="member">
-//           <RentalTable data={rentalData.member} type="Member" />
-//         </TabsContent>
-//         <TabsContent value="nonMember">
-//           <RentalTable data={rentalData.nonMember} type="Non-Member" />
-//         </TabsContent>
-//         <TabsContent value="compare">
-//           <CompareTable />
-//         </TabsContent>
-//       </Tabs>
-//     </div>
-//   );
-// }
-
 "use client";
 
 import React, { useState } from "react";
@@ -745,3 +497,251 @@ export default function RentalFeesTable() {
     </div>
   );
 }
+
+// "use client";
+
+// import React, { useState } from "react";
+// import {
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from "@/components/ui/table";
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// import { Card, CardContent } from "@/components/ui/card";
+// import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+
+// const rentalData = {
+//   member: [
+//     {
+//       vesselName: "Evening Star",
+//       length: "28'",
+//       halfDay: "$105 + $25 Billed",
+//       weekday: "$155 + $25 Billed",
+//       weekend: "$180 + $25 Billed",
+//     },
+//     {
+//       vesselName: "Sand Dollar",
+//       length: "30'",
+//       halfDay: "$130 + $35 Billed",
+//       weekday: "$165 + $35 Billed",
+//       weekend: "$200 + $35 Billed",
+//     },
+//     {
+//       vesselName: "Teewinot",
+//       length: "30'",
+//       halfDay: "$150 + $40 Billed",
+//       weekday: "$180 + $40 Billed",
+//       weekend: "$210 + $40 Billed",
+//     },
+//   ],
+//   nonMember: [
+//     {
+//       vesselName: "Evening Star",
+//       length: "28'",
+//       halfDay: "-",
+//       weekday: "$300",
+//       weekend: "$345",
+//     },
+//     {
+//       vesselName: "Sand Dollar",
+//       length: "30'",
+//       halfDay: "-",
+//       weekday: "$350",
+//       weekend: "$400",
+//     },
+//     {
+//       vesselName: "Teewinot",
+//       length: "30'",
+//       halfDay: "-",
+//       weekday: "$375",
+//       weekend: "$425",
+//     },
+//   ],
+// };
+
+// export default function RentalFeesTable() {
+//   const [activeTab, setActiveTab] = useState("member");
+
+//   const RentalTable = ({ data, type }) => (
+//     <Card className="w-full">
+//       <CardContent className="p-0">
+//         <ScrollArea className="w-full whitespace-nowrap">
+//           <Table className="w-full">
+//             <TableHeader>
+//               <TableRow>
+//                 <TableHead className="w-[150px] bg-white sticky left-0 z-20">
+//                   {type} Rental Fees
+//                 </TableHead>
+//                 <TableHead className="text-center">Vessel Name</TableHead>
+//                 <TableHead className="text-center">Length</TableHead>
+//                 <TableHead className="text-center">Half-Day</TableHead>
+//                 <TableHead className="text-center">Weekday</TableHead>
+//                 <TableHead className="text-center">Sat/Sun/Holidays</TableHead>
+//               </TableRow>
+//             </TableHeader>
+//             <TableBody>
+//               <TableRow>
+//                 <TableCell className="font-bold bg-white sticky left-0 z-20">
+//                   Sail Boat
+//                 </TableCell>
+//                 <TableCell colSpan={5}></TableCell>
+//               </TableRow>
+//               {data.map((row, index) => (
+//                 <TableRow key={index}>
+//                   <TableCell className="font-medium bg-white sticky left-0 z-20">
+//                     {row.vesselName}
+//                   </TableCell>
+//                   <TableCell className="text-center">{row.length}</TableCell>
+//                   <TableCell className="text-center">{row.halfDay}</TableCell>
+//                   <TableCell className="text-center">{row.weekday}</TableCell>
+//                   <TableCell className="text-center">{row.weekend}</TableCell>
+//                 </TableRow>
+//               ))}
+//             </TableBody>
+//           </Table>
+//           <ScrollBar orientation="horizontal" />
+//         </ScrollArea>
+//       </CardContent>
+//     </Card>
+//   );
+
+//   const CompareTable = () => (
+//     <Card className="w-full">
+//       <CardContent className="p-0">
+//         <ScrollArea className="w-full whitespace-nowrap">
+//           <Table className="w-full">
+//             <TableHeader>
+//               <TableRow>
+//                 <TableHead className="w-[150px] bg-white sticky left-0 z-20">
+//                   Compare Fees
+//                 </TableHead>
+//                 <TableHead className="text-center" colSpan={2}>
+//                   Vessel Name
+//                 </TableHead>
+//                 <TableHead className="text-center" colSpan={2}>
+//                   Length
+//                 </TableHead>
+//                 <TableHead className="text-center" colSpan={2}>
+//                   Half-Day
+//                 </TableHead>
+//                 <TableHead className="text-center" colSpan={2}>
+//                   Weekday
+//                 </TableHead>
+//                 <TableHead className="text-center" colSpan={2}>
+//                   Sat/Sun/Holidays
+//                 </TableHead>
+//               </TableRow>
+//               <TableRow>
+//                 <TableHead className="bg-white sticky left-0 z-20"></TableHead>
+//                 <TableHead className="text-center">Member</TableHead>
+//                 <TableHead className="text-center">Non-Member</TableHead>
+//                 <TableHead className="text-center">Member</TableHead>
+//                 <TableHead className="text-center">Non-Member</TableHead>
+//                 <TableHead className="text-center">Member</TableHead>
+//                 <TableHead className="text-center">Non-Member</TableHead>
+//                 <TableHead className="text-center">Member</TableHead>
+//                 <TableHead className="text-center">Non-Member</TableHead>
+//                 <TableHead className="text-center">Member</TableHead>
+//                 <TableHead className="text-center">Non-Member</TableHead>
+//               </TableRow>
+//             </TableHeader>
+//             <TableBody>
+//               <TableRow>
+//                 <TableCell className="font-bold bg-white sticky left-0 z-20">
+//                   Sail Boat
+//                 </TableCell>
+//                 <TableCell colSpan={10}></TableCell>
+//               </TableRow>
+//               {rentalData.member.map((memberRow, index) => {
+//                 const nonMemberRow = rentalData.nonMember[index];
+//                 return (
+//                   <TableRow key={index}>
+//                     <TableCell className="font-medium bg-white sticky left-0 z-20">
+//                       {memberRow.vesselName}
+//                     </TableCell>
+//                     <TableCell className="text-center">
+//                       {memberRow.vesselName}
+//                     </TableCell>
+//                     <TableCell className="text-center">
+//                       {nonMemberRow.vesselName}
+//                     </TableCell>
+//                     <TableCell className="text-center">
+//                       {memberRow.length}
+//                     </TableCell>
+//                     <TableCell className="text-center">
+//                       {nonMemberRow.length}
+//                     </TableCell>
+//                     <TableCell className="text-center">
+//                       {memberRow.halfDay}
+//                     </TableCell>
+//                     <TableCell className="text-center">
+//                       {nonMemberRow.halfDay}
+//                     </TableCell>
+//                     <TableCell className="text-center">
+//                       {memberRow.weekday}
+//                     </TableCell>
+//                     <TableCell className="text-center">
+//                       {nonMemberRow.weekday}
+//                     </TableCell>
+//                     <TableCell className="text-center">
+//                       {memberRow.weekend}
+//                     </TableCell>
+//                     <TableCell className="text-center">
+//                       {nonMemberRow.weekend}
+//                     </TableCell>
+//                   </TableRow>
+//                 );
+//               })}
+//             </TableBody>
+//           </Table>
+//           <ScrollBar orientation="horizontal" />
+//         </ScrollArea>
+//       </CardContent>
+//     </Card>
+//   );
+
+//   return (
+//     <div className="w-full max-w-7xl mx-auto p-4 space-y-6">
+//       {/* <div className="text-center space-y-2">
+//         <h1 className="text-3xl font-bold text-blue-600">
+//           Windward Sailing Club
+//         </h1>
+//         <h2 className="text-4xl font-bold">Rental Fees</h2>
+//       </div>
+
+//       <p className="text-center max-w-3xl mx-auto text-sm">
+//         Enjoy a day out on the waves—without owning your own boat! Our rental
+//         services are perfect for people looking to experience the joys of
+//         sailing without worrying about the upkeep, capital investment, and
+//         ownership of an expensive sailboat. All prices below include insurance
+//         and cleanup after your charter.
+//       </p> */}
+
+//       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+//         <TabsList className="flex flex-col w-full sm:w-auto">
+//           <TabsTrigger value="member" className="w-full">
+//             Member Rental Fees
+//           </TabsTrigger>
+//           <TabsTrigger value="nonMember" className="w-full">
+//             Non-Member Rental Fees
+//           </TabsTrigger>
+//           <TabsTrigger value="compare" className="w-full">
+//             Compare Fees
+//           </TabsTrigger>
+//         </TabsList>
+//         <TabsContent value="member">
+//           <RentalTable data={rentalData.member} type="Member" />
+//         </TabsContent>
+//         <TabsContent value="nonMember">
+//           <RentalTable data={rentalData.nonMember} type="Non-Member" />
+//         </TabsContent>
+//         <TabsContent value="compare">
+//           <CompareTable />
+//         </TabsContent>
+//       </Tabs>
+//     </div>
+//   );
+// }

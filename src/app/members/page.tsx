@@ -8,6 +8,8 @@ import { fetchVehicleAmenities } from "@/lib/services";
 import Image from "next/image";
 import { SkeletonCard } from "@/components/skeleton";
 import MemberCard from "@/components/common/member-card";
+import DecoratorLine from "@/components/common/decorator-icon-line";
+import { contentFont, cursiveHeadingFont, mainHeadingFont } from "../ui/fonts";
 
 // const members = [
 //   {
@@ -90,10 +92,21 @@ export default function Members() {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold text-[#00008b] mb-8">Members</h1>
+      <div className="text-start space-y-2  ">
+        <h1
+          className={` text-start  text-xl text-flatBlue ${cursiveHeadingFont.className}`}
+          style={{ marginTop: "1.25rem" }}
+        >
+          Windward Sailing Club
+        </h1>
+        <h2 className={`text-4xl ${mainHeadingFont.className}`}>Members</h2>
+        <DecoratorLine />
+      </div>
+
+      {/* <h1 className="text-4xl font-bold text-[#00008b] mb-8 p-4">Members</h1> */}
       {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8  ">
        */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr mt-20">
         {members ? (
           members.map((member, index) => (
             <MemberCard

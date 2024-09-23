@@ -7,7 +7,8 @@ import { HeroSection } from "@/components/common/hero-section";
 import ImageGallery from "@/components/common/image-gallery";
 import ImageCarousel from "@/components/common/image-slider";
 import StatsSlider from "@/components/common/stats";
-import TestimonialsCarousel from "@/components/common/testi";
+
+// import TestimonialsCarousel from "@/components/common/testi";
 import TestimonialSlider from "@/components/common/testimonials";
 import Heroo from "@/components/sections/heroo";
 import SailingServices from "@/components/sections/sailing-services";
@@ -16,6 +17,7 @@ import YachtGallery, {
 } from "@/components/sections/specification";
 import Swipe from "@/components/sections/swiper";
 import { Bath, Bed } from "lucide-react";
+import ResponsiveCarousel from "./slick/page";
 
 const images = [
   "d.jpg",
@@ -36,7 +38,7 @@ export default function Home() {
     //   <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
     // grid-rows-[20px_1fr_20px]
     // <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-0 gap-16 font-[family-name:var(--font-geist-sans)]">
-    <div className="flex flex-col items-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)]">
+    <div className="flex flex-col items-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)]  ">
       {/* <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start "> */}
       <main className="w-full flex flex-col items-center sm:items-start gap-4">
         {/* <HeroSection1 /> */}
@@ -51,7 +53,8 @@ export default function Home() {
 
         {/* <ExteriorPhotos /> */}
         <SpecificationsSection />
-
+        <StatsSlider />
+        <ResponsiveCarousel />
         <Detail
           benefits={false}
           benefitsData={[
