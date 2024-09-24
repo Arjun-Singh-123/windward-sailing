@@ -96,7 +96,7 @@ export default function ResponsiveCarousel() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4">
+    <div className="w-full max-w-4xl mx-auto px-4 m-6">
       <Slider {...settings}>
         {testimonials.map((testimonial) => (
           <div key={testimonial.id} className="p-2">

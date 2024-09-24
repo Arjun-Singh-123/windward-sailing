@@ -22,7 +22,7 @@ const stats = [
 const StatItem = ({ emoji, value, label, bgColor, isCenter }: Destination) => (
   <div
     className={`flex gap-3  items-center justify-center transition-all duration-300 ${
-      isCenter ? "scale-110" : "scale-100 opacity-70"
+      isCenter ? "scale-150" : "scale-100 opacity-70"
     }`}
   >
     <div
@@ -60,10 +60,10 @@ export default function StatsSlider() {
   }, [emblaApi, onSelect]);
 
   return (
-    <div className="relative w-full bg-blue-600 bg-opacity-80 overflow-hidden bg-custom">
-      <div className="max-w-screen-xl mx-auto py-8">
+    <div className="relative w-full bg-blue-600 bg-opacity-80 overflow-hidden  bg-custom p-8 m-4">
+      <div className="max-w-screen-xl mx-auto py-8 overflow-hidden">
         <div className="embla" ref={emblaRef}>
-          <div className="embla__container flex">
+          <div className="embla__container  flex">
             {[...stats, ...stats, ...stats].map((stat, index) => (
               <div
                 key={index}

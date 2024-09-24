@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,14 +27,64 @@ import {
 import { Menu, MoreHorizontal, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Theme from "./theme";
+import CombinedNavigation from "./combined-header";
 
-const navItems = [
-  { label: "Home", path: "/" },
-  { label: "About Us", path: "/about-us" },
-  { label: "Membership Fees", path: "/membership-fees" },
-  { label: "Rental Fees", path: "/rental-fees" },
-  { label: "Boats", path: "/boats" },
-  { label: "Members", path: "/members" },
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+
+import { cn } from "@/lib/utils";
+
+// const navItems = [
+//   { label: "Home", path: "/" },
+//   { label: "About Us", path: "/about-us" },
+//   { label: "Membership Fees", path: "/membership-fees" },
+//   { label: "Rental Fees", path: "/rental-fees" },
+//   { label: "Boats", path: "/boats" },
+//   { label: "Members", path: "/members" },
+// ];
+
+const menuItems = [
+  { name: "Home", href: "/" },
+  { name: "Membership Fees", href: "/membership-fees" },
+  { name: "Rental Fees", href: "/rental-fees" },
+  {
+    name: "Boats",
+    href: "/boats",
+    categories: [
+      {
+        name: "Sedan",
+        href: "/boats/sedan",
+        subcategories: [
+          { name: "Compact", href: "/boats/sedan" },
+          { name: "Mid-size", href: "/boats/sedan" },
+          { name: "Full-size", href: "/boats/sedan" },
+        ],
+      },
+      {
+        name: "SUV",
+        href: "/boats/suv",
+        subcategories: [
+          { name: "Compact", href: "/boats/suv" },
+          { name: "Mid-size", href: "/boats/suv" },
+          { name: "Full-size", href: "/boats/suv" },
+        ],
+      },
+      {
+        name: "Sports Car",
+        href: "/boats/sports",
+        subcategories: [
+          { name: "Coupe", href: "/boats/spor" },
+          { name: "Convertible", href: "/boats/sports" },
+          { name: "Supercar", href: "/boats/sports" },
+        ],
+      },
+    ],
+  },
+  { name: "About Us", href: "/about-us" },
+  { name: "Members", href: "/members" },
 ];
 
 const Header = () => {
@@ -42,9 +92,18 @@ const Header = () => {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
+  const isActive = (href: string) => {
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
+  const menuRef = useRef<HTMLDivElement>(null);
+  const handleOverlayClick = () => {
+    setIsDetailsOpen(false);
+  };
   // Close the sheet when the route changes
   useEffect(() => {
     setIsSheetOpen(false);
+    setIsDetailsOpen(false);
   }, [pathname]);
   return (
     <header className="sticky top-0 z-50 lg:relative md:top-auto  ">
@@ -136,7 +195,7 @@ const Header = () => {
       <div className="bg-[#052449] text-white py-4">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
-            <Link href="/" className="flex items-center space-x-2">
+            <Link href="/" className="flex items-center space-x-2 z-20">
               <Image
                 src="/images/logoo.png"
                 alt="Windward Sailing Club"
@@ -177,7 +236,8 @@ const Header = () => {
             </div>
 
             {/* Mobile Hamburger Menu */}
-            <div className="md:block lg:hidden flex items-center space-x-4">
+
+            <div className="md:hidden flex items-center space-x-4">
               <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                 <SheetTrigger asChild>
                   <Button
@@ -189,30 +249,83 @@ const Header = () => {
                     <Menu className="h-6 w-6 bg-transparent" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="bg-[#c5dfff] w-64">
-                  <SheetHeader className="flex items-center justify-between">
+                <SheetContent side="left" className="bg-[#c5dfff] w-64 p-0">
+                  <SheetHeader className="p-4 border-b">
                     <SheetTitle>Menu</SheetTitle>
-                    {/* <SheetClose asChild>
-                      <Button variant="ghost" size="icon">
-                        <X className="h-6 w-6" />
-                      </Button>
-                    </SheetClose> */}
                   </SheetHeader>
-                  <nav className="flex flex-col space-y-4 mt-4">
-                    {navItems?.map(({ label, path }) => (
-                      <Link
-                        key={label}
-                        href={path}
-                        onClick={() => {
-                          setIsSheetOpen(false);
-                        }}
-                        className={`flex items-center justify-between py-2 px-4 ${
-                          pathname === path ? "text-[#00bfff]" : "text-black"
-                        }`}
-                      >
-                        {label}
-                        <ChevronRight className="h-4 w-4 " />
-                      </Link>
+                  <nav className="flex flex-col">
+                    {menuItems.map((item) => (
+                      <React.Fragment key={item.name}>
+                        {item.categories ? (
+                          <Collapsible>
+                            <CollapsibleTrigger className="flex items-center justify-between w-full p-4 text-left">
+                              <span
+                                className={cn(
+                                  "text-lg font-semibold",
+                                  isActive(item.href)
+                                    ? "text-[#00bfff]"
+                                    : "text-black"
+                                )}
+                              >
+                                {item.name}
+                              </span>
+                              <ChevronRight className="h-4 w-4" />
+                            </CollapsibleTrigger>
+                            <CollapsibleContent>
+                              {item.categories.map((category) => (
+                                <Collapsible key={category.name}>
+                                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 pl-8 text-left">
+                                    <span
+                                      className={cn(
+                                        "text-base font-medium",
+                                        isActive(category.href)
+                                          ? "text-[#00bfff]"
+                                          : "text-black"
+                                      )}
+                                    >
+                                      {category.name}
+                                    </span>
+                                    <ChevronRight className="h-4 w-4" />
+                                  </CollapsibleTrigger>
+                                  <CollapsibleContent>
+                                    {category.subcategories.map(
+                                      (subcategory) => (
+                                        <Link
+                                          key={subcategory.name}
+                                          href={subcategory.href}
+                                          onClick={() => setIsSheetOpen(false)}
+                                          className={cn(
+                                            "block p-4 pl-12 text-sm",
+                                            isActive(subcategory.href)
+                                              ? "text-[#00bfff]"
+                                              : "text-black"
+                                          )}
+                                        >
+                                          {subcategory.name}
+                                        </Link>
+                                      )
+                                    )}
+                                  </CollapsibleContent>
+                                </Collapsible>
+                              ))}
+                            </CollapsibleContent>
+                          </Collapsible>
+                        ) : (
+                          <Link
+                            href={item.href}
+                            onClick={() => setIsSheetOpen(false)}
+                            className={cn(
+                              "flex items-center justify-between p-4 text-lg font-semibold",
+                              isActive(item.href)
+                                ? "text-[#00bfff]"
+                                : "text-black"
+                            )}
+                          >
+                            {item.name}
+                            <ChevronRight className="h-4 w-4" />
+                          </Link>
+                        )}
+                      </React.Fragment>
                     ))}
                   </nav>
                 </SheetContent>
@@ -222,7 +335,7 @@ const Header = () => {
                 size="icon"
                 onClick={() => setIsDetailsOpen(!isDetailsOpen)}
               >
-                <MoreHorizontal className="h-6 w-6 " />
+                <MoreHorizontal className="h-6 w-6" />
               </Button>
             </div>
           </div>
@@ -231,10 +344,11 @@ const Header = () => {
 
       {/* Details Section for Mobile View */}
       {isDetailsOpen && (
-        <div className="md:block lg:hidden bg-[#052449] text-white py-4">
+        <div className="md:block lg:hidden bg-[#052449] text-white py-4  ">
           <div className="container mx-auto px-4">
             <div className="flex flex-col space-y-4">
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 ">
+                <Link href="/members">members</Link>
                 <Phone className="w-6 h-6" />
                 <div>
                   <div className="text-sm">CALL US</div>
@@ -265,8 +379,17 @@ const Header = () => {
         </div>
       )}
 
+      {isDetailsOpen && (
+        <div
+          className="fixed inset-x-0 top-[400px] bottom-0 bg-black opacity-10 z-10" // Semi-transparent overlay
+          onClick={handleOverlayClick} // Close on click
+        />
+      )}
+
       {/* Main Navigation Bar */}
-      <nav className="hidden fixed  md:hidden lg:block bg-sky text-[#00008b] py-2 md:sticky md:top-0 md:z-50">
+
+      <CombinedNavigation />
+      {/* <nav className="hidden fixed  md:hidden lg:block bg-sky text-[#00008b] py-2 md:sticky md:top-0 md:z-50">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             <div className="flex space-x-4">
@@ -290,7 +413,7 @@ const Header = () => {
             </Button>
           </div>
         </div>
-      </nav>
+      </nav> */}
       {/* <Theme /> */}
     </header>
   );
@@ -398,3 +521,54 @@ const Footer: React.FC = () => {
 };
 
 export { Header, Footer };
+
+// old mobile header
+
+// <div className="md:block lg:hidden flex items-center space-x-4">
+// <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+//   <SheetTrigger asChild>
+//     <Button
+//       variant="ghost"
+//       size="icon"
+//       className="bg-transparent"
+//       onClick={() => setIsDetailsOpen(false)}
+//     >
+//       <Menu className="h-6 w-6 bg-transparent" />
+//     </Button>
+//   </SheetTrigger>
+//   <SheetContent side="left" className="bg-[#c5dfff] w-64">
+//     <SheetHeader className="flex items-center justify-between">
+//       <SheetTitle>Menu</SheetTitle>
+//        <SheetClose asChild>
+//         <Button variant="ghost" size="icon">
+//           <X className="h-6 w-6" />
+//         </Button>
+//       </SheetClose>
+//     </SheetHeader>
+//     <nav className="flex flex-col space-y-4 mt-4">
+//       {navItems?.map(({ label, path }) => (
+//         <Link
+//           key={label}
+//           href={path}
+//           onClick={() => {
+//             setIsSheetOpen(false);
+//           }}
+//           className={`flex items-center justify-between py-2 px-4 ${
+//             pathname === path ? "text-[#00bfff]" : "text-black"
+//           }`}
+//         >
+//           {label}
+//           <ChevronRight className="h-4 w-4 " />
+//         </Link>
+//       ))}
+//     </nav>
+//   </SheetContent>
+// </Sheet>
+// <Button
+//   variant="ghost"
+//   size="icon"
+//   onClick={() => setIsDetailsOpen(!isDetailsOpen)}
+// >
+//   <MoreHorizontal className="h-6 w-6 " />
+// </Button>
+// </div>
