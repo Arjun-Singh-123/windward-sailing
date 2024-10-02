@@ -5,6 +5,58 @@ import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Anchor } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 // types/vehicle.ts
+// function flattenData(data:any) {
+//   const flattenedData:any = [];
+
+//   Object.keys(data).forEach(key => {
+//       data[key].forEach(item => {
+//           flattenedData.push({
+//               category: key,
+//               name: item.name,
+//               value: item.value
+//           });
+//       });
+//   });
+
+//   return flattenedData;
+// }
+
+interface SpecificationData {
+  content: {
+    amenities: { name: string; value: string }[];
+    boat_details: {
+      title: string;
+      subtitle: string;
+      description: string;
+    };
+    specifications: {
+      "Fin Keel": { name: string; value: string }[];
+      "Wing Keel": { name: string; value: string }[];
+      "General Dimensions": { name: string; value: string }[];
+    };
+  };
+}
+
+function convertToSpecificationData(data: any) {
+  console.log("getting convertible data", data);
+  // Check if 'data' and 'content' exist
+  if (!data || typeof data !== "object") {
+    console.error("Invalid data provided.");
+    return []; // Return empty if the data is invalid
+  }
+
+  // Now we can safely access 'data.content'
+  const specificationData = Object.keys(data).map((section) => ({
+    title: section,
+    specs: data[section].map((spec: any) => ({
+      name: spec.name,
+      value: spec.value,
+    })),
+  }));
+
+  console.log("finished data", specificationData);
+  return specificationData;
+}
 
 export type Specification = {
   name: string;
@@ -30,6 +82,19 @@ export type VehicleDetails = {
   content: VehicleContent;
   section_type: string;
 };
+
+// Function to check if `specificationData.content.specifications` exists and is valid
+function hasValidSpecifications(data: any): boolean {
+  return (
+    data &&
+    typeof data === "object" &&
+    "content" in data &&
+    data.content &&
+    typeof data.content === "object" &&
+    "specifications" in data.content &&
+    Array.isArray(data.content.specifications)
+  );
+}
 
 // const specificationData = [
 //   {
@@ -77,9 +142,10 @@ const SpecificationsSection = () => {
 
   const { data: specificationData } = useQuery({
     queryKey: ["specification-details"],
-    queryFn: () => fetchVehicleAmenitiesSpec(),
+    queryFn: () => getAmenitiess(),
   });
 
+  console.log("spec data", specificationData);
   // async function fetchVehicleAmenities() {
   //   // console.log("in the fetchVehicle function");
 
@@ -108,35 +174,43 @@ const SpecificationsSection = () => {
         Specifications
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {specificationData?.map((section, index) => (
-          <div
-            key={index}
-            className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden"
-          >
-            <div className="bg-black dark:bg-gray-900 text-white p-4">
-              <h3 className="text-lg font-semibold">{section.title}</h3>
+        {specificationData &&
+          typeof specificationData === "object" &&
+          "content" in specificationData &&
+          specificationData.content &&
+          typeof specificationData.content === "object" &&
+          "specifications" in specificationData.content &&
+          convertToSpecificationData(
+            specificationData?.content?.specifications
+          )?.map((section, index) => (
+            <div
+              key={index}
+              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden"
+            >
+              <div className="bg-black dark:bg-gray-900 text-white p-4">
+                <h3 className="text-lg font-semibold">{section.title}</h3>
+              </div>
+              <div className="p-4 overflow-x-auto">
+                <table className="w-full divide-y divide-gray-200 dark:divide-gray-700">
+                  <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    {section?.specs?.map((spec: any, specIndex: any) => (
+                      <tr
+                        key={specIndex}
+                        className="hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        <td className="px-4 py-2 sm:px-6 sm:py-3 text-sm font-medium text-gray-900 dark:text-white">
+                          {spec.name}
+                        </td>
+                        <td className="px-4 py-2 sm:px-6 sm:py-3 text-sm text-gray-500 dark:text-gray-300">
+                          {spec.value}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-            <div className="p-4 overflow-x-auto">
-              <table className="w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                  {section?.specs?.map((spec, specIndex) => (
-                    <tr
-                      key={specIndex}
-                      className="hover:bg-gray-100 dark:hover:bg-gray-700"
-                    >
-                      <td className="px-4 py-2 sm:px-6 sm:py-3 text-sm font-medium text-gray-900 dark:text-white">
-                        {spec.name}
-                      </td>
-                      <td className="px-4 py-2 sm:px-6 sm:py-3 text-sm text-gray-500 dark:text-gray-300">
-                        {spec.value}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
 
@@ -676,7 +750,7 @@ const VesselOverview = () => {
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { fetchVehicleAmenitiesSpec } from "@/lib/services";
+import { fetchVehicleAmenities, getAmenitiess } from "@/lib/services";
 import { useQuery } from "@tanstack/react-query";
 
 const images = [

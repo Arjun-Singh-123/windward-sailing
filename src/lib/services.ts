@@ -1,6 +1,5 @@
 import { Tables } from "../../database.types";
 import { supabase } from "./supabase";
-import { cache } from "react";
 
 export async function getAmenities() {
   const { data, error } = await supabase
@@ -10,12 +9,14 @@ export async function getAmenities() {
     .single();
 
   if (error) throw error;
-  return data.content.amenities;
+  return data?.content;
 }
 
-export async function getAmenitiess(): Promise<Tables<'vehicle_details_new'>['content']['amenities']>  {
+export async function getAmenitiess(): Promise<
+  Tables<"vehicle_details_new">["content"]
+> {
   const { data, error } = await supabase
-    .from("vehicle_details")
+    .from("vehicle_details_new")
     .select("content")
     .eq("id", 1)
     .single();
@@ -25,7 +26,7 @@ export async function getAmenitiess(): Promise<Tables<'vehicle_details_new'>['co
     return [];
   }
 
-  return data?.content?.amenities ?? [];
+  return data;
 }
 
 export const fetchVehicleAmenities = async () => {

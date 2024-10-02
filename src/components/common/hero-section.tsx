@@ -15,7 +15,7 @@ import KeyValueGrid from "./key-value-grid";
 import { Json, Tables } from "../../../database.types";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import { fetchVehicleAmenitiesA } from "@/lib/services";
+// import { fetchVehicleAmenitiesA } from "@/lib/services";
 
 // types/vehicle.ts
 export type AmenityItem = {
@@ -41,48 +41,48 @@ export type VehicleDetailsNew = {
   id: number;
   content: VehicleContent;
 };
-// const amenitiesData = [
-//   { name: "MFG.", value: "Windward" },
-//   { name: "Size", value: "28" },
-//   { name: "Auto Pilot", value: "no" },
-//   { name: "Bimini", value: "no" },
-//   { name: "Bluetooth Stereo", value: "yes" },
-//   { name: "Cabins", value: "2" },
-//   { name: "Cockpit Table", value: "no" },
-//   { name: "Charge Station", value: "no" },
-//   { name: "Dept/Knot", value: "no" },
-//   { name: "Dodger", value: "no" },
-//   { name: "GPS", value: "no" },
-//   { name: "Head & Shower", value: "yes" },
-//   { name: "Ice Box", value: "no" },
-//   { name: "Microwave", value: "no" },
-//   { name: "Marine Radio", value: "no" },
-//   { name: "Perch Seats", value: "no" },
-//   { name: "Radar", value: "no" },
-//   { name: "Salon Table Drop", value: "no" },
-//   { name: "Stove", value: "Alcohol" },
-//   { name: "Swim Strip", value: "yes" },
-//   { name: "USB Charger", value: "no" },
-//   { name: "Windless", value: "no" },
-//   { name: "Rolling Furling", value: "yes" },
-//   { name: "Sleeps", value: "4" },
-//   { name: "Max. Passangers", value: "8" },
-//   { name: "Year Manufactured", value: "1988" },
-//   { name: "Engine Mfg.", value: "Universal" },
-//   { name: "Engine Size", value: "no" },
-//   { name: "Diesel Fuel", value: "22" },
-//   { name: "Water Holding Tank", value: "25" },
-//   { name: "Waste Tank", value: "1 Tank" },
-// ];
+const amenitiesData = [
+  { name: "MFG.", value: "Windward" },
+  { name: "Size", value: "28" },
+  { name: "Auto Pilot", value: "no" },
+  { name: "Bimini", value: "no" },
+  { name: "Bluetooth Stereo", value: "yes" },
+  { name: "Cabins", value: "2" },
+  { name: "Cockpit Table", value: "no" },
+  { name: "Charge Station", value: "no" },
+  { name: "Dept/Knot", value: "no" },
+  { name: "Dodger", value: "no" },
+  { name: "GPS", value: "no" },
+  { name: "Head & Shower", value: "yes" },
+  { name: "Ice Box", value: "no" },
+  { name: "Microwave", value: "no" },
+  { name: "Marine Radio", value: "no" },
+  { name: "Perch Seats", value: "no" },
+  { name: "Radar", value: "no" },
+  { name: "Salon Table Drop", value: "no" },
+  { name: "Stove", value: "Alcohol" },
+  { name: "Swim Strip", value: "yes" },
+  { name: "USB Charger", value: "no" },
+  { name: "Windless", value: "no" },
+  { name: "Rolling Furling", value: "yes" },
+  { name: "Sleeps", value: "4" },
+  { name: "Max. Passangers", value: "8" },
+  { name: "Year Manufactured", value: "1988" },
+  { name: "Engine Mfg.", value: "Universal" },
+  { name: "Engine Size", value: "no" },
+  { name: "Diesel Fuel", value: "22" },
+  { name: "Water Holding Tank", value: "25" },
+  { name: "Waste Tank", value: "1 Tank" },
+];
 
 export const HeroSection = () => {
-  const [amenitiesData, setAmenitiesData] = useState<AmenityItem[]>([]);
+  const [data, setAmenitiesData] = useState<any>(amenitiesData);
   const [boatData, setBoatData] = useState<any>({});
 
-  const { data } = useQuery({
-    queryKey: ["amenities-details"],
-    queryFn: () => fetchVehicleAmenitiesA(),
-  });
+  // const { data } = useQuery({
+  //   queryKey: ["amenities-details"],
+  //   queryFn: () => fetchVehicleAmenitiesA(),
+  // });
 
   // useEffect(() => {
   //   fetchVehicleAmenities();

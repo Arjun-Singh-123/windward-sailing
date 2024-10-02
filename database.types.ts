@@ -33,6 +33,24 @@ export type Database = {
         }
         Relationships: []
       }
+      category: {
+        Row: {
+          id: number
+          name: string
+          type: string
+        }
+        Insert: {
+          id?: number
+          name: string
+          type: string
+        }
+        Update: {
+          id?: number
+          name?: string
+          type?: string
+        }
+        Relationships: []
+      }
       members: {
         Row: {
           about: string | null
@@ -104,6 +122,62 @@ export type Database = {
           },
         ]
       }
+      product: {
+        Row: {
+          description: string
+          id: number
+          name: string
+          price: number
+          subcategory_id: number | null
+        }
+        Insert: {
+          description: string
+          id?: number
+          name: string
+          price: number
+          subcategory_id?: number | null
+        }
+        Update: {
+          description?: string
+          id?: number
+          name?: string
+          price?: number
+          subcategory_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_subcategory_id_fkey"
+            columns: ["subcategory_id"]
+            isOneToOne: false
+            referencedRelation: "subcategory"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      register: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: number
+          name: string | null
+          password: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: number
+          name?: string | null
+          password: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: number
+          name?: string | null
+          password?: string
+        }
+        Relationships: []
+      }
       subcategories: {
         Row: {
           category_id: string
@@ -135,6 +209,32 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subcategory: {
+        Row: {
+          category_id: number | null
+          id: number
+          name: string
+        }
+        Insert: {
+          category_id?: number | null
+          id?: number
+          name: string
+        }
+        Update: {
+          category_id?: number | null
+          id?: number
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subcategory_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "category"
             referencedColumns: ["id"]
           },
         ]
