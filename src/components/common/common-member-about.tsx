@@ -89,7 +89,7 @@ const CommonMembershipAbout = ({
     // </div>
 
     <div
-      className={` ${
+      className={`   ${
         rentalFeesBg ? "w-full" : "container mx-auto   md:max-w-6xl"
       }  `}
     >

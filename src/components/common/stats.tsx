@@ -63,7 +63,7 @@ export default function StatsSlider() {
     <div className="relative w-full bg-blue-600 bg-opacity-80 overflow-hidden  bg-custom p-8 m-4">
       <div className="max-w-screen-xl mx-auto py-8 overflow-hidden">
         <div className="embla" ref={emblaRef}>
-          <div className="embla__container  flex">
+          <div className="embla__container  flex ">
             {[...stats, ...stats, ...stats].map((stat, index) => (
               <div
                 key={index}

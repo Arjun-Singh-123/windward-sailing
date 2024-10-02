@@ -318,7 +318,7 @@ const Detail: React.FC<DetailProps> = ({
                       <h2 className="text-2xl font-semibold mb-4">{heading}</h2>
                     )} */}
                     {/* {description && <p className="mb-4">{description}</p>} */}
-                    {membershipFees && ( 
+                    {membershipFees && (
                       <button className="bg-blue-500 text-white px-4 py-2 rounded">
                         Join Membership
                       </button>
@@ -420,12 +420,12 @@ const Detail: React.FC<DetailProps> = ({
       )}
 
       {benefitsData && (
-        <div className="mb-8">
+        <div className="  mb-8">
           {/* <h2 className="text-2xl font-bold mb-4 text-[#1e40af]">
             What You Get
           </h2> */}
 
-          <div className="text-start space-y-2">
+          <div className="text-start space-y-2 mb-6">
             <h1
               className={` text-start  text-xl text-flatBlue ${cursiveHeadingFont.className}`}
               style={{ marginTop: "1.25rem" }}
@@ -437,7 +437,7 @@ const Detail: React.FC<DetailProps> = ({
             </h2>
             <DecoratorLine />
           </div>
-          <div className="flex flex-col md:flex-row">
+          <div className="flex flex-col-reverse md:flex-row">
             <div className="w-full md:w-1/2 p-8 bg-[#bfdbfe] rounded-lg">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {benefitsData.map((benefit, index) => (

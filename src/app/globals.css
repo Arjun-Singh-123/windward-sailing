@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
- 
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -204,4 +203,35 @@ body {
 
 .theme-toggle:hover {
   opacity: 0.8; /* Slightly fade on hover */
+}
+.legend-container {
+  position: relative;
+  display: inline-block;
+}
+
+.styled-legend {
+  display: inline;
+  width: inherit;
+  padding: 0px 20px;
+  margin-bottom: 0;
+  margin-left: 15px;
+  font-size: 14px;
+  line-height: inherit;
+  color: #ffffff;
+  background: var(--flatBlue);
+  border: 0;
+  border-bottom: none;
+  border-radius: 0 0 4px 4px;
+  position: relative;
+}
+
+.styled-legend::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -10px;
+
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #222d32 #222d32 transparent;
 }

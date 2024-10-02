@@ -142,7 +142,7 @@ export default function Home() {
           <ResponsiveCarousel />
         </div>
       </section>
-      <section className="w-full p-4">
+      <section className="w-full p-4 bg-lightSky ">
         {/* <div className="container mx-auto max-w-6xl"> */}
         <CommonMembershipAbout
           subtitle="What We Do"

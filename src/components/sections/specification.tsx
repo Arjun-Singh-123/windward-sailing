@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Anchor } from "lucide-react";
+import { Anchor, AnchorIcon } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 // types/vehicle.ts
 // function flattenData(data:any) {
@@ -170,9 +170,10 @@ const SpecificationsSection = () => {
   // console.log("specification", specificationData);
   return (
     <div className="mb-8 px-4 sm:px-6 lg:px-8">
-      <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-black dark:text-white">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-1 text-black dark:text-white">
         Specifications
       </h2>
+      <DecoratorLine />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {specificationData &&
           typeof specificationData === "object" &&
@@ -185,11 +186,13 @@ const SpecificationsSection = () => {
           )?.map((section, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden"
+              className=" bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg  "
             >
-              <div className="bg-black dark:bg-gray-900 text-white p-4">
+              <LegendComponent text={section.title} />
+
+              {/* <div className="bg-black dark:bg-gray-900 text-white p-4">
                 <h3 className="text-lg font-semibold">{section.title}</h3>
-              </div>
+              </div> */}
               <div className="p-4 overflow-x-auto">
                 <table className="w-full divide-y divide-gray-200 dark:divide-gray-700">
                   <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -198,10 +201,15 @@ const SpecificationsSection = () => {
                         key={specIndex}
                         className="hover:bg-gray-100 dark:hover:bg-gray-700"
                       >
-                        <td className="px-4 py-2 sm:px-6 sm:py-3 text-sm font-medium text-gray-900 dark:text-white">
+                        <td className=" text-sm">
+                          <AnchorIcon className="text-flatBlue" />
+                        </td>
+
+                        <td className=" px-2    py-2 sm:px-2 sm:py-3 text-sm font-medium text-gray-900 dark:text-white">
                           {spec.name}
                         </td>
-                        <td className="px-4 py-2 sm:px-6 sm:py-3 text-sm text-gray-500 dark:text-gray-300">
+
+                        <td className="  py-2 sm:px-6 sm:py-3 text-sm text-gray-500 dark:text-gray-300">
                           {spec.value}
                         </td>
                       </tr>
@@ -752,6 +760,8 @@ import { ChevronLeft, ChevronRight, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { fetchVehicleAmenities, getAmenitiess } from "@/lib/services";
 import { useQuery } from "@tanstack/react-query";
+import LegendComponent from "../common/left-triangle";
+import DecoratorLine from "../common/decorator-icon-line";
 
 const images = [
   {

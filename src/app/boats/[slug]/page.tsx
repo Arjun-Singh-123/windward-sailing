@@ -60,7 +60,7 @@ export default function AlternatingYachtSections() {
             </h2>
             <p className="text-gray-600 mb-6">{yacht.description}</p>
 
-            <Link href={`/products/${index}`} passHref>
+            <Link href={`/products/${index % yachtData.length}`} passHref>
               <Button
                 variant="default"
                 className="bg-blue-600 hover:bg-blue-700 text-white"
