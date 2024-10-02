@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface YachtInfo {
   name: string;
@@ -31,7 +32,7 @@ const yachtData: YachtInfo[] = [
 export default function AlternatingYachtSections() {
   return (
     <div className="w-full">
-      {yachtData.map((yacht, index) => (
+      {yachtData?.map((yacht, index) => (
         <section
           key={yacht.name}
           className={`flex flex-col md:flex-row items-center justify-between py-16 px-4 md:px-8 ${
@@ -58,12 +59,15 @@ export default function AlternatingYachtSections() {
               {yacht.name}
             </h2>
             <p className="text-gray-600 mb-6">{yacht.description}</p>
-            <Button
-              variant="default"
-              className="bg-blue-600 hover:bg-blue-700 text-white"
-            >
-              LEARN MORE
-            </Button>
+
+            <Link href={`/products/${index}`} passHref>
+              <Button
+                variant="default"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                LEARN MORE
+              </Button>
+            </Link>
           </div>
         </section>
       ))}

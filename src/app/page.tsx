@@ -30,86 +30,96 @@ export default function Home() {
     // <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-0 gap-16 font-[family-name:var(--font-geist-sans)]">
     <div className="flex flex-col items-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)]  ">
       {/* <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start "> */}
-      <main className="w-full flex flex-col items-center sm:items-start gap-4">
-        {/* <HeroSection1 /> */}
-        <Heroo />
-        <SailingServices />
-        <HeroSection />
+      {/* <main className="w-full flex flex-col items-center sm:items-start gap-4"> */}
+      {/* <HeroSection1 /> */}
+      <Heroo />
+      <SailingServices />
+      <HeroSection />
 
-        {/* <ImageGallery images={images} title="virtual tour" /> */}
-        {/* <ImageGallery images={images} title="ExteriorPhotos" /> */}
-        {/* <YachtGallery /> */}
-        {/* <YachtGallery /> */}
+      {/* <ImageGallery images={images} title="virtual tour" /> */}
+      {/* <ImageGallery images={images} title="ExteriorPhotos" /> */}
+      {/* <YachtGallery /> */}
+      {/* <YachtGallery /> */}
 
-        {/* <ExteriorPhotos /> */}
-        <SpecificationsSection />
-        <StatsSlider />
-        <ResponsiveCarousel />
-        <Detail
-          benefits={false}
-          benefitsData={[
-            {
-              icon: <Bath />,
-              title: "Bathroom",
-              description:
-                "There were 2 bathrooms available with attached toilets.",
-            },
-            {
-              icon: <Bed />,
-              title: "Double bed",
-              description:
-                "There were 1 double beds and common facility available with attached toilets.",
-            },
-            {
-              icon: <Bath />,
-              title: "Bathroom",
-              description:
-                "There were 2 bathrooms available with attached toilets.",
-            },
-            {
-              icon: <Bed />,
-              title: "Double bed",
-              description:
-                "There were 1 double beds and common facility available with attached toilets.",
-            },
-            {
-              icon: <Bath />,
-              title: "Bathroom",
-              description:
-                "There were 2 bathrooms available with attached toilets.",
-            },
-            {
-              icon: <Bed />,
-              title: "Double bed",
-              description:
-                "There were 1 double beds and common facility available with attached toilets.",
-            },
+      {/* <ExteriorPhotos /> */}
+      {/* <SpecificationsSection /> */}
 
-            {
-              icon: <Bath />,
-              title: "Bathroom",
-              description:
-                "There were 2 bathrooms available with attached toilets.",
-            },
-            {
-              icon: <Bed />,
-              title: "Double bed",
-              description:
-                "There were 1 double beds and common facility available with attached toilets.",
-            },
-            // ... other benefits
-          ]}
-        />
-        {/* <StatsSlider /> */}
-        {/* <TestimonialSlider /> */}
-        {/* <Detail
+      <section className="w-full p-4">
+        <div className="container mx-auto max-w-6xl">
+          <SpecificationsSection />
+        </div>
+      </section>
+
+      <section className="w-full p-4 bg-[#ebf8fc]">
+        <div className="container mx-auto max-w-6xl">
+          <Detail
+            benefits={false}
+            benefitsData={[
+              {
+                icon: <Bath />,
+                title: "Bathroom",
+                description:
+                  "There were 2 bathrooms available with attached toilets.",
+              },
+              {
+                icon: <Bed />,
+                title: "Double bed",
+                description:
+                  "There were 1 double beds and common facility available with attached toilets.",
+              },
+              {
+                icon: <Bath />,
+                title: "Bathroom",
+                description:
+                  "There were 2 bathrooms available with attached toilets.",
+              },
+              {
+                icon: <Bed />,
+                title: "Double bed",
+                description:
+                  "There were 1 double beds and common facility available with attached toilets.",
+              },
+              {
+                icon: <Bath />,
+                title: "Bathroom",
+                description:
+                  "There were 2 bathrooms available with attached toilets.",
+              },
+              {
+                icon: <Bed />,
+                title: "Double bed",
+                description:
+                  "There were 1 double beds and common facility available with attached toilets.",
+              },
+
+              {
+                icon: <Bath />,
+                title: "Bathroom",
+                description:
+                  "There were 2 bathrooms available with attached toilets.",
+              },
+              {
+                icon: <Bed />,
+                title: "Double bed",
+                description:
+                  "There were 1 double beds and common facility available with attached toilets.",
+              },
+              // ... other benefits
+            ]}
+          />
+        </div>
+      </section>
+
+      {/* <StatsSlider /> */}
+      {/* <TestimonialSlider /> */}
+      {/* <Detail
           title="About Us"
           heading="What We Do"
           description={description}
           video={video}
         /> */}
 
-        {/* <Detail
+      {/* <Detail
           title="What We Do "
           heading="Welcome to Windward Sailing Club"
           description={description}
@@ -118,19 +128,36 @@ export default function Home() {
           isVideo={true}
         /> */}
 
-        {/* <TestimonialsCarousel /> */}
+      {/* <TestimonialsCarousel /> */}
+      {/* <CommonMembershipAbout
+          subtitle="What We Do"
+          title="Welcome to Windward Sailing Club"
+          description={description}
+          video={true}
+        /> */}
+      <StatsSlider />
+      {/* <ResponsiveCarousel /> */}
+      <section className="w-full p-4">
+        <div className="container mx-auto max-w-6xl">
+          <ResponsiveCarousel />
+        </div>
+      </section>
+      <section className="w-full p-4">
+        {/* <div className="container mx-auto max-w-6xl"> */}
         <CommonMembershipAbout
           subtitle="What We Do"
           title="Welcome to Windward Sailing Club"
           description={description}
           video={true}
         />
+        {/* </div> */}
+      </section>
 
-        {/* <ImageCarousel /> */}
-        {/* <Swipe /> */}
-        {/* <YachtGallery/> */}
-        {/* <Test /> */}
-      </main>
+      {/* <ImageCarousel /> */}
+      {/* <Swipe /> */}
+      {/* <YachtGallery/> */}
+      {/* <Test /> */}
+      {/* </main> */}
     </div>
   );
 }

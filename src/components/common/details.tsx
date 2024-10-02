@@ -318,7 +318,7 @@ const Detail: React.FC<DetailProps> = ({
                       <h2 className="text-2xl font-semibold mb-4">{heading}</h2>
                     )} */}
                     {/* {description && <p className="mb-4">{description}</p>} */}
-                    {membershipFees && (
+                    {membershipFees && ( 
                       <button className="bg-blue-500 text-white px-4 py-2 rounded">
                         Join Membership
                       </button>

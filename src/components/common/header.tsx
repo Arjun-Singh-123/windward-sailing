@@ -103,8 +103,11 @@ const Header = () => {
   // Close the sheet when the route changes
   useEffect(() => {
     setIsSheetOpen(false);
-    setIsDetailsOpen(false);
   }, [pathname]);
+
+
+
+  
   return (
     <header className="sticky top-0 z-50 lg:relative md:top-auto  ">
       {/* First Row */}
@@ -344,11 +347,10 @@ const Header = () => {
 
       {/* Details Section for Mobile View */}
       {isDetailsOpen && (
-        <div className="md:block lg:hidden bg-[#052449] text-white py-4  ">
+        <div className="md:block lg:hidden bg-[#052449] text-white py-4">
           <div className="container mx-auto px-4">
             <div className="flex flex-col space-y-4">
-              <div className="flex items-center space-x-2 ">
-                <Link href="/members">members</Link>
+              <div className="flex items-center space-x-2">
                 <Phone className="w-6 h-6" />
                 <div>
                   <div className="text-sm">CALL US</div>
@@ -381,7 +383,7 @@ const Header = () => {
 
       {isDetailsOpen && (
         <div
-          className="fixed inset-x-0 top-[400px] bottom-0 bg-black opacity-10 z-10" // Semi-transparent overlay
+          className="fixed inset-0 bg-black opacity-10 z-10" // Semi-transparent overlay
           onClick={handleOverlayClick} // Close on click
         />
       )}

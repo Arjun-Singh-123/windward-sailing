@@ -17,9 +17,10 @@ export const cursiveHeadingFont = Great_Vibes({
 export const contentFont = Roboto({
   subsets: ["latin"],
   weight: ["400", "700"], // You can specify weights as needed
-});
+});    
 
 export const mainHeadingFont = Prata({
   subsets: ["latin"],
   weight: ["400"],
 });
+      
