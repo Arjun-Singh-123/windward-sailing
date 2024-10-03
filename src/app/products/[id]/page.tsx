@@ -20,6 +20,26 @@ const mockData: any = {
     description: "Description for Product 2",
     image: "/path/to/image2.jpg",
   },
+  3: {
+    title: "Product 1",
+    description: "Description for Product 1",
+    image: "/path/to/image1.jpg",
+  },
+  4: {
+    title: "Product 2",
+    description: "Description for Product 2",
+    image: "/path/to/image2.jpg",
+  },
+  5: {
+    title: "Product 1",
+    description: "Description for Product 1",
+    image: "/path/to/image1.jpg",
+  },
+  6: {
+    title: "Product 2",
+    description: "Description for Product 2",
+    image: "/path/to/image2.jpg",
+  },
 };
 
 const ProductPage = () => {

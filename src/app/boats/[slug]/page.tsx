@@ -51,7 +51,7 @@ export default function AlternatingYachtSections() {
   return (
     <div className="w-full">
       {yachtData?.map((yacht, index) => {
-        const newIndex = (index + 1) % yachtData.length || yachtData.length - 1;
+        const newIndex = index % yachtData.length || yachtData.length - 1;
         const imageUrl =
           index % 2 === 0
             ? "/images/cf.jpeg?height=400&width=600"
@@ -59,7 +59,7 @@ export default function AlternatingYachtSections() {
 
         return (
           <section
-            key={yacht.name}
+            key={index}
             className={`flex flex-col md:flex-row items-center justify-between py-16 px-4 md:px-8 ${
               index % 2 === 0 ? "bg-sky-50" : "bg-white"
             }`}
