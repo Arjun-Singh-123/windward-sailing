@@ -77,8 +77,8 @@ export default function Members() {
   });
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="text-start space-y-2  ">
+    <div className="container mx-auto  py-12">
+      <div className="text-start space-y-2 px-4  ">
         <h1
           className={` text-start  text-xl text-flatBlue ${cursiveHeadingFont.className}`}
           style={{ marginTop: "1.25rem" }}
@@ -99,6 +99,7 @@ export default function Members() {
               about={member?.about ?? ""}
               email={member?.email}
               phone={member?.phone ?? ""}
+              index={index}
             />
           ))
         ) : (
