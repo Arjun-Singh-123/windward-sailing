@@ -2,23 +2,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import {
   Facebook,
   Twitter,
   Instagram,
-  Linkedin,
   Phone,
   Clock,
   MapPin,
+  Youtube,
+  Mail,
+  Cross,
   X,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -26,7 +26,6 @@ import {
 } from "@/components/ui/sheet";
 import { Menu, MoreHorizontal, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import Theme from "./theme";
 import CombinedNavigation from "./combined-header";
 
 import {
@@ -36,15 +35,6 @@ import {
 } from "@/components/ui/collapsible";
 
 import { cn } from "@/lib/utils";
-
-// const navItems = [
-//   { label: "Home", path: "/" },
-//   { label: "About Us", path: "/about-us" },
-//   { label: "Membership Fees", path: "/membership-fees" },
-//   { label: "Rental Fees", path: "/rental-fees" },
-//   { label: "Boats", path: "/boats" },
-//   { label: "Members", path: "/members" },
-// ];
 
 const menuItems = [
   { name: "Home", href: "/" },
@@ -106,246 +96,282 @@ const Header = () => {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 lg:relative md:top-auto  ">
+    <header className={`sticky top-0 z-50 lg:relative md:top-auto`}>
       {/* First Row */}
-      <div className="bg-[#f0f8ff] text-[#00008b] sm:hidden md:hidden lg:block">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center md:py-2">
-            <Link
-              href="mailto:support@windwardsailingclub.com"
-              className="text-sm hover:underline hidden md:block"
-            >
-              support@windwardsailingclub.com
-            </Link>
-            <div className="flex items-center space-x-4">
-              <div className="hidden md:flex space-x-2">
-                <div className="flex items-center space-x-4">
-                  <div className="hidden md:flex space-x-2">
-                    <Link href="#" aria-label="Facebook">
-                      <Facebook
-                        size={20}
-                        className="text-[#00008b] hover:text-[#4267B2] transition-colors"
-                      />
-                    </Link>
-                    <Link href="#" aria-label="Twitter">
-                      <Twitter
-                        size={20}
-                        className="text-[#00008b] hover:text-[#1DA1F2] transition-colors"
-                      />
-                    </Link>
-                    <Link href="#" aria-label="Instagram">
-                      <Instagram
-                        size={20}
-                        className="text-[#00008b] hover:text-[#E1306C] transition-colors"
-                      />
-                    </Link>
-                    <Link href="#" aria-label="Pinterest">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="text-[#00008b] hover:text-[#E60023] transition-colors"
-                      >
-                        <path d="M8 12a4 4 0 1 0 8 0a4 4 0 0 0-8 0"></path>
-                        <path d="M12 2v6"></path>
-                        <path d="M12 22v-6"></path>
-                        <path d="M6 12H2"></path>
-                        <path d="M22 12h-4"></path>
-                      </svg>
-                    </Link>
-                  </div>
-                  {/* <Separator
+      {!isDetailsOpen && (
+        <div className="bg-[#f0f8ff] text-[#00008b] sm:hidden md:hidden lg:block">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-between items-center md:py-2">
+              <Link
+                href="mailto:support@windwardsailingclub.com"
+                className="text-sm hover:underline hidden md:block"
+              >
+                support@windwardsailingclub.com
+              </Link>
+              <div className="flex items-center space-x-4">
+                <div className="hidden md:flex space-x-2">
+                  <div className="flex items-center space-x-4">
+                    <div className="hidden md:flex space-x-2">
+                      <Link href="#" aria-label="Facebook">
+                        <Facebook
+                          size={20}
+                          className="text-[#00008b] hover:text-[#4267B2] transition-colors"
+                        />
+                      </Link>
+                      <Link href="#" aria-label="Twitter">
+                        <Twitter
+                          size={20}
+                          className="text-[#00008b] hover:text-[#1DA1F2] transition-colors"
+                        />
+                      </Link>
+                      <Link href="#" aria-label="Instagram">
+                        <Instagram
+                          size={20}
+                          className="text-[#00008b] hover:text-[#E1306C] transition-colors"
+                        />
+                      </Link>
+                      <Link href="#" aria-label="Pinterest">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="text-[#00008b] hover:text-[#E60023] transition-colors"
+                        >
+                          <path d="M8 12a4 4 0 1 0 8 0a4 4 0 0 0-8 0"></path>
+                          <path d="M12 2v6"></path>
+                          <path d="M12 22v-6"></path>
+                          <path d="M6 12H2"></path>
+                          <path d="M22 12h-4"></path>
+                        </svg>
+                      </Link>
+                    </div>
+                    {/* <Separator
                     orientation="vertical"
                     className="h-6 hidden md:block"
                   /> */}
-                  {/* <Button
+                    {/* <Button
                     variant="default"
                     size="sm"
                     className="bg-[#00bfff] hover:bg-[#0080ff] text-white"
                   >
                     Login
                   </Button> */}
+                  </div>
+                  {/* Social Media Icons */}
+                  {/* ... your existing social media links ... */}
                 </div>
-                {/* Social Media Icons */}
-                {/* ... your existing social media links ... */}
+                <Separator
+                  orientation="vertical"
+                  className="h-6 hidden md:block"
+                />
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="bg-[#00bfff] hover:bg-[#0080ff] text-white hidden md:block"
+                >
+                  Login
+                </Button>
               </div>
-              <Separator
-                orientation="vertical"
-                className="h-6 hidden md:block"
-              />
-              <Button
-                variant="default"
-                size="sm"
-                className="bg-[#00bfff] hover:bg-[#0080ff] text-white hidden md:block"
-              >
-                Login
-              </Button>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
-      <div className="bg-[#052449] text-white py-4">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center">
-            <Link href="/" className="flex items-center space-x-2 z-20">
-              <Image
-                src="/images/logoo.png"
-                alt="Windward Sailing Club"
-                className="h-16 w-auto"
-                width={277.75}
-                height={84.984}
-                onClick={() => setIsDetailsOpen(false)}
-              />
-            </Link>
-            <div className="hidden md:hidden lg:flex items-center space-x-6">
-              {/* Contact Info Section */}
-              <div className="flex items-center space-x-2">
-                <Phone className="w-6 h-6" />
-                <div>
-                  <div className="text-sm">CALL US</div>
-                  <div className="font-bold">(949) 675-9060</div>
+      {!isDetailsOpen && (
+        <div className="bg-[#052449] text-white py-4">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-between items-center">
+              <Link href="/" className="flex items-center space-x-2 z-20">
+                <Image
+                  src="/images/logoo.png"
+                  alt="Windward Sailing Club"
+                  className="h-16 w-auto"
+                  width={277.75}
+                  height={84.984}
+                  onClick={() => setIsDetailsOpen(false)}
+                />
+              </Link>
+              <div className="hidden md:hidden lg:flex items-center space-x-6">
+                {/* Contact Info Section */}
+                <div className="flex items-center space-x-2">
+                  <Phone className="w-6 h-6" />
+                  <div>
+                    <div className="text-sm">CALL US</div>
+                    <div className="font-bold">(949) 675-9060</div>
+                  </div>
                 </div>
-              </div>
-              <Separator orientation="vertical" className="h-10" />
-              <div className="flex items-center space-x-2">
-                <Clock className="w-6 h-6" />
-                <div>
-                  <div className="text-sm">HOURS OF OPERATION</div>
-                  <div className="font-bold">Monday — Sunday</div>
-                  <div className="text-sm">9:00 a.m. — 5:00 p.m.</div>
+                <Separator orientation="vertical" className="h-10" />
+                <div className="flex items-center space-x-2">
+                  <Clock className="w-6 h-6" />
+                  <div>
+                    <div className="text-sm">HOURS OF OPERATION</div>
+                    <div className="font-bold">Monday — Sunday</div>
+                    <div className="text-sm">9:00 a.m. — 5:00 p.m.</div>
+                  </div>
                 </div>
-              </div>
-              <Separator orientation="vertical" className="h-10" />
-              <div className="flex items-center space-x-2">
-                <MapPin className="w-6 h-6" />
-                <div>
-                  <div className="text-sm">COMPANY / LOCATION</div>
-                  <div className="font-bold">
-                    3300 Via Lido, Windward Beach, CA 92663
+                <Separator orientation="vertical" className="h-10" />
+                <div className="flex items-center space-x-2">
+                  <MapPin className="w-6 h-6" />
+                  <div>
+                    <div className="text-sm">COMPANY / LOCATION</div>
+                    <div className="font-bold">
+                      3300 Via Lido, Windward Beach, CA 92663
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Mobile Hamburger Menu */}
+              {/* Mobile Hamburger Menu */}
 
-            <div className="md:hidden flex items-center space-x-4">
-              <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-                <SheetTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="bg-transparent"
-                    onClick={() => setIsDetailsOpen(false)}
-                  >
-                    <Menu className="h-6 w-6 bg-transparent" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="left" className="bg-[#c5dfff] w-64 p-0">
-                  <SheetHeader className="p-4 border-b">
-                    <SheetTitle>Menu</SheetTitle>
-                  </SheetHeader>
-                  <nav className="flex flex-col">
-                    {menuItems.map((item) => (
-                      <React.Fragment key={item.name}>
-                        {item.categories ? (
-                          <Collapsible>
-                            <CollapsibleTrigger className="flex items-center justify-between w-full p-4 text-left">
-                              <span
-                                className={cn(
-                                  "text-lg font-semibold",
-                                  isActive(item.href)
-                                    ? "text-[#00bfff]"
-                                    : "text-black"
-                                )}
-                              >
-                                {item.name}
-                              </span>
-                              <ChevronRight className="h-4 w-4" />
-                            </CollapsibleTrigger>
-                            <CollapsibleContent>
-                              {item.categories.map((category) => (
-                                <Collapsible key={category.name}>
-                                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 pl-8 text-left">
-                                    <span
-                                      className={cn(
-                                        "text-base font-medium",
-                                        isActive(category.href)
-                                          ? "text-[#00bfff]"
-                                          : "text-black"
+              <div className="md:hidden flex items-center space-x-4">
+                <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+                  <SheetTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="bg-transparent"
+                      onClick={() => setIsDetailsOpen(false)}
+                    >
+                      <Menu className="h-6 w-6 bg-transparent" />
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="bg-[#c5dfff] w-64 p-0">
+                    <SheetHeader className="p-4 border-b">
+                      <SheetTitle>Menu</SheetTitle>
+                    </SheetHeader>
+                    <nav className="flex flex-col">
+                      {menuItems?.map((item) => (
+                        <React.Fragment key={item.name}>
+                          {item.categories ? (
+                            <Collapsible>
+                              <CollapsibleTrigger className="flex items-center justify-between w-full p-4 text-left">
+                                <span
+                                  className={cn(
+                                    "text-lg font-semibold",
+                                    isActive(item.href)
+                                      ? "text-[#00bfff]"
+                                      : "text-black"
+                                  )}
+                                >
+                                  {item.name}
+                                </span>
+                                <ChevronRight className="h-4 w-4" />
+                              </CollapsibleTrigger>
+                              <CollapsibleContent>
+                                {item.categories.map((category) => (
+                                  <Collapsible key={category.name}>
+                                    <CollapsibleTrigger className="flex items-center justify-between w-full p-4 pl-8 text-left">
+                                      <span
+                                        className={cn(
+                                          "text-base font-medium",
+                                          isActive(category.href)
+                                            ? "text-[#00bfff]"
+                                            : "text-black"
+                                        )}
+                                      >
+                                        {category.name}
+                                      </span>
+                                      <ChevronRight className="h-4 w-4" />
+                                    </CollapsibleTrigger>
+                                    <CollapsibleContent>
+                                      {category.subcategories.map(
+                                        (subcategory) => (
+                                          <Link
+                                            key={subcategory.name}
+                                            href={subcategory.href}
+                                            onClick={() =>
+                                              setIsSheetOpen(false)
+                                            }
+                                            className={cn(
+                                              "block p-4 pl-12 text-sm",
+                                              isActive(subcategory.href)
+                                                ? "text-[#00bfff]"
+                                                : "text-black"
+                                            )}
+                                          >
+                                            {subcategory.name}
+                                          </Link>
+                                        )
                                       )}
-                                    >
-                                      {category.name}
-                                    </span>
-                                    <ChevronRight className="h-4 w-4" />
-                                  </CollapsibleTrigger>
-                                  <CollapsibleContent>
-                                    {category.subcategories.map(
-                                      (subcategory) => (
-                                        <Link
-                                          key={subcategory.name}
-                                          href={subcategory.href}
-                                          onClick={() => setIsSheetOpen(false)}
-                                          className={cn(
-                                            "block p-4 pl-12 text-sm",
-                                            isActive(subcategory.href)
-                                              ? "text-[#00bfff]"
-                                              : "text-black"
-                                          )}
-                                        >
-                                          {subcategory.name}
-                                        </Link>
-                                      )
-                                    )}
-                                  </CollapsibleContent>
-                                </Collapsible>
-                              ))}
-                            </CollapsibleContent>
-                          </Collapsible>
-                        ) : (
-                          <Link
-                            href={item.href}
-                            onClick={() => setIsSheetOpen(false)}
-                            className={cn(
-                              "flex items-center justify-between p-4 text-lg font-semibold",
-                              isActive(item.href)
-                                ? "text-[#00bfff]"
-                                : "text-black"
-                            )}
-                          >
-                            {item.name}
-                            <ChevronRight className="h-4 w-4" />
-                          </Link>
-                        )}
-                      </React.Fragment>
-                    ))}
-                  </nav>
-                </SheetContent>
-              </Sheet>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsDetailsOpen(!isDetailsOpen)}
-              >
-                <MoreHorizontal className="h-6 w-6" />
-              </Button>
+                                    </CollapsibleContent>
+                                  </Collapsible>
+                                ))}
+                              </CollapsibleContent>
+                            </Collapsible>
+                          ) : (
+                            <Link
+                              href={item.href}
+                              onClick={() => setIsSheetOpen(false)}
+                              className={cn(
+                                "flex items-center justify-between p-4 text-lg font-semibold",
+                                isActive(item.href)
+                                  ? "text-[#00bfff]"
+                                  : "text-black"
+                              )}
+                            >
+                              {item.name}
+                              <ChevronRight className="h-4 w-4" />
+                            </Link>
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </nav>
+                    <Button className="flex justify-center mt-8 items-center  w-full px-4 py-2 text-white bg-flatBlue hover:bg-flatBlue hover:opacity-60  rounded-full">
+                      Booking Now
+                    </Button>{" "}
+                  </SheetContent>
+                </Sheet>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => {
+                    setIsDetailsOpen(!isDetailsOpen);
+                  }}
+                >
+                  <MoreHorizontal className="h-6 w-6" />
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Details Section for Mobile View */}
       {isDetailsOpen && (
-        <div className="md:block lg:hidden bg-[#052449] text-white py-4">
+        <div className="md:block relative   lg:hidden bg-sky text-black py-4">
+          <button
+            className="absolute -top-4 -right-4 m-4 rounded-full    text-white   shadow-md bg-red-600"
+            onClick={handleOverlayClick}
+          >
+            <X />
+          </button>
           <div className="container mx-auto px-4">
             <div className="flex flex-col space-y-4">
+              <div className="">
+                <Button className="flex justify-center items-center w-full px-4 py-2 text-white bg-flatBlue  rounded-lg">
+                  <Link href="/login">Login</Link>
+                </Button>{" "}
+                <Link
+                  href="mailto:support@windwardsailingclub.com"
+                  className="text-xl hover:underline flex justify-center items-center mt-4 "
+                >
+                  <Mail className="mr-2" /> support@windwardsailingclub.com
+                </Link>
+                <div className="flex  justify-center items-center w-full p-2 space-x-4  border-2 rounded-full mt-2 shadow-sm">
+                  <Facebook className="w-6 h-6" />
+                  <Twitter className="w-6 h-6" />
+                  <Instagram className="w-6 h-6" />
+                  <Youtube className="w-6 h-6" />
+                </div>
+              </div>
+              <Separator className="bg-white/20" />
+
               <div className="flex items-center space-x-2">
                 <Phone className="w-6 h-6" />
                 <div>
@@ -379,7 +405,7 @@ const Header = () => {
 
       {isDetailsOpen && (
         <div
-          className="fixed inset-0 bg-black opacity-10 z-10" // Semi-transparent overlay
+          className="fixed top-[410px] inset-0 bg-black opacity-20 z-10" // Semi-transparent overlay
           onClick={handleOverlayClick} // Close on click
         />
       )}
@@ -387,32 +413,6 @@ const Header = () => {
       {/* Main Navigation Bar */}
 
       <CombinedNavigation />
-      {/* <nav className="hidden fixed  md:hidden lg:block bg-sky text-[#00008b] py-2 md:sticky md:top-0 md:z-50">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center">
-            <div className="flex space-x-4">
-              {navItems?.map(({ label, path }) => (
-                <Link
-                  key={label}
-                  href={path}
-                  className={`hover:underline   px-3 py-2 rounded font- ${
-                    pathname === path ? "bg-[#00bfff] text-white" : ""
-                  }`}
-                >
-                  {label}
-                </Link>
-              ))}
-            </div>
-            <Button
-              variant="default"
-              className="bg-[#00bfff] hover:bg-[#0080ff] text-white"
-            >
-              BOOKING NOW
-            </Button>
-          </div>
-        </div>
-      </nav> */}
-      {/* <Theme /> */}
     </header>
   );
 };
@@ -519,54 +519,3 @@ const Footer: React.FC = () => {
 };
 
 export { Header, Footer };
-
-// old mobile header
-
-// <div className="md:block lg:hidden flex items-center space-x-4">
-// <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-//   <SheetTrigger asChild>
-//     <Button
-//       variant="ghost"
-//       size="icon"
-//       className="bg-transparent"
-//       onClick={() => setIsDetailsOpen(false)}
-//     >
-//       <Menu className="h-6 w-6 bg-transparent" />
-//     </Button>
-//   </SheetTrigger>
-//   <SheetContent side="left" className="bg-[#c5dfff] w-64">
-//     <SheetHeader className="flex items-center justify-between">
-//       <SheetTitle>Menu</SheetTitle>
-//        <SheetClose asChild>
-//         <Button variant="ghost" size="icon">
-//           <X className="h-6 w-6" />
-//         </Button>
-//       </SheetClose>
-//     </SheetHeader>
-//     <nav className="flex flex-col space-y-4 mt-4">
-//       {navItems?.map(({ label, path }) => (
-//         <Link
-//           key={label}
-//           href={path}
-//           onClick={() => {
-//             setIsSheetOpen(false);
-//           }}
-//           className={`flex items-center justify-between py-2 px-4 ${
-//             pathname === path ? "text-[#00bfff]" : "text-black"
-//           }`}
-//         >
-//           {label}
-//           <ChevronRight className="h-4 w-4 " />
-//         </Link>
-//       ))}
-//     </nav>
-//   </SheetContent>
-// </Sheet>
-// <Button
-//   variant="ghost"
-//   size="icon"
-//   onClick={() => setIsDetailsOpen(!isDetailsOpen)}
-// >
-//   <MoreHorizontal className="h-6 w-6 " />
-// </Button>
-// </div>

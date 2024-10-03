@@ -8,20 +8,6 @@ import Heroo from "@/components/sections/heroo";
 import YachtGallery, {
   SpecificationsSection,
 } from "@/components/sections/specification";
-// src/components/common/hero-image.tsx
-
-const HeroImage = () => {
-  return (
-    <div
-      className="w-full h-64 bg-cover bg-center"
-      style={{ backgroundImage: "url('/images/hero-image.jpg')" }}
-    >
-      <h2 className="text-3xl text-white text-center pt-24">
-        Welcome to Our Club
-      </h2>
-    </div>
-  );
-};
 
 const mockData: any = {
   1: {
@@ -34,7 +20,6 @@ const mockData: any = {
     description: "Description for Product 2",
     image: "/path/to/image2.jpg",
   },
-  // Add more mock products as needed
 };
 
 const ProductPage = () => {
@@ -81,24 +66,6 @@ const ProductPage = () => {
         </section>
       </main>
     </div>
-
-    // <div className="container mx-auto">
-    //   {/* Hero Area */}
-    //   <div className="hero bg-gray-200 p-8">
-    //     <img
-    //       src={product.image}
-    //       alt={product.title}
-    //       className="w-full h-64 object-cover"
-    //     />
-    //     <h1 className="text-3xl font-bold mt-4">{product.title}</h1>
-    //   </div>
-
-    //   <VesselAmenities />
-    //   {/* Description Section */}
-    //   <div className="description p-8">
-    //     <p className="text-lg">{product.description}</p>
-    //   </div>
-    // </div>
   );
 };
 

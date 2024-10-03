@@ -42,18 +42,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        className={`${inter.className} antialiased`}
-      >
+      <body className={`${inter.className} antialiased`}>
         <Providers>
           <StickyHeader />
 
           <Header />
-          {/* <HeaderNew /> */}
+
           <SpeedInsights />
           {children}
-          {/* The rest of your application */}
+
           <ReactQueryDevtools initialIsOpen={false} />
           <ScrollToTop />
           <Toaster richColors={true} duration={3000} position="top-right" />
