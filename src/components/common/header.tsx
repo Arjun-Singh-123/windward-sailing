@@ -93,6 +93,7 @@ const Header = () => {
   // Close the sheet when the route changes
   useEffect(() => {
     setIsSheetOpen(false);
+    setIsDetailsOpen(false);
   }, [pathname]);
 
   return (
@@ -354,7 +355,7 @@ const Header = () => {
           <div className="container mx-auto px-4">
             <div className="flex flex-col space-y-4">
               <div className="">
-                <Button className="flex justify-center items-center w-full px-4 py-2 text-white bg-flatBlue  rounded-lg">
+                <Button className="flex justify-center items-center w-full px-4 py-2 text-white bg-flatBlue hover:bg-flatBlue  rounded-lg">
                   <Link href="/login">Login</Link>
                 </Button>{" "}
                 <Link
