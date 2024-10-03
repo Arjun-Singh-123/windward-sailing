@@ -762,7 +762,13 @@ import { fetchVehicleAmenities, getAmenitiess } from "@/lib/services";
 import { useQuery } from "@tanstack/react-query";
 import LegendComponent from "../common/left-triangle";
 import DecoratorLine from "../common/decorator-icon-line";
-
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 const images = [
   {
     src: "/images/benefits.jpg?height=300&width=400&text=CATALINA_30_SAND_DOLLAR1",
@@ -910,70 +916,65 @@ const images = [
 // ];
 
 export default function YachtGallery() {
-  const [startIndex, setStartIndex] = useState(0);
+  const [api, setApi] = React.useState<any>();
 
-  const nextSlide = () => {
-    setStartIndex((prevIndex) => (prevIndex + 1) % (images.length - 3));
-  };
+  const scrollPrev = React.useCallback(() => {
+    api?.scrollPrev();
+  }, [api]);
 
-  const prevSlide = () => {
-    setStartIndex(
-      (prevIndex) => (prevIndex - 1 + (images.length - 3)) % (images.length - 3)
-    );
-  };
+  const scrollNext = React.useCallback(() => {
+    api?.scrollNext();
+  }, [api]);
+
+  // const [startIndex, setStartIndex] = useState(0);
+
+  // const nextSlide = () => {
+  //   setStartIndex((prevIndex) => (prevIndex + 1) % (images.length - 3));
+  // };
+
+  // const prevSlide = () => {
+  //   setStartIndex(
+  //     (prevIndex) => (prevIndex - 1 + (images.length - 3)) % (images.length - 3)
+  //   );
+  // };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-[#1e3a8a] flex items-center">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-primary flex items-center">
         <Compass className="mr-2 h-6 w-6 sm:h-8 sm:w-8" />
         Exterior Photos
       </h2>
       <div className="relative">
-        <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 overflow-hidden">
-          {images.slice(startIndex, startIndex + 4).map((image, index) => (
-            <div
-              key={index}
-              className="flex-none w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
-            >
-              <div className="relative aspect-[4/3] mb-2">
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg"
-                />
-              </div>
-              <p className="text-sm text-center text-gray-600">
-                {image.caption}
-              </p>
-            </div>
-          ))}
-        </div>
-        <Button
-          variant="outline"
-          size="icon"
-          className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white/80 hover:bg-white hidden sm:flex"
-          onClick={prevSlide}
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="h-6 w-6" />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white/80 hover:bg-white hidden sm:flex"
-          onClick={nextSlide}
-          aria-label="Next slide"
-        >
-          <ChevronRight className="h-6 w-6" />
-        </Button>
+        <Carousel setApi={setApi} className="w-full">
+          <CarouselContent>
+            {images.map((image, index) => (
+              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                <div className="p-1">
+                  <div className="relative aspect-[4/3] mb-2">
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-lg"
+                    />
+                  </div>
+                  <p className="text-sm text-center text-muted-foreground">
+                    {image.caption}
+                  </p>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden sm:flex -left-4 bg-background/80 hover:bg-background" />
+          <CarouselNext className="hidden sm:flex -right-4 bg-background/80 hover:bg-background" />
+        </Carousel>
       </div>
       <div className="flex justify-center space-x-4 mt-4 sm:hidden">
         <Button
           variant="outline"
           size="sm"
-          onClick={prevSlide}
+          onClick={scrollPrev}
           aria-label="Previous slide"
         >
           <ChevronLeft className="h-4 w-4 mr-2" />
@@ -982,7 +983,7 @@ export default function YachtGallery() {
         <Button
           variant="outline"
           size="sm"
-          onClick={nextSlide}
+          onClick={scrollNext}
           aria-label="Next slide"
         >
           Next
@@ -990,6 +991,74 @@ export default function YachtGallery() {
         </Button>
       </div>
     </div>
+
+    // <div className="container mx-auto px-4 py-8">
+    //   <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-[#1e3a8a] flex items-center">
+    //     <Compass className="mr-2 h-6 w-6 sm:h-8 sm:w-8" />
+    //     Exterior Photos
+    //   </h2>
+    //   <div className="relative">
+    //     <div className="flex  sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 overflow-hidden">
+    //       {images.slice(startIndex, startIndex + 4).map((image, index) => (
+    //         <div
+    //           key={index}
+    //           className="flex-none w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+    //         >
+    //           <div className="relative aspect-[4/3] mb-2">
+    //             <Image
+    //               src={image.src}
+    //               alt={image.alt}
+    //               layout="fill"
+    //               objectFit="cover"
+    //               className="rounded-lg"
+    //             />
+    //           </div>
+    //           <p className="text-sm text-center text-gray-600">
+    //             {image.caption}
+    //           </p>
+    //         </div>
+    //       ))}
+    //     </div>
+    //     <Button
+    //       variant="outline"
+    //       size="icon"
+    //       className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white/80 hover:bg-white hidden sm:flex"
+    //       onClick={prevSlide}
+    //       aria-label="Previous slide"
+    //     >
+    //       <ChevronLeft className="h-6 w-6" />
+    //     </Button>
+    //     <Button
+    //       variant="outline"
+    //       size="icon"
+    //       className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white/80 hover:bg-white hidden sm:flex"
+    //       onClick={nextSlide}
+    //       aria-label="Next slide"
+    //     >
+    //       <ChevronRight className="h-6 w-6" />
+    //     </Button>
+    //   </div>
+    //   <div className="flex justify-center space-x-4 mt-4 sm:hidden">
+    //     <Button
+    //       variant="outline"
+    //       size="sm"
+    //       onClick={prevSlide}
+    //       aria-label="Previous slide"
+    //     >
+    //       <ChevronLeft className="h-4 w-4 mr-2" />
+    //       Previous
+    //     </Button>
+    //     <Button
+    //       variant="outline"
+    //       size="sm"
+    //       onClick={nextSlide}
+    //       aria-label="Next slide"
+    //     >
+    //       Next
+    //       <ChevronRight className="h-4 w-4 ml-2" />
+    //     </Button>
+    //   </div>
+    // </div>
   );
 }
 

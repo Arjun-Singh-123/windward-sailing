@@ -105,9 +105,6 @@ const Header = () => {
     setIsSheetOpen(false);
   }, [pathname]);
 
-
-
-  
   return (
     <header className="sticky top-0 z-50 lg:relative md:top-auto  ">
       {/* First Row */}
@@ -194,7 +191,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Second Row */}
       <div className="bg-[#052449] text-white py-4">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
