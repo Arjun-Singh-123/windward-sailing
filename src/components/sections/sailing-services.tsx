@@ -27,7 +27,7 @@ const services = [
 
 export default function SailingServices() {
   return (
-    <div className="  w-screen mx-auto px-4 py-8">
+    <div className="    mx-auto px-4 py-8">
       <h1
         className={`text-4.5xl text-black font-bold text-center mb-8 ${cursiveHeadingFont.className}`}
       >

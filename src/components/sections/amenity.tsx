@@ -13,7 +13,7 @@ const LegendComponent = ({ text }: { text: string }) => {
 };
 
 const TableRow = ({ label, value }: { label: string; value: string }) => (
-  <div className="grid grid-cols-2 border-b border-gray-400">
+  <div className="columns-1   md:columns-2 border-b border-gray-400">
     <div className="py-1 px-2 font-semibold text-right">{label}:</div>
     <div className="py-1 px-2">{value}</div>
   </div>
@@ -103,9 +103,9 @@ export default function YachtDescription() {
           <div className="md:w-1/2">
             <div className="max-w-4xl mx-auto bg-sky p-6 rounded-lg shadow-lg relative">
               <LegendComponent text="Vessel Amenities" />
-              <div className=" bg-sky rounded-lg overflow-hidden grid grid-cols-2 gap-4">
+              <div className=" bg-sky rounded-lg overflow-hidden   gap-4">
                 <div>
-                  {amenities.slice(0, 16).map((item, index) => (
+                  {amenities.map((item, index) => (
                     <TableRow
                       key={index}
                       label={item.label}
@@ -113,7 +113,7 @@ export default function YachtDescription() {
                     />
                   ))}
                 </div>
-                <div>
+                {/* <div>
                   {amenities.slice(16).map((item, index) => (
                     <TableRow
                       key={index}
@@ -121,7 +121,7 @@ export default function YachtDescription() {
                       value={item.value}
                     />
                   ))}
-                </div>
+                </div> */}
               </div>
               <div className="absolute md:-bottom-7 md:right-4 -bottom-6 -right-4 w-28 h-28 transform rotate-[335deg]">
                 <Image

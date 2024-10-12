@@ -33,6 +33,33 @@ export type Database = {
         }
         Relationships: []
       }
+      categoriesd: {
+        Row: {
+          created_at: string | null
+          href: string
+          id: string
+          name: string
+          order_index: number
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          href: string
+          id?: string
+          name: string
+          order_index: number
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          href?: string
+          id?: string
+          name?: string
+          order_index?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       categoryss: {
         Row: {
           id: number
@@ -122,6 +149,141 @@ export type Database = {
         }
         Relationships: []
       }
+      footer_contentn: {
+        Row: {
+          fields: Json
+          id: string
+        }
+        Insert: {
+          fields?: Json
+          id?: string
+        }
+        Update: {
+          fields?: Json
+          id?: string
+        }
+        Relationships: []
+      }
+      footer_contents: {
+        Row: {
+          created_at: string | null
+          footer_data: Json
+          id: number
+        }
+        Insert: {
+          created_at?: string | null
+          footer_data: Json
+          id?: number
+        }
+        Update: {
+          created_at?: string | null
+          footer_data?: Json
+          id?: number
+        }
+        Relationships: []
+      }
+      footer_contentsa: {
+        Row: {
+          content: Json
+          id: string
+        }
+        Insert: {
+          content?: Json
+          id?: string
+        }
+        Update: {
+          content?: Json
+          id?: string
+        }
+        Relationships: []
+      }
+      header_details: {
+        Row: {
+          address: string
+          buttons: Json
+          email: string
+          hours_of_operation: string
+          id: number
+          logo: string
+          phone: string
+          social_media: Json
+        }
+        Insert: {
+          address: string
+          buttons: Json
+          email: string
+          hours_of_operation: string
+          id?: number
+          logo: string
+          phone: string
+          social_media: Json
+        }
+        Update: {
+          address?: string
+          buttons?: Json
+          email?: string
+          hours_of_operation?: string
+          id?: number
+          logo?: string
+          phone?: string
+          social_media?: Json
+        }
+        Relationships: []
+      }
+      header_detailsd: {
+        Row: {
+          address: string
+          buttons: Json
+          email: string
+          hours_of_operation: string
+          id: string
+          logo: string
+          phone: string
+          social_media: Json
+        }
+        Insert: {
+          address: string
+          buttons: Json
+          email: string
+          hours_of_operation: string
+          id?: string
+          logo: string
+          phone: string
+          social_media: Json
+        }
+        Update: {
+          address?: string
+          buttons?: Json
+          email?: string
+          hours_of_operation?: string
+          id?: string
+          logo?: string
+          phone?: string
+          social_media?: Json
+        }
+        Relationships: []
+      }
+      homepage_sections: {
+        Row: {
+          id: number
+          is_visible: boolean | null
+          page: string
+          section_name: string
+        }
+        Insert: {
+          id?: number
+          is_visible?: boolean | null
+          page: string
+          section_name: string
+        }
+        Update: {
+          id?: number
+          is_visible?: boolean | null
+          page?: string
+          section_name?: string
+        }
+        Relationships: []
+      }
       members: {
         Row: {
           about: string | null
@@ -151,6 +313,188 @@ export type Database = {
           profession?: string | null
         }
         Relationships: []
+      }
+      menu_items: {
+        Row: {
+          created_at: string | null
+          href: string
+          id: string
+          name: string
+          order_index: number
+          parent_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          href: string
+          id?: string
+          name: string
+          order_index: number
+          parent_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          href?: string
+          id?: string
+          name?: string
+          order_index?: number
+          parent_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "menu_items_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "menu_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      menu_itemsd: {
+        Row: {
+          created_at: string | null
+          href: string
+          id: string
+          is_category: boolean | null
+          name: string
+          order_index: number
+          parent_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          href: string
+          id?: string
+          is_category?: boolean | null
+          name: string
+          order_index: number
+          parent_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          href?: string
+          id?: string
+          is_category?: boolean | null
+          name?: string
+          order_index?: number
+          parent_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "menu_itemsd_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "menu_itemsd"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nav_items: {
+        Row: {
+          created_at: string | null
+          href: string
+          id: string
+          name: string
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          href: string
+          id?: string
+          name: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          href?: string
+          id?: string
+          name?: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      nav_sections: {
+        Row: {
+          created_at: string | null
+          href: string
+          id: string
+          name: string
+          nav_item_id: string | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          href: string
+          id?: string
+          name: string
+          nav_item_id?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          href?: string
+          id?: string
+          name?: string
+          nav_item_id?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nav_sections_nav_item_id_fkey"
+            columns: ["nav_item_id"]
+            isOneToOne: false
+            referencedRelation: "nav_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nav_subsections: {
+        Row: {
+          created_at: string | null
+          href: string
+          id: string
+          name: string
+          section_id: string
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          href: string
+          id?: string
+          name: string
+          section_id: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          href?: string
+          id?: string
+          name?: string
+          section_id?: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nav_subsections_section_id_fkey"
+            columns: ["section_id"]
+            isOneToOne: false
+            referencedRelation: "nav_sections"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       navigation_items: {
         Row: {
@@ -192,6 +536,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      posts: {
+        Row: {
+          content: string | null
+          created_at: string
+          id: string
+          image_url: string | null
+          title: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          title: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          title?: string
+        }
+        Relationships: []
       }
       product: {
         Row: {
@@ -296,6 +664,24 @@ export type Database = {
         }
         Relationships: []
       }
+      rentals: {
+        Row: {
+          id: string
+          members: Json
+          non_members: Json
+        }
+        Insert: {
+          id?: string
+          members: Json
+          non_members: Json
+        }
+        Update: {
+          id?: string
+          members?: Json
+          non_members?: Json
+        }
+        Relationships: []
+      }
       subcategories: {
         Row: {
           category_id: number | null
@@ -318,6 +704,44 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subcategoriesd: {
+        Row: {
+          category_id: string | null
+          created_at: string | null
+          href: string
+          id: string
+          name: string
+          order_index: number
+          updated_at: string | null
+        }
+        Insert: {
+          category_id?: string | null
+          created_at?: string | null
+          href: string
+          id?: string
+          name: string
+          order_index: number
+          updated_at?: string | null
+        }
+        Update: {
+          category_id?: string | null
+          created_at?: string | null
+          href?: string
+          id?: string
+          name?: string
+          order_index?: number
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subcategoriesd_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categoriesd"
             referencedColumns: ["id"]
           },
         ]

@@ -19,7 +19,11 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { cn } from "@/lib/utils";
-
+import { useQuery } from "@tanstack/react-query";
+import { fetchCategories } from "@/lib/services";
+import { menuItemss } from "./header";
+import { ModeToggle } from "../toggle-mode";
+export const dynamic = "force-dynamic";
 // const menuItems = [
 //   { name: "Home", href: "/" },
 //   { name: "Membership Fees", href: "/membership-fees" },
@@ -60,15 +64,40 @@ import { cn } from "@/lib/utils";
 //   { name: "About Us", href: "/about-us" },
 //   { name: "Members", href: "/members" },
 // ];
-
-let menuItems: any;
+const desiredOrder = [
+  "Home",
+  "Membership Fees",
+  "Rental Fees",
+  "Boats",
+  "Members",
+];
+// let menuItems: any;
 export default function CombinedNavigation() {
   const [isSticky, setIsSticky] = useState(false);
   const pathname = usePathname();
   const [hoveredItem, setHoveredItem] = useState<any>(null);
   const [activeItem, setActiveItem] = useState<string | null>(null);
+
+  const { data: menuItems } = useQuery({
+    queryKey: ["menuitems-data"],
+    queryFn: fetchCategories,
+  });
+
+  // console.log("hello data", data);
+
+  // const sortData = (data) => {
+  //   return data?.sort((a, b) => {
+  //     return desiredOrder.indexOf(a.name) - desiredOrder.indexOf(b.name);
+  //   });
+  // };
+
+  // const menu = sortData(data);
+
+  // console.log(menu);
+
+  // console.log("checking item name", menu);
   useEffect(() => {
-    menuItems = JSON.parse(localStorage.getItem("key") ?? "");
+    // menuItems = JSON.parse(localStorage.getItem("key") ?? "");
 
     const handleScroll = () => {
       setIsSticky(window.scrollY > 100);
@@ -85,58 +114,62 @@ export default function CombinedNavigation() {
   return (
     <>
       <nav className="hidden lg:block bg-sky-100 text-[#00008b] py-2 sticky top-0 z-50 px-4">
+        {/* <ModeToggle /> */}
         <ul className="flex justify-center space-x-8">
-          {menuItems?.map((item) => (
-            <li key={item.name} className="relative group">
-              <Link
-                href={item.href}
-                className={`text-lg font-semibold transition-colors duration-300 px-3 py-2 rounded-md ${
-                  isActive(item.href)
-                    ? "bg-[#6edcfc] text-black"
-                    : "text-gray-800 hover:text-blue-600 hover:bg-blue-50"
-                }`}
-                onMouseEnter={() => setActiveItem(item.href)}
-                onMouseLeave={() => setActiveItem(null)}
-              >
-                {item.name}
-              </Link>
-              {item.categories && (
-                <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 invisible group-hover:visible">
-                  {item.categories.map((category) => (
-                    <div key={category.name} className="relative group/sub">
-                      <span
-                        // href={category.href}
-                        className={`block px-4 py-2 text-sm ${
-                          isActive(category.href)
-                            ? "bg-blue-100 text-blue-600"
-                            : "text-gray-800 hover:bg-blue-50"
-                        }`}
-                      >
-                        {category.name}
-                      </span>
-                      {category.subcategories && (
-                        <div className="absolute left-full top-0 mt-0 w-48 bg-white rounded-md shadow-lg opacity-0 group-hover/sub:opacity-100 transition-opacity duration-300 invisible group-hover/sub:visible">
-                          {category.subcategories.map((subcategory) => (
-                            <Link
-                              key={subcategory.name}
-                              href={category.href}
-                              className={`block px-4 py-2 text-sm ${
-                                isActive(subcategory.href)
-                                  ? "bg-blue-100 text-blue-600"
-                                  : "text-gray-800 hover:bg-blue-50"
-                              }`}
-                            >
-                              {subcategory.name}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </li>
-          ))}
+          {menuItems &&
+            menuItems?.map((item: any) => (
+              <li key={item.name} className="relative group">
+                <Link
+                  href={item.href}
+                  className={`text-lg font-semibold transition-colors duration-300 px-3 py-2 rounded-md ${
+                    isActive(item.href)
+                      ? "bg-[#6edcfc] text-black"
+                      : "text-gray-800 hover:text-blue-600 hover:bg-blue-50"
+                  }`}
+                  onMouseEnter={() => setActiveItem(item.href)}
+                  onMouseLeave={() => setActiveItem(null)}
+                >
+                  {item?.name ?? "hello"}
+                </Link>
+                {item && (
+                  <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 invisible group-hover:visible">
+                    {item?.nav_sections?.map((category: any) => (
+                      <div key={category.name} className="relative group/sub">
+                        <span
+                          // href={category.href}
+                          className={`block px-4 py-2 text-sm ${
+                            isActive(category.href)
+                              ? "bg-blue-100 text-blue-600"
+                              : "text-gray-800 hover:bg-blue-50"
+                          }`}
+                        >
+                          {category?.name}
+                        </span>
+                        {category?.subcategories && (
+                          <div className="absolute left-full top-0 mt-0 w-48 bg-white rounded-md shadow-lg opacity-0 group-hover/sub:opacity-100 transition-opacity duration-300 invisible group-hover/sub:visible">
+                            {category?.nav_subsections?.map(
+                              (subcategory: any) => (
+                                <Link
+                                  key={subcategory.name}
+                                  href={category.href}
+                                  className={`block px-4 py-2 text-sm ${
+                                    isActive(subcategory.href)
+                                      ? "bg-blue-100 text-blue-600"
+                                      : "text-gray-800 hover:bg-blue-50"
+                                  }`}
+                                >
+                                  {subcategory?.name}
+                                </Link>
+                              )
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </li>
+            ))}
           <li>
             <button className="bg-[#00bfff] hover:bg-[#0080ff] text-white px-4 py-2 rounded-md transition-colors duration-300">
               BOOKING NOW
@@ -154,7 +187,7 @@ export default function CombinedNavigation() {
         {isSticky && (
           <nav className="container mx-auto px-4 py-4">
             <ul className="flex justify-center space-x-8">
-              {menuItems?.map((item) => (
+              {menuItems?.map((item: any) => (
                 <li key={item?.name} className="relative">
                   {item?.categories ? (
                     <DropdownMenu>
@@ -166,11 +199,12 @@ export default function CombinedNavigation() {
                             : "text-gray-800 hover:text-blue-600 hover:bg-blue-50"
                         )}
                       >
-                        {item.name}
+                        {console.log("checking item name", item)}
+                        {item?.name}
                       </DropdownMenuTrigger>
 
                       <DropdownMenuContent>
-                        {item.categories.map((category) => (
+                        {item?.nav_sections?.map((category: any) => (
                           <DropdownMenuSub key={category.name}>
                             <DropdownMenuSubTrigger
                               className={cn(
@@ -181,23 +215,25 @@ export default function CombinedNavigation() {
                               {category.name}
                             </DropdownMenuSubTrigger>
                             <DropdownMenuSubContent>
-                              {category.subcategories.map((subcategory) => (
-                                <DropdownMenuItem
-                                  key={subcategory.name}
-                                  asChild
-                                >
-                                  <Link
-                                    href={subcategory.href}
-                                    className={cn(
-                                      "w-full",
-                                      isActive(subcategory.href) &&
-                                        "bg-blue-100 text-blue-600"
-                                    )}
+                              {category?.nav_subsections?.map(
+                                (subcategory: any) => (
+                                  <DropdownMenuItem
+                                    key={subcategory.name}
+                                    asChild
                                   >
-                                    {subcategory.name}
-                                  </Link>
-                                </DropdownMenuItem>
-                              ))}
+                                    <Link
+                                      href={subcategory.href}
+                                      className={cn(
+                                        "w-full",
+                                        isActive(subcategory.href) &&
+                                          "bg-blue-100 text-blue-600"
+                                      )}
+                                    >
+                                      {subcategory?.name}
+                                    </Link>
+                                  </DropdownMenuItem>
+                                )
+                              )}
                             </DropdownMenuSubContent>
                           </DropdownMenuSub>
                         ))}
@@ -213,7 +249,7 @@ export default function CombinedNavigation() {
                           : "text-gray-800 hover:text-blue-600 hover:bg-blue-50"
                       )}
                     >
-                      {item.name}
+                      {item?.name}
                     </Link>
                   )}
                 </li>

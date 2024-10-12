@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -18,6 +18,7 @@ import {
   mainHeadingFont,
 } from "@/app/ui/fonts";
 import DecoratorLine from "./decorator-icon-line";
+import { supabase } from "@/lib/supabase";
 // Define the interface for a rental entry
 interface RentalEntry {
   vesselName: string;
@@ -31,62 +32,92 @@ interface RentalTableProps {
   type: string; // The type of the table, e.g., 'Member' or 'Non-Member'
 }
 
-// Define the main rental data type
-interface RentalData {
-  member: RentalEntry[];
-  nonMember: RentalEntry[];
+// // Define the main rental data type
+// interface RentalData {
+//   member: RentalEntry[];
+//   nonMember: RentalEntry[];
+// }
+// const rentalData: RentalData = {
+//   member: [
+//     {
+//       vesselName: "Evening Star",
+//       length: "28'",
+//       halfDay: "$105 + $25 Billed",
+//       weekday: "$155 + $25 Billed",
+//       weekend: "$180 + $25 Billed",
+//     },
+//     {
+//       vesselName: "Sand Dollar",
+//       length: "30'",
+//       halfDay: "$130 + $35 Billed",
+//       weekday: "$165 + $35 Billed",
+//       weekend: "$200 + $35 Billed",
+//     },
+//     {
+//       vesselName: "Teewinot",
+//       length: "30'",
+//       halfDay: "$150 + $40 Billed",
+//       weekday: "$180 + $40 Billed",
+//       weekend: "$210 + $40 Billed",
+//     },
+//   ],
+//   nonMember: [
+//     {
+//       vesselName: "Evening Star",
+//       length: "28'",
+//       halfDay: "-",
+//       weekday: "$300",
+//       weekend: "$345",
+//     },
+//     {
+//       vesselName: "Sand Dollar",
+//       length: "30'",
+//       halfDay: "-",
+//       weekday: "$350",
+//       weekend: "$400",
+//     },
+//     {
+//       vesselName: "Teewinot",
+//       length: "30'",
+//       halfDay: "-",
+//       weekday: "$375",
+//       weekend: "$425",
+//     },
+//   ],
+// };
+
+interface Vessel {
+  vesselName: string;
+  length: string;
+  halfDay: string;
+  weekday: string;
+  weekend: string;
 }
-const rentalData: RentalData = {
-  member: [
-    {
-      vesselName: "Evening Star",
-      length: "28'",
-      halfDay: "$105 + $25 Billed",
-      weekday: "$155 + $25 Billed",
-      weekend: "$180 + $25 Billed",
-    },
-    {
-      vesselName: "Sand Dollar",
-      length: "30'",
-      halfDay: "$130 + $35 Billed",
-      weekday: "$165 + $35 Billed",
-      weekend: "$200 + $35 Billed",
-    },
-    {
-      vesselName: "Teewinot",
-      length: "30'",
-      halfDay: "$150 + $40 Billed",
-      weekday: "$180 + $40 Billed",
-      weekend: "$210 + $40 Billed",
-    },
-  ],
-  nonMember: [
-    {
-      vesselName: "Evening Star",
-      length: "28'",
-      halfDay: "-",
-      weekday: "$300",
-      weekend: "$345",
-    },
-    {
-      vesselName: "Sand Dollar",
-      length: "30'",
-      halfDay: "-",
-      weekday: "$350",
-      weekend: "$400",
-    },
-    {
-      vesselName: "Teewinot",
-      length: "30'",
-      halfDay: "-",
-      weekday: "$375",
-      weekend: "$425",
-    },
-  ],
-};
+
+interface Rental {
+  id: string;
+  members: Vessel[];
+  non_members: Vessel[];
+}
 
 export default function RentalFeesTable() {
   const [activeTab, setActiveTab] = useState("member");
+  const [rentalData, setRentalData] = useState<any>({});
+
+  // Fetch Rentals
+  useEffect(() => {
+    const fetchRentals = async () => {
+      const { data, error } = await supabase
+        .from("rentals")
+        .select("*")
+        .single();
+      if (error) console.error("Error fetching rentals:", error);
+      else setRentalData(data || []);
+    };
+
+    fetchRentals();
+  }, []);
+  console.log("checking renals data", rentalData);
 
   const RentalTable: React.FC<RentalTableProps> = ({ data, type }) => (
     <Card className="w-full">
@@ -212,8 +243,8 @@ export default function RentalFeesTable() {
                 );
               })} */}
 
-                {rentalData.member.map((memberRow, index) => {
-                  const nonMemberRow = rentalData.nonMember[index];
+                {rentalData?.members?.map((memberRow: any, index: number) => {
+                  const nonMemberRow = rentalData.non_members[index];
                   return (
                     <React.Fragment key={index}>
                       <TableRow>
@@ -271,14 +302,16 @@ export default function RentalFeesTable() {
                           {nonMemberRow.weekend}
                         </TableCell>
                       </TableRow>
-                      {index < rentalData.member.length - 1 && (
-                        <TableRow>
-                          <TableCell
-                            colSpan={5}
-                            className="h-4 bg-gray-100"
-                          ></TableCell>
-                        </TableRow>
-                      )}
+                      {rentalData &&
+                        rentalData.members &&
+                        index < rentalData.members.length - 1 && (
+                          <TableRow>
+                            <TableCell
+                              colSpan={5}
+                              className="h-4 bg-gray-100"
+                            ></TableCell>
+                          </TableRow>
+                        )}
                     </React.Fragment>
                   );
                 })}
@@ -364,8 +397,8 @@ export default function RentalFeesTable() {
                 );
               })} */}
 
-              {rentalData.member.map((memberRow, index) => {
-                const nonMemberRow = rentalData.nonMember[index];
+              {rentalData.members.map((memberRow: any, index: number) => {
+                const nonMemberRow = rentalData.non_members[index];
                 return (
                   <React.Fragment key={index}>
                     <TableRow>
@@ -423,14 +456,16 @@ export default function RentalFeesTable() {
                         {nonMemberRow.weekend}
                       </TableCell>
                     </TableRow>
-                    {index < rentalData.member.length - 1 && (
-                      <TableRow>
-                        <TableCell
-                          colSpan={5}
-                          className="h-4 bg-gray-100"
-                        ></TableCell>
-                      </TableRow>
-                    )}
+                    {rentalData &&
+                      rentalData.members &&
+                      index < rentalData.members.length - 1 && (
+                        <TableRow>
+                          <TableCell
+                            colSpan={5}
+                            className="h-4 bg-gray-100"
+                          ></TableCell>
+                        </TableRow>
+                      )}
                   </React.Fragment>
                 );
               })}
@@ -485,10 +520,10 @@ export default function RentalFeesTable() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="member">
-          <RentalTable data={rentalData.member} type="Member" />
+          <RentalTable data={rentalData.members} type="Member" />
         </TabsContent>
         <TabsContent value="nonMember">
-          <RentalTable data={rentalData.nonMember} type="Non-Member" />
+          <RentalTable data={rentalData.non_members} type="Non-Member" />
         </TabsContent>
         <TabsContent value="compare">
           <CompareTable />

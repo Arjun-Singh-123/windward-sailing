@@ -15,6 +15,7 @@ const allowedHostnames = [
   "toolset.com",
   "lreclvqyoujucqaggxfy.supabase.co",
   "dev.windwardsailingclub.com",
+  "pknbhkxuqdmghngwniok.supabase.co",
 ];
 
 const nextConfig = {

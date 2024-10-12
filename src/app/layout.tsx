@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Footer, Header } from "@/components/common/header";
+import { DynamicFooter, Header } from "@/components/common/header";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Providers from "./providers";
 import ScrollToTop from "@/components/common/scroll-to-top";
@@ -54,7 +54,7 @@ export default function RootLayout({
           <ReactQueryDevtools initialIsOpen={false} />
           <ScrollToTop />
           <Toaster richColors={true} duration={3000} position="top-right" />
-          <Footer />
+          <DynamicFooter />
         </Providers>
       </body>
     </html>

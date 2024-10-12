@@ -1,7 +1,13 @@
 "use client";
 import { supabase } from "@/lib/supabase";
+import { Upload } from "lucide-react";
 import React, { useState, useEffect } from "react";
+import { toast } from "sonner";
 
+export interface NavigationLink {
+  text: string;
+  url: string;
+}
 export interface FooterContent {
   id: string;
   logo_url: string;
@@ -11,7 +17,7 @@ export interface FooterContent {
   address_label: string;
   service_area: string;
   service_area_label: string;
-  navigation_links: { text: string; url: string }[];
+  navigation_links: NavigationLink[];
   copyright_text: string;
 }
 
@@ -40,7 +46,7 @@ export default function FooterEditForm() {
       .single();
 
     if (error) {
-      console.error("Error fetching footer content:", error);
+      console.error("Error fetching footer content:", error.message);
     } else if (data) {
       setFooterContent(data as any);
     }
@@ -50,24 +56,26 @@ export default function FooterEditForm() {
     e.preventDefault();
     const { data, error } = await supabase
       .from("footer_content")
-      .upsert(footerContent)
+      .upsert(footerContent as any)
       .select();
 
     if (error) {
       console.error("Error updating footer content:", error);
     } else {
       console.log("Footer content updated successfully:", data);
-      alert("Footer content updated successfully!");
+      toast.success("Footer content updated successfully!");
     }
   };
 
   const handleNavigationLinkChange = (
     index: number,
-    field: "text" | "url",
+    field: keyof NavigationLink,
     value: string
   ) => {
     const updatedLinks = [...footerContent.navigation_links];
+
     updatedLinks[index] = { ...updatedLinks[index], [field]: value };
+
     setFooterContent({ ...footerContent, navigation_links: updatedLinks });
   };
 
@@ -120,7 +128,7 @@ export default function FooterEditForm() {
         <input
           type="text"
           id="footer_image_url"
-          value={footerContent.footer_image_url}
+          value={footerContent?.footer_image_url}
           onChange={(e) =>
             setFooterContent({
               ...footerContent,
@@ -231,7 +239,7 @@ export default function FooterEditForm() {
         <label className="block text-sm font-medium text-gray-700 mb-2">
           Navigation Links:
         </label>
-        {footerContent.navigation_links.map((link, index) => (
+        {footerContent?.navigation_links?.map((link, index) => (
           <div key={index} className="flex space-x-2 mb-2">
             <input
               type="text"
