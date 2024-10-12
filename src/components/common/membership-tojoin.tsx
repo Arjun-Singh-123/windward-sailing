@@ -24,7 +24,7 @@ const PricingItem = ({
   value: string | number;
 }) => (
   <div
-    className={`flex text-xs justify-between py-2 border-b border-gray-200 ${contentFont.className}`}
+    className={`flex text-[0.875rem] justify-between py-2 border-b border-gray-200 ${contentFont.className}`}
   >
     <span>{label}</span>
     <span>{typeof value === "number" ? `$${value}` : value}</span>
@@ -44,8 +44,8 @@ const PricingItem = ({
 
 export default function BoatClubPricing() {
   return (
-    <div className="  w-full mx-auto  ">
-      <div className="     overflow-visible bg-white border-2 border-black  w-full p-2 shadow-lg rounded-lg  ">
+    <div className="  w-full   ">
+      <div className="     overflow-visible bg-white border-2 border-black  w-full p-2 shadow-lg    ">
         <ToJoinHeader
           membershipFee={true}
           specification={false}
@@ -74,7 +74,7 @@ export default function BoatClubPricing() {
             <span>${pricingData.total}</span>
           </div>
         </div>
-        <div className="bg-[#00A3E0] text-white p-4 mt-4">
+        <div className="bg-[#17a2b8] text-white p-4 mt-4 rounded-md">
           <p className="font-bold mb-2">Note:</p>
           <p>
             Monthly dues total ${pricingData.monthlyDues.total} ($

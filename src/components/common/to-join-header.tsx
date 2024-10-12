@@ -79,7 +79,7 @@ export const ToJoinHeader = ({
         {/* <span className="whitespace-nowrap ">{text}</span> */}
       </h3>
 
-      {isHovered && (
+      {isHovered && text.split(" ").length >= 7 && (
         <div className="absolute bg-white text-black p-2 rounded shadow-lg z-20">
           {text} {/* Full text shown on hover */}
         </div>

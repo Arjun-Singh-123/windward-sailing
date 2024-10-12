@@ -20,53 +20,56 @@ import {
 } from "@/components/ui/hover-card";
 import { cn } from "@/lib/utils";
 
-const menuItems = [
-  { name: "Home", href: "/" },
-  { name: "Membership Fees", href: "/membership-fees" },
-  { name: "Rental Fees", href: "/rental-fees" },
-  {
-    name: "Boats",
-    href: "/boats",
-    categories: [
-      {
-        name: "Sedan",
-        href: "/boats/sedan",
-        subcategories: [
-          { name: "Compact", href: "/boats/sedan" },
-          { name: "Mid-size", href: "/boats/sedan" },
-          { name: "Full-size", href: "/boats/sedan" },
-        ],
-      },
-      {
-        name: "SUV",
-        href: "/boats/suv",
-        subcategories: [
-          { name: "Compact", href: "/boats/suv" },
-          { name: "Mid-size", href: "/boats/suv" },
-          { name: "Full-size", href: "/boats/suv" },
-        ],
-      },
-      {
-        name: "Sports Car",
-        href: "/boats/sports",
-        subcategories: [
-          { name: "Coupe", href: "/boats/spor" },
-          { name: "Convertible", href: "/boats/sports" },
-          { name: "Supercar", href: "/boats/sports" },
-        ],
-      },
-    ],
-  },
-  { name: "About Us", href: "/about-us" },
-  { name: "Members", href: "/members" },
-];
+// const menuItems = [
+//   { name: "Home", href: "/" },
+//   { name: "Membership Fees", href: "/membership-fees" },
+//   { name: "Rental Fees", href: "/rental-fees" },
+//   {
+//     name: "Boats",
+//     href: "/boats",
+//     categories: [
+//       {
+//         name: "Sedan",
+//         href: "/boats ",
+//         subcategories: [
+//           { name: "Compact", href: "/boats" },
+//           { name: "Mid-size", href: "/boats" },
+//           { name: "Full-size", href: "/boats" },
+//         ],
+//       },
+//       {
+//         name: "SUV",
+//         href: "/boats ",
+//         subcategories: [
+//           { name: "Compact", href: "/boats " },
+//           { name: "Mid-size", href: "/boats " },
+//           { name: "Full-size", href: "/boats " },
+//         ],
+//       },
+//       {
+//         name: "Sports Car",
+//         href: "/boats ",
+//         subcategories: [
+//           { name: "Coupe", href: "/boats " },
+//           { name: "Convertible", href: "/boats " },
+//           { name: "Supercar", href: "/boats " },
+//         ],
+//       },
+//     ],
+//   },
+//   { name: "About Us", href: "/about-us" },
+//   { name: "Members", href: "/members" },
+// ];
 
+let menuItems: any;
 export default function CombinedNavigation() {
   const [isSticky, setIsSticky] = useState(false);
   const pathname = usePathname();
   const [hoveredItem, setHoveredItem] = useState<any>(null);
   const [activeItem, setActiveItem] = useState<string | null>(null);
   useEffect(() => {
+    menuItems = JSON.parse(localStorage.getItem("key") ?? "");
+
     const handleScroll = () => {
       setIsSticky(window.scrollY > 100);
     };
@@ -83,7 +86,7 @@ export default function CombinedNavigation() {
     <>
       <nav className="hidden lg:block bg-sky-100 text-[#00008b] py-2 sticky top-0 z-50 px-4">
         <ul className="flex justify-center space-x-8">
-          {menuItems.map((item) => (
+          {menuItems?.map((item) => (
             <li key={item.name} className="relative group">
               <Link
                 href={item.href}
@@ -151,7 +154,7 @@ export default function CombinedNavigation() {
         {isSticky && (
           <nav className="container mx-auto px-4 py-4">
             <ul className="flex justify-center space-x-8">
-              {menuItems.map((item) => (
+              {menuItems?.map((item) => (
                 <li key={item?.name} className="relative">
                   {item?.categories ? (
                     <DropdownMenu>

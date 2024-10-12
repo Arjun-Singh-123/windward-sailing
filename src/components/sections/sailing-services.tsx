@@ -15,7 +15,8 @@ const services = [
   },
   {
     title: "Everyone can Captain a Duffy Boat",
-    description: "Members",
+    description:
+      "Renting a Duffy boat in Newport Beach Bay offers a relaxing and enjoyable way to explore the scenic waterfront. These electric boats glide smoothly across the calm waters, allowing you to take in the beauty of the surrounding homes, yachts, and nature at your own pace. Enjoy a tranquil experience as you cruise past charming waterfront homes, harbors, and the iconic Balboa Island. Whether you're with friends, family, work team building or on a romantic outing, a Duffy boat provides a cozy and intimate setting to enjoy a picnic, sip on drinks, and soak in the sunset over the bay. The ease of operation makes it accessible for all, adding to the carefree enjoyment of Newport Beach’s coastal charm.",
   },
   {
     title: "Your Cruise — With our Captain at the Helm ",

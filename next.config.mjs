@@ -23,8 +23,9 @@ const nextConfig = {
       protocol: "https",
       hostname,
     })),
+    // unoptimized: true,
   },
-
+  // output: "export",
   eslint: {
     ignoreDuringBuilds: true,
   },

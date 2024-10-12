@@ -22,7 +22,6 @@ const MemberCard: React.FC<MemberProps> = ({
   phone,
   index,
 }) => {
-  console.log("checking index", index);
   return (
     <Card
       className={`relative border-t-[0.625rem] pt-12 m-2 mt-6 ${

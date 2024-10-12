@@ -11,7 +11,7 @@ export default function MemberShipFees() {
         title="About Us"
         description={description}
         membership={true}
-        imageUrl="/images/about.jpg"
+        imageUrl="/images/membership-fee.png"
         image={true}
       />
     </>

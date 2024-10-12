@@ -1,4 +1,3 @@
-"use client";
 // src/app/products/[id]/page.tsx
 import React from "react";
 
@@ -41,15 +40,31 @@ const mockData: any = {
     image: "/path/to/image2.jpg",
   },
 };
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+// This function generates static parameters for each product
+export function generateStaticParams() {
+  return Object.keys(mockData).map((key) => ({
+    id: key, // Use the product ID as the slug
+  }));
+}
 
-const ProductPage = () => {
-  const { id } = useParams();
+const ProductPage = ({ params }: PageProps) => {
+  const { id } = params; // Get the product ID from the params
 
-  const product = mockData[id as string];
+  const product = mockData[id]; // Fetch the product data based on the ID
 
   if (!product) {
-    return <div>Product not found</div>;
+    return <div>Product not found</div>; // Handle case where product is not found
   }
+  // const product = mockData[id as string];
+
+  // if (!product) {
+  //   return <div>Product not found</div>;
+  // }
 
   return (
     <div className="flex flex-col items-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)]">

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -19,8 +19,7 @@ interface MemberProps {
   about?: string;
   email?: string;
   phone?: string;
-  current?: number;
-  index?: number;
+  isActive?: boolean;
 }
 
 const MemberCard: React.FC<MemberProps> = ({
@@ -29,25 +28,20 @@ const MemberCard: React.FC<MemberProps> = ({
   about,
   email,
   phone,
-  current,
-  index,
+
+  isActive,
 }) => {
-  console.log("Rendering MemberCard:", {
-    current,
-    index,
-  });
+  console.log("Rendering MemberCard:", { isActive });
   return (
     <Card
-      className={`relative rounded-none border pt-20 ${
-        current === index ? "border-flatBlue" : "border-black"
+      className={`relative rounded-none border border-flatBlue pt-20 ${
+        isActive ? "md:border-flatBlue" : "md:border-black"
       } h-[400px]`}
     >
       <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
         <div
           className={`w-20 h-20 rounded-full overflow-hidden  ${
-            index === current
-              ? "border-2 border-flatBlue"
-              : "border-2 border-gray-300"
+            isActive ? "border-2 border-flatBlue" : "border-2 border-gray-300"
           }   shadow-lg`}
         >
           <Image
@@ -170,20 +164,25 @@ export default function MemberCarousel() {
         </div>
 
         <CarouselContent className="-ml-2 md:-ml-4  ">
-          {members?.map((member, index) => (
-            <CarouselItem
-              key={index}
-              className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3"
-            >
-              <div
-                className={`${
-                  index === current ? "scale-100" : "scale-100   "
-                } transition-all duration-300 h-full`}
+          {members?.map((member, index) => {
+            console.log("scroll snap number", api?.selectedScrollSnap());
+            console.log("index number", index);
+
+            return (
+              <CarouselItem
+                key={index}
+                className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3"
               >
-                <MemberCard {...member} current={current} index={index} />
-              </div>
-            </CarouselItem>
-          ))}
+                <div
+                  className={`${
+                    index === current ? "scale-100" : "scale-100   "
+                  } transition-all duration-300 h-full`}
+                >
+                  <MemberCard {...member} isActive={current === index - 1} />
+                </div>
+              </CarouselItem>
+            );
+          })}
         </CarouselContent>
         {/* <div className="hidden md:block"> */}
         {/* <CarouselPrevious /> */}

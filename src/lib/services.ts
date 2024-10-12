@@ -1,3 +1,4 @@
+import { FooterContent } from "@/components/sections/admin-footer";
 import { Tables } from "../../database.types";
 import { supabase } from "./supabase";
 
@@ -51,3 +52,30 @@ export const fetchVehicleAmenities = async () => {
     throw error;
   }
 };
+
+export async function getFooterContent() {
+  const { data, error } = await supabase
+    .from("footer_content")
+    .select("*")
+    .single();
+
+  if (error) throw error;
+  if (data && Object.keys(data).length === 0) {
+    console.log("No footer content found in the database");
+    // Handle the case when no data is found
+    return {};
+    return;
+  }
+  return data;
+}
+
+export async function updateFooterContent(content: Partial<FooterContent>) {
+  const { data, error } = await supabase
+    .from("footer_content")
+    .update(content)
+    .eq("id", content.id ?? "")
+    .single();
+
+  if (error) throw error;
+  return data;
+}
