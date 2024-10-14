@@ -2,6 +2,14 @@ import { cursiveHeadingFont, mainHeadingFont } from "@/app/ui/fonts";
 import Image from "next/image";
 import DecoratorLine from "../common/decorator-icon-line";
 
+interface Amenity {
+  label: string;
+  value: string;
+}
+
+interface AmenitiesDisplayProps {
+  amenities: Amenity[];
+}
 const LegendComponent = ({ text }: { text: string }) => {
   return (
     <div className="relative inline-block">
@@ -12,12 +20,65 @@ const LegendComponent = ({ text }: { text: string }) => {
   );
 };
 
-const TableRow = ({ label, value }: { label: string; value: string }) => (
-  <div className="columns-1   md:columns-2 border-b border-gray-400">
-    <div className="py-1 px-2 font-semibold text-right">{label}:</div>
-    <div className="py-1 px-2">{value}</div>
-  </div>
-);
+// const TableRow = ({ label, value }: { label: string; value: string }) => (
+//   <div className="columns-1   md:columns-2 border-b border-gray-400">
+//     <div className="py-1 px-2 font-semibold text-right">{label}:</div>
+//     <div className="py-1 px-2">{value}</div>
+//   </div>
+// );
+
+const AmenitiesDisplay: React.FC<AmenitiesDisplayProps> = ({ amenities }) => {
+  return (
+    <div className="  p-6 rounded-lg shadow-md">
+      {/* <h2 className="text-2xl font-bold mb-6 text-gray-800">Amenities</h2> */}
+      <div className="columns-1 md:columns-2 space-y-4">
+        {amenities.map((item, index) => (
+          <div
+            key={index}
+            className="flex justify-between py-2 border-b border-gray-400 last:border-b-0"
+          >
+            <span className="font-medium text-gray-700">{item.label}</span>
+            <span className="text-gray-600">{item.value}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// const AmenitiesDisplay: React.FC<AmenitiesDisplayProps> = ({ amenities }) => {
+//   const midpoint = Math.ceil(amenities.length / 2);
+
+//   return (
+//     <div className="bg-white p-6 rounded-lg shadow-md">
+//       <h2 className="text-2xl font-bold mb-6 text-gray-800">Amenities</h2>
+//       <div className="md:columns-2 gap-8">
+//         <div className="mb-6 md:mb-0">
+//           {amenities.slice(0, midpoint).map((item, index) => (
+//             <div
+//               key={index}
+//               className="flex justify-between py-2 border-b border-gray-200 last:border-b-0"
+//             >
+//               <span className="font-medium text-gray-700">{item.label}</span>
+//               <span className="text-gray-600">{item.value}</span>
+//             </div>
+//           ))}
+//         </div>
+//         <div className="md:mt-0">
+//           {amenities.slice(midpoint).map((item, index) => (
+//             <div
+//               key={index + midpoint}
+//               className="flex justify-between py-2 border-b border-gray-200 last:border-b-0"
+//             >
+//               <span className="font-medium text-gray-700">{item.label}</span>
+//               <span className="text-gray-600">{item.value}</span>
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 export default function YachtDescription() {
   const amenities = [
@@ -101,29 +162,15 @@ export default function YachtDescription() {
             </p>
           </div>
           <div className="md:w-1/2">
-            <div className="max-w-4xl mx-auto bg-sky p-6 rounded-lg shadow-lg relative">
+            <div className="max-w-4xl h-auto mx-auto bg-sky p-6 pb-20 rounded-lg shadow-lg relative">
               <LegendComponent text="Vessel Amenities" />
-              <div className=" bg-sky rounded-lg overflow-hidden   gap-4">
+              <div className="bg-sky rounded-lg overflow-hidden gap-4">
                 <div>
-                  {amenities.map((item, index) => (
-                    <TableRow
-                      key={index}
-                      label={item.label}
-                      value={item.value}
-                    />
-                  ))}
+                  <AmenitiesDisplay amenities={amenities} />
                 </div>
-                {/* <div>
-                  {amenities.slice(16).map((item, index) => (
-                    <TableRow
-                      key={index}
-                      label={item.label}
-                      value={item.value}
-                    />
-                  ))}
-                </div> */}
               </div>
-              <div className="absolute md:-bottom-7 md:right-4 -bottom-6 -right-4 w-28 h-28 transform rotate-[335deg]">
+
+              <div className="absolute md:-bottom-7 md:right-4 bottom-0 right-4 w-28 h-28 transform rotate-[335deg]">
                 <Image
                   src="/images/spec-boat-icon.png"
                   alt="Sailboat logo"

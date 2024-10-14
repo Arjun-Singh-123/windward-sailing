@@ -100,10 +100,9 @@ export const fetchNavItems = async () => {
       nav_sections (
         id,
         name,
-        href,
-        status,
-        nav_subsections (
-          id,
+        href,  
+        nav_subsections ( 
+          id,   
           name,
           href,
           status
@@ -968,7 +967,7 @@ const DynamicFooter = () => {
         );
       case "links":
         return (
-          <div className="columns-2 md:columns-auto text-xs whitespace-nowrap">
+          <div className="columns-2 md:columns-3 text-xs whitespace-nowrap">
             {(field?.value as { text: string; url: string }[])?.map(
               (link, index) => (
                 <Link
@@ -1032,29 +1031,30 @@ const DynamicFooter = () => {
           />
         </div>
 
-        <div className="md:flex md:justify-center">
-          <div>
-            {logoField && (
-              <Link href="/" className="flex items-center space-x-2 mb-4">
-                {renderField(logoField)}
-              </Link>
-            )}
-            {Object.values(footerContent?.content ?? {}).map(
-              (field) =>
-                // if any field is added in hte code pelase do add that label so that it wont render in the footer
-                field.type !== "links" &&
-                field.label !== "Copyright" &&
-                field.label !== "Logo" &&
-                field.label !== "boat" &&
-                field.label !== "Background Image" && (
-                  <div key={field.label} className="mb-4">
-                    <h3 className="text-xl font-bold mb-2">{field.label}</h3>
-                    {renderField(field)}
-                  </div>
-                )
-            )}
-          </div>
-          {/* <div className="mt-2">
+        <section className="w-full p-4  ">
+          <div className=" container mx-auto   max-w-6xl md:flex md:justify-center gap-4">
+            <div className="flex-1">
+              {logoField && (
+                <Link href="/" className="flex items-center space-x-2 mb-4">
+                  {renderField(logoField)}
+                </Link>
+              )}
+              {Object.values(footerContent?.content ?? {}).map(
+                (field) =>
+                  // if any field is added in hte code pelase do add that label so that it wont render in the footer
+                  field.type !== "links" &&
+                  field.label !== "Copyright" &&
+                  field.label !== "Logo" &&
+                  field.label !== "boat" &&
+                  field.label !== "Background Image" && (
+                    <div key={field.label} className="mb-4">
+                      <h3 className="text-xl font-bold mb-2">{field.label}</h3>
+                      {renderField(field)}
+                    </div>
+                  )
+              )}
+            </div>
+            {/* <div className="mt-2">
             {Object.values(footerContent.content).filter(
               (field) => field.type === "links"
             ) &&
@@ -1073,23 +1073,27 @@ const DynamicFooter = () => {
               }
           </div> */}
 
-          <div className="mt-2">
-            {footerContent?.content &&
-              Object.values(footerContent.content)
-                .filter((field) => field.type === "links")
-                .map((field, index) => (
-                  <div key={index}>{renderField(field)} </div>
-                ))}
+            <div className="flex-1 mt-2">
+              {footerContent?.content &&
+                Object.values(footerContent.content)
+                  .filter((field) => field.type === "links")
+                  .map((field, index) => (
+                    <div key={index}>{renderField(field)} </div>
+                  ))}
+
+              <div className="mt-8">
+                <Separator className="my-4 bg-black" />
+                <div className="text-justify">
+                  <p>
+                    {getFieldByLabel("Copyright")
+                      ?.value.toString()
+                      .replace("{year}", currentYear.toString())}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <Separator className="my-8 bg-black" />
-        <div className="text-justify">
-          <p>
-            {getFieldByLabel("Copyright")
-              ?.value.toString()
-              .replace("{year}", currentYear.toString())}
-          </p>
-        </div>
+        </section>
       </div>
     </footer>
   );

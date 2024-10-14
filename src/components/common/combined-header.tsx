@@ -166,7 +166,7 @@ export default function CombinedNavigation() {
         </ul>
       </nav> */}
 
-      <nav className="hidden lg:block bg-sky-100 text-[#00008b] py-2 sticky top-0 z-50 px-4">
+      <nav className="hidden lg:block bg-sky-100   py-2 sticky top-0 z-50 px-4">
         <ul className="flex justify-center space-x-8">
           {menuItems &&
             menuItems?.map((item: any) => (
@@ -179,14 +179,11 @@ export default function CombinedNavigation() {
                       : "text-gray-800 hover:text-blue-600 hover:bg-blue-50"
                   }`}
                   onMouseEnter={() => {
-                    {
-                      console.log("checking item name", item);
-                    }
                     setActiveItem(item.href);
                   }}
                   onMouseLeave={() => setActiveItem(null)}
                 >
-                  {item?.name ?? "hello"}
+                  {item?.name}
                 </Link>
                 {item && (
                   <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 invisible group-hover:visible">
@@ -208,7 +205,8 @@ export default function CombinedNavigation() {
                               (subcategory: any) => (
                                 <Link
                                   key={subcategory.name}
-                                  href={category.href}
+                                  // href={category.href}
+                                  href="/boats"
                                   className={`block px-4 py-2 text-sm ${
                                     isActive(subcategory.href)
                                       ? "bg-blue-100 text-blue-600"
