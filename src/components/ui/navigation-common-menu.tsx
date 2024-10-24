@@ -39,7 +39,7 @@ const NavigationCommonMenu = () => {
           {menuItems?.map((item) => (
             <li key={item.id} className="relative group">
               <Link
-                href={item.href}
+                href={item?.name && item.name === "Boats" ? "#" : item.href}
                 className={cn(
                   "block px-4 py-2 text-sm font-regular400 transition-colors duration-300",
                   isActive(item.href)
