@@ -474,7 +474,7 @@ const Header = () => {
                     </Button>
                   </SheetTrigger>
                   <SheetContent side="left" className="bg-[#c5dfff] w-64 p-0">
-                    <SheetHeader className="p-4 border-b">
+                    <SheetHeader className="p-4 border-b text-black">
                       <SheetTitle>Menu</SheetTitle>
                     </SheetHeader>
                     <nav className="flex flex-col">
@@ -511,14 +511,14 @@ const Header = () => {
                                         {section.name}
                                       </span>
 
-                                      <ChevronRight className="h-4 w-4" />
+                                      <ChevronRight className="h-4 w-4 text-black" />
                                     </CollapsibleTrigger>
                                     <CollapsibleContent>
                                       <Link
                                         // href={section.href ?? ""}
 
                                         href={`/boats/${section.href}`}
-                                        className="block p-4 pl-12 text-sm font-medium"
+                                        className="block p-4 pl-12 text-sm font-medium text-black"
                                         onClick={() => setIsSheetOpen(false)}
                                       >
                                         All {section.name}

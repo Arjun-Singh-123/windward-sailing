@@ -9,6 +9,8 @@ import YachtGallery, {
   SpecificationsSection,
 } from "@/components/sections/specification";
 import YachtDescription from "@/components/sections/amenity";
+import NotFoundNew from "@/components/sections/not-found-page";
+import NoDataFound from "@/components/common/no-data-found";
 
 const ExternalImages = [
   {
@@ -193,7 +195,12 @@ export default async function SubcategoryPage({
     // enabled: !!params.subcategory, // Only run query if subcategory exists
   });
 
-  if (!productDetail) return <div>Product not found</div>;
+  if (!productDetail)
+    return (
+      <div>
+        <NoDataFound />
+      </div>
+    );
   // const { product_details } = product;
   const { specifications, amenities, images } = productDetail;
 
