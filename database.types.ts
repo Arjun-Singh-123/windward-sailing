@@ -9,179 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      categories: {
-        Row: {
-          icon_name: string | null
-          id: number
-          is_product_category: boolean | null
-          menu_name: string
-          name: string
-        }
-        Insert: {
-          icon_name?: string | null
-          id?: number
-          is_product_category?: boolean | null
-          menu_name: string
-          name: string
-        }
-        Update: {
-          icon_name?: string | null
-          id?: number
-          is_product_category?: boolean | null
-          menu_name?: string
-          name?: string
-        }
-        Relationships: []
-      }
-      categoriesd: {
-        Row: {
-          created_at: string | null
-          href: string
-          id: string
-          name: string
-          order_index: number
-          updated_at: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          href: string
-          id?: string
-          name: string
-          order_index: number
-          updated_at?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          href?: string
-          id?: string
-          name?: string
-          order_index?: number
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      categoryss: {
-        Row: {
-          id: number
-          name: string
-          type: string
-        }
-        Insert: {
-          id?: number
-          name: string
-          type: string
-        }
-        Update: {
-          id?: number
-          name?: string
-          type?: string
-        }
-        Relationships: []
-      }
-      change: {
-        Row: {
-          id: number
-          name: string
-          subcategory_id: number | null
-        }
-        Insert: {
-          id?: number
-          name: string
-          subcategory_id?: number | null
-        }
-        Update: {
-          id?: number
-          name?: string
-          subcategory_id?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "products_subcategory_id_fkey"
-            columns: ["subcategory_id"]
-            isOneToOne: false
-            referencedRelation: "subcategories"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      footer_content: {
-        Row: {
-          address: string | null
-          address_label: string | null
-          club_name: string | null
-          copyright_text: string | null
-          created_at: string | null
-          footer_image_url: string | null
-          id: string
-          logo_url: string | null
-          navigation_links: Json | null
-          service_area: string | null
-          service_area_label: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          address?: string | null
-          address_label?: string | null
-          club_name?: string | null
-          copyright_text?: string | null
-          created_at?: string | null
-          footer_image_url?: string | null
-          id?: string
-          logo_url?: string | null
-          navigation_links?: Json | null
-          service_area?: string | null
-          service_area_label?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          address?: string | null
-          address_label?: string | null
-          club_name?: string | null
-          copyright_text?: string | null
-          created_at?: string | null
-          footer_image_url?: string | null
-          id?: string
-          logo_url?: string | null
-          navigation_links?: Json | null
-          service_area?: string | null
-          service_area_label?: string | null
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      footer_contentn: {
-        Row: {
-          fields: Json
-          id: string
-        }
-        Insert: {
-          fields?: Json
-          id?: string
-        }
-        Update: {
-          fields?: Json
-          id?: string
-        }
-        Relationships: []
-      }
-      footer_contents: {
-        Row: {
-          created_at: string | null
-          footer_data: Json
-          id: number
-        }
-        Insert: {
-          created_at?: string | null
-          footer_data: Json
-          id?: number
-        }
-        Update: {
-          created_at?: string | null
-          footer_data?: Json
-          id?: number
-        }
-        Relationships: []
-      }
       footer_contentsa: {
         Row: {
           content: Json
@@ -194,72 +21,6 @@ export type Database = {
         Update: {
           content?: Json
           id?: string
-        }
-        Relationships: []
-      }
-      header_details: {
-        Row: {
-          address: string
-          buttons: Json
-          email: string
-          hours_of_operation: string
-          id: number
-          logo: string
-          phone: string
-          social_media: Json
-        }
-        Insert: {
-          address: string
-          buttons: Json
-          email: string
-          hours_of_operation: string
-          id?: number
-          logo: string
-          phone: string
-          social_media: Json
-        }
-        Update: {
-          address?: string
-          buttons?: Json
-          email?: string
-          hours_of_operation?: string
-          id?: number
-          logo?: string
-          phone?: string
-          social_media?: Json
-        }
-        Relationships: []
-      }
-      header_detailsd: {
-        Row: {
-          address: string
-          buttons: Json
-          email: string
-          hours_of_operation: string
-          id: string
-          logo: string
-          phone: string
-          social_media: Json
-        }
-        Insert: {
-          address: string
-          buttons: Json
-          email: string
-          hours_of_operation: string
-          id?: string
-          logo: string
-          phone: string
-          social_media: Json
-        }
-        Update: {
-          address?: string
-          buttons?: Json
-          email?: string
-          hours_of_operation?: string
-          id?: string
-          logo?: string
-          phone?: string
-          social_media?: Json
         }
         Relationships: []
       }
@@ -314,92 +75,14 @@ export type Database = {
         }
         Relationships: []
       }
-      menu_items: {
-        Row: {
-          created_at: string | null
-          href: string
-          id: string
-          name: string
-          order_index: number
-          parent_id: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          href: string
-          id?: string
-          name: string
-          order_index: number
-          parent_id?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          href?: string
-          id?: string
-          name?: string
-          order_index?: number
-          parent_id?: string | null
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "menu_items_parent_id_fkey"
-            columns: ["parent_id"]
-            isOneToOne: false
-            referencedRelation: "menu_items"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      menu_itemsd: {
-        Row: {
-          created_at: string | null
-          href: string
-          id: string
-          is_category: boolean | null
-          name: string
-          order_index: number
-          parent_id: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          href: string
-          id?: string
-          is_category?: boolean | null
-          name: string
-          order_index: number
-          parent_id?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          href?: string
-          id?: string
-          is_category?: boolean | null
-          name?: string
-          order_index?: number
-          parent_id?: string | null
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "menu_itemsd_parent_id_fkey"
-            columns: ["parent_id"]
-            isOneToOne: false
-            referencedRelation: "menu_itemsd"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       nav_items: {
         Row: {
           created_at: string | null
           href: string
           id: string
           name: string
-          status: string | null
+          priority: number | null
+          status: string
           updated_at: string | null
         }
         Insert: {
@@ -407,7 +90,8 @@ export type Database = {
           href: string
           id?: string
           name: string
-          status?: string | null
+          priority?: number | null
+          status?: string
           updated_at?: string | null
         }
         Update: {
@@ -415,7 +99,8 @@ export type Database = {
           href?: string
           id?: string
           name?: string
-          status?: string | null
+          priority?: number | null
+          status?: string
           updated_at?: string | null
         }
         Relationships: []
@@ -426,169 +111,37 @@ export type Database = {
           href: string
           id: string
           name: string
-          nav_item_id: string | null
-          status: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          href: string
-          id?: string
-          name: string
-          nav_item_id?: string | null
-          status?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          href?: string
-          id?: string
-          name?: string
-          nav_item_id?: string | null
-          status?: string | null
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "nav_sections_nav_item_id_fkey"
-            columns: ["nav_item_id"]
-            isOneToOne: false
-            referencedRelation: "nav_items"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      nav_subsections: {
-        Row: {
-          created_at: string | null
-          href: string
-          id: string
-          name: string
-          section_id: string
-          status: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          href: string
-          id?: string
-          name: string
-          section_id: string
-          status?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          href?: string
-          id?: string
-          name?: string
-          section_id?: string
-          status?: string | null
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "nav_subsections_section_id_fkey"
-            columns: ["section_id"]
-            isOneToOne: false
-            referencedRelation: "nav_sections"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      navigation_items: {
-        Row: {
-          created_at: string | null
-          id: string
-          is_category: boolean | null
-          name: string
-          order_index: number
           parent_id: string | null
-          slug: string
+          slug: string | null
+          status: string
           updated_at: string | null
         }
         Insert: {
           created_at?: string | null
+          href: string
           id?: string
-          is_category?: boolean | null
           name: string
-          order_index: number
           parent_id?: string | null
-          slug: string
+          slug?: string | null
+          status?: string
           updated_at?: string | null
         }
         Update: {
           created_at?: string | null
+          href?: string
           id?: string
-          is_category?: boolean | null
           name?: string
-          order_index?: number
           parent_id?: string | null
-          slug?: string
+          slug?: string | null
+          status?: string
           updated_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "navigation_items_parent_id_fkey"
+            foreignKeyName: "nav_sections_parent_id_fkey"
             columns: ["parent_id"]
             isOneToOne: false
-            referencedRelation: "navigation_items"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      posts: {
-        Row: {
-          content: string | null
-          created_at: string
-          id: string
-          image_url: string | null
-          title: string
-        }
-        Insert: {
-          content?: string | null
-          created_at?: string
-          id?: string
-          image_url?: string | null
-          title: string
-        }
-        Update: {
-          content?: string | null
-          created_at?: string
-          id?: string
-          image_url?: string | null
-          title?: string
-        }
-        Relationships: []
-      }
-      product: {
-        Row: {
-          description: string
-          id: number
-          name: string
-          price: number
-          subcategory_id: number | null
-        }
-        Insert: {
-          description: string
-          id?: number
-          name: string
-          price: number
-          subcategory_id?: number | null
-        }
-        Update: {
-          description?: string
-          id?: number
-          name?: string
-          price?: number
-          subcategory_id?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "product_subcategory_id_fkey"
-            columns: ["subcategory_id"]
-            isOneToOne: false
-            referencedRelation: "subcategories"
+            referencedRelation: "nav_items"
             referencedColumns: ["id"]
           },
         ]
@@ -596,73 +149,99 @@ export type Database = {
       product_details: {
         Row: {
           amenities: Json | null
+          created_at: string | null
           description: string | null
-          hero_image: string | null
+          hero_image: string[] | null
           icon: string | null
-          id: number
+          id: string
           images: Json | null
-          product_id: number | null
+          product_id: string | null
           specifications: Json | null
           subtitle: string | null
-          title: string | null
+          title: string
+          updated_at: string | null
         }
         Insert: {
           amenities?: Json | null
+          created_at?: string | null
           description?: string | null
-          hero_image?: string | null
+          hero_image?: string[] | null
           icon?: string | null
-          id?: number
+          id?: string
           images?: Json | null
-          product_id?: number | null
+          product_id?: string | null
           specifications?: Json | null
           subtitle?: string | null
-          title?: string | null
+          title: string
+          updated_at?: string | null
         }
         Update: {
           amenities?: Json | null
+          created_at?: string | null
           description?: string | null
-          hero_image?: string | null
+          hero_image?: string[] | null
           icon?: string | null
-          id?: number
+          id?: string
           images?: Json | null
-          product_id?: number | null
+          product_id?: string | null
           specifications?: Json | null
           subtitle?: string | null
-          title?: string | null
+          title?: string
+          updated_at?: string | null
         }
         Relationships: [
           {
             foreignKeyName: "product_details_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
-            referencedRelation: "product"
+            referencedRelation: "products"
             referencedColumns: ["id"]
           },
         ]
       }
-      register: {
+      products: {
         Row: {
           created_at: string | null
-          email: string
-          id: number
-          name: string | null
-          password: string
+          description: string | null
+          href: string | null
+          id: string
+          image_url: string | null
+          name: string
+          nav_section_id: string | null
+          price: number
+          updated_at: string | null
         }
         Insert: {
           created_at?: string | null
-          email: string
-          id?: number
-          name?: string | null
-          password: string
+          description?: string | null
+          href?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          nav_section_id?: string | null
+          price: number
+          updated_at?: string | null
         }
         Update: {
           created_at?: string | null
-          email?: string
-          id?: number
-          name?: string | null
-          password?: string
+          description?: string | null
+          href?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          nav_section_id?: string | null
+          price?: number
+          updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "products_nav_section_id_fkey"
+            columns: ["nav_section_id"]
+            isOneToOne: false
+            referencedRelation: "nav_sections"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       rentals: {
         Row: {
@@ -682,117 +261,6 @@ export type Database = {
         }
         Relationships: []
       }
-      subcategories: {
-        Row: {
-          category_id: number | null
-          id: number
-          name: string
-        }
-        Insert: {
-          category_id?: number | null
-          id?: number
-          name: string
-        }
-        Update: {
-          category_id?: number | null
-          id?: number
-          name?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "subcategories_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "categories"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      subcategoriesd: {
-        Row: {
-          category_id: string | null
-          created_at: string | null
-          href: string
-          id: string
-          name: string
-          order_index: number
-          updated_at: string | null
-        }
-        Insert: {
-          category_id?: string | null
-          created_at?: string | null
-          href: string
-          id?: string
-          name: string
-          order_index: number
-          updated_at?: string | null
-        }
-        Update: {
-          category_id?: string | null
-          created_at?: string | null
-          href?: string
-          id?: string
-          name?: string
-          order_index?: number
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "subcategoriesd_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "categoriesd"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      subcategory: {
-        Row: {
-          category_id: number | null
-          id: number
-          name: string
-        }
-        Insert: {
-          category_id?: number | null
-          id?: number
-          name: string
-        }
-        Update: {
-          category_id?: number | null
-          id?: number
-          name?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "subcategory_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "categoryss"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      vehicle_details: {
-        Row: {
-          content: Json
-          id: number
-          section_type: string
-          vehicle_id: number | null
-        }
-        Insert: {
-          content: Json
-          id?: number
-          section_type: string
-          vehicle_id?: number | null
-        }
-        Update: {
-          content?: Json
-          id?: number
-          section_type?: string
-          vehicle_id?: number | null
-        }
-        Relationships: []
-      }
       vehicle_details_new: {
         Row: {
           content: Json | null
@@ -808,27 +276,6 @@ export type Database = {
           content?: Json | null
           id?: number
           vehicle_id?: number | null
-        }
-        Relationships: []
-      }
-      vehicle_detailss: {
-        Row: {
-          created_at: string | null
-          id: number
-          vehicle_name: string
-          vehicle_type: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          id?: number
-          vehicle_name: string
-          vehicle_type?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          id?: number
-          vehicle_name?: string
-          vehicle_type?: string | null
         }
         Relationships: []
       }
@@ -928,4 +375,19 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof PublicSchema["CompositeTypes"]
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
+    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never

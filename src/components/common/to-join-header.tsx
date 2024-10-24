@@ -75,7 +75,7 @@ export const ToJoinHeader = ({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <span className=" text-[14px]">{displayText(text)}</span>
+        <span className=" text-[1rem]">{displayText(text)}</span>
         {/* <span className="whitespace-nowrap ">{text}</span> */}
       </h3>
 

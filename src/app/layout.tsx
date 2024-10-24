@@ -42,15 +42,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>
+      <body
+        className={`${inter.className} antialiased flex flex-col min-h-screen overflow-x-hidden`}
+      >
         <Providers>
-          <StickyHeader />
+          {/* <StickyHeader /> */}
 
           <Header />
 
-          <SpeedInsights />
-          {children}
-
+          <main className="flex-grow">
+            <SpeedInsights />
+            {children}
+          </main>
           <ReactQueryDevtools initialIsOpen={false} />
           <ScrollToTop />
           <Toaster richColors={true} duration={3000} position="top-right" />

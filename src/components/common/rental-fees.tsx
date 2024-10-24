@@ -397,7 +397,7 @@ export default function RentalFeesTable() {
                 );
               })} */}
 
-              {rentalData.members.map((memberRow: any, index: number) => {
+              {rentalData?.members?.map((memberRow: any, index: number) => {
                 const nonMemberRow = rentalData.non_members[index];
                 return (
                   <React.Fragment key={index}>

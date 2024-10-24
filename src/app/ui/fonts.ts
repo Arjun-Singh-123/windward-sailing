@@ -11,16 +11,15 @@ import { Great_Vibes } from "next/font/google";
 export const cursiveHeadingFont = Great_Vibes({
   weight: ["400"],
   subsets: ["latin"],
-  display: "swap",
+  // display: "swap",
 });
 // Importing fonts
 export const contentFont = Roboto({
   subsets: ["latin"],
-  weight: ["400", "700"], // You can specify weights as needed
-});    
+  weight: ["400", "700"],
+});
 
 export const mainHeadingFont = Prata({
   subsets: ["latin"],
   weight: ["400"],
 });
-      

@@ -27,7 +27,7 @@ export default function BoatFeatures() {
     <div className="w-full max-w-4xl mx-auto">
       <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {features.map((feature, index) => (
-          <div key={index} className="  flex  p-3 rounded-lg shadow-sm">
+          <div key={index} className="  flex  p-3 rounded-lg  ">
             <DotIcon />
             <span> {feature}</span>
           </div>

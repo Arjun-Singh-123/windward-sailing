@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Anchor, AnchorIcon } from "lucide-react";
@@ -755,9 +755,6 @@ const VesselOverview = () => {
 //   );
 // };
 
-import Image from "next/image";
-import { ChevronLeft, ChevronRight, Compass } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { fetchVehicleAmenities, getAmenitiess } from "@/lib/services";
 import { useQuery } from "@tanstack/react-query";
 import LegendComponent from "../common/left-triangle";
@@ -771,62 +768,62 @@ import {
 } from "@/components/ui/carousel";
 const images = [
   {
-    src: "/images/benefits.jpg?height=300&width=400&text=CATALINA_30_SAND_DOLLAR1",
+    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4543.jpg",
     alt: "CATALINA 30 SAND DOLLAR1",
     caption: "CATALINA_30_SAND_DOLLAR1",
   },
   {
-    src: "/images/sarah.jpg?height=300&width=400&text=CATALINA_30_SAND_DOLLAR2",
+    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4544.jpg",
     alt: "CATALINA 30 SAND DOLLAR2",
     caption: "CATALINA_30_SAND_DOLLAR2",
   },
   {
-    src: "/images/emily.jpg?height=300&width=400&text=CATALINA_30_SAND_DOLLAR3",
+    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4545.jpg",
     alt: "CATALINA 30 SAND DOLLAR3",
     caption: "CATALINA_30_SAND_DOLLAR3",
   },
   {
-    src: "/images/benefits.jpg?height=300&width=400&text=CATALINA_30_SAND_DOLLAR4",
+    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4546.jpg",
     alt: "CATALINA 30 SAND DOLLAR4",
     caption: "CATALINA_30_SAND_DOLLAR4",
   },
   {
-    src: "/images/benefits.jpg?height=300&width=400&text=CATALINA_30_SAND_DOLLAR1",
+    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4547.jpg",
     alt: "CATALINA 30 SAND DOLLAR1",
     caption: "CATALINA_30_SAND_DOLLAR1",
   },
   {
-    src: "/images/benefits.jpg?height=300&width=400&text=CATALINA_30_SAND_DOLLAR2",
+    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4548.jpg",
     alt: "CATALINA 30 SAND DOLLAR2",
     caption: "CATALINA_30_SAND_DOLLAR2",
   },
   {
-    src: "/images/benefits.jpg?height=300&width=400&text=CATALINA_30_SAND_DOLLAR3",
+    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4549.jpg",
     alt: "CATALINA 30 SAND DOLLAR3",
     caption: "CATALINA_30_SAND_DOLLAR3",
   },
   {
-    src: "/images/benefits.jpg?height=300&width=400&text=CATALINA_30_SAND_DOLLAR4",
+    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4550.jpg",
     alt: "CATALINA 30 SAND DOLLAR4",
     caption: "CATALINA_30_SAND_DOLLAR4",
   },
   {
-    src: "/images/benefits.jpg?height=300&width=400&text=CATALINA_30_SAND_DOLLAR1",
+    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4551.jpg",
     alt: "CATALINA 30 SAND DOLLAR1",
     caption: "CATALINA_30_SAND_DOLLAR1",
   },
   {
-    src: "/images/benefits.jpg?height=300&width=400&text=CATALINA_30_SAND_DOLLAR2",
+    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4552.jpg",
     alt: "CATALINA 30 SAND DOLLAR2",
     caption: "CATALINA_30_SAND_DOLLAR2",
   },
   {
-    src: "/images/benefits.jpg?height=300&width=400&text=CATALINA_30_SAND_DOLLAR3",
+    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4553.jpg",
     alt: "CATALINA 30 SAND DOLLAR3",
     caption: "CATALINA_30_SAND_DOLLAR3",
   },
   {
-    src: "/images/about.jpg?height=300&width=400&text=CATALINA_30_SAND_DOLLAR4",
+    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4554.jpg",
     alt: "CATALINA 30 SAND DOLLAR4",
     caption: "CATALINA_30_SAND_DOLLAR4",
   },
@@ -915,18 +912,252 @@ const images = [
 //   },
 // ];
 
-export default function YachtGallery() {
-  // const [api, setApi] = React.useState<any>();
+const ImageModal = ({ isOpen, onClose, image }: any) => {
+  if (!isOpen) return null;
 
-  // const scrollPrev = React.useCallback(() => {
-  //   api?.scrollPrev();
-  // }, [api]);
+  console.log("image in modal compoennt", image);
 
-  // const scrollNext = React.useCallback(() => {
-  //   api?.scrollNext();
-  // }, [api]);
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
+      <div className="relative">
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 text-white text-2xl"
+        >
+          &times;
+        </button>
+        <Image
+          src="https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4546.jpg"
+          alt={image.alt}
+          layout="fill"
+          objectFit="cover"
+          className="rounded-lg"
+        />
+      </div>
+    </div>
+  );
+};
 
+// export default function YachtGallery() {
+//   // const [api, setApi] = React.useState<any>();
+
+//   // const scrollPrev = React.useCallback(() => {
+//   //   api?.scrollPrev();
+//   // }, [api]);
+
+//   // const scrollNext = React.useCallback(() => {
+//   //   api?.scrollNext();
+//   // }, [api]);
+
+//   const [startIndex, setStartIndex] = useState(0);
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+//   const [selectedImage, setSelectedImage] = useState(null);
+
+//   const nextSlide = () => {
+//     setStartIndex((prevIndex) => (prevIndex + 1) % (images.length - 3));
+//   };
+
+//   const prevSlide = () => {
+//     setStartIndex(
+//       (prevIndex) => (prevIndex - 1 + (images.length - 3)) % (images.length - 3)
+//     );
+//   };
+
+//   const openModal = (image) => {
+//     console.log("iamge before setting it ", image);
+//     setSelectedImage(image.src);
+//     setIsModalOpen(true);
+//   };
+
+//   const closeModal = () => {
+//     setIsModalOpen(false);
+//     setSelectedImage(null);
+//   };
+
+//   return (
+//     // <div className="container mx-auto px-4 py-8">
+//     //   <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-primary flex items-center">
+//     //     <Compass className="mr-2 h-6 w-6 sm:h-8 sm:w-8" />
+//     //     Exterior Photos
+//     //   </h2>
+//     //   <div className="relative">
+//     //     <Carousel setApi={setApi} className="w-full">
+//     //       <CarouselContent>
+//     //         {images.map((image, index) => (
+//     //           <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+//     //             <div className="p-1">
+//     //               <div className="relative aspect-[4/3] mb-2">
+//     //                 <Image
+//     //                   src={image.src}
+//     //                   alt={image.alt}
+//     //                   layout="fill"
+//     //                   objectFit="cover"
+//     //                   className="rounded-lg"
+//     //                 />
+//     //               </div>
+//     //               <p className="text-sm text-center text-muted-foreground">
+//     //                 {image.caption}
+//     //               </p>
+//     //             </div>
+//     //           </CarouselItem>
+//     //         ))}
+//     //       </CarouselContent>
+//     //       <CarouselPrevious className="hidden sm:flex -left-4 bg-background/80 hover:bg-background" />
+//     //       <CarouselNext className="hidden sm:flex -right-4 bg-background/80 hover:bg-background" />
+//     //     </Carousel>
+//     //   </div>
+//     //   <div className="flex justify-center space-x-4 mt-4 sm:hidden">
+//     //     <Button
+//     //       variant="outline"
+//     //       size="sm"
+//     //       onClick={scrollPrev}
+//     //       aria-label="Previous slide"
+//     //     >
+//     //       <ChevronLeft className="h-4 w-4 mr-2" />
+//     //       Previous
+//     //     </Button>
+//     //     <Button
+//     //       variant="outline"
+//     //       size="sm"
+//     //       onClick={scrollNext}
+//     //       aria-label="Next slide"
+//     //     >
+//     //       Next
+//     //       <ChevronRight className="h-4 w-4 ml-2" />
+//     //     </Button>
+//     //   </div>
+//     // </div>
+
+//     <div className="container mx-auto px-4 py-8">
+//       <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-[#1e3a8a] flex items-center">
+//         <Compass className="mr-2 h-6 w-6 sm:h-8 sm:w-8" />
+//         Exterior Photos
+//       </h2>
+//       <div className="relative">
+//         <div className="flex  sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 overflow-hidden">
+//           {images.slice(startIndex, startIndex + 4).map((image, index) => (
+//             <div
+//               key={index}
+//               className="flex-none w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+//               onClick={() => openModal(image)} // Open modal on click
+//             >
+//               <div className="relative aspect-[4/3] mb-2">
+//                 <Image
+//                   src={image.src}
+//                   alt={image.alt}
+//                   layout="fill"
+//                   objectFit="cover"
+//                   className="rounded-lg"
+//                 />
+//               </div>
+//               <p className="text-sm text-center text-gray-600">
+//                 {image.caption}
+//               </p>
+//             </div>
+//           ))}
+//         </div>
+//         <Button
+//           variant="outline"
+//           size="icon"
+//           className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white/80 hover:bg-white hidden sm:flex"
+//           onClick={prevSlide}
+//           aria-label="Previous slide"
+//         >
+//           <ChevronLeft className="h-6 w-6" />
+//         </Button>
+//         <Button
+//           variant="outline"
+//           size="icon"
+//           className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white/80 hover:bg-white hidden sm:flex"
+//           onClick={nextSlide}
+//           aria-label="Next slide"
+//         >
+//           <ChevronRight className="h-6 w-6" />
+//         </Button>
+//       </div>
+//       <div className="flex justify-center space-x-4 mt-4 sm:hidden">
+//         <Button
+//           variant="outline"
+//           size="sm"
+//           onClick={prevSlide}
+//           aria-label="Previous slide"
+//         >
+//           <ChevronLeft className="h-4 w-4 mr-2" />
+//           Previous
+//         </Button>
+//         <Button
+//           variant="outline"
+//           size="sm"
+//           onClick={nextSlide}
+//           aria-label="Next slide"
+//         >
+//           Next
+//           <ChevronRight className="h-4 w-4 ml-2" />
+//         </Button>
+//       </div>
+
+//       {/* Modal for displaying the image */}
+//       <ImageModal
+//         isOpen={isModalOpen}
+//         onClose={closeModal}
+//         image={selectedImage}
+//       />
+//     </div>
+//   );
+// }
+
+interface ImageProps {
+  src: string;
+  alt: string;
+  caption: string;
+  is360?: boolean;
+}
+
+interface ImageProps {
+  src: string;
+  alt: string;
+  caption: string;
+  is360?: boolean;
+}
+
+import Image from "next/image";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Compass,
+  ZoomIn,
+  ZoomOut,
+  Rotate3D,
+  Maximize,
+  Minimize,
+} from "lucide-react";
+
+interface ImageProps {
+  src: string;
+  alt: string;
+  caption: string;
+  is360?: boolean;
+}
+
+export default function YachtGallery({
+  images = [],
+  title = "External",
+}: {
+  images: ImageProps[];
+  title: string;
+}) {
   const [startIndex, setStartIndex] = useState(0);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
+    null
+  );
+  const [scale, setScale] = useState(1);
+  const [rotation, setRotation] = useState(0);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isCardboardView, setIsCardboardView] = useState(false);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const nextSlide = () => {
     setStartIndex((prevIndex) => (prevIndex + 1) % (images.length - 3));
@@ -938,73 +1169,102 @@ export default function YachtGallery() {
     );
   };
 
-  return (
-    // <div className="container mx-auto px-4 py-8">
-    //   <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-primary flex items-center">
-    //     <Compass className="mr-2 h-6 w-6 sm:h-8 sm:w-8" />
-    //     Exterior Photos
-    //   </h2>
-    //   <div className="relative">
-    //     <Carousel setApi={setApi} className="w-full">
-    //       <CarouselContent>
-    //         {images.map((image, index) => (
-    //           <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-    //             <div className="p-1">
-    //               <div className="relative aspect-[4/3] mb-2">
-    //                 <Image
-    //                   src={image.src}
-    //                   alt={image.alt}
-    //                   layout="fill"
-    //                   objectFit="cover"
-    //                   className="rounded-lg"
-    //                 />
-    //               </div>
-    //               <p className="text-sm text-center text-muted-foreground">
-    //                 {image.caption}
-    //               </p>
-    //             </div>
-    //           </CarouselItem>
-    //         ))}
-    //       </CarouselContent>
-    //       <CarouselPrevious className="hidden sm:flex -left-4 bg-background/80 hover:bg-background" />
-    //       <CarouselNext className="hidden sm:flex -right-4 bg-background/80 hover:bg-background" />
-    //     </Carousel>
-    //   </div>
-    //   <div className="flex justify-center space-x-4 mt-4 sm:hidden">
-    //     <Button
-    //       variant="outline"
-    //       size="sm"
-    //       onClick={scrollPrev}
-    //       aria-label="Previous slide"
-    //     >
-    //       <ChevronLeft className="h-4 w-4 mr-2" />
-    //       Previous
-    //     </Button>
-    //     <Button
-    //       variant="outline"
-    //       size="sm"
-    //       onClick={scrollNext}
-    //       aria-label="Next slide"
-    //     >
-    //       Next
-    //       <ChevronRight className="h-4 w-4 ml-2" />
-    //     </Button>
-    //   </div>
-    // </div>
+  const openModal = (index: number) => {
+    setSelectedImageIndex(index);
+    setScale(1);
+    setRotation(0);
+  };
 
+  const closeModal = () => {
+    setSelectedImageIndex(null);
+    setIsFullScreen(false);
+    setIsCardboardView(false);
+  };
+
+  const handleZoomIn = () => {
+    setScale((prevScale) => Math.min(prevScale + 0.1, 3));
+  };
+
+  const handleZoomOut = () => {
+    setScale((prevScale) => Math.max(prevScale - 0.1, 0.5));
+  };
+
+  const handle360Rotation = (e: React.MouseEvent<HTMLImageElement>) => {
+    if (
+      selectedImageIndex !== null &&
+      images[selectedImageIndex].is360 &&
+      imageRef.current
+    ) {
+      const { left, width } = imageRef.current.getBoundingClientRect();
+      const mouseX = e.clientX - left;
+      const rotationDegree = (mouseX / width) * 360;
+      setRotation(rotationDegree);
+    }
+  };
+
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      containerRef.current?.requestFullscreen();
+      setIsFullScreen(true);
+    } else {
+      document.exitFullscreen();
+      setIsFullScreen(false);
+    }
+  };
+
+  const toggleCardboardView = () => {
+    setIsCardboardView(!isCardboardView);
+  };
+
+  const nextImage = () => {
+    if (selectedImageIndex !== null) {
+      setSelectedImageIndex(
+        (prevIndex) => ((prevIndex as number) + 1) % images.length
+      );
+    }
+  };
+
+  const prevImage = () => {
+    if (selectedImageIndex !== null) {
+      setSelectedImageIndex(
+        (prevIndex) =>
+          ((prevIndex as number) - 1 + images.length) % images.length
+      );
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+        setIsCardboardView(false);
+      } else if (e.key === "ArrowRight") {
+        nextImage();
+      } else if (e.key === "ArrowLeft") {
+        prevImage();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-[#1e3a8a] flex items-center">
         <Compass className="mr-2 h-6 w-6 sm:h-8 sm:w-8" />
-        Exterior Photos
+        {title}
       </h2>
       <div className="relative">
-        <div className="flex  sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 overflow-hidden">
+        <div className="flex sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 overflow-hidden">
           {images.slice(startIndex, startIndex + 4).map((image, index) => (
             <div
               key={index}
               className="flex-none w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
             >
-              <div className="relative aspect-[4/3] mb-2">
+              <div
+                className="relative aspect-[4/3] mb-2 cursor-pointer"
+                onClick={() => openModal(startIndex + index)}
+              >
                 <Image
                   src={image.src}
                   alt={image.alt}
@@ -1022,7 +1282,7 @@ export default function YachtGallery() {
         <Button
           variant="outline"
           size="icon"
-          className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white/80 hover:bg-white hidden sm:flex"
+          className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white text-black hover:bg-white hidden sm:flex"
           onClick={prevSlide}
           aria-label="Previous slide"
         >
@@ -1031,7 +1291,7 @@ export default function YachtGallery() {
         <Button
           variant="outline"
           size="icon"
-          className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white/80 hover:bg-white hidden sm:flex"
+          className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white hover:bg-white hidden sm:flex"
           onClick={nextSlide}
           aria-label="Next slide"
         >
@@ -1058,6 +1318,128 @@ export default function YachtGallery() {
           <ChevronRight className="h-4 w-4 ml-2" />
         </Button>
       </div>
+
+      <Dialog open={selectedImageIndex !== null} onOpenChange={closeModal}>
+        <DialogContent className="max-w-full w-full h-[90vh] p-0 bg-transparent border-none shadow-none">
+          <div
+            className="fixed inset-0 bg-black opacity-80"
+            onClick={closeModal}
+          ></div>
+          <DialogTitle></DialogTitle>
+          <div
+            ref={containerRef}
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-[80%] max-w-4xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {selectedImageIndex !== null && (
+              <div
+                className={`relative w-full h-full ${
+                  isCardboardView ? "flex" : ""
+                }`}
+              >
+                <Image
+                  ref={imageRef}
+                  src={images[selectedImageIndex].src}
+                  alt={images[selectedImageIndex].alt}
+                  layout="fill"
+                  objectFit="contain"
+                  className={`rounded-lg ${
+                    isCardboardView ? "w-1/2" : "w-full"
+                  }`}
+                  style={{
+                    transform: `scale(${scale}) rotate(${rotation}deg)`,
+                    transition: "transform 0.2s ease-in-out",
+                  }}
+                  onMouseMove={handle360Rotation}
+                />
+                {isCardboardView && (
+                  <Image
+                    src={images[selectedImageIndex].src}
+                    alt={images[selectedImageIndex].alt}
+                    layout="fill"
+                    objectFit="contain"
+                    className="rounded-lg w-1/2 ml-1/2"
+                    style={{
+                      transform: `scale(${scale}) rotate(${rotation}deg)`,
+                      transition: "transform 0.2s ease-in-out",
+                    }}
+                  />
+                )}
+              </div>
+            )}
+
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={handleZoomIn}
+                className="bg-white/20 hover:bg-white/40 text-white"
+              >
+                <ZoomIn className="h-4 w-4 mr-2" />
+                Zoom In
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={handleZoomOut}
+                className="bg-white/20 hover:bg-white/40 text-white"
+              >
+                <ZoomOut className="h-4 w-4 mr-2" />
+                Zoom Out
+              </Button>
+              {selectedImageIndex !== null &&
+                images[selectedImageIndex].is360 && (
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={toggleCardboardView}
+                    className="bg-white/20 hover:bg-white/40 text-white"
+                  >
+                    <Rotate3D className="h-4 w-4 mr-2" />
+                    {isCardboardView ? "Normal View" : "Cardboard View"}
+                  </Button>
+                )}
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={toggleFullScreen}
+                className="bg-white/20 hover:bg-white/40 text-white"
+              >
+                {isFullScreen ? (
+                  <>
+                    <Minimize className="h-4 w-4 mr-2" />
+                    Exit Full Screen
+                  </>
+                ) : (
+                  <>
+                    <Maximize className="h-4 w-4 mr-2" />
+                    Full Screen
+                  </>
+                )}
+              </Button>
+            </div>
+
+            <Button
+              variant="secondary"
+              size="icon"
+              className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white hover:bg-gray/40 text-black"
+              onClick={prevImage}
+              aria-label="Previous image"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </Button>
+            <Button
+              variant="secondary"
+              size="icon"
+              className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white hover:bg-white/40 text-black"
+              onClick={nextImage}
+              aria-label="Next image"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

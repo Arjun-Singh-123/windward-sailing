@@ -37,9 +37,9 @@ export default function SailingServices() {
         {services?.map((service, index) => (
           <div
             key={index}
-            className="relative bg-white shadow-lg rounded-lg border-2 border-black "
+            className="relative bg-white shadow-lg rounded-lg border-2 border-black flex flex-col"
           >
-            <div className="  p-6">
+            <div className="flex-grow p-6">
               <ToJoinHeader
                 text={service.title}
                 specification={true}
@@ -47,17 +47,17 @@ export default function SailingServices() {
               />
 
               <p
-                className={`mt-4 text-xs text-gray-600 ${contentFont.className}`}
+                className={`mt-4 font-light tracking-[0.0625rem] text-[0.875rem] text-gray-600 ${contentFont.className}`}
               >
                 {service.description}
               </p>
-
-              {service.description.split(" ").length > 3 && (
-                <button className="mt-4 bg-buttonGrd1 hover:bg-buttonGrd2 text-darkBlue text-xs font-bold py-1 px-2 rounded-full">
-                  LEARN MORE
-                </button>
-              )}
             </div>
+
+            {service.description.split(" ").length > 3 && (
+              <button className="bg-buttonGrd1 hover:bg-buttonGrd2 text-darkBlue text-xs font-bold py-1 px-2 rounded-full self-end m-6 mt-auto">
+                LEARN MORE
+              </button>
+            )}
           </div>
         ))}
       </div>

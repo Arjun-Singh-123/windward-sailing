@@ -69,43 +69,77 @@ import { cursiveHeadingFont, mainHeadingFont } from "../ui/fonts";
 //     borderColor: "border-blue-500",
 //   },
 // ];
-
+const desiredOrder = [
+  "Randy Treas",
+  "John Schaaf",
+  "Senjalkumar",
+  "Amanda Martin",
+  "Brian Taylor",
+  "Christopher Brown",
+  "Daniel Davis",
+  "David Thompson",
+  "Emily Turner",
+  "Jason Wilson",
+  "Jennifer Smith",
+  "Jessica Martinez",
+  "Jessica Turner",
+  "John Williams",
+  "Kevin Davis",
+  "Laura Hernandez",
+  "Lisa Baker",
+  "Melissa Jackson",
+  "Member1",
+  "Member2",
+  "Michael Davis",
+  "Robert Johnson",
+  "Sarah Anderson",
+];
 export default function Members() {
   const { data: members } = useQuery({
     queryKey: ["members-info"],
     queryFn: () => fetchVehicleAmenities(),
   });
 
-  return (
-    <div className="container mx-auto  py-12">
-      <div className="text-start space-y-2 px-4  ">
-        <h1
-          className={` text-start  text-xl text-flatBlue ${cursiveHeadingFont.className}`}
-          style={{ marginTop: "1.25rem" }}
-        >
-          Windward Sailing Club
-        </h1>
-        <h2 className={`text-4xl ${mainHeadingFont.className}`}>Members</h2>
-        <DecoratorLine />
-      </div>
+  const orderedMembers = desiredOrder
+    .map((name) => {
+      return members?.find((member) => member.name === name);
+    })
+    .filter((member) => member !== undefined);
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr mt-20">
-        {members ? (
-          members.map((member, index) => (
-            <MemberCard
-              key={index}
-              name={member.name}
-              image={member.image ?? ""}
-              about={member?.about ?? ""}
-              email={member?.email}
-              phone={member?.phone ?? ""}
-              index={index}
-            />
-          ))
-        ) : (
-          <SkeletonCard />
-        )}
+  console.log("member memeber", members);
+  return (
+    <section className="w-full p-4 max-w-6xl mx-auto">
+      <div className="container mx-auto  py-12">
+        <div className="text-start space-y-2 px-4  ">
+          <h1
+            className={` text-start  text-[1.375rem] text-flatBlue ${cursiveHeadingFont.className}`}
+            style={{ marginTop: "1.25rem" }}
+          >
+            Windward Sailing Club
+          </h1>
+          <h2 className={`text-4xl ${mainHeadingFont.className}`}>Members</h2>
+          <DecoratorLine />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr mt-20">
+          {members ? (
+            orderedMembers?.map((member, index) => (
+              <MemberCard
+                key={index}
+                name={member.name}
+                image={member.image ?? ""}
+                profession={member.profession ?? ""}
+                about={member?.about ?? ""}
+                email={member?.email}
+                phone={member?.phone ?? ""}
+                index={index}
+              />
+            ))
+          ) : (
+            <SkeletonCard />
+          )}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

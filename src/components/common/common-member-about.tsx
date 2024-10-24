@@ -39,11 +39,13 @@ const CommonMembershipAbout = ({
   return (
     <div
       className={`   ${
-        rentalFeesBg ? "w-full" : "container mx-auto   md:max-w-7xl"
+        rentalFeesBg
+          ? "w-full bg-lightSky  "
+          : "container mx-auto   md:max-w-7xl"
       }  `}
     >
       <section
-        className={` flex flex-col-reverse md:flex-row        p-1  ${
+        className={` flex flex-col-reverse md:flex-row    max-w-6xl  container mx-auto    p-1  ${
           rentalFeesBg && " bg-lightSky w-full  "
         }  `}
       >

@@ -74,12 +74,12 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)]  ">
-      {visibilityMap["hero-image"] && <Heroo />}
-      {visibilityMap["sailing-services"] && <SailingServices />}
+      {!visibilityMap["hero-image"] && <Heroo />}
+      {!visibilityMap["sailing-services"] && <SailingServices />}
       {/* <HeroSection /> */}
 
-      {visibilityMap["benefits-section"] && (
-        <section className="w-full p-4 bg-[#ebf8fc]">
+      {!visibilityMap["benefits-section"] && (
+        <section className="w-full p-4 bg-lightSky">
           <div className="container mx-auto max-w-6xl">
             <Detail
               benefits={false}
@@ -140,15 +140,15 @@ export default function Home() {
         </section>
       )}
 
-      {visibilityMap["statistics"] && <StatsSlider />}
-      {visibilityMap["testimonials"] && (
+      {!visibilityMap["statistics"] && <StatsSlider />}
+      {!visibilityMap["testimonials"] && (
         <section className="w-full p-4">
           <div className="container mx-auto max-w-6xl">
             <MemberCarousel />
           </div>
         </section>
       )}
-      {visibilityMap["membership"] && (
+      {!visibilityMap["membership"] && (
         <section className="w-full p-4 bg-lightSky ">
           <CommonMembershipAbout
             subtitle="What We Do"

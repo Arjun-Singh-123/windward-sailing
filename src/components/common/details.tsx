@@ -5,7 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Image from "next/image";
 import CustomImage from "../custom-image";
-import { cursiveHeadingFont, mainHeadingFont } from "@/app/ui/fonts";
+import {
+  contentFont,
+  cursiveHeadingFont,
+  mainHeadingFont,
+} from "@/app/ui/fonts";
 import DecoratorLine from "./decorator-icon-line";
 
 interface Specification {
@@ -73,7 +77,7 @@ const Detail: React.FC<DetailProps> = ({
   }, []);
 
   return (
-    <div className={`  container mx-auto  bg-[#ebf8fc]`}>
+    <div className={`  container mx-auto  `}>
       {(heading || description || mediaUrl) && (
         <>
           <Card className="mb-8      overflow-hidden bg-[#ebf8fc] border-none">
@@ -208,7 +212,7 @@ const Detail: React.FC<DetailProps> = ({
         <div className="  mb-8">
           <div className="text-start space-y-2 mb-6">
             <h1
-              className={` text-start  text-xl text-flatBlue ${cursiveHeadingFont.className}`}
+              className={` text-start  text-xl text-flatBlue  `}
               style={{ marginTop: "1.25rem" }}
             >
               Benefits
@@ -218,8 +222,8 @@ const Detail: React.FC<DetailProps> = ({
             </h2>
             <DecoratorLine />
           </div>
-          <div className="flex flex-col-reverse md:flex-row">
-            <div className="w-full md:w-1/2 p-8 bg-[#bfdbfe] rounded-lg">
+          <div className="flex flex-col-reverse justify-between md:flex-row">
+            <div className="w-full md:w-1/2 mt-2   rounded-lg">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {benefitsData?.map((benefit, index) => (
                   <div key={index} className="flex items-start space-x-4">
@@ -227,7 +231,9 @@ const Detail: React.FC<DetailProps> = ({
                       <span>{benefit.icon}</span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-[#1e40af] mb-2">
+                      <h3
+                        className={`text-[1.375rem] font-semibold text-darkBlue mb-2 ${contentFont.className}`}
+                      >
                         {benefit.title}
                       </h3>
                       <p className="text-sm text-gray-600">
