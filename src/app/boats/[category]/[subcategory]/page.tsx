@@ -11,6 +11,7 @@ import YachtGallery, {
 import YachtDescription from "@/components/sections/amenity";
 import NotFoundNew from "@/components/sections/not-found-page";
 import NoDataFound from "@/components/common/no-data-found";
+import Loader from "@/components/common/loader";
 
 const ExternalImages = [
   {
@@ -195,6 +196,7 @@ export default async function SubcategoryPage({
     // enabled: !!params.subcategory, // Only run query if subcategory exists
   });
 
+  if (isLoading) return <Loader />;
   if (!productDetail)
     return (
       <div>
@@ -232,7 +234,7 @@ export default async function SubcategoryPage({
             </div>
           </section>
 
-          <section className="w-full p-4">
+          <section className="w-full p-4 bg-lightSky">
             <div className="container mx-auto max-w-6xl">
               <YachtGallery images={ExternalImages} title="Exterior Photos" />
             </div>
@@ -245,17 +247,17 @@ export default async function SubcategoryPage({
             </div>
           </section>
 
-          <section className="w-full p-4">
+          <section className="w-full p-4 bg-lightSky">
             <div className="container mx-auto max-w-6xl">
               {" "}
-              <SpecificationsSection />
+              <SpecificationsSection specificationData={specifications} />
             </div>
           </section>
         </main>
       </div>
 
       {/* hello boundary is here  */}
-      <div className="container mx-auto px-4">
+      {/* <div className="container mx-auto px-4">
         <div className="my-8">
           <h1 className="text-4xl font-bold mb-4">{productDetail.title}</h1>
           <p className="text-xl text-gray-600 mb-6">{productDetail.subtitle}</p>
@@ -289,7 +291,7 @@ export default async function SubcategoryPage({
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

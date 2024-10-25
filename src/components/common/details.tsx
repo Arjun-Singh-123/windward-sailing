@@ -228,7 +228,7 @@ const Detail: React.FC<DetailProps> = ({
                 {benefitsData?.map((benefit, index) => (
                   <div key={index} className="flex items-start space-x-4">
                     <div className="flex-shrink-0">
-                      <span>{benefit.icon}</span>
+                      <span>{benefit?.icon}</span>
                     </div>
                     <div>
                       <h3

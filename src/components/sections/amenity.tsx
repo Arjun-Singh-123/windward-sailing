@@ -4,7 +4,7 @@ import Image from "next/image";
 import DecoratorLine from "../common/decorator-icon-line";
 
 interface Amenity {
-  label: string;
+  feature: string;
   value: string;
 }
 
@@ -33,12 +33,12 @@ const AmenitiesDisplay: React.FC<AmenitiesDisplayProps> = ({ amenities }) => {
     <div className="  p-6 rounded-lg shadow-md">
       {/* <h2 className="text-2xl font-bold mb-6 text-gray-800">Amenities</h2> */}
       <div className="columns-1 md:columns-2 space-y-4">
-        {amenities.map((item, index) => (
+        {amenities?.map((item, index) => (
           <div
             key={index}
             className="flex justify-between py-2 border-b border-gray-400 last:border-b-0"
           >
-            <span className="font-medium text-gray-700">{item.label}</span>
+            <span className="font-medium text-gray-700">{item.feature}</span>
             <span className="text-gray-600">{item.value}</span>
           </div>
         ))}

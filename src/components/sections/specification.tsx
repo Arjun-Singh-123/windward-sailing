@@ -1,9 +1,10 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Anchor, AnchorIcon } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import * as z from "zod";
 // types/vehicle.ts
 // function flattenData(data:any) {
 //   const flattenedData:any = [];
@@ -46,9 +47,9 @@ function convertToSpecificationData(data: any) {
   }
 
   // Now we can safely access 'data.content'
-  const specificationData = Object.keys(data).map((section) => ({
+  const specificationData = Object.keys(data ?? {})?.map((section) => ({
     title: section,
-    specs: data[section].map((spec: any) => ({
+    specs: data[section]?.map((spec: any) => ({
       name: spec.name,
       value: spec.value,
     })),
@@ -96,129 +97,127 @@ function hasValidSpecifications(data: any): boolean {
   );
 }
 
-// const specificationData = [
-//   {
-//     title: "General Dimensions",
-//     specs: [
-//       { name: "Length Overall", value: "44' 5\"" },
-//       { name: "Length of Hull", value: "43' 3\"" },
-//       { name: "Length at Waterline", value: "38' 4\"" },
-//       { name: "Beam", value: "13' 7\"" },
-//       { name: "Distance from Waterline to Masthead", value: "63' 10\"" },
-//     ],
-//   },
-//   {
-//     title: "Wing Keel",
-//     specs: [
-//       { name: "Draft", value: "5' 0\"" },
-//       { name: "Ballast", value: "8,200 lbs" },
-//       { name: "Basic Weight", value: "24,500 lbs" },
-//     ],
-//   },
-//   {
-//     title: "Fin Keel",
-//     specs: [
-//       { name: "Draft", value: "6' 8\"" },
-//       { name: "Ballast", value: "7,200 lbs" },
-//       { name: "Basic Weight", value: "23,500 lbs" },
-//     ],
-//   },
-// ];
-// function convertSpecificationData(
-//   data: RawSpecificationData
-// ): SpecificationCategory[] {
-//   return Object.entries(data).map(([title, specs]) => ({
-//     title,
-//     specs: Array.isArray(specs) ? specs : [],
-//   }));
-// }
-const SpecificationsSection = () => {
-  // const [specificationData, setSpecificationData] = useState<
-  //   SpecificationCategory[]
-  // >([]);
-  // useEffect(() => {
-  //   fetchVehicleAmenitiesSpec();
-  // }, []);
+const SpecificationValueSchema = z.object({
+  name: z.string(),
+  value: z.string(),
+});
+const SpecificationSectionSchema = z.record(
+  z.array(SpecificationValueSchema).or(z.record(z.string()))
+);
 
-  const { data: specificationData } = useQuery({
-    queryKey: ["specification-details"],
-    queryFn: () => getAmenitiess(),
+type SpecificationSection = z.infer<typeof SpecificationSectionSchema>;
+
+export const transformSpecifications = (data: SpecificationSection) => {
+  return Object.entries(data ?? {})?.map(([title, values]) => {
+    const specs = Array.isArray(values)
+      ? values
+      : Object.entries(values).map(([name, value]) => ({
+          name,
+          value: String(value),
+        }));
+
+    return {
+      title,
+      specs,
+    };
   });
+};
+const SpecificationsSection = ({ specificationData }: any) => {
+  console.log("spec data ...........", specificationData);
 
-  console.log("spec data", specificationData);
-  // async function fetchVehicleAmenities() {
-  //   // console.log("in the fetchVehicle function");
+  const sectionWidths = useMemo(() => {
+    return transformSpecifications(specificationData)?.map((section) => {
+      const maxLength = Math.max(
+        ...section.specs.map((spec) => spec.value.length)
+      );
+      // Calculate width based on max length, with a minimum of 300px and maximum of 600px
+      return Math.min(Math.max(300, maxLength * 8), 600);
+    });
+  }, []);
 
-  //   const { data, error } = await supabase
-  //     .from("vehicle_details")
-  //     .select("content")
-  //     .eq("section_type", "specifications")
-
-  //     .single();
-
-  //   if (error) {
-  //     console.error("Error fetching vehicle:", error);
-  //   } else {
-  //     // console.log("checking data in else", data.id);
-  //     const convertedData = convertSpecificationData(
-  //       data.content as RawSpecificationData
-  //     );
-
-  //     setSpecificationData(convertedData);
-  //   }
-  // }
-  // console.log("specification", specificationData);
+  console.log("specification");
   return (
-    <div className="mb-8 px-4 sm:px-6 lg:px-8">
+    <div className="mb-8 px-4 sm:px-6 lg:px-8 ">
       <h2 className="text-2xl sm:text-3xl font-bold mb-1 text-black dark:text-white">
         Specifications
       </h2>
       <DecoratorLine />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {specificationData &&
-          typeof specificationData === "object" &&
-          "content" in specificationData &&
-          specificationData.content &&
-          typeof specificationData.content === "object" &&
-          "specifications" in specificationData.content &&
-          convertToSpecificationData(
-            specificationData?.content?.specifications
-          )?.map((section, index) => (
+          convertToSpecificationData(specificationData)?.map(
+            (section, index) => (
+              <div
+                key={index}
+                className=" bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg  "
+              >
+                <LegendComponent text={section.title} />
+
+               
+                <div className="p-4 overflow-x-auto">
+                  <table className="w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                      {section?.specs?.map((spec: any, specIndex: any) => (
+                        <tr
+                          key={specIndex}
+                          className="hover:bg-gray-100 dark:hover:bg-gray-700"
+                        >
+                          <td className=" text-sm">
+                            <AnchorIcon className="text-flatBlue" />
+                          </td>
+
+                          <td className=" px-2    py-2 sm:px-2 sm:py-3 text-sm font-medium text-gray-900 dark:text-white">
+                            {spec.name}
+                          </td>
+
+                          <td className="  py-2 sm:px-6 sm:py-3 text-sm text-gray-500 dark:text-gray-300">
+                            {spec.value}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )
+          )}
+      </div> */}
+      <div className="p-4 bg-sky-50">
+        <div className="flex flex-wrap gap-8  ">
+          {transformSpecifications(specificationData)?.map((section, index) => (
             <div
               key={index}
-              className=" bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg  "
+              className="bg-white border border-gray-200 rounded-lg shadow-md   flex-grow   "
+              // style={{
+              //   minWidth: "300px",
+              //   flexBasis: `${Math.max(25, section.specs.length * 5)}%`,
+              // }}
+
+              // style={{ width: `${sectionWidths[index]}px` }}
+              style={{
+                minWidth: "300px",
+                maxWidth: "600px",
+                minHeight: "300px",
+              }}
             >
               <LegendComponent text={section.title} />
-
-              {/* <div className="bg-black dark:bg-gray-900 text-white p-4">
-                <h3 className="text-lg font-semibold">{section.title}</h3>
-              </div> */}
-              <div className="p-4 overflow-x-auto">
-                <table className="w-full divide-y divide-gray-200 dark:divide-gray-700">
-                  <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                    {section?.specs?.map((spec: any, specIndex: any) => (
-                      <tr
-                        key={specIndex}
-                        className="hover:bg-gray-100 dark:hover:bg-gray-700"
-                      >
-                        <td className=" text-sm">
-                          <AnchorIcon className="text-flatBlue" />
-                        </td>
-
-                        <td className=" px-2    py-2 sm:px-2 sm:py-3 text-sm font-medium text-gray-900 dark:text-white">
-                          {spec.name}
-                        </td>
-
-                        <td className="  py-2 sm:px-6 sm:py-3 text-sm text-gray-500 dark:text-gray-300">
-                          {spec.value}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="p-3">
+                <div className="space-y-2">
+                  {section.specs.map((spec, specIndex) => (
+                    <div key={specIndex} className="flex   gap-2 text-sm">
+                      <Anchor className="text-sky-500 h-4 w-4 flex-shrink-0 mt-0.5 text-flatBlue" />
+                      <div className="flex-1 gap-2">
+                        <span className="font-medium text-gray-900">
+                          {spec.name}:{" "}
+                        </span>
+                        <span className="text-gray-600">{spec.value}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
+        </div>
       </div>
     </div>
 
@@ -1251,9 +1250,9 @@ export default function YachtGallery({
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-[#1e3a8a] flex items-center">
-        <Compass className="mr-2 h-6 w-6 sm:h-8 sm:w-8" />
-        {title}
+        <Compass className="mr-2 h-6 w-6 sm:h-8 sm:w-8" /> {title}
       </h2>
+      <DecoratorLine />
       <div className="relative">
         <div className="flex sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 overflow-hidden">
           {images.slice(startIndex, startIndex + 4).map((image, index) => (

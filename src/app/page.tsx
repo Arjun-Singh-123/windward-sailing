@@ -72,6 +72,8 @@ export default function Home() {
     {}
   );
 
+  const iconStyle = { width: "40px", height: "40px" };
+
   return (
     <div className="flex flex-col items-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)]  ">
       {visibilityMap["hero-image"] && <Heroo />}
@@ -85,50 +87,50 @@ export default function Home() {
               benefits={false}
               benefitsData={[
                 {
-                  icon: <Bath />,
+                  icon: <Bath style={iconStyle} />,
                   title: "Bathroom",
                   description:
                     "There were 2 bathrooms available with attached toilets.",
                 },
                 {
-                  icon: <Music />,
+                  icon: <Music style={iconStyle} />,
                   title: "Music",
                   description:
                     "There were TV and Music system available in the common sitting area.",
                 },
                 {
-                  icon: <ChefHat />,
+                  icon: <ChefHat style={iconStyle} />,
                   title: "Kitchen",
                   description:
                     "There were 2 bathrooms available with attached toilets.",
                 },
                 {
-                  icon: <Wifi />,
+                  icon: <Wifi style={iconStyle} />,
                   title: "Maps, radios and safety equipment",
                   description:
                     "There were Fre WiFi available in the entire yacht.",
                 },
                 {
-                  icon: <Bath />,
+                  icon: <Bath style={iconStyle} />,
                   title: "Maps, radios and safety equipment",
                   description:
                     "There were 2 bathrooms available with attached toilets.",
                 },
                 {
-                  icon: <CookingPot />,
+                  icon: <CookingPot style={iconStyle} />,
                   title: "Additional options",
                   description:
                     "There were 3 meals per day with your desired choices from the menu.",
                 },
 
                 {
-                  icon: <ShieldCheck />,
+                  icon: <ShieldCheck style={iconStyle} />,
                   title: "Boat Owners",
                   description:
                     "There were a safe ficility available so you have no worries for your cards and cash or devices.",
                 },
                 {
-                  icon: <Bed />,
+                  icon: <Bed style={iconStyle} />,
                   title: "Double bed",
                   description:
                     "There were 1 double beds and common facility available with attached toilets.",
