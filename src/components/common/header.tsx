@@ -333,26 +333,6 @@ const Header = () => {
                         />
                       </Link>
                     ))}
-                    {/* <Link href="#" aria-label="Pinterest">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="25"
-                      height="25"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-[#00008b] hover:text-[#E60023] transition-colors"
-                    >
-                      <path d="M8 12a4 4 0 1 0 8 0a4 4 0 0 0-8 0"></path>
-                      <path d="M12 2v6"></path>
-                      <path d="M12 22v-6"></path>
-                      <path d="M6 12H2"></path>
-                      <path d="M22 12h-4"></path>
-                    </svg>
-                  </Link> */}
                   </div>
 
                   <Separator
@@ -363,14 +343,6 @@ const Header = () => {
                     <AnimatedButton href={loginItem.value}>
                       {loginItem.label}
                     </AnimatedButton>
-
-                    // <Button
-                    //   variant="default"
-                    //   size="lg"
-                    //   className="bg-flatBlue hover:bg-flatBlue text-lg text-white hover:text-black hidden md:block rounded-none"
-                    // >
-                    //   <Link href={loginItem.value}>{loginItem.label}</Link>
-                    // </Button>
                   )}
                 </div>
               </div>
@@ -579,67 +551,6 @@ const Header = () => {
         </div>
       )}
 
-      {/* Details Section for Mobile View */}
-      {/* {isDetailsOpen && (
-        <div className="md:block relative   lg:hidden bg-sky text-black py-4">
-          <button
-            className="absolute -top-4 -right-4 m-4 rounded-full    text-white   shadow-md bg-red-600"
-            onClick={handleOverlayClick}
-          >
-            <X />
-          </button>
-          <div className="container mx-auto px-4">
-            <div className="flex flex-col space-y-4">
-              <div className="">
-                <Button className="flex justify-center items-center w-full px-4 py-2 text-white bg-flatBlue hover:bg-flatBlue  rounded-lg">
-                  <Link href="/login">Login</Link>
-                </Button>{" "}
-                <Link
-                  href="mailto:support@windwardsailingclub.com"
-                  className="text-xl hover:underline flex justify-center items-center mt-4 "
-                >
-                  <Mail className="mr-2" /> support@windwardsailingclub.com
-                </Link>
-                <div className="flex  justify-center items-center w-full p-2 space-x-4  border-2 rounded-full mt-2 shadow-sm">
-                  <Facebook className="w-6 h-6" />
-                  <Twitter className="w-6 h-6" />
-                  <Instagram className="w-6 h-6" />
-                  <Youtube className="w-6 h-6" />
-                </div>
-              </div>
-              <Separator className="bg-white/20" />
-
-              <div className="flex items-center space-x-2">
-                <Phone className="w-6 h-6" />
-                <div>
-                  <div className="text-sm">CALL US</div>
-                  <div className="font-bold">(949) 675-9060</div>
-                </div>
-              </div>
-              <Separator className="bg-white/20" />
-              <div className="flex items-center space-x-2">
-                <Clock className="w-6 h-6" />
-                <div>
-                  <div className="text-sm">HOURS OF OPERATION</div>
-                  <div className="font-bold">Monday — Sunday</div>
-                  <div className="text-sm">9:00 a.m. — 5:00 p.m.</div>
-                </div>
-              </div>
-              <Separator className="bg-white/20" />
-              <div className="flex items-center space-x-2">
-                <MapPin className="w-6 h-6" />
-                <div>
-                  <div className="text-sm">COMPANY / LOCATION</div>
-                  <div className="font-bold">
-                    3300 Via Lido, Windward Beach, CA 92663
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )} */}
-
       {isDetailsOpen && (
         <MobileOverlay
           contacts={contacts}
@@ -747,22 +658,17 @@ const DynamicFooter = () => {
   const backgroundField = getFieldByLabel("Background Image");
   const boatField = getFieldByLabel("boat");
   const boatImageUrl = boatField?.value ?? "";
-  // console.log(`Boat Image Url : ${boatImageUrl} :: boatfiled is ${boatField}`);
 
   return (
     <footer
       className="relative py-8 text-white"
       style={{
         position: "relative",
-        // background: `linear-gradient(90deg,#072f6cc9 0%,#072f6cc9 100%), url(${
-        //   backgroundField?.value || "/images/footer-bg.jpg"
-        // })`,
 
         background: `linear-gradient(90deg,#072f6cc9 0%,#072f6cc9 100%), url(${
           backgroundField?.value || "/images/footer-bg.jpg"
-        }) center / cover`, // Combine backgroundPosition and backgroundSize into shorthand
-        // backgroundSize: "cover",
-        // backgroundPosition: "center",
+        }) center / cover`,
+
         fontSize: "18px",
         padding: "15px 0",
       }}
@@ -814,24 +720,6 @@ const DynamicFooter = () => {
                   )
               )}
             </div>
-            {/* <div className="mt-2">
-            {Object.values(footerContent.content).filter(
-              (field) => field.type === "links"
-            ) &&
-
-
-            
-              renderField(
-                Object.values(footerContent.content).filter(
-                  (field) => field.type === "links"
-                )!
-              )
-              
-              
-              
-              
-              }
-          </div> */}
 
             <div className={`flex-1 mt-2 ${contentFont.className}`}>
               {footerContent?.content &&

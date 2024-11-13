@@ -2,7 +2,6 @@ import { contentFont, mainHeadingFont } from "@/app/ui/fonts";
 import React from "react";
 import { ToJoinHeader } from "./to-join-header";
 
-// Assume this data is coming from a database
 const pricingData = {
   initialFee: 550,
   damageDeposit: 500,
@@ -30,17 +29,6 @@ const PricingItem = ({
     <span>{typeof value === "number" ? `$${value}` : value}</span>
   </div>
 );
-
-// const ToJoinHeader = () => (
-//   <div className="relative overflow-visible">
-//     <h3 className="relative inline-block -left-8 bg-[#00A3E0] text-white py-2 px-4 font-bold">
-//       <span>To Join</span>
-//       <span className="absolute left-full top-0 border-t-[20px] border-b-[20px] border-l-[20px] border-l-[#00A3E0] border-t-transparent border-b-transparent"></span>
-//     </h3>
-//     <span className="absolute bottom-0 left-0 w-2 h-2 bg-[#00A3E0]"></span>
-//     <span className="absolute bottom-[-7px] left-[7px] w-0 h-0 border-t-[7px] border-l-[7px] border-t-black border-l-black"></span>
-//   </div>
-// );
 
 export default function BoatClubPricing() {
   return (

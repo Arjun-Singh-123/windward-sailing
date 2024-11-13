@@ -92,17 +92,7 @@ export default function CategoryPage() {
     queryKey: ["products", params.category],
     queryFn: () => fetchProductsNavsection(params.category as any),
   });
-  // console.log("checkingllllllllllllllllllllllll paramssssssssss", params);
   const categoryId = params.category; // Use category directly
-  // if (!isValidUUID(params.category)) {
-  //   console.error("Invalid UUID format:", params.category);
-  //   return <div>Error: Invalid Category ID</div>; // Return error component
-  // }
-
-  // const products = (await fetchProductsByCategory(categoryId)) || [];
-  // console.log("checking products", products);
-
-  // console.log("checking params", params);
 
   if (!products || products.length === 0) {
     return (
@@ -114,12 +104,6 @@ export default function CategoryPage() {
       </>
     );
   }
-
-  // const productsChanged = products?.flatMap((section) =>
-  //   section.nav_subsections
-  //     .filter((subsection) => subsection.products.length > 0)
-  //     .flatMap((subsection) => subsection.products)
-  // );
 
   return (
     <>
@@ -243,51 +227,6 @@ export default function CategoryPage() {
           })}
         </main>
       </div>
-
-      {/* <div className="container mx-auto px-4">
-        
-        <h1 className="text-3xl font-bold my-6">Products in this Section</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products?.map((product) => (
-            <div
-              key={product.id}
-              className="border rounded-lg overflow-hidden shadow-lg"
-            >
-              <Link href={`/boats/hello/${product.href}`}>
-                {product.image_url && (
-                  <img
-                    src={product.image_url}
-                    alt={product.name}
-                    className="w-full h-48 object-cover"
-                  />
-                )}
-                <div className="p-4">
-                  <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
-                  <p className="text-gray-600 mb-2">{product.description}</p>
-                  <p className="text-lg font-bold">
-                    Price: ${product.price.toFixed(2)}
-                  </p>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
-      </div> */}
     </>
-
-    // <ProductList products={products} title={"windward sailing platform"} />
   );
 }
-
-// export default async function CategoryPage({
-//   params,
-// }: {
-//   params: { id: number | string }; // Update type to include string if necessary
-// }) {
-//   console.log("Params received:", params); // Log the entire params object
-
-//   const products = await fetchProductsByCategory(Number(params.id)); // Ensure you're passing a number
-//   console.log("Checking products", products);
-
-//   return <ProductList products={products} title={params.category} />;
-// }

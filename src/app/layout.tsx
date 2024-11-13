@@ -46,8 +46,6 @@ export default function RootLayout({
         className={`${inter.className} antialiased flex flex-col min-h-screen overflow-x-hidden   `}
       >
         <Providers>
-          {/* <StickyHeader /> */}
-
           <Header />
 
           <main className="flex-grow">

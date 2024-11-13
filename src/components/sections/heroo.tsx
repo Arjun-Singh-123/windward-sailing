@@ -133,33 +133,7 @@ export default function Heroo() {
     queryFn: () => fetchSectionProducts("Banner Section"),
   });
 
-  // React.useEffect(()=>{
-  //   // Function ko call karo
-  //   fetchBannerProducts();
-  // },[])
-
   return (
-    // <section className="relative w-full mt-24">
-    //   <Image
-    //     src="/images/hero-image.jpg?height=800&width=1600"
-    //     alt="Hero Image"
-    //     width={1600}
-    //     height={800}
-    //     priority
-    //     className="w-full h-[12.5rem] sm:h-[18.75rem] md:h-[25rem] lg:h-[31.25rem] xl:h-[37.5rem] object-cover"
-    //   />
-    // </section>
-
-    // <section className="relative w-full   ">
-    //   <Image
-    //     src="/images/hero-image.jpg?height=800&width=1600"
-    //     alt="Hero Image"
-    //     width={1600}
-    //     height={800}
-    //     className="w-full  h-auto object-contain "
-    //   />
-    // </section>
-
     <Carousel className="">
       <CarouselContent>
         {data?.map((item, index) => (

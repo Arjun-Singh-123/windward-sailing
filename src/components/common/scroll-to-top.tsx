@@ -84,15 +84,5 @@ export default function ScrollToTop() {
     >
       <ArrowUp className="w-6 h-6" />
     </button>
-
-    // <Button
-    //   variant="destructive"
-    //   size="icon"
-    //   className="fixed bottom-14 right-14 rounded-full shadow-lg bg-black text-white hover:bg-gray-800 hover:text-yellow-300 transition duration-300 ease-in-out"
-    //   onClick={scrollToTop}
-    //   aria-label="Scroll to top"
-    // >
-    //   <ArrowUp className="h-8 w-8" />
-    // </Button>
   );
 }

@@ -168,41 +168,5 @@ export default function SailingServices() {
         ))}
       </div>
     </div>
-
-    // <div className="    mx-auto px-4 py-8">
-    //   <h1
-    //     className={`text-4.5xl text-black font-bold text-center mb-8 ${cursiveHeadingFont.className}`}
-    //   >
-    //     Windward Sailing Club
-    //   </h1>
-    //   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-    //     {data?.map((service, index) => (
-    //       <div
-    //         key={index}
-    //         className="relative bg-white shadow-lg rounded-lg border-2 border-black flex flex-col"
-    //       >
-    //         <div className="flex-grow p-6">
-    //           <ToJoinHeader
-    //             text={service.title}
-    //             specification={true}
-    //             membershipFee={false}
-    //           />
-
-    //           <p
-    //             className={`mt-4 font-light tracking-[0.0625rem] text-[0.875rem] text-gray-600 ${contentFont.className}`}
-    //           >
-    //             {service.description}
-    //           </p>
-    //         </div>
-
-    //         {/* {service.description.split(" ").length > 3 && (
-    //           <button className="bg-buttonGrd1 hover:bg-buttonGrd2 text-darkBlue text-xs font-bold py-1 px-2 rounded-full self-end m-6 mt-auto">
-    //             LEARN MORE
-    //           </button>
-    //         )} */}
-    //       </div>
-    //     ))}
-    //   </div>
-    // </div>
   );
 }
