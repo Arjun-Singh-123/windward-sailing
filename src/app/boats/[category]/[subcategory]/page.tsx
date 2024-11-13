@@ -212,7 +212,7 @@ export default async function SubcategoryPage({
   console.log("params params id ", params);
   console.log("subcategory id ", params.subcategory);
 
-  console.log("images ........", images);
+  console.log("images ........", productDetail.images.external);
 
   // return <ProductList products={productDetail} title={params.subcategory} />;
 
@@ -236,14 +236,20 @@ export default async function SubcategoryPage({
 
           <section className="w-full p-4 bg-lightSky">
             <div className="container mx-auto max-w-6xl">
-              <YachtGallery images={ExternalImages} title="Exterior Photos" />
+              <YachtGallery
+                images={productDetail?.images?.external}
+                title="Exterior Photos"
+              />
             </div>
           </section>
 
           <section className="w-full p-4">
             <div className="container mx-auto max-w-6xl">
               {" "}
-              <YachtGallery images={InternalImages} title="Interior Photos" />
+              <YachtGallery
+                images={productDetail?.images?.internal}
+                title="Interior Photos"
+              />
             </div>
           </section>
 
@@ -324,7 +330,7 @@ interface AmenitiesProps {
 function AmenitiesComponent({ amenities }: AmenitiesProps) {
   return (
     <ul className="list-disc list-inside mb-6">
-      {Object.entries(amenities ?? {})?.map(([key, value]) => (
+      {Object?.entries(amenities ?? {})?.map(([key, value]) => (
         <li key={key}>{`${key}: ${value}`}</li>
       ))}
     </ul>

@@ -43,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} antialiased flex flex-col min-h-screen overflow-x-hidden`}
+        className={`${inter.className} antialiased flex flex-col min-h-screen overflow-x-hidden   `}
       >
         <Providers>
           {/* <StickyHeader /> */}

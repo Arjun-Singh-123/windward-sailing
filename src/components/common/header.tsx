@@ -15,8 +15,9 @@ import {
   X,
   ChevronsRight,
   MailIcon,
+  Globe,
 } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 
 import {
   Sheet,
@@ -40,6 +41,8 @@ import { cn } from "@/lib/utils";
 import { supabase } from "@/lib/supabase";
 import { useQuery } from "@tanstack/react-query";
 import { contentFont } from "@/app/ui/fonts";
+import MobileOverlay from "./mobile-overlay";
+import AnimatedButton from "./animated-button";
 
 export const fetchNavItems = async () => {
   const { data: navItems, error: navItemsError } = await supabase
@@ -104,18 +107,104 @@ export const menuItemss = (items: any) => {
   });
 };
 
+const IconComponent = ({
+  icon,
+  className,
+}: {
+  icon: string;
+  className?: string;
+}) => {
+  const props = { className: className || "w-10 h-10" };
+  switch (icon) {
+    case "phone":
+      return <Phone {...props} />;
+    case "clock":
+      return <Clock {...props} />;
+    case "map-pin":
+      return <MapPin {...props} />;
+    case "email":
+      return <Mail {...props} />;
+    case "facebook":
+      return <Facebook {...props} />;
+    case "twitter":
+      return <Twitter {...props} />;
+    case "instagram":
+      return <Instagram {...props} />;
+    default:
+      return null;
+  }
+};
+
+interface ContactItem {
+  id: string;
+  icon: string;
+  label: string;
+  value: any;
+  type: string;
+  display_order: number;
+}
+
+interface ContactHeaderProps {
+  contacts: ContactItem[];
+  setIsDetailsOpen: (isOpen: boolean) => void;
+}
+
+const IconComponent1: React.FC<{ icon: string; className?: string }> = ({
+  icon,
+  className,
+}) => {
+  const props = { className: className || "w-10 h-10" };
+  const icons = {
+    phone: Phone,
+    clock: Clock,
+    "map-pin": MapPin,
+    email: Mail,
+    facebook: Facebook,
+    twitter: Twitter,
+    instagram: Instagram,
+  };
+
+  const IconElement = icons[icon as keyof typeof icons];
+  return IconElement ? <IconElement {...props} /> : null;
+};
+
+const formatHours = (hours: { [key: string]: string }) => {
+  const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+  return days.map((day) => `${day}: ${hours[day]}`).join("\n");
+};
+
 const Header = () => {
   const pathname = usePathname();
   const [isSticky, setIsSticky] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   // const [product, setProduct] = useState<any[]>(menuItems);
-  const [isHovered, setIsHovered] = useState(false);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+
   const { data: menuItems } = useQuery({
     queryKey: ["menuitems-data"],
     queryFn: fetchNavItems,
   });
 
+  const { data: contacts = [] } = useQuery({
+    queryKey: ["contacts"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("contacts")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+  });
   console.log("menu data", menuItems);
 
   const isActive = (href: string) => {
@@ -146,124 +235,144 @@ const Header = () => {
     };
   }, []);
 
+  const IconComponent = ({
+    icon,
+    className,
+  }: {
+    icon: string;
+    className?: string;
+  }) => {
+    const props = { className: className || "w-10 h-10" };
+    switch (icon) {
+      case "phone":
+        return <Phone {...props} />;
+      case "clock":
+        return <Clock {...props} />;
+      case "map-pin":
+        return <MapPin {...props} />;
+      case "email":
+        return <Mail {...props} />;
+      case "facebook":
+        return <Facebook {...props} fill="black" />;
+      case "twitter":
+        return <Twitter {...props} fill="black" />;
+      case "instagram":
+        return <Instagram {...props} />;
+      default:
+        return null;
+    }
+  };
+  const order = ["phone", "hours", "location"];
+  const emailItem = contacts?.find((item) => item.type === "support_email");
+  const socialItems = contacts?.filter((item) => item.type === "social");
+  const loginItem = contacts?.find((item) => item.type === "login");
+  const contactItems = contacts
+    ?.filter((item) => ["phone", "hours", "location"].includes(item.type))
+    .sort((a, b) => a.display_order - b.display_order);
   return (
     <header
       className={` ${
-        isSticky ? "fixed md:sticky" : "sticky"
+        isSticky && "fixed   w-full"
       }  top-0 z-50 lg:relative md:top-auto bg-[#c5dfff] shadow-md`}
     >
-      {/* First Row */}
+      {/* first row  */}
       {!isDetailsOpen && (
-        <div className="     sm:hidden md:hidden lg:block">
+        <div className="hidden  lg:block">
           <div className="container mx-auto px-4 max-w-6xl">
-            <div className="flex justify-between items-center  ">
-              <Link
-                href="mailto:support@windwardsailingclub.com"
-                className="text-xl hover:underline hidden md:block"
-              >
-                <span
-                  className={` gap-1 flex items-center justify-center ${contentFont.className}`}
+            <div className="flex justify-between items-center">
+              {emailItem && (
+                <Link
+                  href={`mailto:${emailItem?.value}`}
+                  className="text-xl hover:underline hidden md:block"
                 >
-                  <MailIcon
-                    className="text-black stroke-white stroke-2"
-                    fill="#232323"
-                  />
-                  support@windwardsailingclub.com
-                </span>
-              </Link>
-              <div className="flex items-center space-x-4">
-                <div className="hidden md:flex space-x-2">
-                  <div className="flex items-center space-x-4">
-                    <div
-                      className="hidden md:flex space-x-2 "
-                      onMouseEnter={() => setIsHovered(true)}
-                      onMouseLeave={() => setIsHovered(false)}
+                  <span className="gap-1 flex items-center justify-center">
+                    <IconComponent
+                      icon={emailItem?.icon as string}
+                      className="text-black stroke-white stroke-2"
+                    />
+                    {emailItem.value}
+                  </span>
+                </Link>
+              )}
+              <div className="hidden md:flex space-x-2">
+                <div className="flex items-center space-x-4">
+                  <div className=" flex space-x-2">
+                    {socialItems?.map((item) => (
+                      <Link
+                        key={item.id}
+                        href={item.value ?? ""}
+                        aria-label={item.label}
+                        onMouseEnter={() => setHoveredId(item.id as string)}
+                        onMouseLeave={() => setHoveredId(null)}
+                        className={`
+                          p-2 
+                          rounded-lg 
+                          transition-all 
+                          duration-300
+                          ${
+                            hoveredId === item.id
+                              ? "bg-[#232323]"
+                              : "bg-transparent"
+                          }
+                          hover:scale-110
+                        `}
+                      >
+                        <IconComponent
+                          icon={item.icon as string}
+                          className={`
+                            w-6 
+                            h-6 
+                            transition-colors 
+                            duration-300
+                            ${
+                              hoveredId === item.id
+                                ? "text-white"
+                                : "text-gray-700"
+                            }
+                          `}
+                        />
+                      </Link>
+                    ))}
+                    {/* <Link href="#" aria-label="Pinterest">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="25"
+                      height="25"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-[#00008b] hover:text-[#E60023] transition-colors"
                     >
-                      <Link
-                        href="#"
-                        aria-label="Facebook"
-                        className=" hover:bg-[#232323] hover:text-white transition-colors duration-300"
-                      >
-                        <Facebook
-                          size={25}
-                          className={`hover:text-[#4267B2] transition-colors duration-300 text-black  ${
-                            isHovered && "stroke-white "
-                          } `}
-                          fill={`${isHovered} ? '#FFFFFF' : '	#FFFFFF'`}
-                        />
-                      </Link>
-                      <Link
-                        href="#"
-                        aria-label="Twitter"
-                        className=" hover:bg-[#232323] hover:text-white transition-colors duration-300"
-                      >
-                        <Twitter
-                          size={25}
-                          fill={`${isHovered} ? '#232323' : '	#FFFFFF'`}
-                          className={`hover:text-[#4267B2] transition-colors duration-300 text-black    ${
-                            isHovered && "stroke-white "
-                          } `}
-                        />
-                      </Link>
-                      <Link
-                        href="#"
-                        aria-label="Instagram"
-                        className=" hover:bg-[#232323] hover:text-white transition-colors duration-300"
-                      >
-                        <Instagram
-                          size={25}
-                          className={`hover:text-[#4267B2] transition-colors duration-300 text-black    
-                            
-                           `}
-                        />
-                      </Link>
-                      <Link href="#" aria-label="Pinterest">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="25"
-                          height="25"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="text-[#00008b] hover:text-[#E60023] transition-colors"
-                        >
-                          <path d="M8 12a4 4 0 1 0 8 0a4 4 0 0 0-8 0"></path>
-                          <path d="M12 2v6"></path>
-                          <path d="M12 22v-6"></path>
-                          <path d="M6 12H2"></path>
-                          <path d="M22 12h-4"></path>
-                        </svg>
-                      </Link>
-                    </div>
-                    {/* <Separator
+                      <path d="M8 12a4 4 0 1 0 8 0a4 4 0 0 0-8 0"></path>
+                      <path d="M12 2v6"></path>
+                      <path d="M12 22v-6"></path>
+                      <path d="M6 12H2"></path>
+                      <path d="M22 12h-4"></path>
+                    </svg>
+                  </Link> */}
+                  </div>
+
+                  <Separator
                     orientation="vertical"
                     className="h-6 hidden md:block"
-                  /> */}
-                    {/* <Button
-                    variant="default"
-                    size="sm"
-                    className="bg-[#00bfff] hover:bg-[#0080ff] text-white"
-                  >
-                    Login
-                  </Button> */}
-                  </div>
-                  {/* Social Media Icons */}
-                  {/* ... your existing social media links ... */}
+                  />
+                  {loginItem && (
+                    <AnimatedButton href={loginItem.value}>
+                      {loginItem.label}
+                    </AnimatedButton>
+
+                    // <Button
+                    //   variant="default"
+                    //   size="lg"
+                    //   className="bg-flatBlue hover:bg-flatBlue text-lg text-white hover:text-black hidden md:block rounded-none"
+                    // >
+                    //   <Link href={loginItem.value}>{loginItem.label}</Link>
+                    // </Button>
+                  )}
                 </div>
-                <Separator
-                  orientation="vertical"
-                  className="h-6 hidden md:block"
-                />
-                <Button
-                  variant="default"
-                  size="lg"
-                  className="bg-flatBlue hover:bg-flatBlue text-lg text-white hover:text-black hidden md:block rounded-none"
-                >
-                  Login
-                </Button>
               </div>
             </div>
           </div>
@@ -271,197 +380,85 @@ const Header = () => {
       )}
 
       {!isDetailsOpen && (
-        <div className="bg-[#052449] text-white py-2">
+        <div className="bg-[#052449] text-white py-2    ">
           <div className="container mx-auto px-4 max-w-6xl md:min-h-[8.25rem]">
             <div className="flex justify-between items-center">
-              <Link href="/" className="flex items-center   z-20">
+              <Link href="/" className="flex items-center z-20">
                 <Image
-                  src="/images/logoo.png"
+                  src="/images/Logo_black.png"
                   alt="Windward Sailing Club"
-                  // className="h-16 w-auto"
                   className="h-[85px] w-[288px]"
                   width={377.75}
                   height={100.984}
                   onClick={() => setIsDetailsOpen(false)}
                 />
               </Link>
-              <div className=" hidden md:flex flex-col gap-2">
+              <div className="hidden     lg:flex flex-col gap-2">
                 <div className="hidden md:hidden lg:flex items-center space-x-6">
-                  {/* Contact Info Section */}
-                  <div className="flex items-center space-x-2">
-                    <Phone className="w-10 h-10" />
-                    <div>
-                      <div className="text-sm text-gray-400">CALL US</div>
-                      <div className="font-bold">(949) 675-9060</div>
-                    </div>
-                  </div>
-                  <Separator
-                    orientation="vertical"
-                    className="h-16 bg-gray-500"
-                  />
-                  <div className="flex items-center space-x-2">
-                    <Clock className="w-10 h-10" />
-                    <div>
-                      <div className="text-sm text-gray-400">
-                        HOURS OF OPERATION
-                      </div>
-                      <div className="font-bold">Monday — Sunday</div>
-                      <div className="text-sm">9:00 a.m. — 5:00 p.m.</div>
-                    </div>
-                  </div>
-                </div>
+                  {contactItems?.slice(0, 2).map((item, index) => (
+                    <React.Fragment key={item.id}>
+                      {index > 0 && (
+                        <Separator
+                          orientation="vertical"
+                          className="h-16 bg-gray-500"
+                        />
+                      )}
+                      <div className="flex items-center space-x-2">
+                        <IconComponent icon={item.icon as string} />
+                        <div>
+                          <div className="text-sm text-gray-400">
+                            {item.label}
+                          </div>
+                          {item.type === "hours" ? (
+                            <>
+                              {/* <div className="font-bold">
+                                {item.value.split("\\n")[0]}
+                              </div>
+                              
+                              <div className="text-sm">
+                                {item.value.split("\\n")[1]}
+                              </div> */}
 
-                <Separator orientation="horizontal" className="  bg-gray-500" />
-                <div className="flex items-center space-x-2">
-                  <MapPin className="w-10 h-10" />
-                  <div>
-                    <div className="text-sm text-gray-400">
-                      COMPANY / LOCATION
-                    </div>
-                    <div className="font-bold">
-                      3300 Via Lido, Windward Beach, CA 92663
-                    </div>
-                  </div>
+                              {item.value.split("\\n").map((line, index) => (
+                                <div
+                                  key={index}
+                                  className={
+                                    index === 0 ? "font-bold" : "text-sm"
+                                  }
+                                >
+                                  {line}
+                                  {index <
+                                    item.value.split("\\n").length - 1 && (
+                                    <br />
+                                  )}
+                                </div>
+                              ))}
+                            </>
+                          ) : (
+                            <div className="font-bold">{item.value}</div>
+                          )}
+                        </div>
+                      </div>
+                    </React.Fragment>
+                  ))}
                 </div>
+                <Separator orientation="horizontal" className="bg-gray-500" />
+                {contactItems?.slice(2, 3).map((item) => {
+                  return (
+                    <div key={item.id} className="flex items-center space-x-2">
+                      <IconComponent icon={item.icon as string} />
+                      <div>
+                        <div className="text-sm text-gray-400">
+                          {item.label}
+                        </div>
+                        <div className="font-bold">{item.value}</div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
 
-              {/* Mobile Hamburger Menu */}
-
-              {/* <div className="md:hidden flex items-center space-x-4">
-                <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-                  <SheetTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="bg-transparent"
-                      onClick={() => setIsDetailsOpen(false)}
-                    >
-                      <Menu className="h-6 w-6 bg-transparent" />
-                    </Button>
-                  </SheetTrigger>
-                  <SheetContent side="left" className="bg-[#c5dfff] w-64 p-0">
-                    <SheetHeader className="p-4 border-b">
-                      <SheetTitle>Menu</SheetTitle>
-                    </SheetHeader>
-                    <nav className="flex flex-col">
-                      {menuItems?.map((item) => (
-                        <React.Fragment key={item.name}>
-                          {item?.nav_sections ? (
-                            <Collapsible>
-                              <CollapsibleTrigger className="flex items-center justify-between w-full p-4 text-left">
-                                {item.name && (
-                                  <Link
-                                    href={`/${item.name
-                                      .toLowerCase()
-                                      .replace(/\s+/g, "-")}`}
-                                  >
-                                    <span
-                                      className={cn(
-                                        "text-lg font-semibold",
-                                        isActive(item.href)
-                                          ? "text-[#00bfff]"
-                                          : "text-black"
-                                      )}
-                                    >
-                                      {item.name}
-                                    </span>
-                                  </Link>
-                                )}
-                                <ChevronRight className="h-4 w-4" />
-                              </CollapsibleTrigger>
-                              <CollapsibleContent>
-                                {item?.nav_sections?.map((category) => (
-                                  <Collapsible key={category.name}>
-                                    <CollapsibleTrigger className="flex items-center font-bold justify-between w-full p-4 pl-8 text-left">
-                                      <Link
-                                        href={`/category/${
-                                          category.name || ""
-                                        } `}
-                                      >
-                                        <span
-                                          className={cn(
-                                            "text-base font-bold",
-                                            isActive(category.href)
-                                              ? "text-[#00bfff]"
-                                              : "text-black"
-                                          )}
-                                        >
-                                          {category.name}
-                                        </span>
-                                      </Link>
-                                      <ChevronRight className="h-4 w-4" />
-                                    </CollapsibleTrigger>
-                                    <CollapsibleContent>
-                                      <Link
-                                        // href={category.href}
-                                        href={`/category/${category.id || ""} `}
-                                        className="block p-4 pl-12 text-sm font-medium"
-                                        onClick={() => setIsSheetOpen(false)}
-                                      >
-                                        All {category.name}
-                                      </Link>
-                                      {category?.nav_subsections?.map(
-                                        (subcategory) => (
-                                          <Link
-                                            key={subcategory.name}
-                                            // href={subcategory.href}
-                                            href={`/${(
-                                              category.name || ""
-                                            ).toLowerCase()}/${subcategory.name.toLowerCase()} ?? " " `}
-                                            onClick={() =>
-                                              setIsSheetOpen(false)
-                                            }
-                                            className={cn(
-                                              "block p-4 pl-12 text-sm",
-                                              isActive(subcategory.href)
-                                                ? "text-[#00bfff]"
-                                                : "text-black"
-                                            )}
-                                          >
-                                            {subcategory.name}
-                                          </Link>
-                                        )
-                                      )}
-                                    </CollapsibleContent>
-                                  </Collapsible>
-                                ))}
-                              </CollapsibleContent>
-                            </Collapsible>
-                          ) : (
-                            <Link
-                              href={item.href ?? ""}
-                              onClick={() => setIsSheetOpen(false)}
-                              className={cn(
-                                "flex items-center justify-between p-4 text-lg font-semibold",
-                                isActive(item.href)
-                                  ? "text-[#00bfff]"
-                                  : "text-black"
-                              )}
-                            >
-                              {item.name}
-                              <ChevronRight className="h-4 w-4" />
-                            </Link>
-                          )}
-                        </React.Fragment>
-                      ))}
-                    </nav>
-                    <Button className="flex justify-center mt-8 items-center  w-full px-4 py-2 text-white bg-flatBlue hover:bg-flatBlue hover:opacity-60  rounded-full">
-                      Booking Now
-                    </Button>{" "}
-                  </SheetContent>
-                </Sheet>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => {
-                    setIsDetailsOpen(!isDetailsOpen);
-                  }}
-                >
-                  <MoreHorizontal className="h-6 w-6" />
-                </Button>
-              </div> */}
-
-              <div className="md:hidden flex items-center space-x-4">
+              <div className="  lg:hidden flex items-center space-x-4">
                 <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                   <SheetTrigger asChild>
                     <Button
@@ -583,7 +580,7 @@ const Header = () => {
       )}
 
       {/* Details Section for Mobile View */}
-      {isDetailsOpen && (
+      {/* {isDetailsOpen && (
         <div className="md:block relative   lg:hidden bg-sky text-black py-4">
           <button
             className="absolute -top-4 -right-4 m-4 rounded-full    text-white   shadow-md bg-red-600"
@@ -641,11 +638,18 @@ const Header = () => {
             </div>
           </div>
         </div>
+      )} */}
+
+      {isDetailsOpen && (
+        <MobileOverlay
+          contacts={contacts}
+          onClose={() => setIsDetailsOpen(false)}
+        />
       )}
 
       {isDetailsOpen && (
         <div
-          className="fixed top-[27.4375rem] inset-0 bg-black opacity-20 z-10" // Semi-transparent overlay
+          className="fixed top-[27.4375rem] inset-0 bg-black opacity-20 z-10"
           onClick={handleOverlayClick}
         />
       )}
@@ -676,11 +680,8 @@ const DynamicFooter = () => {
   // const [footerContent, setFooterContent] = useState<FooterContent | null>(
   //   null
   // );
+  const pathname = usePathname();
   const [currentYear] = useState(new Date().getFullYear());
-
-  // useEffect(() => {
-  //   fetchFooterContent();
-  // }, []);
 
   const fetchFooterContent = async () => {
     const { data, error } = await supabase
@@ -695,8 +696,6 @@ const DynamicFooter = () => {
       return data;
     }
   };
-
-  // if (!footerContent) return null;
 
   const { data: footerContent } = useQuery({
     queryKey: ["footer-data"],
@@ -720,7 +719,7 @@ const DynamicFooter = () => {
         );
       case "links":
         return (
-          <div className="columns-2 md:columns-3 text-xs whitespace-nowrap">
+          <div className="columns-2 md:columns-2 text-xs whitespace-nowrap">
             {(field?.value as { text: string; url: string }[])?.map(
               (link, index) => (
                 <Link
@@ -748,7 +747,7 @@ const DynamicFooter = () => {
   const backgroundField = getFieldByLabel("Background Image");
   const boatField = getFieldByLabel("boat");
   const boatImageUrl = boatField?.value ?? "";
-  console.log(`Boat Image Url : ${boatImageUrl} :: boatfiled is ${boatField}`);
+  // console.log(`Boat Image Url : ${boatImageUrl} :: boatfiled is ${boatField}`);
 
   return (
     <footer
@@ -778,17 +777,19 @@ const DynamicFooter = () => {
           }}
         />
 
-        <div className="absolute -top-[180px] left-5 lg:left-20 bottom-4 z-[3] w-[14.1875rem] h-[24.625rem] overflow-hidden hidden md:hidden 4xl:block">
-          {boatImageUrl && (
-            <Image
-              src={(boatImageUrl as string) ?? "/images/sarah.jpg"}
-              alt="Footer decoration"
-              className="object-cover w-full h-full"
-              height={227}
-              width={394}
-            />
-          )}
-        </div>
+        {pathname !== "/member-dashboard" && (
+          <div className="absolute -top-[180px] left-5 lg:left-20 bottom-4 z-[3] w-[14.1875rem] h-[24.625rem] overflow-hidden hidden md:hidden 4xl:block">
+            {boatImageUrl && (
+              <Image
+                src={(boatImageUrl as string) ?? "/images/sarah.jpg"}
+                alt="Footer decoration"
+                className="object-cover w-full h-full"
+                height={227}
+                width={394}
+              />
+            )}
+          </div>
+        )}
 
         <section className="w-full p-4  ">
           <div className=" container mx-auto   max-w-6xl md:flex md:justify-center gap-4">
@@ -800,7 +801,7 @@ const DynamicFooter = () => {
               )}
               {Object.values(footerContent?.content ?? {}).map(
                 (field) =>
-                  // if any field is added in hte code pelase do add that label so that it wont render in the footer
+                  // if any field is added in the code please do add that label so that it wont render in the footer
                   field.type !== "links" &&
                   field.label !== "Copyright" &&
                   field.label !== "Logo" &&
@@ -832,7 +833,7 @@ const DynamicFooter = () => {
               }
           </div> */}
 
-            <div className="flex-1 mt-2">
+            <div className={`flex-1 mt-2 ${contentFont.className}`}>
               {footerContent?.content &&
                 Object.values(footerContent.content)
                   .filter((field) => field.type === "links")

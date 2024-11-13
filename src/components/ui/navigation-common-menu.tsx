@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { fetchNavItems } from "@/lib/services";
+import AnimatedButton from "../common/animated-button";
 const NavigationCommonMenu = () => {
   const [isSticky, setIsSticky] = useState(false);
   const pathname = usePathname();
@@ -44,7 +45,7 @@ const NavigationCommonMenu = () => {
                   "block px-4 py-2 text-sm font-regular400 transition-colors duration-300",
                   isActive(item.href)
                     ? "bg-gradient-to-r from-[#6edcfc] to-[#4facfe] text-black w-full"
-                    : "text-gray-800 hover:bg-gradient-to-r hover:from-[#6edcfc] hover:to-[#4facfe] hover:text-black w-full"
+                    : "text-gray-800 hover:bg-gradient-to-b hover:from-[#6edcfc] hover:to-[#4facfe] hover:text-black w-full"
                 )}
                 onMouseEnter={() => setActiveItem(item.href)}
                 onMouseLeave={() => setActiveItem(null)}
@@ -62,7 +63,7 @@ const NavigationCommonMenu = () => {
                             "block px-4 py-2 text-sm w-full",
                             isActive(`/boats/${section.href}`)
                               ? "bg-gradient-to-r from-[#6edcfc] to-[#4facfe] text-black w-full"
-                              : "text-gray-800 hover:bg-gradient-to-r hover:from-[#6edcfc] hover:to-[#4facfe] hover:text-black w-full"
+                              : "text-gray-800 hover:bg-gradient-to-b hover:from-[#6edcfc] hover:to-[#4facfe] hover:text-black w-full"
                           )}
                         >
                           {section.name}
@@ -98,9 +99,11 @@ const NavigationCommonMenu = () => {
           ))}
         </div>
         <li>
-          <button className="bg-gradient-to-r from-[#6edcfc] to-[#4facfe] text-black font-bold px-4 py-2 rounded-full transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+          {/* <button className="bg-gradient-to-r from-[#6edcfc] to-[#4facfe] text-black font-bold px-4 py-2 rounded-full transition-transform duration-300 hover:scale-105 hover:shadow-lg">
             BOOKING NOW
-          </button>
+          </button> */}
+
+          <AnimatedButton href="/trip-planning">BOOKING NOW</AnimatedButton>
         </li>
       </ul>
     </nav>

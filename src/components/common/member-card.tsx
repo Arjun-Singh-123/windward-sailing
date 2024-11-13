@@ -27,7 +27,7 @@ const MemberCard: React.FC<MemberProps> = ({
   console.log(image);
   return (
     <Card
-      className={`relative border-t-[0.625rem]  border-b-[0.125rem]  border-l-[0.125rem]  border-r-[0.125rem]    pt-12 m-2 mt-6 ${
+      className={`relative border-t-[0.625rem]  border-b-[0.125rem]  border-l-[0.125rem]  border-r-[0.125rem]    pt-12 m-2 mt-6 mb-2 ${
         index === 0
           ? "border-t-green-500 border-green-500"
           : index === 1
@@ -69,7 +69,7 @@ const MemberCard: React.FC<MemberProps> = ({
           </span>
           {about}
         </p>
-        <div className="flex flex-col gap-2 items-start w-full px-4 mt-auto whitespace-nowrap">
+        <div className="flex flex-col gap-2 items-start w-full px-4 mt-auto whitespace-nowrap mb-2">
           <a
             href="mailto:amanda.martin@example.com"
             className="flex items-center text-primary hover:underline"

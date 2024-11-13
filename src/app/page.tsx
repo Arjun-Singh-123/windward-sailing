@@ -48,16 +48,6 @@ export default function Home() {
     queryFn: fetchSections,
   });
 
-  // console.log("section data", sections);
-
-  // // Memoize the visibility map to avoid recalculating on every render
-  // const visibilityMap: Record<string, boolean> = useMemo(() => {
-  //   return (sections || [])?.reduce((acc, section) => {
-  //     acc[section.section_name] = section.is_visible;
-  //     return acc;
-  //   }, {});
-  // }, [sections]);
-
   const visibilityMap: Record<string, boolean> = (sections || []).reduce(
     (acc: Record<string, boolean>, section: Section) => {
       if (
@@ -135,7 +125,6 @@ export default function Home() {
                   description:
                     "There were 1 double beds and common facility available with attached toilets.",
                 },
-                // ... other benefits
               ]}
             />
           </div>

@@ -10,6 +10,7 @@
     "generate:types": "supabase gen types typescript --project-id lpflijrmgfjwrcvpdvpi > database.types.ts"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-checkbox": "^1.1.2",
     "@radix-ui/react-collapsible": "^1.1.0",
@@ -40,6 +41,7 @@
     "papaparse": "^5.4.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.53.1",
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
     "socket.io": "^4.7.5",

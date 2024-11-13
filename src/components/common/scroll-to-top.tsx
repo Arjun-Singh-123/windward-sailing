@@ -45,7 +45,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ChevronUp } from "lucide-react";
+import { ArrowUp, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function ScrollToTop() {
@@ -75,14 +75,24 @@ export default function ScrollToTop() {
   if (!isVisible) return null;
 
   return (
-    <Button
-      variant="outline"
-      size="icon"
-      className="fixed bottom-14 right-14 rounded-full shadow-lg bg-black text-white hover:bg-gray-800 hover:text-yellow-300 transition duration-300 ease-in-out"
+    <button
+      className={`fixed bottom-10 right-10 bg-gray-800 text-white p-3 rounded-full shadow-lg transition-opacity duration-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 ${
+        isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+      }`}
       onClick={scrollToTop}
       aria-label="Scroll to top"
     >
-      <ChevronUp className="h-8 w-8" />
-    </Button>
+      <ArrowUp className="w-6 h-6" />
+    </button>
+
+    // <Button
+    //   variant="destructive"
+    //   size="icon"
+    //   className="fixed bottom-14 right-14 rounded-full shadow-lg bg-black text-white hover:bg-gray-800 hover:text-yellow-300 transition duration-300 ease-in-out"
+    //   onClick={scrollToTop}
+    //   aria-label="Scroll to top"
+    // >
+    //   <ArrowUp className="h-8 w-8" />
+    // </Button>
   );
 }

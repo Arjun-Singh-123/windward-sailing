@@ -11,6 +11,8 @@ import {
   mainHeadingFont,
 } from "@/app/ui/fonts";
 import DecoratorLine from "./decorator-icon-line";
+import { supabase } from "@/lib/supabase";
+import { useQuery } from "@tanstack/react-query";
 
 interface Specification {
   name: string;
@@ -40,6 +42,42 @@ interface DetailProps {
   benefits?: boolean;
 }
 
+export const fetchSectionProducts = async (sectionName: string) => {
+  const { data, error } = await supabase
+    .from("user_selections")
+    .select(
+      `
+      product_id,
+      products (
+        id,
+        name  ,
+        image_url  ,
+        price,
+        description,
+        href,nav_sections(slug),
+        product_details(images)
+      ),
+      sections (
+        name 
+      )
+    `
+    )
+    .eq("section_id", "e19f92fb-5d0b-49a8-9fff-a64a3fe80a80");
+
+  if (error) throw error;
+
+  return data.map((item) => ({
+    product_id: item.product_id,
+    title: item?.products?.name,
+    imageUrl: item?.products?.image_url,
+    price: item?.products?.price,
+    link: item?.products?.href,
+    slug: item?.products?.nav_sections?.slug,
+    description: item.products?.description,
+    images: item.products?.product_details,
+  }));
+};
+
 const Detail: React.FC<DetailProps> = ({
   title,
   heading,
@@ -53,7 +91,36 @@ const Detail: React.FC<DetailProps> = ({
 }) => {
   const [showVideo, setShowVideo] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { data } = useQuery({
+    queryKey: ["benefit-images"],
+    queryFn: () => fetchSectionProducts("Benefits"),
+  });
 
+  const benefitImages =
+    data
+      ?.map((item) => {
+        const images = item?.images?.[0]?.images;
+        console.log("images images", item);
+        const { external, internal } = (images as any) ?? {};
+        const firstImage = internal[0] || external[0] || null;
+        return firstImage;
+
+        //  const firstImage =  images?.external?.[0] ||  images?.internal?.[0] || ""
+      })
+      .filter(Boolean) ?? [];
+
+  console.log("benefit images", benefitImages);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex(
+        (prevIndex) => (prevIndex + 1) % benefitImages.length
+      );
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [benefitImages.length]);
   useEffect(() => {
     if (isVideo) {
       setShowVideo(true);
@@ -61,7 +128,6 @@ const Detail: React.FC<DetailProps> = ({
   }, [isVideo]);
 
   useEffect(() => {
-    // Function to detect if the screen width is mobile size (typically 768px and below)
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
@@ -244,7 +310,7 @@ const Detail: React.FC<DetailProps> = ({
                 ))}
               </div>
             </div>
-            <div className="w-full   md:w-1/2 mt-8 md:mt-0 md:ml-8">
+            {/* <div className="w-full   md:w-1/2 mt-8 md:mt-0 md:ml-8">
               <Image
                 src="/images/features.png"
                 alt="benefits"
@@ -253,6 +319,24 @@ const Detail: React.FC<DetailProps> = ({
                 className="object-cover w-full h-full rounded-lg"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
+            </div> */}
+
+            <div className="w-full lg:w-1/2 relative h-[500px] rounded-lg overflow-hidden  m-2">
+              {benefitImages?.map((product, index) => (
+                <div
+                  key={index}
+                  className={`absolute inset-0 transition-opacity duration-1000 ${
+                    index === currentImageIndex ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <Image
+                    src={product ?? ""}
+                    alt="default"
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>

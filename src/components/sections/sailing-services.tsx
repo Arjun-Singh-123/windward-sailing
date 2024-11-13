@@ -1,7 +1,21 @@
 "use client";
 import { contentFont, cursiveHeadingFont } from "@/app/ui/fonts";
 import { ToJoinHeader } from "../common/to-join-header";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/lib/supabase";
 
+import Image from "next/image";
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ChevronRight } from "lucide-react";
+import { useEffect, useState } from "react";
 const services = [
   {
     title: "Captain Your Own Boat",
@@ -25,42 +39,170 @@ const services = [
   },
 ];
 
+export const fetchSectionProducts = async (sectionName: string) => {
+  const { data, error } = await supabase
+    .from("user_selections")
+    .select(
+      `
+      product_id,
+      products (
+        id,
+        name  ,
+        image_url  ,
+        price,
+        description,
+        href,nav_sections(slug)
+        
+      ),
+      sections (
+        name 
+      )
+    `
+    )
+    .eq("section_id", "8af6b308-d7a6-4f02-9f96-b11567aaa3b6");
+
+  if (error) throw error;
+
+  return data.map((item) => ({
+    product_id: item?.product_id,
+    title: item?.products?.name,
+    imageUrl: item?.products?.image_url,
+    price: item?.products?.price,
+    link: item?.products?.href,
+    slug: item?.products?.nav_sections?.slug,
+    description: item.products?.description,
+  }));
+};
+
 export default function SailingServices() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const cardsToShow = 4;
+
+  const { data } = useQuery({
+    queryKey: ["cards-data"],
+    queryFn: () => fetchSectionProducts("HIghlighted Cards") ?? [],
+  });
+
+  // useEffect(() => {
+  //   if (data && data?.length > cardsToShow) {
+  //     const timer = setInterval(() => {
+  //       setCurrentIndex((prevIndex) =>
+  //         prevIndex + cardsToShow >= data?.length ? 0 : prevIndex + 1
+  //       );
+  //     }, 5000);
+
+  //     return () => clearInterval(timer);
+  //   }
+  // }, [data?.length]);
+  // const visibleBoats = data?.slice(currentIndex, currentIndex + cardsToShow);
+
+  // Auto-move the slider
+  useEffect(() => {
+    if (data && data?.length) {
+      const timer = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+      }, 5000);
+
+      return () => clearInterval(timer);
+    }
+  }, [data?.length]);
+
+  const visibleBoats = [
+    ...(data || []),
+    ...(data || []),
+    ...(data || []).slice(0, cardsToShow),
+  ].slice(currentIndex, currentIndex + cardsToShow);
+
   return (
-    <div className="    mx-auto px-4 py-8">
-      <h1
+    <div className="w-full px-4 py-8 bg-gray-50">
+      <h2
         className={`text-4.5xl text-black font-bold text-center mb-8 ${cursiveHeadingFont.className}`}
       >
-        Windward Sailing Club
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {services?.map((service, index) => (
-          <div
-            key={index}
-            className="relative bg-white shadow-lg rounded-lg border-2 border-black flex flex-col"
+        Newport Sailing Club
+      </h2>
+      <div
+        className="flex gap-4 transition-transform duration-1000 ease-in-out"
+        // style={{
+        //   transform: `translateX(-${currentIndex * (100 / cardsToShow)}%)`,
+        // }}
+      >
+        {visibleBoats?.map((boat) => (
+          <Card
+            key={boat.product_id}
+            className="overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 h-64 flex flex-col"
+            // className="min-w-[calc(100%/4)] lg:min-w-[calc(100%/4)] overflow-hidden"
           >
-            <div className="flex-grow p-6">
-              <ToJoinHeader
-                text={service.title}
-                specification={true}
-                membershipFee={false}
-              />
-
-              <p
-                className={`mt-4 font-light tracking-[0.0625rem] text-[0.875rem] text-gray-600 ${contentFont.className}`}
-              >
-                {service.description}
+            {/* <CardHeader className="p-0">
+              <div className="relative h-48 w-full">
+                <Image
+                  src={boat.imageUrl ?? ""}
+                  alt={boat.title}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              </div>
+            </CardHeader> */}
+            <CardContent className="p-4 flex flex-col flex-grow">
+              <CardTitle className="text-xl font-semibold mb-2 text-blue-800">
+                {boat.title}
+              </CardTitle>
+              <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                {boat.description}
               </p>
-            </div>
-
-            {service.description.split(" ").length > 3 && (
-              <button className="bg-buttonGrd1 hover:bg-buttonGrd2 text-darkBlue text-xs font-bold py-1 px-2 rounded-full self-end m-6 mt-auto">
-                LEARN MORE
-              </button>
-            )}
-          </div>
+              <p className="text-lg font-bold text-green-600">
+                {/* ${boat.price}/day */}
+              </p>
+            </CardContent>
+            <CardFooter className="mt-auto">
+              <Link
+                href={`/boats/${boat.slug || ""}/${boat.link || ""}`}
+                passHref
+              >
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                  View Details
+                  <ChevronRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </CardFooter>
+          </Card>
         ))}
       </div>
     </div>
+
+    // <div className="    mx-auto px-4 py-8">
+    //   <h1
+    //     className={`text-4.5xl text-black font-bold text-center mb-8 ${cursiveHeadingFont.className}`}
+    //   >
+    //     Windward Sailing Club
+    //   </h1>
+    //   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    //     {data?.map((service, index) => (
+    //       <div
+    //         key={index}
+    //         className="relative bg-white shadow-lg rounded-lg border-2 border-black flex flex-col"
+    //       >
+    //         <div className="flex-grow p-6">
+    //           <ToJoinHeader
+    //             text={service.title}
+    //             specification={true}
+    //             membershipFee={false}
+    //           />
+
+    //           <p
+    //             className={`mt-4 font-light tracking-[0.0625rem] text-[0.875rem] text-gray-600 ${contentFont.className}`}
+    //           >
+    //             {service.description}
+    //           </p>
+    //         </div>
+
+    //         {/* {service.description.split(" ").length > 3 && (
+    //           <button className="bg-buttonGrd1 hover:bg-buttonGrd2 text-darkBlue text-xs font-bold py-1 px-2 rounded-full self-end m-6 mt-auto">
+    //             LEARN MORE
+    //           </button>
+    //         )} */}
+    //       </div>
+    //     ))}
+    //   </div>
+    // </div>
   );
 }

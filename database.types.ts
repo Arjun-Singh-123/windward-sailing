@@ -9,6 +9,51 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      contacts: {
+        Row: {
+          button_style: string | null
+          created_at: string
+          display_order: number
+          icon: string | null
+          id: string
+          label: string
+          platform: string | null
+          position: string
+          status: string
+          type: string
+          updated_at: string
+          value: string
+        }
+        Insert: {
+          button_style?: string | null
+          created_at?: string
+          display_order?: number
+          icon?: string | null
+          id?: string
+          label: string
+          platform?: string | null
+          position?: string
+          status?: string
+          type: string
+          updated_at?: string
+          value: string
+        }
+        Update: {
+          button_style?: string | null
+          created_at?: string
+          display_order?: number
+          icon?: string | null
+          id?: string
+          label?: string
+          platform?: string | null
+          position?: string
+          status?: string
+          type?: string
+          updated_at?: string
+          value?: string
+        }
+        Relationships: []
+      }
       footer_contentsa: {
         Row: {
           content: Json
@@ -260,6 +305,84 @@ export type Database = {
           non_members?: Json
         }
         Relationships: []
+      }
+      sections: {
+        Row: {
+          description: string | null
+          display_order: number
+          icon: string | null
+          id: string
+          image: string | null
+          is_visible: boolean | null
+          name: string
+          status: string | null
+          title: string | null
+          type: string | null
+        }
+        Insert: {
+          description?: string | null
+          display_order: number
+          icon?: string | null
+          id?: string
+          image?: string | null
+          is_visible?: boolean | null
+          name: string
+          status?: string | null
+          title?: string | null
+          type?: string | null
+        }
+        Update: {
+          description?: string | null
+          display_order?: number
+          icon?: string | null
+          id?: string
+          image?: string | null
+          is_visible?: boolean | null
+          name?: string
+          status?: string | null
+          title?: string | null
+          type?: string | null
+        }
+        Relationships: []
+      }
+      user_selections: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_external_image: boolean | null
+          product_id: string | null
+          section_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_external_image?: boolean | null
+          product_id?: string | null
+          section_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_external_image?: boolean | null
+          product_id?: string | null
+          section_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_selections_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_selections_section_id_fkey"
+            columns: ["section_id"]
+            isOneToOne: false
+            referencedRelation: "sections"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       vehicle_details_new: {
         Row: {

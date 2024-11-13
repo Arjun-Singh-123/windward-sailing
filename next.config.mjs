@@ -16,6 +16,9 @@ const allowedHostnames = [
   "lreclvqyoujucqaggxfy.supabase.co",
   "dev.windwardsailingclub.com",
   "pknbhkxuqdmghngwniok.supabase.co",
+  "lpflijrmgfjwrcvpdvpi.supabase.co",
+  "source.unsplash.com",
+  "plus.unsplash.com",
 ];
 
 const nextConfig = {

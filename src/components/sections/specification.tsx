@@ -1138,15 +1138,19 @@ interface ImageProps {
   alt: string;
   caption: string;
   is360?: boolean;
+  height?: number;
+  width?: number;
 }
 
 export default function YachtGallery({
   images = [],
   title = "External",
 }: {
-  images: ImageProps[];
+  images: any[];
   title: string;
 }) {
+  console.log(`checking ${title} images.....`, images);
+
   const [startIndex, setStartIndex] = useState(0);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
     null
@@ -1255,47 +1259,54 @@ export default function YachtGallery({
       <DecoratorLine />
       <div className="relative">
         <div className="flex sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 overflow-hidden">
-          {images.slice(startIndex, startIndex + 4).map((image, index) => (
+          {images?.slice(startIndex, startIndex + 4)?.map((image, index) => (
             <div
               key={index}
               className="flex-none w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
             >
-              <div
-                className="relative aspect-[4/3] mb-2 cursor-pointer"
-                onClick={() => openModal(startIndex + index)}
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg"
-                />
-              </div>
+              {image && (
+                <div
+                  className="relative   mb-2 cursor-pointer"
+                  onClick={() => openModal(startIndex + index)}
+                >
+                  <Image
+                    src={image ?? ""}
+                    alt={image.alt}
+                    width={1600}
+                    height={800}
+                    objectFit="cover"
+                    className="rounded-lg h-[300px] object-center"
+                  />
+                </div>
+              )}
               <p className="text-sm text-center text-gray-600">
                 {image.caption}
               </p>
             </div>
           ))}
         </div>
-        <Button
-          variant="outline"
-          size="icon"
-          className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white text-black hover:bg-white hidden sm:flex"
-          onClick={prevSlide}
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="h-6 w-6" />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white hover:bg-white hidden sm:flex"
-          onClick={nextSlide}
-          aria-label="Next slide"
-        >
-          <ChevronRight className="h-6 w-6" />
-        </Button>
+        {images && images.length >= 4 && (
+          <>
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white text-black hover:bg-white hidden sm:flex"
+              onClick={prevSlide}
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white hover:bg-white hidden sm:flex"
+              onClick={nextSlide}
+              aria-label="Next slide"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </Button>
+          </>
+        )}
       </div>
       <div className="flex justify-center space-x-4 mt-4 sm:hidden">
         <Button
@@ -1338,8 +1349,8 @@ export default function YachtGallery({
               >
                 <Image
                   ref={imageRef}
-                  src={images[selectedImageIndex].src}
-                  alt={images[selectedImageIndex].alt}
+                  src={images?.[selectedImageIndex] ?? ""}
+                  alt="default"
                   layout="fill"
                   objectFit="contain"
                   className={`rounded-lg ${
