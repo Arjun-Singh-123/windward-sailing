@@ -21,7 +21,9 @@ body {
   width: 100dvw;
   margin: 0;
 }
-
+body:has(.rental-fees-bg) .rental-fees-bg {
+  background-color: var(--lightSky);
+}
 header .btnplr-50 {
   padding-left: calc(var(--container-mw) / 25);
   padding-right: calc(var(--container-mw) / 25);

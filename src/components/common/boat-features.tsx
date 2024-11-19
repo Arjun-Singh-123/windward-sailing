@@ -24,10 +24,10 @@ const features = [
 
 export default function BoatFeatures() {
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full   ">
       <div className=" columns-1 md:columns-3 gap-4">
         {features.map((feature, index) => (
-          <div key={index} className="  flex  p-3 rounded-lg  ">
+          <div key={index} className="  flex  p-3 rounded-lg   ">
             <DotIcon />
             <span> {feature}</span>
           </div>

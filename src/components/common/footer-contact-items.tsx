@@ -153,7 +153,7 @@ const SettingsPanel = () => {
         <Button
           variant="default"
           size="icon"
-          className="text-white h-20 w-24  rounded-none  md:border-l border-white/10 bg-transparent"
+          className="text-white h-24 w-24  rounded-none  md:border-l border-white/10 bg-transparent"
         >
           <Settings className="h-6 w-6" />
         </Button>

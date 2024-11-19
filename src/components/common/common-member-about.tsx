@@ -36,63 +36,61 @@ const CommonMembershipAbout = ({
   rentalFeesBg = false,
 }: AboutProps) => {
   const { isMobile } = useMobileCheck();
+  console.log(rentalFeesBg);
   return (
-    <div
-      className={`   ${
-        rentalFeesBg
-          ? "container w-full max-w-[1630px] px-[15px] mx-auto  bg-lightSky  "
-          : "container w-full max-w-[1630px] px-[15px] mx-auto"
-      }  `}
-    >
-      <section className={` flex flex-col-reverse md:flex-row           `}>
-        <div className=" relative flex flex-col w-full md:w-[68%] p-4 md:p-4">
-          {/* <h2
+    <div className="w-full  pt-20  rental-fees-bg">
+      <div className="container w-full max-w-[1630px] px-[15px] mx-auto    ">
+        <section
+          className={` flex flex-col-reverse md:flex-row   gap-6        `}
+        >
+          <div className=" relative flex flex-col w-full md:w-[68%]   md:p-4">
+            {/* <h2
             className={`mt-4  md:mt-10    text-2xl text-flatBlue ${cursiveHeadingFont.className}`}
           >
             {subtitle && subtitle}
           </h2> */}
 
-          <h3 className={`text-4xl ${mainHeadingFont.className}`}>
-            {title && title}
-          </h3>
-          {/* <DecoratorLine /> */}
-          <br />
-          <div className={`${contentFont.className}  mb-4     `}>
-            <p className="mb-2">{description && description}</p>
-            {membership && <BoatClubPricing />}
-            {boatFeatures && <BoatFeatures />}
-          </div>
-        </div>
-
-        <div className="relative w-full md:w-auto md:h-auto overflow-visible">
-          {video ? (
-            <div className="relative w-full h-full">
-              <video
-                src="/images/Sailboat_Videos_2.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-                // className="w-[29rem] h-[32.560rem] object-cover border-[30px] border-[#001135] absolute -top-[40px]"
-                // className="w-full h-full object-cover border-[30px] border-[#001135]"
-                className="w-full h-full object-cover border-[30px] border-[#001135] 
-              "
-              />
+            <h3 className={`text-4xl ${mainHeadingFont.className} pt-6`}>
+              {title && title}
+            </h3>
+            {/* <DecoratorLine /> */}
+            <br />
+            <div className={`${contentFont.className}  mb-4     `}>
+              <p className="mb-2">{description && description}</p>
+              {membership && <BoatClubPricing />}
+              {boatFeatures && <BoatFeatures />}
             </div>
-          ) : (
-            image && (
-              <Image
-                src={imageUrl ?? ""}
-                alt="Side"
-                className=" w-full h-full object-cover border-spacing-12 border-blue-500"
-                height={863}
-                width={576}
-              />
-            )
-          )}
+          </div>
 
-          {!image && (
-            <style jsx>{`
+          <div className="relative w-full md:w-auto md:h-auto overflow-visible">
+            {video ? (
+              <div className="relative w-full h-full">
+                <video
+                  src="/images/Sailboat_Videos_2.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  // className="w-[29rem] h-[32.560rem] object-cover border-[30px] border-[#001135] absolute -top-[40px]"
+                  // className="w-full h-full object-cover border-[30px] border-[#001135]"
+                  className="w-full h-full object-cover border-[30px] border-[#001135] 
+              "
+                />
+              </div>
+            ) : (
+              image && (
+                <Image
+                  src={imageUrl ?? ""}
+                  alt="Side"
+                  className=" w-full h-full object-cover border-spacing-12 border-blue-500"
+                  height={863}
+                  width={576}
+                />
+              )
+            )}
+
+            {!image && (
+              <style jsx>{`
             div::before {
               content: "";
               position: absolute;
@@ -106,9 +104,10 @@ const CommonMembershipAbout = ({
               display:   ${isMobile} ? "block" : "none"};
             }
           `}</style>
-          )}
-        </div>
-      </section>
+            )}
+          </div>
+        </section>
+      </div>
     </div>
   );
 };

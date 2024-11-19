@@ -166,76 +166,78 @@ export default function SailingServices() {
           Newport Sailing Club
         </h2>
         {shouldScroll ? (
-          <div
-            ref={scrollRef}
-            className="flex overflow-x-scroll space-x-6 pb-6 pt-2"
-            style={{
-              width: "100%",
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
-            }}
-            onMouseEnter={() => setIsScrolling(false)}
-            onMouseLeave={() => setIsScrolling(true)}
-          >
-            {[...(data || []), ...(data || []), ...(data || [])]?.map(
-              (boat, index) => {
-                console.log("object", boat?.title?.split(" "));
-                const titleParts = boat?.title
-                  ?.split(" ")
-                  .map((part) => part.replace(/\\/g, "").replace(/'/g, ""));
+          <div className="relative overflow-hidden">
+            <div
+              ref={scrollRef}
+              className="flex     overflow-x-scroll space-x-6 pb-6 pt-2"
+              style={{
+                width: "100%",
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+              }}
+              onMouseEnter={() => setIsScrolling(false)}
+              onMouseLeave={() => setIsScrolling(true)}
+            >
+              {[...(data || []), ...(data || []), ...(data || [])]?.map(
+                (boat, index) => {
+                  console.log("object", boat?.title?.split(" "));
+                  const titleParts = boat?.title
+                    ?.split(" ")
+                    .map((part) => part.replace(/\\/g, "").replace(/'/g, ""));
 
-                console.log(titleParts);
-                // const titleParts = boat?.title?.split(" ");
-                const manufacturer = titleParts?.[0];
-                // Combine first two parts and store the last part separately
-                const combinedName = `${titleParts?.[0]}${titleParts?.[1]}`; // 'Duffield 18'
-                const splashPart = titleParts?.[2]; // 'SPLASH'
-                console.log(combinedName);
-                // const model = titleParts?.slice(1, -1).join(" ");
-                // console.log(model);
-                const length = titleParts?.[titleParts.length - 1];
-                return (
-                  <Card
-                    key={`${boat.product_id}-${index}`}
-                    className="flex flex-col justify-between shrink-0 p-2 overflow-hidden bg-lightSky transition-all duration-300 hover:shadow-2xl hover:bg-darkBlue hover:text-white text-black  rounded-md"
-                    style={{
-                      width: `${cardWidth}px`,
-                      height: `${cardHeight}px`,
-                      boxShadow: "0 0 5px rgba(0,0,0,0.2)",
-                    }}
-                  >
-                    <CardContent className="p-6 flex-grow">
-                      <CardTitle className="text-2xl font-semibold mb-4">
-                        <div className={`${contentFont.className}  `}>
-                          <p className="text-xs uppercase font-regular400 tracking-widest  ">
-                            {combinedName}
-                          </p>
-                          <p className=" font-regular400 ">{splashPart}</p>
-                        </div>
-                      </CardTitle>
-                      <p className="text-base line-clamp-6">
-                        {boat.description}
-                      </p>
-                    </CardContent>
-                    <CardFooter className="p-6">
-                      <Link
-                        href={`/boats/${boat.slug || ""}/${boat.link || ""}`}
-                        passHref
-                        className="w-full"
-                      >
-                        <Button
-                          variant="outline"
-                          className="w-full      text-lg py-3   hover:shadow-md"
+                  console.log(titleParts);
+                  // const titleParts = boat?.title?.split(" ");
+                  const manufacturer = titleParts?.[0];
+                  // Combine first two parts and store the last part separately
+                  const combinedName = `${titleParts?.[0]}${titleParts?.[1]}`; // 'Duffield 18'
+                  const splashPart = titleParts?.[2]; // 'SPLASH'
+                  console.log(combinedName);
+                  // const model = titleParts?.slice(1, -1).join(" ");
+                  // console.log(model);
+                  const length = titleParts?.[titleParts.length - 1];
+                  return (
+                    <Card
+                      key={`${boat.product_id}-${index}`}
+                      className="flex flex-col justify-between shrink-0 p-2 overflow-hidden bg-lightSky transition-all duration-300 hover:shadow-2xl hover:bg-darkBlue hover:text-white text-black  rounded-md"
+                      style={{
+                        width: `${cardWidth}px`,
+                        height: `${cardHeight}px`,
+                        boxShadow: "0 0 5px rgba(0,0,0,0.2)",
+                      }}
+                    >
+                      <CardContent className="p-6 flex-grow">
+                        <CardTitle className="text-2xl font-semibold mb-4">
+                          <div className={`${contentFont.className}  `}>
+                            <p className="text-xs uppercase font-regular400 tracking-widest  ">
+                              {combinedName}
+                            </p>
+                            <p className=" font-regular400 ">{splashPart}</p>
+                          </div>
+                        </CardTitle>
+                        <p className="text-base line-clamp-6">
+                          {boat.description}
+                        </p>
+                      </CardContent>
+                      <CardFooter className="p-6">
+                        <Link
+                          href={`/boats/${boat.slug || ""}/${boat.link || ""}`}
+                          passHref
+                          className="w-full"
                         >
-                          View Details
-                          <ChevronRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                        </Button>
-                      </Link>
-                    </CardFooter>
-                  </Card>
-                );
-              }
-            )}
+                          <Button
+                            variant="outline"
+                            className="w-full      text-lg py-3   hover:shadow-md"
+                          >
+                            View Details
+                            <ChevronRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                          </Button>
+                        </Link>
+                      </CardFooter>
+                    </Card>
+                  );
+                }
+              )}
+            </div>
           </div>
         ) : (
           <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1">

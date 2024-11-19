@@ -142,7 +142,7 @@ const feeData = {
 
 export default function RentalFees() {
   return (
-    <div className=" w-full">
+    <div className=" w-full   ">
       <HeroFallback />
       <RentalFeesTable />
       <CommonMembershipAbout

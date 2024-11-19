@@ -310,7 +310,7 @@ export default function Header() {
                       {item.nav_sections.map((section) => (
                         <div
                           key={section.id}
-                          className="relative group/sub -top-3   "
+                          className="relative group/sub     "
                         >
                           <Link
                             href={`/boats/${section.href}`}
