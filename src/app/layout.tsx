@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { DynamicFooter, Header } from "@/components/common/header";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Providers from "./providers";
 import ScrollToTop from "@/components/common/scroll-to-top";
@@ -10,6 +9,8 @@ import { inter } from "@/app/ui/fonts";
 import { Toaster } from "sonner";
 import StickyHeader from "@/components/common/sticky-header";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Header, { DynamicFooter } from "@/components/common/header";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -43,12 +44,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} antialiased flex flex-col min-h-screen overflow-x-hidden   `}
+        className={`${inter.className} antialiased flex flex-col min-h-screen overflow-x-hidden    `}
       >
         <Providers>
           <Header />
 
-          <main className="flex-grow">
+          <main className="flex-grow   ">
             <SpeedInsights />
             {children}
           </main>

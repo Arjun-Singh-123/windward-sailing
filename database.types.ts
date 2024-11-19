@@ -9,6 +9,81 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      about_section: {
+        Row: {
+          created_at: string | null
+          description_1: string
+          description_2: string
+          id: string
+          image_url: string | null
+          subtitle: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description_1: string
+          description_2: string
+          id?: string
+          image_url?: string | null
+          subtitle: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description_1?: string
+          description_2?: string
+          id?: string
+          image_url?: string | null
+          subtitle?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      boats: {
+        Row: {
+          availability_time: string
+          available_no: number
+          booked_by_email: string | null
+          booked_by_name: string | null
+          booked_by_phone: string | null
+          booked_end_date: string | null
+          booked_start_date: string | null
+          booked_status: string
+          id: number
+          name: string
+          size: string
+        }
+        Insert: {
+          availability_time: string
+          available_no: number
+          booked_by_email?: string | null
+          booked_by_name?: string | null
+          booked_by_phone?: string | null
+          booked_end_date?: string | null
+          booked_start_date?: string | null
+          booked_status: string
+          id?: number
+          name: string
+          size: string
+        }
+        Update: {
+          availability_time?: string
+          available_no?: number
+          booked_by_email?: string | null
+          booked_by_name?: string | null
+          booked_by_phone?: string | null
+          booked_end_date?: string | null
+          booked_start_date?: string | null
+          booked_status?: string
+          id?: number
+          name?: string
+          size?: string
+        }
+        Relationships: []
+      }
       contacts: {
         Row: {
           button_style: string | null
@@ -117,6 +192,72 @@ export type Database = {
           name?: string
           phone?: string | null
           profession?: string | null
+        }
+        Relationships: []
+      }
+      members_new: {
+        Row: {
+          about: string | null
+          access: string
+          address1: string | null
+          address2: string | null
+          city: string | null
+          country: string | null
+          created_at: string | null
+          email: string
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
+          emergency_contact_relation: string | null
+          id: string
+          job_role: string | null
+          name: string
+          phone: string | null
+          profile_image_url: string | null
+          state: string | null
+          updated_at: string | null
+          zipcode: string | null
+        }
+        Insert: {
+          about?: string | null
+          access: string
+          address1?: string | null
+          address2?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string | null
+          email: string
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          emergency_contact_relation?: string | null
+          id?: string
+          job_role?: string | null
+          name: string
+          phone?: string | null
+          profile_image_url?: string | null
+          state?: string | null
+          updated_at?: string | null
+          zipcode?: string | null
+        }
+        Update: {
+          about?: string | null
+          access?: string
+          address1?: string | null
+          address2?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string | null
+          email?: string
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          emergency_contact_relation?: string | null
+          id?: string
+          job_role?: string | null
+          name?: string
+          phone?: string | null
+          profile_image_url?: string | null
+          state?: string | null
+          updated_at?: string | null
+          zipcode?: string | null
         }
         Relationships: []
       }
@@ -308,6 +449,7 @@ export type Database = {
       }
       sections: {
         Row: {
+          content: Json | null
           description: string | null
           display_order: number
           icon: string | null
@@ -320,6 +462,7 @@ export type Database = {
           type: string | null
         }
         Insert: {
+          content?: Json | null
           description?: string | null
           display_order: number
           icon?: string | null
@@ -332,6 +475,7 @@ export type Database = {
           type?: string | null
         }
         Update: {
+          content?: Json | null
           description?: string | null
           display_order?: number
           icon?: string | null
@@ -342,6 +486,33 @@ export type Database = {
           status?: string | null
           title?: string | null
           type?: string | null
+        }
+        Relationships: []
+      }
+      stats_section: {
+        Row: {
+          created_at: string | null
+          destination_count: number
+          id: string
+          satisfied_count: number
+          updated_at: string | null
+          yachts_count: number
+        }
+        Insert: {
+          created_at?: string | null
+          destination_count: number
+          id?: string
+          satisfied_count: number
+          updated_at?: string | null
+          yachts_count: number
+        }
+        Update: {
+          created_at?: string | null
+          destination_count?: number
+          id?: string
+          satisfied_count?: number
+          updated_at?: string | null
+          yachts_count?: number
         }
         Relationships: []
       }
@@ -399,6 +570,96 @@ export type Database = {
           content?: Json | null
           id?: number
           vehicle_id?: number | null
+        }
+        Relationships: []
+      }
+      vessels: {
+        Row: {
+          autopilot: boolean | null
+          bbq: boolean | null
+          bimini: boolean | null
+          cabins: string | null
+          cockpit_table: boolean | null
+          depth_fish: boolean | null
+          dodger: boolean | null
+          fuel_tank_size: string | null
+          gps: boolean | null
+          head_shower: boolean | null
+          heater: boolean | null
+          ice_box: boolean | null
+          id: string
+          marine_radio: boolean | null
+          max_persons: string | null
+          mfg: string
+          microwave: boolean | null
+          microwave_stove: boolean | null
+          refrigerator: boolean | null
+          sails: boolean | null
+          shower_system: boolean | null
+          size: string
+          stereo: boolean | null
+          stove: boolean | null
+          swim_platform: boolean | null
+          vessel: string
+          water_tank_size: string | null
+        }
+        Insert: {
+          autopilot?: boolean | null
+          bbq?: boolean | null
+          bimini?: boolean | null
+          cabins?: string | null
+          cockpit_table?: boolean | null
+          depth_fish?: boolean | null
+          dodger?: boolean | null
+          fuel_tank_size?: string | null
+          gps?: boolean | null
+          head_shower?: boolean | null
+          heater?: boolean | null
+          ice_box?: boolean | null
+          id?: string
+          marine_radio?: boolean | null
+          max_persons?: string | null
+          mfg: string
+          microwave?: boolean | null
+          microwave_stove?: boolean | null
+          refrigerator?: boolean | null
+          sails?: boolean | null
+          shower_system?: boolean | null
+          size: string
+          stereo?: boolean | null
+          stove?: boolean | null
+          swim_platform?: boolean | null
+          vessel: string
+          water_tank_size?: string | null
+        }
+        Update: {
+          autopilot?: boolean | null
+          bbq?: boolean | null
+          bimini?: boolean | null
+          cabins?: string | null
+          cockpit_table?: boolean | null
+          depth_fish?: boolean | null
+          dodger?: boolean | null
+          fuel_tank_size?: string | null
+          gps?: boolean | null
+          head_shower?: boolean | null
+          heater?: boolean | null
+          ice_box?: boolean | null
+          id?: string
+          marine_radio?: boolean | null
+          max_persons?: string | null
+          mfg?: string
+          microwave?: boolean | null
+          microwave_stove?: boolean | null
+          refrigerator?: boolean | null
+          sails?: boolean | null
+          shower_system?: boolean | null
+          size?: string
+          stereo?: boolean | null
+          stove?: boolean | null
+          swim_platform?: boolean | null
+          vessel?: string
+          water_tank_size?: string | null
         }
         Relationships: []
       }

@@ -5,28 +5,22 @@ import DecoratorLine from "@/components/common/decorator-icon-line";
 
 const Trip = () => {
   return (
-    <div>
+    <div className="pt-20">
       <div
         className={`    "w-full bg-lightSky 
           container mx-auto   md:max-w-7xl"
         `}
       >
         <section
-          className={` flex flex-col-reverse md:flex-row    max-w-7xl  container mx-auto    p-1  
+          className={` flex flex-col-reverse md:flex-row    max-w-7xl  container mx-auto gap-6   p-1  
               `}
         >
           <div className=" relative flex flex-col w-full md:w-[68%] p-4 md:p-4">
-            <h2
-              className={`mt-4  md:mt-10    text-2xl text-flatBlue ${cursiveHeadingFont.className}`}
-            >
-              {/* {subtitle && subtitle} */}
-              hello
-            </h2>
-            <h3 className={`text-2xl ${mainHeadingFont.className}`}>
+            <h3 className={`text-2xl mb-4 ${mainHeadingFont.className}`}>
               {/* {title && title} */}
-              windwardsailingclub
+              Windward Sailing Club
             </h3>
-            <DecoratorLine />
+            {/* <DecoratorLine /> */}
 
             <div className={`${contentFont.className}  mb-4     `}>
               <p className="mb-2">

@@ -6,6 +6,7 @@ import { SkeletonCard } from "@/components/skeleton";
 import MemberCard from "@/components/common/member-card";
 import DecoratorLine from "@/components/common/decorator-icon-line";
 import { cursiveHeadingFont, mainHeadingFont } from "../ui/fonts";
+import HeroFallback from "@/components/common/hero-slider-check";
 
 // const members = [
 //   {
@@ -109,6 +110,7 @@ export default function Members() {
   console.log("member memeber", members);
   return (
     <section className="w-full p-4 max-w-6xl mx-auto">
+      <HeroFallback />
       <div className="container mx-auto  py-12">
         <div className="text-start space-y-2 px-4  ">
           <h1

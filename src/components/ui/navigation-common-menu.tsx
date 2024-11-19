@@ -54,7 +54,7 @@ const NavigationCommonMenu = () => {
               </Link>
               {item.nav_sections && item.nav_sections.length > 0 && (
                 <div className="absolute bg-[#c5dfff] z-40 left-0 mt-0 w-48 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 invisible group-hover:visible">
-                  <div className="py-2">
+                  <div className="absolute top-full left-0 hidden group-hover:block min-w-[200px] bg-white shadow-lg rounded-md p-2 mt-2">
                     {item?.nav_sections?.map((section) => (
                       <div key={section.id} className="relative group/sub">
                         <Link

@@ -1,6 +1,7 @@
 "use client";
 import BoatFeatures from "@/components/common/boat-features";
 import CommonMembershipAbout from "@/components/common/common-member-about";
+import HeroFallback from "@/components/common/hero-slider-check";
 import RentalFeesTable from "@/components/common/rental-fees";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -141,7 +142,8 @@ const feeData = {
 
 export default function RentalFees() {
   return (
-    <div className="py-4 px-1">
+    <div className=" w-full">
+      <HeroFallback />
       <RentalFeesTable />
       <CommonMembershipAbout
         subtitle="Windward Sailing Club"

@@ -1,7 +1,22 @@
 "use client";
 
-import * as React from "react";
-import { Mail, Pencil, Trash } from "lucide-react";
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  Loader2,
+  Mail,
+  Pencil,
+  Trash,
+  Check,
+  X,
+  Upload,
+  Plus,
+} from "lucide-react";
+import { toast, Toaster } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import {
   Table,
   TableBody,
@@ -10,242 +25,177 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { Controller } from "react-hook-form";
+import { supabase } from "@/lib/supabase";
 
-const members = [
-  {
-    id: "1",
-    name: "Amanda Martin",
-    profileImage: "https://dev.windwardsailingclub.com/img/users/User51.jpg",
-    address1: "68---1330 Mauna Lani Dr, Bldg 1---A",
-    address2: "",
-    city: "Kohala Coast",
-    state: "HI",
-    zipcode: "96743",
-    country: "United States",
-    email: "amanda.martin@example.com",
-    phone: "(555) 234-5678",
-    access: "Member",
-    jobRole: "Safety Officer",
-    about:
-      "Ensures adherence to safety protocols and conducts safety briefings for members.",
-    emergencyContact: {
-      name: "Penelope Young",
-      relation: "Sister",
-      contact: "480-685-4226",
-    },
-  },
-  {
-    id: "2",
-    name: "Brian Taylor",
-    profileImage:
-      "https://dev.windwardsailingclub.com/img/FoundingMembers/User2.jpg",
-    address1: "201 Bellevue Square, Space 201",
-    address2: "",
-    city: "Bellevue",
-    state: "WA",
-    zipcode: "98004",
-    country: "United States",
-    email: "brian.taylor@example.com",
-    phone: "(555) 987-6543",
-    access: "Member",
-    jobRole: "Harbor Master",
-    about:
-      "Manages the harbor area, assigns moorings, and enforces harbor rules and regulations.",
-    emergencyContact: {
-      name: "Daniel Young",
-      relation: "Friend",
-      contact: "612-555-5412",
-    },
-  },
-  {
-    id: "3",
-    name: "Christopher Brown",
-    profileImage:
-      "https://dev.windwardsailingclub.com/img/FoundingMembers/User3.jpg",
-    address1: "343 Sardis Station",
-    address2: "",
-    city: "Minneapolis",
-    state: "Minnesota",
-    zipcode: "55402",
-    country: "United States",
-    email: "christopher.brown@example.com",
-    phone: "612-555-5412",
-    access: "Member",
-    jobRole: "Security Personnel",
-    about:
-      "Provides security services to ensure the safety of the club’s facilities and members.",
-    emergencyContact: {
-      name: "ThomasGarden",
-      relation: "Brother",
-      contact: "612-555-5412",
-    },
-  },
-  {
-    id: "4",
-    name: "Daniel Davis",
-    profileImage:
-      "https://dev.windwardsailingclub.com/img/FoundingMembers/User13.jpg",
-    address1: "Waikoloa Beach Resort, Unit D---8250 Waikoloa Beach",
-    address2: "",
-    city: "Waikoloa",
-    state: "HI",
-    zipcode: "96738",
-    country: "United States",
-    email: "daniel.davis@example.com",
-    phone: "(555) 456-7890",
-    access: "Member",
-    jobRole: "Marketing and Communications Coordinator",
-    about:
-      "Develops marketing strategies, manages social media, and handles communications.",
-    emergencyContact: {
-      name: "Aiden King",
-      relation: "Brother",
-      contact: "412-882-9003",
-    },
-  },
-  {
-    id: "5",
-    name: "David Thompson",
-    profileImage:
-      "https://dev.windwardsailingclub.com/img/FoundingMembers/User8.jpg",
-    address1: "1520 E Buena Vista Drive 8A",
-    address2: "",
-    city: "Lake Buena Vista",
-    state: "FL",
-    zipcode: "32830",
-    country: "United States",
-    email: "david.thompson@example.com",
-    phone: "(821) 036-2224",
-    access: "Member",
-    jobRole: "Catering and Hospitality Staff",
-    about:
-      "Assists members with boat rentals, ensuring they have a safe and enjoyable experience.",
-    emergencyContact: {
-      name: "Ryan Green",
-      relation: "Brother",
-      contact: "(271) 201-1925",
-    },
-  },
-  {
-    id: "6",
-    name: "Emily Turner",
-    profileImage: "https://dev.windwardsailingclub.com/img/users/User52.jpg",
-    address1: "3115 Hillside Street",
-    address2: "",
-    city: "Paradise Valley",
-    state: "Arizona",
-    zipcode: "85253",
-    country: "United States",
-    email: "emily.turner@example.com",
-    phone: "(651) 822-8462",
-    access: "Member",
-    jobRole: "Environmental Officer",
-    about:
-      "Manages the marina area, coordinating boat launches, moorings, and dock upkeep.",
-    emergencyContact: {
-      name: "Merry Doe",
-      relation: "Sister",
-      contact: "(361) 378-8634",
-    },
-  },
-  {
-    id: "7",
-    name: "Jason Wilson",
-    profileImage:
-      "https://dev.windwardsailingclub.com/img/FoundingMembers/User6.jpg",
-    address1: "1409 Trouser Log Road",
-    address2: "",
-    city: "Agawam",
-    state: "Massachusetts",
-    zipcode: "01001",
-    country: "United States",
-    email: "jason.wilson@example.com",
-    phone: "413-822-9995",
-    access: "Member",
-    jobRole: "Sailing Instructor/Coach",
-    about:
-      "Experienced instructor passionate about teaching sailing techniques to all skill levels.",
-    emergencyContact: {
-      name: "Bravo Davis",
-      relation: "Brother",
-      contact: "412-882-9000",
-    },
-  },
-  {
-    id: "8",
-    name: "Jennifer Smith",
-    profileImage: "https://dev.windwardsailingclub.com/img/users/User2.jpg",
-    address1: "15205 North Kierland Blvd. Suite 100",
-    address2: "",
-    city: "Scottsdale",
-    state: "AZ",
-    zipcode: "85254",
-    country: "United States",
-    email: "jennifer.smith@example.com",
-    phone: "(713) 873-4244",
-    access: "Member",
-    jobRole: "Accountant/Financial Officer",
-    about:
-      "Manages financial operations, budgets, and payroll for the sailing club.",
-    emergencyContact: {
-      name: "Daniel Scott",
-      relation: "Brother",
-      contact: "(116) 920-2153",
-    },
-  },
-  {
-    id: "9",
-    name: "Jessica Martinez",
-    profileImage: "https://dev.windwardsailingclub.com/img/users/User3.jpg",
-    address1: "2829 Ala Kalaniakaumaka, Kukui’ula Village",
-    address2: "",
-    city: "Koloa",
-    state: "HI",
-    zipcode: "96756",
-    country: "United States",
-    email: "jessica.martinez@example.com",
-    phone: "(449) 646-6041",
-    access: "Member",
-    jobRole: "Dockhand/Marina Attendants",
-    about:
-      "Oversees daily operations, event planning, and ensures member satisfaction.",
-    emergencyContact: {
-      name: "William Hernandez",
-      relation: "Brother",
-      contact: "(305) 648-6041",
-    },
-  },
-  {
-    id: "10",
-    name: "Jessica Turner",
-    profileImage: "https://dev.windwardsailingclub.com/img/users/User5.jpg",
-    address1: "854 Avocado Ave.",
-    address2: "",
-    city: "Windward Beach",
-    state: "CA",
-    zipcode: "92660",
-    country: "United States",
-    email: "jessica.turner@example.com",
-    phone: "(555) 456-7890",
-    access: "Member",
-    jobRole: "Youth Program Coordinator",
-    about:
-      "Organizes and manages sailing programs and activities for children and teenagers.",
-    emergencyContact: {
-      name: "Harper Harris",
-      relation: "Friend",
-      contact: "412-882-9002",
-    },
-  },
-];
+type Member = {
+  id: string;
+  name: string;
+  profile_image_url: string;
+  address1: string;
+  address2: string;
+  city: string;
+  state: string;
+  zipcode: string;
+  country: string;
+  email: string;
+  phone: string;
+  access: string;
+  job_role: string;
+  about: string;
+  emergency_contact_name: string; // Matches database field
+  emergency_contact_relation: string; // Matches database field
+  emergency_contact_phone: string; // Matches database field
+};
+// const mapMemberToDB = (member: Member) => ({
+//   name: member.name,
+//   profile_image_url: member.profile_image_url,
+//   address1: member.address1,
+//   address2: member.address2,
+//   city: member.city,
+//   state: member.state,
+//   zipcode: member.zipcode,
+//   country: member.country,
+//   email: member.email,
+//   phone: member.phone,
+//   access: member.access,
+//   job_role: member.jobRole,
+//   about: member.about,
+//   emergency_contact_name: member.emergencyContact.name,
+//   emergency_contact_relation: member.emergencyContact.relation,
+//   emergency_contact_phone: member.emergencyContact.contact,
+// });
+
+const fetchMembers = async (): Promise<Member[]> => {
+  const { data, error } = await supabase.from("members_new").select("*");
+  if (error) throw error;
+  return data as any;
+};
+
+const updateMember = async (member: Partial<Member>): Promise<Member> => {
+  const { data, error } = await supabase
+    .from("members_new")
+    .update(member)
+    .eq("id", member.id as string)
+    .single();
+  if (error) throw error;
+  return data;
+};
+
+const deleteMember = async (id: string): Promise<void> => {
+  const { error } = await supabase.from("members_new").delete().eq("id", id);
+  if (error) throw error;
+};
+
+const createMember = async (member: Omit<Member, "id">): Promise<Member> => {
+  const { data, error } = await supabase
+    .from("members_new")
+    .insert([member])
+    .single();
+  if (error) throw error;
+  return data;
+};
 
 export default function Component() {
-  const [selectedRows, setSelectedRows] = React.useState<Set<string>>(
-    new Set()
+  const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set());
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editedMember, setEditedMember] = useState<Partial<Member> | null>(
+    null
   );
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [memberToDelete, setMemberToDelete] = useState<string | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [newMember, setNewMember] = useState<Omit<Member, "id">>({
+    name: "",
+    profile_image_url: "",
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    country: "",
+    email: "",
+    phone: "",
+    access: "",
+    job_role: "",
+    about: "",
+    emergency_contact_name: "", // Flat structure
+    emergency_contact_relation: "", // Flat structure
+    emergency_contact_phone: "", // Flat structure
+  });
+
+  const queryClient = useQueryClient();
+
+  const { data: members, isLoading } = useQuery<Member[]>({
+    queryKey: ["members"],
+    queryFn: fetchMembers,
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: updateMember,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["members"] });
+      setEditingId(null);
+      setEditedMember(null);
+      toast.success("Member updated successfully");
+    },
+    onError: () => {
+      toast.error("Failed to update member");
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteMember,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["members"] });
+      setDeleteDialogOpen(false);
+      setMemberToDelete(null);
+      toast.success("Member deleted successfully");
+    },
+    onError: () => {
+      toast.error("Failed to delete member");
+    },
+  });
+
+  const createMutation = useMutation({
+    mutationFn: createMember,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["members"] });
+      setCreateDialogOpen(false);
+      setNewMember({
+        name: "",
+        profile_image_url: "",
+        address1: "",
+        address2: "",
+        city: "",
+        state: "",
+        zipcode: "",
+        country: "",
+        email: "",
+        phone: "",
+        access: "",
+        job_role: "",
+        about: "",
+        emergency_contact_name: "", // Flat structure
+        emergency_contact_relation: "", // Flat structure
+        emergency_contact_phone: "", // Flat structure
+      });
+      toast.success("Member created successfully");
+    },
+    onError: () => {
+      toast.error("Failed to create member");
+    },
+  });
 
   const toggleRow = (id: string) => {
     const newSelected = new Set(selectedRows);
@@ -258,163 +208,2557 @@ export default function Component() {
   };
 
   const toggleAll = () => {
-    if (selectedRows.size === members.length) {
+    if (selectedRows.size === members?.length) {
       setSelectedRows(new Set());
     } else {
-      setSelectedRows(new Set(members.map((member) => member.id)));
+      setSelectedRows(new Set(members?.map((member) => member.id)));
     }
   };
 
-  const handleEmailClick = (email: string, id: any) => {
-    if (!selectedRows.has(id)) {
-      return;
-    }
+  const handleEmailClick = (email: string, id: string) => {
+    if (!selectedRows.has(id)) return;
     window.location.href = `mailto:${email}`;
   };
 
-  const handleEmailClickAll = (email: string) => {
-    window.location.href = `mailto:${email}`;
+  const handleEmailClickAll = () => {
+    const emails = members
+      ?.filter((member) => selectedRows.has(member.id))
+      .map((member) => member.email)
+      .join(";");
+    window.location.href = `mailto:${emails}`;
   };
+
+  const handleEdit = (member: Member) => {
+    setEditingId(member.id);
+    setEditedMember({ ...member });
+  };
+
+  const handleSave = () => {
+    if (editedMember) {
+      updateMutation.mutate(editedMember);
+    }
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+    setEditedMember(null);
+  };
+
+  const handleDelete = (id: string) => {
+    setMemberToDelete(id);
+    setDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (memberToDelete) {
+      deleteMutation.mutate(memberToDelete);
+    }
+  };
+
+  const handleImageUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+    memberId: string
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+    try {
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `member-images/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("images")
+        .upload(filePath, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      const { data } = supabase.storage.from("images").getPublicUrl(filePath);
+
+      if (data?.publicUrl) {
+        const updatedMember = { id: memberId, profileImage: data.publicUrl };
+        updateMutation.mutate(updatedMember);
+        toast.success("Image uploaded successfully");
+      }
+    } catch (error) {
+      toast.error("Error uploading image");
+      console.error("Error uploading image:", error);
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const handleCreate = () => {
+    console.log(newMember);
+
+    createMutation.mutate(newMember);
+  };
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className=" container mx-auto  ">
-      <Table className="border-collapse">
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[40px] p-2">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  checked={selectedRows.size === members.length}
-                  onCheckedChange={toggleAll}
-                  aria-label="Select all"
-                />
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() =>
-                    handleEmailClickAll(
-                      members
-                        .filter((member) => selectedRows.has(member.id))
-                        .map((member) => member.email)
-                        .join(";")
-                    )
-                  }
-                  disabled={selectedRows.size === 0}
-                >
-                  <Mail className="h-4 w-4" />
-                </Button>
-              </div>
-            </TableHead>
-            <TableHead className="w-[100px] p-2">Action</TableHead>
-            <TableHead className="w-[40px] p-2">#</TableHead>
-            <TableHead className="w-[40px] p-2">Profile</TableHead>
-            <TableHead className="p-2">Name</TableHead>
-            <TableHead className="p-2">Address1</TableHead>
-            <TableHead className="p-2">Address2</TableHead>
-            <TableHead className="p-2">City</TableHead>
-            <TableHead className="p-2">State</TableHead>
-            <TableHead className="p-2">Zipcode</TableHead>
-            <TableHead className="p-2">Country</TableHead>
-            <TableHead className="p-2">Email</TableHead>
-            <TableHead className="p-2">Phone</TableHead>
-            <TableHead className="p-2">Access</TableHead>
-            <TableHead className="p-2">Job Role</TableHead>
-            <TableHead className="p-2">About</TableHead>
-
-            <TableHead colSpan={3} className="p-2">
-              <div className="space-y-2">
-                <div className="bg-red-500  text-white text-center text-[0.625rem]   rounded-t-sm">
-                  Emergency Contact Information
-                </div>
-
-                <div className="grid grid-cols-3 gap-2 pb-4">
-                  <div>Name</div>
-                  <div>Relation</div>
-                  <div>Contact</div>
-                </div>
-              </div>
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {members?.map((member, index) => (
-            <TableRow key={member.id} className="border-b">
-              <TableCell className="p-2">
-                <Checkbox
-                  checked={selectedRows.has(member.id)}
-                  onCheckedChange={() => toggleRow(member.id)}
-                  aria-label={`Select ${member.name}`}
-                />
-              </TableCell>
-              <TableCell className="p-2">
-                <div className="flex items-center  ">
+    <div className="container mx-auto px-4 py-8 pt-40">
+      <Toaster />
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">Members Dashboard</h1>
+        <Button onClick={() => setCreateDialogOpen(true)}>
+          <Plus className="mr-2 h-4 w-4" /> Add Member
+        </Button>
+      </div>
+      <div className="relative max-h-[800px] overflow-y-auto overflow-x-scroll">
+        <Table className="border-collapse border-dashed border-red-500 text-xs p-2">
+          <TableHeader className="sticky top-0 bg-white z-10 font-extrabold">
+            <TableRow>
+              <TableHead className="w-[40px] p-2 text-black border-r border-dotted border-gray-300">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    checked={selectedRows.size === members?.length}
+                    onCheckedChange={toggleAll}
+                    aria-label="Select all"
+                  />
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8"
-                    onClick={() => handleEmailClick(member.email, member.id)}
-                    disabled={!selectedRows.has(member.id)}
+                    onClick={handleEmailClickAll}
+                    disabled={selectedRows.size === 0}
                   >
                     <Mail className="h-4 w-4" />
                   </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <Pencil className="h-4 w-4" />
-                  </Button>
-                  <Button variant="destructive" size="icon" className="h-8 w-8">
-                    <Trash className="h-4 w-4" />
-                  </Button>
                 </div>
-              </TableCell>
-              <TableCell className="p-2">{index + 1}</TableCell>
-              <TableCell className="p-2">
-                <Avatar className="h-12 w-12">
-                  <AvatarImage src={member.profileImage} alt={member.name} />
-                  <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-              </TableCell>
-              <TableCell className="p-2 whitespace-nowrap ">
-                {member.name}
-              </TableCell>
-              <TableCell className="p-2 whitespace-nowrap ">
-                {member.address1}
-              </TableCell>
-              <TableCell className="p-2 whitespace-nowrap ">
-                {member.address2}
-              </TableCell>
-              <TableCell className="p-2 whitespace-nowrap">
-                {member.city}
-              </TableCell>
-              <TableCell className="p-2 whitespace-nowrap">
-                {member.state}
-              </TableCell>
-              <TableCell className="p-2 whitespace-nowrap">
-                {member.zipcode}
-              </TableCell>
-              <TableCell className="p-2 whitespace-nowrap">
-                {member.country}
-              </TableCell>
-              <TableCell className="p-2 whitespace-nowrap">
-                {member.email}
-              </TableCell>
-              <TableCell className="p-2 whitespace-nowrap">
-                {member.phone}
-              </TableCell>
-              <TableCell className="p-2">{member.access}</TableCell>
-              <TableCell className="p-2">{member.jobRole}</TableCell>
-              <TableCell className="p-2">{member.about}</TableCell>
-              <TableCell className="p-2">
-                {member.emergencyContact.name}
-              </TableCell>
-              <TableCell className="p-2">
-                {member.emergencyContact.relation}
-              </TableCell>
-              <TableCell className="p-2 whitespace-nowrap">
-                {member.emergencyContact.contact}
-              </TableCell>
+              </TableHead>
+              <TableHead className="w-[100px] p-2 text-black border-r border-dotted border-gray-300">
+                Action
+              </TableHead>
+              <TableHead className="w-[40px] p-2 text-black border-r border-dotted border-gray-300">
+                #
+              </TableHead>
+              <TableHead className="w-[40px] p-2 text-black border-r border-dotted border-gray-300">
+                Profile
+              </TableHead>
+              <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+                Name
+              </TableHead>
+              <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+                Address1
+              </TableHead>
+              <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+                Address2
+              </TableHead>
+              <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+                City
+              </TableHead>
+              <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+                State
+              </TableHead>
+              <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+                Zipcode
+              </TableHead>
+              <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+                Country
+              </TableHead>
+              <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+                Email
+              </TableHead>
+              <TableHead className="p-2 border-r whitespace-nowrap text-black border-dotted border-gray-300">
+                Phone
+              </TableHead>
+              <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+                Access
+              </TableHead>
+              <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+                Job Role
+              </TableHead>
+              <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+                About
+              </TableHead>
+              <TableHead colSpan={3} className="p-2">
+                <div className="space-y-2">
+                  <div className="bg-red-500 text-white text-center text-[0.625rem] rounded-t-sm">
+                    Emergency Contact Information
+                  </div>
+                  <div className="grid grid-cols-3 gap-2 pb-4">
+                    <div>Name</div>
+                    <div>Relation</div>
+                    <div>Contact</div>
+                  </div>
+                </div>
+              </TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {members &&
+              members?.map((member, index) => (
+                <TableRow
+                  key={member.id}
+                  className="border-b odd:bg-gray-100 even:bg-white"
+                >
+                  <TableCell className="p-2 border-r border-dotted border-gray-300">
+                    <Checkbox
+                      checked={selectedRows.has(member.id)}
+                      onCheckedChange={() => toggleRow(member.id)}
+                      aria-label={`Select ${member.name}`}
+                    />
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300">
+                    <div className="flex items-center">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() =>
+                          handleEmailClick(member.email, member.id)
+                        }
+                        disabled={!selectedRows.has(member.id)}
+                      >
+                        <Mail className="h-4 w-4" />
+                      </Button>
+                      {editingId === member.id ? (
+                        <>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={handleSave}
+                          >
+                            <Check className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={handleCancel}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </>
+                      ) : (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8"
+                          onClick={() => handleEdit(member)}
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                      )}
+                      <Button
+                        variant="destructive"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() => handleDelete(member.id)}
+                      >
+                        <Trash className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300">
+                    {index + 1}
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300">
+                    <div className="relative">
+                      <Avatar className="h-12 w-12">
+                        <AvatarImage
+                          src={member?.profile_image_url ?? ""}
+                          alt={member.name}
+                        />
+                        <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      {editingId === member.id && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full">
+                          <label
+                            htmlFor={`image-upload-${member.id}`}
+                            className="cursor-pointer"
+                          >
+                            <Upload className="h-6 w-6 text-white" />
+                          </label>
+                          <input
+                            id={`image-upload-${member.id}`}
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => handleImageUpload(e, member.id)}
+                            disabled={uploadingImage}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+                    {editingId === member.id ? (
+                      <Input
+                        value={editedMember?.name || ""}
+                        onChange={(e) =>
+                          setEditedMember({
+                            ...editedMember,
+                            name: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      member.name
+                    )}
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300">
+                    {editingId === member.id ? (
+                      <Input
+                        value={editedMember?.address1 || ""}
+                        onChange={(e) =>
+                          setEditedMember({
+                            ...editedMember,
+                            address1: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      member.address1
+                    )}
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300">
+                    {editingId === member.id ? (
+                      <Input
+                        value={editedMember?.address2 || ""}
+                        onChange={(e) =>
+                          setEditedMember({
+                            ...editedMember,
+                            address2: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      member.address2
+                    )}
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+                    {editingId === member.id ? (
+                      <Input
+                        value={editedMember?.city || ""}
+                        onChange={(e) =>
+                          setEditedMember({
+                            ...editedMember,
+                            city: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      member.city
+                    )}
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+                    {editingId === member.id ? (
+                      <Input
+                        value={editedMember?.state || ""}
+                        onChange={(e) =>
+                          setEditedMember({
+                            ...editedMember,
+                            state: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      member.state
+                    )}
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+                    {editingId === member.id ? (
+                      <Input
+                        value={editedMember?.zipcode || ""}
+                        onChange={(e) =>
+                          setEditedMember({
+                            ...editedMember,
+                            zipcode: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      member.zipcode
+                    )}
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+                    {editingId === member.id ? (
+                      <Input
+                        value={editedMember?.country || ""}
+                        onChange={(e) =>
+                          setEditedMember({
+                            ...editedMember,
+                            country: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      member.country
+                    )}
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+                    {editingId === member.id ? (
+                      <Input
+                        value={editedMember?.email || ""}
+                        onChange={(e) =>
+                          setEditedMember({
+                            ...editedMember,
+                            email: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      member.email
+                    )}
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+                    {editingId === member.id ? (
+                      <Input
+                        value={editedMember?.phone || ""}
+                        onChange={(e) =>
+                          setEditedMember({
+                            ...editedMember,
+                            phone: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      member.phone
+                    )}
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300">
+                    {editingId === member.id ? (
+                      <Input
+                        value={editedMember?.access || ""}
+                        onChange={(e) =>
+                          setEditedMember({
+                            ...editedMember,
+                            access: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      member.access
+                    )}
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300">
+                    {editingId === member.id ? (
+                      <Input
+                        value={editedMember?.job_role || ""}
+                        onChange={(e) =>
+                          setEditedMember({
+                            ...editedMember,
+                            job_role: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      member?.job_role
+                    )}
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300">
+                    {editingId === member.id ? (
+                      <Input
+                        value={editedMember?.about || ""}
+                        onChange={(e) =>
+                          setEditedMember({
+                            ...editedMember,
+                            about: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      member.about
+                    )}
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300 text-center">
+                    {editingId === member.id ? (
+                      <Input
+                        value={editedMember?.emergency_contact_name || ""}
+                        onChange={(e) =>
+                          setEditedMember({
+                            ...editedMember,
+                            emergency_contact_name: e.target.value,
+                          })
+                        }
+                        className="w-full"
+                      />
+                    ) : (
+                      member.emergency_contact_name
+                    )}
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300 text-center">
+                    {editingId === member.id ? (
+                      <Input
+                        value={editedMember?.emergency_contact_relation || ""}
+                        onChange={(e) =>
+                          setEditedMember({
+                            ...editedMember,
+                            emergency_contact_relation: e.target.value,
+                          })
+                        }
+                        className="w-full"
+                      />
+                    ) : (
+                      member.emergency_contact_relation
+                    )}
+                  </TableCell>
+                  <TableCell className="p-2 border-r border-dotted border-gray-300 text-center">
+                    {editingId === member.id ? (
+                      <Input
+                        value={editedMember?.emergency_contact_phone || ""}
+                        onChange={(e) =>
+                          setEditedMember({
+                            ...editedMember,
+                            emergency_contact_phone: e.target.value,
+                          })
+                        }
+                        className="w-full"
+                      />
+                    ) : (
+                      member.emergency_contact_phone
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </div>
+
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Confirm Deletion</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this member? This action cannot be
+              undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setDeleteDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={confirmDelete}>
+              {deleteMutation.isPending ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                "Delete"
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
+        <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Create New Member</DialogTitle>
+            <DialogDescription>
+              Enter the details for the new member.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="flex items-center gap-4">
+              <label htmlFor="profileImage" className="w-24 text-right">
+                Profile Image
+              </label>
+              <div className="flex-1 flex items-center gap-4">
+                <Avatar className="h-20 w-20">
+                  <AvatarImage
+                    src={newMember?.profile_image_url ?? ""}
+                    alt={newMember.name}
+                  />
+                  <AvatarFallback>
+                    {newMember.name?.charAt(0) || "N"}
+                  </AvatarFallback>
+                </Avatar>
+                <label htmlFor="image-upload" className="cursor-pointer">
+                  <div className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
+                    <Upload className="h-4 w-4" />
+                    Upload Image
+                  </div>
+                </label>
+                <input
+                  id="image-upload"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const fileExt = file.name.split(".").pop();
+                      const fileName = `${Math.random()}.${fileExt}`;
+                      const filePath = `member-images/${fileName}`;
+
+                      try {
+                        const { error: uploadError } = await supabase.storage
+                          .from("images")
+                          .upload(filePath, file);
+
+                        if (uploadError) {
+                          throw uploadError;
+                        }
+
+                        const { data } = supabase.storage
+                          .from("images")
+                          .getPublicUrl(filePath);
+
+                        if (data?.publicUrl) {
+                          setNewMember({
+                            ...newMember,
+                            profile_image_url: data.publicUrl,
+                          });
+                          toast.success("Image uploaded successfully");
+                        }
+                      } catch (error) {
+                        toast.error("Error uploading image");
+                        console.error("Error uploading image:", error);
+                      }
+                    }
+                  }}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="name" className="text-right">
+                Name
+              </label>
+              <Input
+                id="name"
+                value={newMember.name}
+                onChange={(e) =>
+                  setNewMember({ ...newMember, name: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="email" className="text-right">
+                Email
+              </label>
+              <Input
+                id="email"
+                type="email"
+                value={newMember.email}
+                onChange={(e) =>
+                  setNewMember({ ...newMember, email: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="address1" className="text-right">
+                Address 1
+              </label>
+              <Input
+                id="address1"
+                value={newMember.address1}
+                onChange={(e) =>
+                  setNewMember({ ...newMember, address1: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="address2" className="text-right">
+                Address 2
+              </label>
+              <Input
+                id="address2"
+                value={newMember.address2}
+                onChange={(e) =>
+                  setNewMember({ ...newMember, address2: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="city" className="text-right">
+                City
+              </label>
+              <Input
+                id="city"
+                value={newMember.city}
+                onChange={(e) =>
+                  setNewMember({ ...newMember, city: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="state" className="text-right">
+                State
+              </label>
+              <Input
+                id="state"
+                value={newMember.state}
+                onChange={(e) =>
+                  setNewMember({ ...newMember, state: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="zipcode" className="text-right">
+                Zipcode
+              </label>
+              <Input
+                id="zipcode"
+                value={newMember.zipcode}
+                onChange={(e) =>
+                  setNewMember({ ...newMember, zipcode: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="country" className="text-right">
+                Country
+              </label>
+              <Input
+                id="country"
+                value={newMember.country}
+                onChange={(e) =>
+                  setNewMember({ ...newMember, country: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="phone" className="text-right">
+                Phone
+              </label>
+              <Input
+                id="phone"
+                value={newMember.phone}
+                onChange={(e) =>
+                  setNewMember({ ...newMember, phone: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="access" className="text-right">
+                Access
+              </label>
+              <Input
+                id="access"
+                value={newMember.access}
+                onChange={(e) =>
+                  setNewMember({ ...newMember, access: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="jobRole" className="text-right">
+                Job Role
+              </label>
+              <Input
+                id="jobRole"
+                value={newMember.job_role}
+                onChange={(e) =>
+                  setNewMember({ ...newMember, job_role: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="about" className="text-right">
+                About
+              </label>
+              <Textarea
+                id="about"
+                value={newMember.about}
+                onChange={(e) =>
+                  setNewMember({ ...newMember, about: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="border-t pt-4 mt-4">
+              <h4 className="font-medium mb-2">Emergency Contact</h4>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <label htmlFor="emergency_contact_name" className="text-right">
+                  Name
+                </label>
+                <Input
+                  id="emergency_contact_name"
+                  value={newMember.emergency_contact_name}
+                  onChange={(e) =>
+                    setNewMember({
+                      ...newMember,
+                      emergency_contact_name: e.target.value,
+                    })
+                  }
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4 mt-2">
+                <label
+                  htmlFor="emergency_contact_relation"
+                  className="text-right"
+                >
+                  Relation
+                </label>
+                <Input
+                  id="emergency_contact_relation"
+                  value={newMember.emergency_contact_relation}
+                  onChange={(e) =>
+                    setNewMember({
+                      ...newMember,
+                      emergency_contact_relation: e.target.value,
+                    })
+                  }
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4 mt-2">
+                <label htmlFor="emergency_contact_phone" className="text-right">
+                  Contact
+                </label>
+                <Input
+                  id="emergency_contact_phone"
+                  value={newMember.emergency_contact_phone}
+                  onChange={(e) =>
+                    setNewMember({
+                      ...newMember,
+                      emergency_contact_phone: e.target.value,
+                    })
+                  }
+                  className="col-span-3"
+                />
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setCreateDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button onClick={handleCreate}>
+              {createMutation.isPending ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                "Create"
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
+// "use client";
+
+// import { useState } from "react";
+// import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+// import { createClient } from "@supabase/supabase-js";
+// import { Loader2, Mail, Pencil, Trash, Check, X, Upload } from "lucide-react";
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { Checkbox } from "@/components/ui/checkbox";
+// import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+// import {
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from "@/components/ui/table";
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogDescription,
+//   DialogFooter,
+//   DialogHeader,
+//   DialogTitle,
+// } from "@/components/ui/dialog";
+// import { toast } from "sonner";
+
+// // Initialize Supabase client
+// const supabase = createClient(
+//   process.env.NEXT_PUBLIC_SUPABASE_URL!,
+//   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+// );
+
+// type Member = {
+//   id: string;
+//   name: string;
+//   profile_image_url: string;
+//   address1: string;
+//   address2: string;
+//   city: string;
+//   state: string;
+//   zipcode: string;
+//   country: string;
+//   email: string;
+//   phone: string;
+//   access: string;
+//   jobRole: string;
+//   about: string;
+//   emergencyContact: {
+//     name: string;
+//     relation: string;
+//     contact: string;
+//   };
+// };
+
+// const fetchMembers = async (): Promise<Member[]> => {
+//   const { data, error } = await supabase.from("members_new").select("*");
+//   if (error) throw error;
+//   return data;
+// };
+
+// const updateMember = async (member: Partial<Member>): Promise<Member> => {
+//   const { data, error } = await supabase
+//     .from("members_new")
+//     .update(member)
+//     .eq("id", member.id)
+//     .single();
+//   if (error) throw error;
+//   return data;
+// };
+
+// const deleteMember = async (id: string): Promise<void> => {
+//   const { error } = await supabase.from("members_new").delete().eq("id", id);
+//   if (error) throw error;
+// };
+
+// export default function Component() {
+//   const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set());
+//   const [editingId, setEditingId] = useState<string | null>(null);
+//   const [editedMember, setEditedMember] = useState<Partial<Member> | null>(
+//     null
+//   );
+//   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+//   const [memberToDelete, setMemberToDelete] = useState<string | null>(null);
+//   const [uploadingImage, setUploadingImage] = useState(false);
+
+//   const queryClient = useQueryClient();
+
+//   const { data: members, isLoading } = useQuery<Member[]>({
+//     queryKey: ["members"],
+//     queryFn: fetchMembers,
+//   });
+
+//   const updateMutation = useMutation({
+//     mutationFn: updateMember,
+//     onSuccess: () => {
+//       queryClient.invalidateQueries({ queryKey: ["members"] });
+//       setEditingId(null);
+//       setEditedMember(null);
+//     },
+//   });
+
+//   const deleteMutation = useMutation({
+//     mutationFn: deleteMember,
+//     onSuccess: () => {
+//       queryClient.invalidateQueries({ queryKey: ["members"] });
+//       setDeleteDialogOpen(false);
+//       setMemberToDelete(null);
+//     },
+//   });
+
+//   const toggleRow = (id: string) => {
+//     const newSelected = new Set(selectedRows);
+//     if (newSelected.has(id)) {
+//       newSelected.delete(id);
+//     } else {
+//       newSelected.add(id);
+//     }
+//     setSelectedRows(newSelected);
+//   };
+
+//   const toggleAll = () => {
+//     if (selectedRows.size === members?.length) {
+//       setSelectedRows(new Set());
+//     } else {
+//       setSelectedRows(new Set(members?.map((member) => member.id)));
+//     }
+//   };
+
+//   const handleEmailClick = (email: string, id: string) => {
+//     if (!selectedRows.has(id)) return;
+//     window.location.href = `mailto:${email}`;
+//   };
+
+//   const handleEmailClickAll = () => {
+//     const emails = members
+//       ?.filter((member) => selectedRows.has(member.id))
+//       .map((member) => member.email)
+//       .join(";");
+//     window.location.href = `mailto:${emails}`;
+//   };
+
+//   const handleEdit = (member: Member) => {
+//     setEditingId(member.id);
+//     setEditedMember({ ...member });
+//   };
+
+//   const handleSave = () => {
+//     if (editedMember) {
+//       updateMutation.mutate(editedMember);
+//     }
+//   };
+
+//   const handleCancel = () => {
+//     setEditingId(null);
+//     setEditedMember(null);
+//   };
+
+//   const handleDelete = (id: string) => {
+//     setMemberToDelete(id);
+//     setDeleteDialogOpen(true);
+//   };
+
+//   const confirmDelete = () => {
+//     if (memberToDelete) {
+//       deleteMutation.mutate(memberToDelete);
+//     }
+//   };
+
+//   const handleImageUpload = async (
+//     event: React.ChangeEvent<HTMLInputElement>,
+//     memberId: string
+//   ) => {
+//     const file = event.target.files?.[0];
+//     if (!file) return;
+
+//     setUploadingImage(true);
+//     try {
+//       const fileExt = file.name.split(".").pop();
+//       const fileName = `${Math.random()}.${fileExt}`;
+//       const filePath = `member-images/${fileName}`;
+
+//       const { error: uploadError } = await supabase.storage
+//         .from("images")
+//         .upload(filePath, file);
+
+//       if (uploadError) {
+//         throw uploadError;
+//       }
+
+//       const { data } = supabase.storage.from("images").getPublicUrl(filePath);
+
+//       if (data?.publicUrl) {
+//         const updatedMember = { id: memberId, profileImage: data.publicUrl };
+//         updateMutation.mutate(updatedMember);
+//         toast.success("Image uploaded successfully");
+//       }
+//     } catch (error) {
+//       toast.error("Error uploading image");
+//       console.error("Error uploading image:", error);
+//     } finally {
+//       setUploadingImage(false);
+//     }
+//   };
+
+//   if (isLoading) return <div>Loading...</div>;
+
+//   return (
+//     <div className="container mx-auto px-4 py-8 pt-40">
+//       <h1 className="text-3xl font-bold mb-6">Members Dashboard</h1>
+//       <div className="relative max-h-[800px] overflow-y-auto overflow-x-scroll">
+//         <Table className="border-collapse border-dashed border-red-500 text-xs p-2">
+//           <TableHeader className="sticky top-0 bg-white z-10 font-extrabold">
+//             <TableRow>
+//               <TableHead className="w-[40px] p-2 text-black border-r border-dotted border-gray-300">
+//                 <div className="flex items-center space-x-2">
+//                   <Checkbox
+//                     checked={selectedRows.size === members?.length}
+//                     onCheckedChange={toggleAll}
+//                     aria-label="Select all"
+//                   />
+//                   <Button
+//                     variant="ghost"
+//                     size="icon"
+//                     onClick={handleEmailClickAll}
+//                     disabled={selectedRows.size === 0}
+//                   >
+//                     <Mail className="h-4 w-4" />
+//                   </Button>
+//                 </div>
+//               </TableHead>
+//               <TableHead className="w-[100px] p-2 text-black border-r border-dotted border-gray-300">
+//                 Action
+//               </TableHead>
+//               <TableHead className="w-[40px] p-2 text-black border-r border-dotted border-gray-300">
+//                 #
+//               </TableHead>
+//               <TableHead className="w-[40px] p-2 text-black border-r border-dotted border-gray-300">
+//                 Profile
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 Name
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 Address1
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 Address2
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 City
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 State
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 Zipcode
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 Country
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 Email
+//               </TableHead>
+//               <TableHead className="p-2 border-r whitespace-nowrap text-black border-dotted border-gray-300">
+//                 Phone
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 Access
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 Job Role
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 About
+//               </TableHead>
+//               <TableHead colSpan={3} className="p-2">
+//                 <div className="space-y-2">
+//                   <div className="bg-red-500 text-white text-center text-[0.625rem] rounded-t-sm">
+//                     Emergency Contact Information
+//                   </div>
+//                   <div className="grid grid-cols-3 gap-2 pb-4">
+//                     <div>Name</div>
+//                     <div>Relation</div>
+//                     <div>Contact</div>
+//                   </div>
+//                 </div>
+//               </TableHead>
+//             </TableRow>
+//           </TableHeader>
+//           <TableBody>
+//             {members &&
+//               members?.map((member, index) => (
+//                 <TableRow
+//                   key={member.id}
+//                   className="border-b odd:bg-gray-100 even:bg-white"
+//                 >
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                     <Checkbox
+//                       checked={selectedRows.has(member.id)}
+//                       onCheckedChange={() => toggleRow(member.id)}
+//                       aria-label={`Select ${member.name}`}
+//                     />
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                     <div className="flex items-center">
+//                       <Button
+//                         variant="ghost"
+//                         size="icon"
+//                         className="h-8 w-8"
+//                         onClick={() =>
+//                           handleEmailClick(member.email, member.id)
+//                         }
+//                         disabled={!selectedRows.has(member.id)}
+//                       >
+//                         <Mail className="h-4 w-4" />
+//                       </Button>
+//                       {editingId === member.id ? (
+//                         <>
+//                           <Button
+//                             variant="ghost"
+//                             size="icon"
+//                             className="h-8 w-8"
+//                             onClick={handleSave}
+//                           >
+//                             <Check className="h-4 w-4" />
+//                           </Button>
+//                           <Button
+//                             variant="ghost"
+//                             size="icon"
+//                             className="h-8 w-8"
+//                             onClick={handleCancel}
+//                           >
+//                             <X className="h-4 w-4" />
+//                           </Button>
+//                         </>
+//                       ) : (
+//                         <Button
+//                           variant="ghost"
+//                           size="icon"
+//                           className="h-8 w-8"
+//                           onClick={() => handleEdit(member)}
+//                         >
+//                           <Pencil className="h-4 w-4" />
+//                         </Button>
+//                       )}
+//                       <Button
+//                         variant="destructive"
+//                         size="icon"
+//                         className="h-8 w-8"
+//                         onClick={() => handleDelete(member.id)}
+//                       >
+//                         <Trash className="h-4 w-4" />
+//                       </Button>
+//                     </div>
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                     {index + 1}
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                     <div className="relative">
+//                       <Avatar className="h-12 w-12">
+//                         <AvatarImage
+//                           src={member?.profile_image_url}
+//                           alt={member?.name}
+//                         />
+//                         <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+//                       </Avatar>
+//                       {editingId === member.id && (
+//                         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full">
+//                           <label
+//                             htmlFor={`image-upload-${member.id}`}
+//                             className="cursor-pointer"
+//                           >
+//                             <Upload className="h-6 w-6 text-white" />
+//                           </label>
+//                           <input
+//                             id={`image-upload-${member.id}`}
+//                             type="file"
+//                             accept="image/*"
+//                             className="hidden"
+//                             onChange={(e) => handleImageUpload(e, member.id)}
+//                             disabled={uploadingImage}
+//                           />
+//                         </div>
+//                       )}
+//                     </div>
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                     {editingId === member.id ? (
+//                       <Input
+//                         value={editedMember?.name || ""}
+//                         onChange={(e) =>
+//                           setEditedMember({
+//                             ...editedMember,
+//                             name: e.target.value,
+//                           })
+//                         }
+//                       />
+//                     ) : (
+//                       member.name
+//                     )}
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                     {editingId === member.id ? (
+//                       <Input
+//                         value={editedMember?.address1 || ""}
+//                         onChange={(e) =>
+//                           setEditedMember({
+//                             ...editedMember,
+//                             address1: e.target.value,
+//                           })
+//                         }
+//                       />
+//                     ) : (
+//                       member.address1
+//                     )}
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                     {editingId === member.id ? (
+//                       <Input
+//                         value={editedMember?.address2 || ""}
+//                         onChange={(e) =>
+//                           setEditedMember({
+//                             ...editedMember,
+//                             address2: e.target.value,
+//                           })
+//                         }
+//                       />
+//                     ) : (
+//                       member.address2
+//                     )}
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                     {editingId === member.id ? (
+//                       <Input
+//                         value={editedMember?.city || ""}
+//                         onChange={(e) =>
+//                           setEditedMember({
+//                             ...editedMember,
+//                             city: e.target.value,
+//                           })
+//                         }
+//                       />
+//                     ) : (
+//                       member.city
+//                     )}
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                     {editingId === member.id ? (
+//                       <Input
+//                         value={editedMember?.state || ""}
+//                         onChange={(e) =>
+//                           setEditedMember({
+//                             ...editedMember,
+//                             state: e.target.value,
+//                           })
+//                         }
+//                       />
+//                     ) : (
+//                       member.state
+//                     )}
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                     {editingId === member.id ? (
+//                       <Input
+//                         value={editedMember?.zipcode || ""}
+//                         onChange={(e) =>
+//                           setEditedMember({
+//                             ...editedMember,
+//                             zipcode: e.target.value,
+//                           })
+//                         }
+//                       />
+//                     ) : (
+//                       member.zipcode
+//                     )}
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                     {editingId === member.id ? (
+//                       <Input
+//                         value={editedMember?.country || ""}
+//                         onChange={(e) =>
+//                           setEditedMember({
+//                             ...editedMember,
+//                             country: e.target.value,
+//                           })
+//                         }
+//                       />
+//                     ) : (
+//                       member.country
+//                     )}
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                     {editingId === member.id ? (
+//                       <Input
+//                         value={editedMember?.email || ""}
+//                         onChange={(e) =>
+//                           setEditedMember({
+//                             ...editedMember,
+//                             email: e.target.value,
+//                           })
+//                         }
+//                       />
+//                     ) : (
+//                       member.email
+//                     )}
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                     {editingId === member.id ? (
+//                       <Input
+//                         value={editedMember?.phone || ""}
+//                         onChange={(e) =>
+//                           setEditedMember({
+//                             ...editedMember,
+//                             phone: e.target.value,
+//                           })
+//                         }
+//                       />
+//                     ) : (
+//                       member.phone
+//                     )}
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                     {editingId === member.id ? (
+//                       <Input
+//                         value={editedMember?.access || ""}
+//                         onChange={(e) =>
+//                           setEditedMember({
+//                             ...editedMember,
+//                             access: e.target.value,
+//                           })
+//                         }
+//                       />
+//                     ) : (
+//                       member.access
+//                     )}
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                     {editingId === member.id ? (
+//                       <Input
+//                         value={editedMember?.jobRole || ""}
+//                         onChange={(e) =>
+//                           setEditedMember({
+//                             ...editedMember,
+//                             jobRole: e.target.value,
+//                           })
+//                         }
+//                       />
+//                     ) : (
+//                       member.jobRole
+//                     )}
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                     {editingId === member.id ? (
+//                       <Input
+//                         value={editedMember?.about || ""}
+//                         onChange={(e) =>
+//                           setEditedMember({
+//                             ...editedMember,
+//                             about: e.target.value,
+//                           })
+//                         }
+//                       />
+//                     ) : (
+//                       member.about
+//                     )}
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                     {editingId === member.id ? (
+//                       <Input
+//                         value={editedMember?.emergencyContact?.name || ""}
+//                         onChange={(e) =>
+//                           setEditedMember({
+//                             ...editedMember,
+//                             emergencyContact: {
+//                               ...editedMember?.emergencyContact,
+//                               name: e.target.value,
+//                             },
+//                           })
+//                         }
+//                       />
+//                     ) : (
+//                       member?.emergencyContact?.name
+//                     )}
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                     {editingId === member.id ? (
+//                       <Input
+//                         value={editedMember?.emergencyContact?.relation || ""}
+//                         onChange={(e) =>
+//                           setEditedMember({
+//                             ...editedMember,
+//                             emergencyContact: {
+//                               ...editedMember?.emergencyContact,
+//                               relation: e.target.value,
+//                             },
+//                           })
+//                         }
+//                       />
+//                     ) : (
+//                       member?.emergencyContact?.relation
+//                     )}
+//                   </TableCell>
+//                   <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                     {editingId === member.id ? (
+//                       <Input
+//                         value={editedMember?.emergencyContact?.contact || ""}
+//                         onChange={(e) =>
+//                           setEditedMember({
+//                             ...editedMember,
+//                             emergencyContact: {
+//                               ...editedMember?.emergencyContact,
+//                               contact: e.target.value,
+//                             },
+//                           })
+//                         }
+//                       />
+//                     ) : (
+//                       member?.emergencyContact?.contact
+//                     )}
+//                   </TableCell>
+//                 </TableRow>
+//               ))}
+//           </TableBody>
+//         </Table>
+//       </div>
+
+//       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+//         <DialogContent className="sm:max-w-[425px] bg-white">
+//           <DialogHeader>
+//             <DialogTitle>Confirm Deletion</DialogTitle>
+//             <DialogDescription>
+//               Are you sure you want to delete this member? This action cannot be
+//               undone.
+//             </DialogDescription>
+//           </DialogHeader>
+//           <DialogFooter>
+//             <Button
+//               variant="outline"
+//               onClick={() => setDeleteDialogOpen(false)}
+//             >
+//               Cancel
+//             </Button>
+//             <Button variant="destructive" onClick={confirmDelete}>
+//               {deleteMutation.isPending ? (
+//                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+//               ) : (
+//                 "Delete"
+//               )}
+//             </Button>
+//           </DialogFooter>
+//         </DialogContent>
+//       </Dialog>
+//     </div>
+//   );
+// }
+
+// import { useState } from "react";
+// import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+// import { createClient } from "@supabase/supabase-js";
+// import { Loader2, Mail, Pencil, Trash, Check, X } from "lucide-react";
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { Checkbox } from "@/components/ui/checkbox";
+// import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+// import {
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from "@/components/ui/table";
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogDescription,
+//   DialogFooter,
+//   DialogHeader,
+//   DialogTitle,
+// } from "@/components/ui/dialog";
+
+// // Initialize Supabase client
+// const supabase = createClient(
+//   process.env.NEXT_PUBLIC_SUPABASE_URL!,
+//   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+// );
+
+// type Member = {
+//   id: string;
+//   name: string;
+//   profileImage: string;
+//   address1: string;
+//   address2: string;
+//   city: string;
+//   state: string;
+//   zipcode: string;
+//   country: string;
+//   email: string;
+//   phone: string;
+//   access: string;
+//   jobRole: string;
+//   about: string;
+//   emergencyContact: {
+//     name: string;
+//     relation: string;
+//     contact: string;
+//   };
+// };
+
+// const fetchMembers = async (): Promise<Member[]> => {
+//   const { data, error } = await supabase.from("members_new").select("*");
+//   if (error) throw error;
+//   return data;
+// };
+
+// const updateMember = async (member: Partial<Member>): Promise<Member> => {
+//   const { data, error } = await supabase
+//     .from("members_new")
+//     .update(member)
+//     .eq("id", member.id)
+//     .single();
+//   if (error) throw error;
+//   return data;
+// };
+
+// const deleteMember = async (id: string): Promise<void> => {
+//   const { error } = await supabase.from("members_new").delete().eq("id", id);
+//   if (error) throw error;
+// };
+
+// export default function Component() {
+//   const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set());
+//   const [editingId, setEditingId] = useState<string | null>(null);
+//   const [editedMember, setEditedMember] = useState<Partial<Member> | null>(
+//     null
+//   );
+//   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+//   const [memberToDelete, setMemberToDelete] = useState<string | null>(null);
+
+//   const queryClient = useQueryClient();
+
+//   const { data: members, isLoading } = useQuery<Member[]>({
+//     queryKey: ["members"],
+//     queryFn: fetchMembers,
+//   });
+
+//   const updateMutation = useMutation({
+//     mutationFn: updateMember,
+//     onSuccess: () => {
+//       queryClient.invalidateQueries({ queryKey: ["members"] });
+//       setEditingId(null);
+//       setEditedMember(null);
+//     },
+//   });
+
+//   const deleteMutation = useMutation({
+//     mutationFn: deleteMember,
+//     onSuccess: () => {
+//       queryClient.invalidateQueries({ queryKey: ["members"] });
+//       setDeleteDialogOpen(false);
+//       setMemberToDelete(null);
+//     },
+//   });
+
+//   const toggleRow = (id: string) => {
+//     const newSelected = new Set(selectedRows);
+//     if (newSelected.has(id)) {
+//       newSelected.delete(id);
+//     } else {
+//       newSelected.add(id);
+//     }
+//     setSelectedRows(newSelected);
+//   };
+
+//   const toggleAll = () => {
+//     if (selectedRows.size === members?.length) {
+//       setSelectedRows(new Set());
+//     } else {
+//       setSelectedRows(new Set(members?.map((member) => member.id)));
+//     }
+//   };
+
+//   const handleEmailClick = (email: string, id: string) => {
+//     if (!selectedRows.has(id)) return;
+//     window.location.href = `mailto:${email}`;
+//   };
+
+//   const handleEmailClickAll = () => {
+//     const emails = members
+//       ?.filter((member) => selectedRows.has(member.id))
+//       .map((member) => member.email)
+//       .join(";");
+//     window.location.href = `mailto:${emails}`;
+//   };
+
+//   const handleEdit = (member: Member) => {
+//     setEditingId(member.id);
+//     setEditedMember({ ...member });
+//   };
+
+//   const handleSave = () => {
+//     if (editedMember) {
+//       updateMutation.mutate(editedMember);
+//     }
+//   };
+
+//   const handleCancel = () => {
+//     setEditingId(null);
+//     setEditedMember(null);
+//   };
+
+//   const handleDelete = (id: string) => {
+//     setMemberToDelete(id);
+//     setDeleteDialogOpen(true);
+//   };
+
+//   const confirmDelete = () => {
+//     if (memberToDelete) {
+//       deleteMutation.mutate(memberToDelete);
+//     }
+//   };
+
+//   if (isLoading) return <div>Loading...</div>;
+
+//   return (
+//     <div className="relative max-h-[800px] overflow-y-auto overflow-x-scroll pt-40">
+//       <Table className="border-collapse border-dashed border-red-500 text-xs p-2">
+//         <TableHeader className="sticky top-0 bg-white z-10 font-extrabold">
+//           <TableRow>
+//             <TableHead className="w-[40px] p-2 text-black border-r border-dotted border-gray-300">
+//               <div className="flex items-center space-x-2">
+//                 <Checkbox
+//                   checked={selectedRows.size === members?.length}
+//                   onCheckedChange={toggleAll}
+//                   aria-label="Select all"
+//                 />
+//                 <Button
+//                   variant="ghost"
+//                   size="icon"
+//                   onClick={handleEmailClickAll}
+//                   disabled={selectedRows.size === 0}
+//                 >
+//                   <Mail className="h-4 w-4" />
+//                 </Button>
+//               </div>
+//             </TableHead>
+//             <TableHead className="w-[100px] p-2 text-black border-r border-dotted border-gray-300">
+//               Action
+//             </TableHead>
+//             <TableHead className="w-[40px] p-2 text-black border-r border-dotted border-gray-300">
+//               #
+//             </TableHead>
+//             <TableHead className="w-[40px] p-2 text-black border-r border-dotted border-gray-300">
+//               Profile
+//             </TableHead>
+//             <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//               Name
+//             </TableHead>
+//             <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//               Address1
+//             </TableHead>
+//             <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//               Address2
+//             </TableHead>
+//             <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//               City
+//             </TableHead>
+//             <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//               State
+//             </TableHead>
+//             <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//               Zipcode
+//             </TableHead>
+//             <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//               Country
+//             </TableHead>
+//             <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//               Email
+//             </TableHead>
+//             <TableHead className="p-2 border-r whitespace-nowrap text-black border-dotted border-gray-300">
+//               Phone
+//             </TableHead>
+//             <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//               Access
+//             </TableHead>
+//             <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//               Job Role
+//             </TableHead>
+//             <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//               About
+//             </TableHead>
+//             <TableHead colSpan={3} className="p-2">
+//               <div className="space-y-2">
+//                 <div className="bg-red-500 text-white text-center text-[0.625rem] rounded-t-sm">
+//                   Emergency Contact Information
+//                 </div>
+//                 <div className="grid grid-cols-3 gap-2 pb-4">
+//                   <div>Name</div>
+//                   <div>Relation</div>
+//                   <div>Contact</div>
+//                 </div>
+//               </div>
+//             </TableHead>
+//           </TableRow>
+//         </TableHeader>
+//         <TableBody>
+//           {members?.map((member, index) => (
+//             <TableRow
+//               key={member.id}
+//               className="border-b odd:bg-gray-100 even:bg-white"
+//             >
+//               <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                 <Checkbox
+//                   checked={selectedRows.has(member.id)}
+//                   onCheckedChange={() => toggleRow(member.id)}
+//                   aria-label={`Select ${member.name}`}
+//                 />
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                 <div className="flex items-center">
+//                   <Button
+//                     variant="ghost"
+//                     size="icon"
+//                     className="h-8 w-8"
+//                     onClick={() => handleEmailClick(member.email, member.id)}
+//                     disabled={!selectedRows.has(member.id)}
+//                   >
+//                     <Mail className="h-4 w-4" />
+//                   </Button>
+//                   {editingId === member.id ? (
+//                     <>
+//                       <Button
+//                         variant="ghost"
+//                         size="icon"
+//                         className="h-8 w-8"
+//                         onClick={handleSave}
+//                       >
+//                         <Check className="h-4 w-4" />
+//                       </Button>
+//                       <Button
+//                         variant="ghost"
+//                         size="icon"
+//                         className="h-8 w-8"
+//                         onClick={handleCancel}
+//                       >
+//                         <X className="h-4 w-4" />
+//                       </Button>
+//                     </>
+//                   ) : (
+//                     <Button
+//                       variant="ghost"
+//                       size="icon"
+//                       className="h-8 w-8"
+//                       onClick={() => handleEdit(member)}
+//                     >
+//                       <Pencil className="h-4 w-4" />
+//                     </Button>
+//                   )}
+//                   <Button
+//                     variant="destructive"
+//                     size="icon"
+//                     className="h-8 w-8"
+//                     onClick={() => handleDelete(member.id)}
+//                   >
+//                     <Trash className="h-4 w-4" />
+//                   </Button>
+//                 </div>
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                 {index + 1}
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                 <Avatar className="h-12 w-12">
+//                   <AvatarImage src={member.profileImage} alt={member.name} />
+//                   <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+//                 </Avatar>
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                 {editingId === member.id ? (
+//                   <Input
+//                     value={editedMember?.name || ""}
+//                     onChange={(e) =>
+//                       setEditedMember({ ...editedMember, name: e.target.value })
+//                     }
+//                   />
+//                 ) : (
+//                   member.name
+//                 )}
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                 {editingId === member.id ? (
+//                   <Input
+//                     value={editedMember?.address1 || ""}
+//                     onChange={(e) =>
+//                       setEditedMember({
+//                         ...editedMember,
+//                         address1: e.target.value,
+//                       })
+//                     }
+//                   />
+//                 ) : (
+//                   member.address1
+//                 )}
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                 {editingId === member.id ? (
+//                   <Input
+//                     value={editedMember?.address2 || ""}
+//                     onChange={(e) =>
+//                       setEditedMember({
+//                         ...editedMember,
+//                         address2: e.target.value,
+//                       })
+//                     }
+//                   />
+//                 ) : (
+//                   member.address2
+//                 )}
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                 {editingId === member.id ? (
+//                   <Input
+//                     value={editedMember?.city || ""}
+//                     onChange={(e) =>
+//                       setEditedMember({ ...editedMember, city: e.target.value })
+//                     }
+//                   />
+//                 ) : (
+//                   member.city
+//                 )}
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                 {editingId === member.id ? (
+//                   <Input
+//                     value={editedMember?.state || ""}
+//                     onChange={(e) =>
+//                       setEditedMember({
+//                         ...editedMember,
+//                         state: e.target.value,
+//                       })
+//                     }
+//                   />
+//                 ) : (
+//                   member.state
+//                 )}
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                 {editingId === member.id ? (
+//                   <Input
+//                     value={editedMember?.zipcode || ""}
+//                     onChange={(e) =>
+//                       setEditedMember({
+//                         ...editedMember,
+//                         zipcode: e.target.value,
+//                       })
+//                     }
+//                   />
+//                 ) : (
+//                   member.zipcode
+//                 )}
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                 {editingId === member.id ? (
+//                   <Input
+//                     value={editedMember?.country || ""}
+//                     onChange={(e) =>
+//                       setEditedMember({
+//                         ...editedMember,
+//                         country: e.target.value,
+//                       })
+//                     }
+//                   />
+//                 ) : (
+//                   member.country
+//                 )}
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                 {editingId === member.id ? (
+//                   <Input
+//                     value={editedMember?.email || ""}
+//                     onChange={(e) =>
+//                       setEditedMember({
+//                         ...editedMember,
+//                         email: e.target.value,
+//                       })
+//                     }
+//                   />
+//                 ) : (
+//                   member.email
+//                 )}
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                 {editingId === member.id ? (
+//                   <Input
+//                     value={editedMember?.phone || ""}
+//                     onChange={(e) =>
+//                       setEditedMember({
+//                         ...editedMember,
+//                         phone: e.target.value,
+//                       })
+//                     }
+//                   />
+//                 ) : (
+//                   member.phone
+//                 )}
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                 {editingId === member.id ? (
+//                   <Input
+//                     value={editedMember?.access || ""}
+//                     onChange={(e) =>
+//                       setEditedMember({
+//                         ...editedMember,
+//                         access: e.target.value,
+//                       })
+//                     }
+//                   />
+//                 ) : (
+//                   member.access
+//                 )}
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                 {editingId === member.id ? (
+//                   <Input
+//                     value={editedMember?.jobRole || ""}
+//                     onChange={(e) =>
+//                       setEditedMember({
+//                         ...editedMember,
+//                         jobRole: e.target.value,
+//                       })
+//                     }
+//                   />
+//                 ) : (
+//                   member.jobRole
+//                 )}
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                 {editingId === member.id ? (
+//                   <Input
+//                     value={editedMember?.about || ""}
+//                     onChange={(e) =>
+//                       setEditedMember({
+//                         ...editedMember,
+//                         about: e.target.value,
+//                       })
+//                     }
+//                   />
+//                 ) : (
+//                   member.about
+//                 )}
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                 {editingId === member.id ? (
+//                   <Input
+//                     value={editedMember?.emergencyContact?.name || ""}
+//                     onChange={(e) =>
+//                       setEditedMember({
+//                         ...editedMember,
+//                         emergencyContact: {
+//                           ...editedMember?.emergencyContact,
+//                           name: e.target.value,
+//                         },
+//                       })
+//                     }
+//                   />
+//                 ) : (
+//                   member?.emergencyContact?.name
+//                 )}
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                 {editingId === member.id ? (
+//                   <Input
+//                     value={editedMember?.emergencyContact?.relation || ""}
+//                     onChange={(e) =>
+//                       setEditedMember({
+//                         ...editedMember,
+//                         emergencyContact: {
+//                           ...editedMember?.emergencyContact,
+//                           relation: e.target.value,
+//                         },
+//                       })
+//                     }
+//                   />
+//                 ) : (
+//                   member?.emergencyContact?.relation
+//                 )}
+//               </TableCell>
+//               <TableCell className="p-2 border-r border-dotted border-gray-300 whitespace-nowrap">
+//                 {editingId === member.id ? (
+//                   <Input
+//                     value={editedMember?.emergencyContact?.contact || ""}
+//                     onChange={(e) =>
+//                       setEditedMember({
+//                         ...editedMember,
+//                         emergencyContact: {
+//                           ...editedMember?.emergencyContact,
+//                           contact: e.target.value,
+//                         },
+//                       })
+//                     }
+//                   />
+//                 ) : (
+//                   member?.emergencyContact?.contact
+//                 )}
+//               </TableCell>
+//             </TableRow>
+//           ))}
+//         </TableBody>
+//       </Table>
+
+//       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+//         <DialogContent>
+//           <DialogHeader>
+//             <DialogTitle>Confirm Deletion</DialogTitle>
+//             <DialogDescription>
+//               Are you sure you want to delete this member? This action cannot be
+//               undone.
+//             </DialogDescription>
+//           </DialogHeader>
+//           <DialogFooter>
+//             <Button
+//               variant="outline"
+//               onClick={() => setDeleteDialogOpen(false)}
+//             >
+//               Cancel
+//             </Button>
+//             <Button variant="destructive" onClick={confirmDelete}>
+//               {deleteMutation.isPending ? (
+//                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+//               ) : (
+//                 "Delete"
+//               )}
+//             </Button>
+//           </DialogFooter>
+//         </DialogContent>
+//       </Dialog>
+//     </div>
+//   );
+// }
+
+// "use client";
+
+// import * as React from "react";
+// import { Mail, Pencil, Trash } from "lucide-react";
+// import {
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from "@/components/ui/table";
+// import { Checkbox } from "@/components/ui/checkbox";
+// import { Button } from "@/components/ui/button";
+// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+// import HeroFallback from "@/components/common/hero-slider-check";
+
+// const members = [
+//   {
+//     id: "1",
+//     name: "Amanda Martin",
+//     profileImage: "https://dev.windwardsailingclub.com/img/users/User51.jpg",
+//     address1: "68---1330 Mauna Lani Dr, Bldg 1---A",
+//     address2: "",
+//     city: "Kohala Coast",
+//     state: "HI",
+//     zipcode: "96743",
+//     country: "United States",
+//     email: "amanda.martin@example.com",
+//     phone: "(555) 234-5678",
+//     access: "Member",
+//     jobRole: "Safety Officer",
+//     about:
+//       "Ensures adherence to safety protocols and conducts safety briefings for members.",
+//     emergencyContact: {
+//       name: "Penelope Young",
+//       relation: "Sister",
+//       contact: "480-685-4226",
+//     },
+//   },
+//   {
+//     id: "2",
+//     name: "Brian Taylor",
+//     profileImage:
+//       "https://dev.windwardsailingclub.com/img/FoundingMembers/User2.jpg",
+//     address1: "201 Bellevue Square, Space 201",
+//     address2: "",
+//     city: "Bellevue",
+//     state: "WA",
+//     zipcode: "98004",
+//     country: "United States",
+//     email: "brian.taylor@example.com",
+//     phone: "(555) 987-6543",
+//     access: "Member",
+//     jobRole: "Harbor Master",
+//     about:
+//       "Manages the harbor area, assigns moorings, and enforces harbor rules and regulations.",
+//     emergencyContact: {
+//       name: "Daniel Young",
+//       relation: "Friend",
+//       contact: "612-555-5412",
+//     },
+//   },
+//   {
+//     id: "3",
+//     name: "Christopher Brown",
+//     profileImage:
+//       "https://dev.windwardsailingclub.com/img/FoundingMembers/User3.jpg",
+//     address1: "343 Sardis Station",
+//     address2: "",
+//     city: "Minneapolis",
+//     state: "Minnesota",
+//     zipcode: "55402",
+//     country: "United States",
+//     email: "christopher.brown@example.com",
+//     phone: "612-555-5412",
+//     access: "Member",
+//     jobRole: "Security Personnel",
+//     about:
+//       "Provides security services to ensure the safety of the club’s facilities and members.",
+//     emergencyContact: {
+//       name: "ThomasGarden",
+//       relation: "Brother",
+//       contact: "612-555-5412",
+//     },
+//   },
+//   {
+//     id: "4",
+//     name: "Daniel Davis",
+//     profileImage:
+//       "https://dev.windwardsailingclub.com/img/FoundingMembers/User13.jpg",
+//     address1: "Waikoloa Beach Resort, Unit D---8250 Waikoloa Beach",
+//     address2: "",
+//     city: "Waikoloa",
+//     state: "HI",
+//     zipcode: "96738",
+//     country: "United States",
+//     email: "daniel.davis@example.com",
+//     phone: "(555) 456-7890",
+//     access: "Member",
+//     jobRole: "Marketing and Communications Coordinator",
+//     about:
+//       "Develops marketing strategies, manages social media, and handles communications.",
+//     emergencyContact: {
+//       name: "Aiden King",
+//       relation: "Brother",
+//       contact: "412-882-9003",
+//     },
+//   },
+//   {
+//     id: "5",
+//     name: "David Thompson",
+//     profileImage:
+//       "https://dev.windwardsailingclub.com/img/FoundingMembers/User8.jpg",
+//     address1: "1520 E Buena Vista Drive 8A",
+//     address2: "",
+//     city: "Lake Buena Vista",
+//     state: "FL",
+//     zipcode: "32830",
+//     country: "United States",
+//     email: "david.thompson@example.com",
+//     phone: "(821) 036-2224",
+//     access: "Member",
+//     jobRole: "Catering and Hospitality Staff",
+//     about:
+//       "Assists members with boat rentals, ensuring they have a safe and enjoyable experience.",
+//     emergencyContact: {
+//       name: "Ryan Green",
+//       relation: "Brother",
+//       contact: "(271) 201-1925",
+//     },
+//   },
+//   {
+//     id: "6",
+//     name: "Emily Turner",
+//     profileImage: "https://dev.windwardsailingclub.com/img/users/User52.jpg",
+//     address1: "3115 Hillside Street",
+//     address2: "",
+//     city: "Paradise Valley",
+//     state: "Arizona",
+//     zipcode: "85253",
+//     country: "United States",
+//     email: "emily.turner@example.com",
+//     phone: "(651) 822-8462",
+//     access: "Member",
+//     jobRole: "Environmental Officer",
+//     about:
+//       "Manages the marina area, coordinating boat launches, moorings, and dock upkeep.",
+//     emergencyContact: {
+//       name: "Merry Doe",
+//       relation: "Sister",
+//       contact: "(361) 378-8634",
+//     },
+//   },
+//   {
+//     id: "7",
+//     name: "Jason Wilson",
+//     profileImage:
+//       "https://dev.windwardsailingclub.com/img/FoundingMembers/User6.jpg",
+//     address1: "1409 Trouser Log Road",
+//     address2: "",
+//     city: "Agawam",
+//     state: "Massachusetts",
+//     zipcode: "01001",
+//     country: "United States",
+//     email: "jason.wilson@example.com",
+//     phone: "413-822-9995",
+//     access: "Member",
+//     jobRole: "Sailing Instructor/Coach",
+//     about:
+//       "Experienced instructor passionate about teaching sailing techniques to all skill levels.",
+//     emergencyContact: {
+//       name: "Bravo Davis",
+//       relation: "Brother",
+//       contact: "412-882-9000",
+//     },
+//   },
+//   {
+//     id: "8",
+//     name: "Jennifer Smith",
+//     profileImage: "https://dev.windwardsailingclub.com/img/users/User2.jpg",
+//     address1: "15205 North Kierland Blvd. Suite 100",
+//     address2: "",
+//     city: "Scottsdale",
+//     state: "AZ",
+//     zipcode: "85254",
+//     country: "United States",
+//     email: "jennifer.smith@example.com",
+//     phone: "(713) 873-4244",
+//     access: "Member",
+//     jobRole: "Accountant/Financial Officer",
+//     about:
+//       "Manages financial operations, budgets, and payroll for the sailing club.",
+//     emergencyContact: {
+//       name: "Daniel Scott",
+//       relation: "Brother",
+//       contact: "(116) 920-2153",
+//     },
+//   },
+//   {
+//     id: "9",
+//     name: "Jessica Martinez",
+//     profileImage: "https://dev.windwardsailingclub.com/img/users/User3.jpg",
+//     address1: "2829 Ala Kalaniakaumaka, Kukui’ula Village",
+//     address2: "",
+//     city: "Koloa",
+//     state: "HI",
+//     zipcode: "96756",
+//     country: "United States",
+//     email: "jessica.martinez@example.com",
+//     phone: "(449) 646-6041",
+//     access: "Member",
+//     jobRole: "Dockhand/Marina Attendants",
+//     about:
+//       "Oversees daily operations, event planning, and ensures member satisfaction.",
+//     emergencyContact: {
+//       name: "William Hernandez",
+//       relation: "Brother",
+//       contact: "(305) 648-6041",
+//     },
+//   },
+//   {
+//     id: "10",
+//     name: "Jessica Turner",
+//     profileImage: "https://dev.windwardsailingclub.com/img/users/User5.jpg",
+//     address1: "854 Avocado Ave.",
+//     address2: "",
+//     city: "Windward Beach",
+//     state: "CA",
+//     zipcode: "92660",
+//     country: "United States",
+//     email: "jessica.turner@example.com",
+//     phone: "(555) 456-7890",
+//     access: "Member",
+//     jobRole: "Youth Program Coordinator",
+//     about:
+//       "Organizes and manages sailing programs and activities for children and teenagers.",
+//     emergencyContact: {
+//       name: "Harper Harris",
+//       relation: "Friend",
+//       contact: "412-882-9002",
+//     },
+//   },
+// ];
+
+// export default function Component() {
+//   const [selectedRows, setSelectedRows] = React.useState<Set<string>>(
+//     new Set()
+//   );
+
+//   const toggleRow = (id: string) => {
+//     const newSelected = new Set(selectedRows);
+//     if (newSelected.has(id)) {
+//       newSelected.delete(id);
+//     } else {
+//       newSelected.add(id);
+//     }
+//     setSelectedRows(newSelected);
+//   };
+
+//   const toggleAll = () => {
+//     if (selectedRows.size === members.length) {
+//       setSelectedRows(new Set());
+//     } else {
+//       setSelectedRows(new Set(members.map((member) => member.id)));
+//     }
+//   };
+
+//   const handleEmailClick = (email: string, id: any) => {
+//     if (!selectedRows.has(id)) {
+//       return;
+//     }
+//     window.location.href = `mailto:${email}`;
+//   };
+
+//   const handleEmailClickAll = (email: string) => {
+//     window.location.href = `mailto:${email}`;
+//   };
+
+//   return (
+//     <>
+//       <HeroFallback />
+//       <div className="   relative max-h-[800px] overflow-y-auto  overflow-x-scroll  ">
+//         <Table className="border-collapse border-dashed border-red-500 text-xs p-2  ">
+//           <TableHeader className="sticky top-0 bg-white z-10 font-extrabold">
+//             <TableRow className=" ">
+//               <TableHead className="w-[40px] p-2 text-black  border-r border-dotted border-gray-300">
+//                 <div className="flex items-center space-x-2">
+//                   <Checkbox
+//                     checked={selectedRows.size === members.length}
+//                     onCheckedChange={toggleAll}
+//                     aria-label="Select all"
+//                   />
+//                   <Button
+//                     variant="ghost"
+//                     size="icon"
+//                     onClick={() =>
+//                       handleEmailClickAll(
+//                         members
+//                           .filter((member) => selectedRows.has(member.id))
+//                           .map((member) => member.email)
+//                           .join(";")
+//                       )
+//                     }
+//                     disabled={selectedRows.size === 0}
+//                   >
+//                     <Mail className="h-4 w-4" />
+//                   </Button>
+//                 </div>
+//               </TableHead>
+//               <TableHead className="w-[100px] p-2  text-black border-r border-dotted border-gray-300">
+//                 Action
+//               </TableHead>
+//               <TableHead className="w-[40px] p-2 text-black border-r border-dotted border-gray-300">
+//                 #
+//               </TableHead>
+//               <TableHead className="w-[40px] p-2 text-black border-r border-dotted border-gray-300">
+//                 Profile
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 Name
+//               </TableHead>
+//               <TableHead className="p-2  border-r   text-black border-dotted border-gray-300">
+//                 Address1
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 Address2
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 City
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 State
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 Zipcode
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 Country
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 Email
+//               </TableHead>
+//               <TableHead className="p-2 border-r whitespace-nowrap text-black border-dotted border-gray-300">
+//                 Phone
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 Access
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 Job Role
+//               </TableHead>
+//               <TableHead className="p-2 border-r text-black border-dotted border-gray-300">
+//                 About
+//               </TableHead>
+
+//               <TableHead colSpan={3} className="p-2">
+//                 <div className="space-y-2">
+//                   <div className="bg-red-500  text-white text-center text-[0.625rem]   rounded-t-sm">
+//                     Emergency Contact Information
+//                   </div>
+
+//                   <div className="grid grid-cols-3 gap-2 pb-4">
+//                     <div>Name</div>
+//                     <div>Relation</div>
+//                     <div>Contact</div>
+//                   </div>
+//                 </div>
+//               </TableHead>
+//             </TableRow>
+//           </TableHeader>
+
+//           <TableBody>
+//             {members?.map((member, index) => (
+//               <TableRow
+//                 key={member.id}
+//                 className="border-b odd:bg-gray-100 even:bg-white "
+//               >
+//                 <TableCell className="p-2 border-r border-dotted border-gray-300  ">
+//                   <Checkbox
+//                     checked={selectedRows.has(member.id)}
+//                     onCheckedChange={() => toggleRow(member.id)}
+//                     aria-label={`Select ${member.name}`}
+//                   />
+//                 </TableCell>
+//                 <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                   <div className="flex items-center  ">
+//                     <Button
+//                       variant="ghost"
+//                       size="icon"
+//                       className="h-8 w-8"
+//                       onClick={() => handleEmailClick(member.email, member.id)}
+//                       disabled={!selectedRows.has(member.id)}
+//                     >
+//                       <Mail className="h-4 w-4" />
+//                     </Button>
+//                     <Button variant="ghost" size="icon" className="h-8 w-8">
+//                       <Pencil className="h-4 w-4" />
+//                     </Button>
+//                     <Button
+//                       variant="destructive"
+//                       size="icon"
+//                       className="h-8 w-8"
+//                     >
+//                       <Trash className="h-4 w-4" />
+//                     </Button>
+//                   </div>
+//                 </TableCell>
+//                 <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                   {index + 1}
+//                 </TableCell>
+//                 <TableCell className="p-2 border-r border-dotted border-gray-300">
+//                   <Avatar className="h-12 w-12">
+//                     <AvatarImage src={member.profileImage} alt={member.name} />
+//                     <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+//                   </Avatar>
+//                 </TableCell>
+//                 <TableCell className="p-2  border-r border-dotted border-gray-300 whitespace-nowrap ">
+//                   {member.name}
+//                 </TableCell>
+//                 <TableCell className="p-2  border-r border-dotted border-gray-300   ">
+//                   {member.address1}
+//                 </TableCell>
+//                 <TableCell className="p-2  border-r border-dotted border-gray-300  ">
+//                   {member.address2}
+//                 </TableCell>
+//                 <TableCell className="p-2  border-r border-dotted border-gray-300 whitespace-nowrap">
+//                   {member.city}
+//                 </TableCell>
+//                 <TableCell className="p-2  border-r border-dotted border-gray-300 whitespace-nowrap">
+//                   {member.state}
+//                 </TableCell>
+//                 <TableCell className="p-2  border-r border-dotted border-gray-300 whitespace-nowrap">
+//                   {member.zipcode}
+//                 </TableCell>
+//                 <TableCell className="p-2  border-r border-dotted border-gray-300 whitespace-nowrap">
+//                   {member.country}
+//                 </TableCell>
+//                 <TableCell className="p-2  border-r border-dotted border-gray-300 whitespace-nowrap">
+//                   {member.email}
+//                 </TableCell>
+//                 <TableCell className="p-2  border-r border-dotted border-gray-300 whitespace-nowrap">
+//                   {member.phone}
+//                 </TableCell>
+//                 <TableCell className="p-2  border-r border-dotted border-gray-300">
+//                   {member.access}
+//                 </TableCell>
+//                 <TableCell className="p-2  border-r border-dotted border-gray-300">
+//                   {member.jobRole}
+//                 </TableCell>
+//                 <TableCell className="p-2  border-r border-dotted border-gray-300">
+//                   {member.about}
+//                 </TableCell>
+//                 <TableCell className="p-2  border-r border-dotted border-gray-300">
+//                   {member.emergencyContact.name}
+//                 </TableCell>
+//                 <TableCell className="p-2  border-r border-dotted border-gray-300">
+//                   {member.emergencyContact.relation}
+//                 </TableCell>
+//                 <TableCell className="p-2  border-r border-dotted border-gray-300 whitespace-nowrap">
+//                   {member.emergencyContact.contact}
+//                 </TableCell>
+//               </TableRow>
+//             ))}
+//           </TableBody>
+//         </Table>
+//       </div>
+//     </>
+//   );
+// }

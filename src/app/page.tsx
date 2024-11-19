@@ -65,14 +65,14 @@ export default function Home() {
   const iconStyle = { width: "40px", height: "40px" };
 
   return (
-    <div className="flex flex-col items-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)]  ">
+    <div className="flex flex-col items-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)] home-page   ">
       {visibilityMap["hero-image"] && <Heroo />}
       {visibilityMap["sailing-services"] && <SailingServices />}
       {/* <HeroSection /> */}
 
       {visibilityMap["benefits-section"] && (
         <section className="w-full p-4 bg-lightSky">
-          <div className="container mx-auto max-w-6xl">
+          <div className="container mx-auto w-full max-w-[1630px] px-[15px]  ">
             <Detail
               benefits={false}
               benefitsData={[
@@ -134,7 +134,7 @@ export default function Home() {
       {visibilityMap["statistics"] && <StatsSlider />}
       {visibilityMap["testimonials"] && (
         <section className="w-full p-4">
-          <div className="container mx-auto max-w-6xl">
+          <div className="container mx-auto w-full max-w-[1630px] px-[15px]  ">
             <MemberCarousel />
           </div>
         </section>

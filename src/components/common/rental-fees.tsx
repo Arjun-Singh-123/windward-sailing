@@ -66,7 +66,7 @@ export default function RentalFeesTable() {
   console.log("checking renals data", rentalData);
 
   const RentalTable: React.FC<RentalTableProps> = ({ data, type }) => (
-    <Card className="w-full">
+    <Card className="  container w-full max-w-[1630px] px-[15px] mx-auto">
       <CardContent className="p-0">
         <ScrollArea className="w-full">
           <Table className="w-full">
@@ -371,16 +371,18 @@ export default function RentalFeesTable() {
   );
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-4 space-y-6">
-      <div className="text-start space-y-2">
-        <h1
+    <div className="container w-full max-w-[1630px] px-[15px] mx-auto  space-y-6 mt-4 ">
+      <div className="text-start space-y-2 mt-8">
+        {/* <h1
           className={` text-start  text-xl text-flatBlue ${cursiveHeadingFont.className}`}
           style={{ marginTop: "1.25rem" }}
         >
           Windward Sailing Club
-        </h1>
-        <h2 className={`text-4xl ${mainHeadingFont.className}`}>Rental Fees</h2>
-        <DecoratorLine />
+        </h1> */}
+        <h2 className={`text-4xl mt-4 ${mainHeadingFont.className}`}>
+          Rental Fees
+        </h2>
+        {/* <DecoratorLine /> */}
         <p
           className={`text-start mt-8   mx-auto text-sm ${contentFont.className}`}
         >
