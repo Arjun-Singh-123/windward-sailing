@@ -6,6 +6,9 @@ import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { fetchSectionProducts } from "@/services/product-services";
+import { Button } from "../ui/button";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -41,7 +44,7 @@ export default function Hero() {
           transition={{ delay: 0.5, duration: 1.5, ease: "easeOut" }}
           className="absolute inset-0 dark-overlay"
         >
-          {data[currentSlide].imageUrl && (
+          {data?.[currentSlide]?.imageUrl && (
             <Image
               src={data[currentSlide].imageUrl ?? ""}
               alt={data[currentSlide].title || "Slide image"}
@@ -64,6 +67,21 @@ export default function Hero() {
               <p className="text-xl mb-8 text-gray-200">
                 {data[currentSlide]?.title}
               </p>
+              <Link
+                href={`/boats/${data[currentSlide]?.slug || ""}/${
+                  data[currentSlide]?.link || ""
+                }`}
+                passHref
+                className="w-28"
+              >
+                <Button
+                  variant="outline"
+                  className="       text-lg py-3   hover:shadow-md"
+                >
+                  View Details
+                  <ChevronRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </Button>
+              </Link>
             </div>
           </motion.div>
         </motion.div>
