@@ -18,7 +18,6 @@ const users = [
 ];
 
 async function createSession(userId: string, role: string, username: string) {
-  // Simulating session creation (e.g., setting a cookie or creating a server-side session)
   return { success: true, userId, role, username };
 }
 
@@ -33,12 +32,10 @@ export async function POST(request: Request) {
     console.log("Attempting login for user:", username);
 
     if (user) {
-      // Simulate session creation
       const sessionResult = await createSession(user.id, user.role, user.email);
       console.log("Session creation result:", sessionResult);
 
       if (sessionResult.success) {
-        // Returning session info back to client
         return NextResponse.json({
           success: true,
           userId: user.id,

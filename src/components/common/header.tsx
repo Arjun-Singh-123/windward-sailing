@@ -306,17 +306,14 @@ export default function Header() {
             {menuItems?.map((item) => (
               <div key={item.id} className="relative group flex ">
                 {item.nav_sections.length > 0 ? (
-                  <div className="relative flex ">
+                  <div className="relative flex z-200 ">
                     <span className="text-white cursor-pointer py-2     transition-all duration-200 flex items-center border-transparent border-b-2 hover:border-white">
                       {item.name}
                     </span>
 
-                    <div className="absolute top-full left-0 hidden group-hover:block min-w-[200px] bg-white shadow-lg rounded-md   mt-2   ">
+                    <div className="absolute  left-0 hidden group-hover:block min-w-[200px] top-[5.5rem]  shadow-lg rounded-md border-t-flatBlue  bg-[#c5dfff]  mt-2   ">
                       {item.nav_sections.map((section) => (
-                        <div
-                          key={section.id}
-                          className="relative group/sub     "
-                        >
+                        <div key={section.id} className="relative group/sub   ">
                           <Link
                             href={`/boats/${section.href}`}
                             className={cn(
