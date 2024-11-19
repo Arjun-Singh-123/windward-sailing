@@ -144,7 +144,7 @@ export const fetchSectionProducts = async (sectionName: string) => {
   }));
 };
 
-export async function fetchSingleProduct(productId) {
+export async function fetchSingleProduct(productId: any) {
   console.log(productId);
   const { data, error } = await supabase
     .from("products")

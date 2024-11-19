@@ -7,7 +7,7 @@ import {
   mainHeadingFont,
 } from "@/app/ui/fonts";
 import BoatClubPricing from "./membership-tojoin";
-import CustomImage from "../custom-image";
+// import CustomImage from "../custom-image";
 import useMobileCheck from "@/hooks/mobile-check";
 import BoatFeatures from "./boat-features";
 import Image from "next/image";

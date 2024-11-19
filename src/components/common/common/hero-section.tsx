@@ -1,20 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { cache } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { supabase } from "@/lib/supabase";
 import KeyValueGrid from "./key-value-grid";
-import { Json, Tables } from "../../../database.types";
-import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
 // import { fetchVehicleAmenitiesA } from "@/lib/services";
 
 // types/vehicle.ts

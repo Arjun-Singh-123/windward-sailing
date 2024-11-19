@@ -4,8 +4,9 @@ import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
+import NavigationCommonMenu from "@/components/ui/navigation-common-menu";
 // import { fetchNavItems } from "./header";
-import NavigationCommonMenu from "../ui/navigation-common-menu";
+// import NavigationCommonMenu from "../ui/navigation-common-menu";
 export const dynamic = "force-dynamic";
 // const menuItems = [
 //   { name: "Home", href: "/" },

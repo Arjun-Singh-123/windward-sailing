@@ -65,7 +65,7 @@
 // }
 
 // Function to store session data in localStorage (client-side)
-export function storeSession(userId, role, username) {
+export function storeSession(userId: any, role: any, username: any) {
   if (typeof window !== "undefined") {
     // Check if we're in the client-side (browser)
     localStorage.setItem("session", JSON.stringify({ userId, role, username }));

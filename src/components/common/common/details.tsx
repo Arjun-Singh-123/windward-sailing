@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Image from "next/image";
-import CustomImage from "../custom-image";
+// import CustomImage from "../custom-image";
 import {
   contentFont,
   cursiveHeadingFont,
@@ -13,6 +13,7 @@ import {
 import DecoratorLine from "./decorator-icon-line";
 import { supabase } from "@/lib/supabase";
 import { useQuery } from "@tanstack/react-query";
+import CustomImage from "@/components/custom-image";
 
 interface Specification {
   name: string;

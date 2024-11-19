@@ -1,8 +1,5 @@
 import { Tables } from "../../database.types";
 import { supabase } from "./supabase";
-import { menuItemss } from "@/components/common/header-two";
-import { toast } from "sonner";
-import Papa from "papaparse";
 // export async function getAmenities() {
 //   const { data, error } = await supabase
 //     .from("vehicle_details")
