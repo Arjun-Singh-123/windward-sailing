@@ -86,11 +86,11 @@ export default function YachtDescription({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 auto-cols-fr">
           <div className={`${!amenities?.length && "md:col-span-2"}`}>
             <div className="text-start space-y-2 mb-6">
-              <h1 className="text-start text-xl text-flatBlue">
+              {/* <h1 className="text-start text-xl text-flatBlue">
                 Windward Sailing Club
-              </h1>
+              </h1> */}
               <h2 className="text-4xl">{title}</h2>
-              <DecoratorLine />
+              {/* <DecoratorLine /> */}
             </div>
             <p className="text-sm mb-4 whitespace-pre-line">{description}</p>
           </div>

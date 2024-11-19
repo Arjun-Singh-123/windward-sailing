@@ -121,11 +121,11 @@ const SpecificationsSection = ({ specificationData }: any) => {
 
   console.log("specification");
   return (
-    <div className="mb-8 px-4 sm:px-6 lg:px-8 ">
-      <h2 className="text-2xl sm:text-3xl font-bold mb-1 text-black dark:text-white">
+    <div className="mb-8    ">
+      <h2 className="text-2xl sm:text-3xl font-bold ml-3    mb-4 text-black dark:text-white">
         Specifications
       </h2>
-      <DecoratorLine />
+      {/* <DecoratorLine /> */}
       {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {specificationData &&
           convertToSpecificationData(specificationData)?.map(
@@ -544,10 +544,10 @@ export default function YachtGallery({
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-[#1e3a8a] flex items-center">
-        <Compass className="mr-2 h-6 w-6 sm:h-8 sm:w-8" /> {title}
+      <h2 className="text-2xl sm:text-3xl font-bold   text-[#1e3a8a] flex items-center mb-6">
+        <Compass className="mr-2 h-6 w-6 sm:h-8 sm:w-8 " /> {title}
       </h2>
-      <DecoratorLine />
+      {/* <DecoratorLine /> */}
       <div className="relative">
         <div className="flex sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 overflow-hidden">
           {images?.slice(startIndex, startIndex + 4)?.map((image, index) => (
