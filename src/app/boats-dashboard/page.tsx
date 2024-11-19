@@ -13,7 +13,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { supabase } from "@/lib/supabase";
-import { Switch } from "@/components/ui/switch";
+// import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import SectionProducts from "./components/section-products-dashboard";
 import AboutEditor from "./components/about-section-editor";
@@ -137,7 +137,7 @@ function Dashboard() {
           <AccordionTrigger className="text-xl font-bold">
             <div className="flex items-center justify-between w-full">
               <span>{section.name}</span>
-              <div className="flex items-center space-x-2">
+              {/* <div className="flex items-center space-x-2">
                 <span className="text-sm font-normal">Publish</span>
                 <Switch
                   checked={section.status === "published"}
@@ -149,7 +149,7 @@ function Dashboard() {
                     )
                   }
                 />
-              </div>
+              </div> */}
             </div>
           </AccordionTrigger>
           <AccordionContent>
