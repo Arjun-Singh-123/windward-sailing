@@ -150,7 +150,7 @@ export default function ContinuousStatsSlider() {
   }, []);
 
   return (
-    <div className="relative w-full bg-blue-600 bg-opacity-80 bg-custom   p-8">
+    <div className="relative w-full bg-blue-600 bg-opacity-80 bg-custom      p-8">
       <div className="max-w-screen-xl mx-auto py-8  ">
         <div className="relative  " ref={containerRef}>
           <div

@@ -95,7 +95,7 @@ export default function SailingServices() {
 
     let animationId: number;
     let startTime: number | null = null;
-    const totalDuration = 50000; // Total time to scroll through all cards (ms)
+    const totalDuration = 50000;
 
     const scroll = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
@@ -106,7 +106,6 @@ export default function SailingServices() {
         const scrollAmount = progress * scrollContainer.scrollWidth;
         scrollContainer.scrollLeft = scrollAmount;
 
-        // Reset scroll position when reaching the end
         if (
           scrollContainer.scrollLeft >=
           scrollContainer.scrollWidth - scrollContainer.clientWidth
@@ -124,21 +123,8 @@ export default function SailingServices() {
     return () => cancelAnimationFrame(animationId);
   }, [isScrolling, shouldScroll, (data || []).length]);
 
-  const cardWidth = 320; // Increased card width
-  const cardHeight = 400; // Increased card height
-
-  // useEffect(() => {
-  //   if (data && data?.length > cardsToShow) {
-  //     const timer = setInterval(() => {
-  //       setCurrentIndex((prevIndex) =>
-  //         prevIndex + cardsToShow >= data?.length ? 0 : prevIndex + 1
-  //       );
-  //     }, 5000);
-
-  //     return () => clearInterval(timer);
-  //   }
-  // }, [data?.length]);
-  // const visibleBoats = data?.slice(currentIndex, currentIndex + cardsToShow);
+  const cardWidth = 320;
+  const cardHeight = 400;
 
   // Auto-move the slider
   useEffect(() => {
@@ -300,60 +286,5 @@ export default function SailingServices() {
         )}
       </div>
     </div>
-
-    // <div className="w-full px-4 py-8 bg-gray-50">
-    //   <h2
-    //     className={`text-4.5xl text-black font-bold text-center mb-8 ${cursiveHeadingFont.className}`}
-    //   >
-    //     Newport Sailing Club
-    //   </h2>
-    //   <div
-    //     className="flex gap-4 transition-transform duration-1000 ease-in-out"
-    //     // style={{
-    //     //   transform: `translateX(-${currentIndex * (100 / cardsToShow)}%)`,
-    //     // }}
-    //   >
-    //     {visibleBoats?.map((boat) => (
-    //       <Card
-    //         key={boat.product_id}
-    //         className="overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 h-64 flex flex-col"
-    //         // className="min-w-[calc(100%/4)] lg:min-w-[calc(100%/4)] overflow-hidden"
-    //       >
-    //         {/* <CardHeader className="p-0">
-    //           <div className="relative h-48 w-full">
-    //             <Image
-    //               src={boat.imageUrl ?? ""}
-    //               alt={boat.title}
-    //               layout="fill"
-    //               objectFit="cover"
-    //             />
-    //           </div>
-    //         </CardHeader> */}
-    //         <CardContent className="p-4 flex flex-col flex-grow">
-    //           <CardTitle className="text-xl font-semibold mb-2 text-blue-800">
-    //             {boat.title}
-    //           </CardTitle>
-    //           <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-    //             {boat.description}
-    //           </p>
-    //           <p className="text-lg font-bold text-green-600">
-    //             {/* ${boat.price}/day */}
-    //           </p>
-    //         </CardContent>
-    //         <CardFooter className="mt-auto">
-    //           <Link
-    //             href={`/boats/${boat.slug || ""}/${boat.link || ""}`}
-    //             passHref
-    //           >
-    //             <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-    //               View Details
-    //               <ChevronRight className="ml-2 h-4 w-4" />
-    //             </Button>
-    //           </Link>
-    //         </CardFooter>
-    //       </Card>
-    //     ))}
-    //   </div>
-    // </div>
   );
 }

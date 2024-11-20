@@ -80,20 +80,7 @@ function Dashboard() {
 
   const statusMutation = useMutation({
     mutationFn: updateSectionStatus,
-    // onMutate: async ({ sectionId, status }) => {
-    //   // Optimistically update the status
-    //   await queryClient.cancelQueries({ queryKey: ["sections"] });
 
-    //   const previousSections = queryClient.getQueryData(["sections"]);
-
-    //   queryClient.setQueryData(["sections"], (old) =>
-    //     old?.map((section) =>
-    //       section.id === sectionId ? { ...section, status } : section
-    //     )
-    //   );
-
-    //   return { previousSections };
-    // },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["sectionsAndNavItems"] });
 
@@ -112,7 +99,7 @@ function Dashboard() {
         data?.sections?.find((item) => item.name === "Benefits")?.id || null;
       setBenefitsId(id as any);
     }
-  }, [data]); // Only runs when data changes
+  }, [data]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;

@@ -313,7 +313,7 @@ export default function Component() {
       </div>
       <div className="relative max-h-[800px] overflow-y-auto overflow-x-scroll">
         <Table className="border-collapse border-dashed border-red-500 text-xs p-2">
-          <TableHeader className="sticky top-0 bg-white z-10 font-extrabold text-[clamp(12px,2vw,18px)]">
+          <TableHeader className="sticky top-0 bg-white z-10 font-extrabold text-[clamp(12px,2vw,14px)]">
             <TableRow>
               <TableHead className="w-[40px] p-2 text-black border-r border-dotted border-gray-300">
                 <div className="flex items-center space-x-2">

@@ -27,7 +27,6 @@ export default function LoginPage() {
     const session = getSession();
 
     if (session) {
-      // If session exists, redirect to member-dashboard
       router.push("/member-dashboard");
     }
   }, []);
@@ -43,13 +42,10 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (data.success) {
-        // If login is successful, store session in localStorage
         storeSession(data.userId, data.role, data.username);
 
-        // Redirect or show success message
         toast.success("Login successful!", { duration: 1000 });
       } else {
-        // If login fails, display error message
       }
       router.push("/member-dashboard");
     } else {

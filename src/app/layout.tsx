@@ -32,8 +32,6 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  // Also supported by less commonly used
-  // interactiveWidget: 'resizes-visual',
 };
 
 export default function RootLayout({
@@ -44,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} antialiased flex flex-col min-h-screen overflow-x-hidden    `}
+        className={`${inter.className} antialiased flex flex-col min-h-screen    `}
       >
         <Providers>
           <Header />

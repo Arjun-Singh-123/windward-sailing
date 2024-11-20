@@ -2,8 +2,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Anchor, AnchorIcon } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { Anchor } from "lucide-react";
 import * as z from "zod";
 
 interface SpecificationData {
@@ -296,79 +295,7 @@ const VesselOverview = () => {
   );
 };
 
-import { fetchVehicleAmenities, getAmenitiess } from "@/lib/services";
-import { useQuery } from "@tanstack/react-query";
 import LegendComponent from "../common/left-triangle";
-import DecoratorLine from "../common/decorator-icon-line";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-const images = [
-  {
-    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4543.jpg",
-    alt: "CATALINA 30 SAND DOLLAR1",
-    caption: "CATALINA_30_SAND_DOLLAR1",
-  },
-  {
-    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4544.jpg",
-    alt: "CATALINA 30 SAND DOLLAR2",
-    caption: "CATALINA_30_SAND_DOLLAR2",
-  },
-  {
-    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4545.jpg",
-    alt: "CATALINA 30 SAND DOLLAR3",
-    caption: "CATALINA_30_SAND_DOLLAR3",
-  },
-  {
-    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4546.jpg",
-    alt: "CATALINA 30 SAND DOLLAR4",
-    caption: "CATALINA_30_SAND_DOLLAR4",
-  },
-  {
-    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4547.jpg",
-    alt: "CATALINA 30 SAND DOLLAR1",
-    caption: "CATALINA_30_SAND_DOLLAR1",
-  },
-  {
-    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4548.jpg",
-    alt: "CATALINA 30 SAND DOLLAR2",
-    caption: "CATALINA_30_SAND_DOLLAR2",
-  },
-  {
-    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4549.jpg",
-    alt: "CATALINA 30 SAND DOLLAR3",
-    caption: "CATALINA_30_SAND_DOLLAR3",
-  },
-  {
-    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4550.jpg",
-    alt: "CATALINA 30 SAND DOLLAR4",
-    caption: "CATALINA_30_SAND_DOLLAR4",
-  },
-  {
-    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4551.jpg",
-    alt: "CATALINA 30 SAND DOLLAR1",
-    caption: "CATALINA_30_SAND_DOLLAR1",
-  },
-  {
-    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4552.jpg",
-    alt: "CATALINA 30 SAND DOLLAR2",
-    caption: "CATALINA_30_SAND_DOLLAR2",
-  },
-  {
-    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4553.jpg",
-    alt: "CATALINA 30 SAND DOLLAR3",
-    caption: "CATALINA_30_SAND_DOLLAR3",
-  },
-  {
-    src: "https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4554.jpg",
-    alt: "CATALINA 30 SAND DOLLAR4",
-    caption: "CATALINA_30_SAND_DOLLAR4",
-  },
-];
 
 const ImageModal = ({ isOpen, onClose, image }: any) => {
   if (!isOpen) return null;

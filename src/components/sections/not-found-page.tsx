@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 export default function NotFoundNew() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4 pt-20">
       <div className="text-center">
         <h1 className="text-9xl font-bold text-blue-600 mb-4">404</h1>
         <h2 className="text-4xl font-semibold text-gray-800 mb-4">

@@ -46,39 +46,6 @@ export default function YachtDescription({
   amenities,
 }: any) {
   console.log("checking ameniteis", amenities);
-  // const amenities = [
-  //   { label: "MFG.", value: "Catalina" },
-  //   { label: "Auto Pilot", value: "no" },
-  //   { label: "Bluetooth Stereo", value: "yes" },
-  //   { label: "Cockpit Table", value: "no" },
-  //   { label: "Dept/Knot", value: "no" },
-  //   { label: "GPS", value: "no" },
-  //   { label: "Ice Box", value: "no" },
-  //   { label: "Marine Radio", value: "no" },
-  //   { label: "Radar", value: "no" },
-  //   { label: "Stove", value: "yes" },
-  //   { label: "USB Charger", value: "yes" },
-  //   { label: "Rolling Furling", value: "yes" },
-  //   { label: "Max. Passangers", value: "10" },
-  //   { label: "Engine Mfg.", value: "Universal" },
-  //   { label: "Diesel Fuel", value: "21" },
-  //   { label: "Waste Tank", value: "1 Tank" },
-  //   { label: "Size", value: "30" },
-  //   { label: "Bimini", value: "yes" },
-  //   { label: "Cabins", value: "no" },
-  //   { label: "Charge Station", value: "no" },
-  //   { label: "Dodger", value: "no" },
-  //   { label: "Head & Shower", value: "yes" },
-  //   { label: "Microwave", value: "no" },
-  //   { label: "Perch Seats", value: "no" },
-  //   { label: "Salon Table Drop", value: "no" },
-  //   { label: "Swim Strip", value: "no" },
-  //   { label: "Windless", value: "no" },
-  //   { label: "Sleeps", value: "4" },
-  //   { label: "Year Manufactured", value: "1986" },
-  //   { label: "Engine Size", value: "no" },
-  //   { label: "Water Holding Tank", value: "43" },
-  // ];
 
   return (
     <section className="w-full p-4">
@@ -86,11 +53,7 @@ export default function YachtDescription({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 auto-cols-fr">
           <div className={`${!amenities?.length && "md:col-span-2"}`}>
             <div className="text-start space-y-2 mb-6">
-              {/* <h1 className="text-start text-xl text-flatBlue">
-                Windward Sailing Club
-              </h1> */}
               <h2 className="text-4xl">{title}</h2>
-              {/* <DecoratorLine /> */}
             </div>
             <p className="text-sm mb-4 whitespace-pre-line">{description}</p>
           </div>

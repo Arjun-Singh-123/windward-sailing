@@ -233,28 +233,8 @@ export default function Header() {
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
-  // useEffect(() => {
-  //   // Define an async function inside the useEffect
-  //   const fetchSession = async () => {
-  //     try {
-  //       ("use server");
-  //       const sessionData = await getSession();
-  //       setSession(sessionData);
-  //     } catch (error) {
-  //       console.error("Error fetching session:", error);
-  //     }
-  //   };
-
-  //   fetchSession();
-  // }, []);
-
   return (
     <header
-      style={{
-        willChange: "transform",
-        transform: "translateZ(0)",
-        backfaceVisibility: "hidden",
-      }}
       ref={headerRef}
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
@@ -457,7 +437,14 @@ export default function Header() {
                         </React.Fragment>
                       ))}
                       <Button className="flex justify-center mt-8  items-center w-full px-4 py-2 text-white bg-flatBlue hover:bg-flatBlue hover:opacity-60 rounded-full">
-                        Booking Now
+                        <Link
+                          href="/trip-planning"
+                          className={cn(
+                            "flex items-center h-full justify-between p-4 text-lg font-semibold "
+                          )}
+                        >
+                          Booking Now
+                        </Link>
                       </Button>
                     </div>
                   </nav>
@@ -473,18 +460,6 @@ export default function Header() {
                   <MoreHorizontal className="h-6 w-6" />
                 </Button> */}
             </div>
-
-            {/* <Button className="hidden text-white bg-gray-700 lg:inline-flex bg-white/10   hover:bg-white hover:text-black rounded-none   h-20 border-l   border-white/10">
-              <Link
-                href="/trip-planning"
-                className={cn(
-                  "flex items-center justify-between p-4 text-lg font-semibold "
-                )}
-              >
-                Book Now
-                <ChevronRight className="h-4 w-4" />
-              </Link>
-            </Button> */}
 
             <Button
               className={`${
@@ -577,7 +552,6 @@ const BoatImage = ({ url }: { url: string }) => {
   );
 };
 
-// Main Component
 const DynamicFooter = () => {
   const pathname = usePathname();
   const currentYear = new Date().getFullYear();
@@ -633,7 +607,6 @@ const DynamicFooter = () => {
 
         <section className="w-full p-4">
           <div className="container mx-auto max-w-6xl md:flex md:justify-center gap-4">
-            {/* Left Column */}
             <div className="flex-1">
               {logoField && (
                 <Link href="/" className="flex items-center space-x-2 mb-4">
@@ -653,7 +626,6 @@ const DynamicFooter = () => {
               )}
             </div>
 
-            {/* Right Column */}
             <div className="flex-1 mt-2">
               {Object.values(footerContent?.content ?? {})
                 .filter((field) => field.type === "links")
@@ -665,22 +637,13 @@ const DynamicFooter = () => {
 
               <div className="mt-8">
                 <Separator className="my-4 bg-black" />
-                {/* Copyright Section */}
+
                 <div className="text-start">
                   <p>
                     {getFieldByLabel("Copyright")
                       ?.value.toString()
                       .replace("{year}", currentYear.toString())}
                   </p>
-                  {/* Static Content Below Copyright */}
-                  {/* <div className="mt-4 text-sm">
-                    <p>Additional static content can go here</p>
-                    <ul className="mt-2">
-                      <li>Static Link 1</li>
-                      <li>Static Link 2</li>
-                      <li>Static Link 3</li>
-                    </ul>
-                  </div> */}
 
                   <SocialMediaItems />
                 </div>

@@ -132,11 +132,9 @@ const Detail: React.FC<DetailProps> = ({
       setIsMobile(window.innerWidth <= 768);
     };
 
-    // Run the function on mount and on resize
     handleResize();
     window.addEventListener("resize", handleResize);
 
-    // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
