@@ -578,88 +578,88 @@ export type Database = {
           autopilot: boolean | null
           bbq: boolean | null
           bimini: boolean | null
-          cabins: string | null
+          cabins: number | null
           cockpit_table: boolean | null
           depth_fish: boolean | null
           dodger: boolean | null
-          fuel_tank_size: string | null
+          fuel_tank_size: number | null
           gps: boolean | null
           head_shower: boolean | null
           heater: boolean | null
           ice_box: boolean | null
           id: string
           marine_radio: boolean | null
-          max_persons: string | null
+          max_persons: number | null
           mfg: string
           microwave: boolean | null
           microwave_stove: boolean | null
           refrigerator: boolean | null
           sails: boolean | null
           shower_system: boolean | null
-          size: string
+          size: number
           stereo: boolean | null
           stove: boolean | null
           swim_platform: boolean | null
           vessel: string
-          water_tank_size: string | null
+          water_tank_size: number | null
         }
         Insert: {
           autopilot?: boolean | null
           bbq?: boolean | null
           bimini?: boolean | null
-          cabins?: string | null
+          cabins?: number | null
           cockpit_table?: boolean | null
           depth_fish?: boolean | null
           dodger?: boolean | null
-          fuel_tank_size?: string | null
+          fuel_tank_size?: number | null
           gps?: boolean | null
           head_shower?: boolean | null
           heater?: boolean | null
           ice_box?: boolean | null
           id?: string
           marine_radio?: boolean | null
-          max_persons?: string | null
+          max_persons?: number | null
           mfg: string
           microwave?: boolean | null
           microwave_stove?: boolean | null
           refrigerator?: boolean | null
           sails?: boolean | null
           shower_system?: boolean | null
-          size: string
+          size: number
           stereo?: boolean | null
           stove?: boolean | null
           swim_platform?: boolean | null
           vessel: string
-          water_tank_size?: string | null
+          water_tank_size?: number | null
         }
         Update: {
           autopilot?: boolean | null
           bbq?: boolean | null
           bimini?: boolean | null
-          cabins?: string | null
+          cabins?: number | null
           cockpit_table?: boolean | null
           depth_fish?: boolean | null
           dodger?: boolean | null
-          fuel_tank_size?: string | null
+          fuel_tank_size?: number | null
           gps?: boolean | null
           head_shower?: boolean | null
           heater?: boolean | null
           ice_box?: boolean | null
           id?: string
           marine_radio?: boolean | null
-          max_persons?: string | null
+          max_persons?: number | null
           mfg?: string
           microwave?: boolean | null
           microwave_stove?: boolean | null
           refrigerator?: boolean | null
           sails?: boolean | null
           shower_system?: boolean | null
-          size?: string
+          size?: number
           stereo?: boolean | null
           stove?: boolean | null
           swim_platform?: boolean | null
           vessel?: string
-          water_tank_size?: string | null
+          water_tank_size?: number | null
         }
         Relationships: []
       }

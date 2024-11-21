@@ -14,7 +14,7 @@ export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const { data = [] } = useQuery({
-    queryKey: ["banner"],
+    queryKey: ["hero-banner-images"],
     queryFn: () => fetchSectionProducts("Banner Section"),
   });
 

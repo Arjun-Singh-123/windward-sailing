@@ -132,13 +132,13 @@ export const fetchSectionProducts = async (sectionName: string) => {
       )
     `
     )
-    .eq("sections.name", sectionName);
+    .eq("sections.id", "bd024ca4-e72a-499b-8237-c875f6429409");
 
   if (error) throw error;
 
   return (
     data
-      ?.filter((item) => item.sections?.name !== null)
+      ?.filter((item) => item.sections?.name === "Banner Section")
       .map((item) => ({
         product_id: item.product_id,
         title: item?.products?.name,

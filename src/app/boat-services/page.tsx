@@ -170,7 +170,12 @@ export default function AdminBoatTable() {
       render={({ field }) => (
         <div className="grid grid-cols-2 gap-2 items-center py-2">
           <span className="font-medium text-sm text-right pr-2">{label}:</span>
-          <Input {...field} type={type} className="w-full" />
+          <Input
+            {...field}
+            value={field.value ?? ""}
+            type={type}
+            className="w-full"
+          />
         </div>
       )}
     />
@@ -189,6 +194,7 @@ export default function AdminBoatTable() {
           render={({ field: controlField }) => (
             <Input
               {...controlField}
+              value={controlField.value ?? ""}
               type={type}
               className="w-full"
               // error={errors[field]?.message as any}

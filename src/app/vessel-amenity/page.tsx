@@ -38,7 +38,7 @@ import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import { desiredOrder } from "@/constants";
 
-type Vessel = {
+export type Vessel = {
   id?: string;
   vessel: string;
   mfg: string;
@@ -343,7 +343,7 @@ export default function Component() {
               <FormControl>
                 {inputType === "checkbox" ? (
                   <Checkbox
-                    checked={field.value as boolean}
+                    checked={field.value === "true"}
                     onCheckedChange={(checked) => {
                       field.onChange(checked);
                     }}
@@ -353,7 +353,7 @@ export default function Component() {
                   <Input
                     type="number"
                     {...field}
-                    value={field.value !== undefined ? field.value : ""}
+                    value={typeof field.value === "number" ? field.value : " "}
                     onChange={(e) => {
                       const value = e.target.value
                         ? Number(e.target.value)
