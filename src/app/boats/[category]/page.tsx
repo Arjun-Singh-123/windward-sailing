@@ -114,15 +114,15 @@ export default function CategoryPage() {
           <section className="w-full p-4 max-w-6xl mx-auto">
             <div className="   ">
               <div className=" relative flex flex-col w-full   p-4 md:p-4">
-                <h2
+                {/* <h2
                   className={`mt-4  md:mt-10    text-2xl text-flatBlue   ${cursiveHeadingFont.className}  `}
                 >
                   Windward Sailing Club
-                </h2>
-                <h3 className={`text-2xl ${mainHeadingFont.className}`}>
+                </h2> */}
+                <h3 className={`text-4xl mb-4 ${mainHeadingFont.className}`}>
                   {formatTitle(params?.category as any)} Details
                 </h3>
-                <DecoratorLine />
+                {/* <DecoratorLine /> */}
 
                 <div className={`  mb-4     `}>
                   <p className={`mb-2 ${contentFont.className}`}>
@@ -206,11 +206,11 @@ export default function CategoryPage() {
                         : "md:order-1 md:pr-8"
                     }`}
                   >
-                    <h2 className="text-3xl font-bold mb-1 text-gray-800">
+                    <h2 className="text-3xl font-bold mb-4 text-gray-800">
                       {yacht.name}
                     </h2>
-                    <DecoratorLine />
-                    <p className="text-gray-600 mb-2">{yacht?.description}</p>
+                    {/* <DecoratorLine /> */}
+                    <p className="text-gray-600 ">{yacht?.description}</p>
 
                     <Link href={`/boats/category/${yacht?.href}`} passHref>
                       <Button

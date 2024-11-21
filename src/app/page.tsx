@@ -79,51 +79,45 @@ export default function Home() {
                 {
                   icon: <Bath style={iconStyle} />,
                   title: "Bathroom",
-                  description:
-                    "There were 2 bathrooms available with attached toilets.",
+                  description: "Pumped out and ready for your adventure",
                 },
                 {
                   icon: <Music style={iconStyle} />,
                   title: "Music",
                   description:
-                    "There were TV and Music system available in the common sitting area.",
+                    "Many boats have music with Bluetooth connection. ",
                 },
                 {
                   icon: <ChefHat style={iconStyle} />,
                   title: "Kitchen",
                   description:
-                    "There were 2 bathrooms available with attached toilets.",
+                    "Stocked with cooking utensils, silverware, plates, cups and more.  Some boats have stove, oven, ice box or fridge, and a kitchen sink.",
                 },
                 {
                   icon: <Wifi style={iconStyle} />,
                   title: "Maps, radios and safety equipment",
                   description:
-                    "There were Fre WiFi available in the entire yacht.",
+                    "All the equipment to have a safe adventure is already onboard.",
                 },
-                {
-                  icon: <Bath style={iconStyle} />,
-                  title: "Maps, radios and safety equipment",
-                  description:
-                    "There were 2 bathrooms available with attached toilets.",
-                },
+
                 {
                   icon: <CookingPot style={iconStyle} />,
                   title: "Additional options",
                   description:
-                    "There were 3 meals per day with your desired choices from the menu.",
+                    "Add a rail mounted charcoal grill and a dinghy for a small charge.",
                 },
 
                 {
                   icon: <ShieldCheck style={iconStyle} />,
                   title: "Boat Owners",
                   description:
-                    "There were a safe ficility available so you have no worries for your cards and cash or devices.",
+                    " Add your boat to our fleet and turn it into a source of income. ",
                 },
                 {
                   icon: <Bed style={iconStyle} />,
-                  title: "Double bed",
+                  title: "bed",
                   description:
-                    "There were 1 double beds and common facility available with attached toilets.",
+                    "Select the size boat you need. Boats choices are up to 3 cabins and a table that drops down to a bed at largest.",
                 },
               ]}
             />

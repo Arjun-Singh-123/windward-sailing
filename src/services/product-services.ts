@@ -114,6 +114,7 @@ export async function fetchBannerProducts() {
 }
 
 export const fetchSectionProducts = async (sectionName: string) => {
+  console.log(sectionName);
   const { data, error } = await supabase
     .from("user_selections")
     .select(
@@ -135,14 +136,19 @@ export const fetchSectionProducts = async (sectionName: string) => {
 
   if (error) throw error;
 
-  return data.map((item) => ({
-    product_id: item.product_id,
-    title: item?.products?.name,
-    imageUrl: item?.products?.image_url,
-    price: item?.products?.price,
-    link: item?.products?.href,
-    slug: item?.products?.nav_sections?.slug,
-  }));
+  return (
+    data
+      ?.filter((item) => item.sections?.name !== null)
+      .map((item) => ({
+        product_id: item.product_id,
+        title: item?.products?.name,
+        imageUrl: item?.products?.image_url,
+        price: item?.products?.price,
+        link: item?.products?.href,
+        slug: item?.products?.nav_sections?.slug,
+        sectionName: item.sections?.name,
+      })) ?? []
+  );
 };
 
 export async function fetchSingleProduct(productId: any) {

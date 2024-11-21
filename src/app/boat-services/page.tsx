@@ -27,16 +27,29 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast, Toaster } from "sonner";
 import { supabase } from "@/lib/supabase";
 
+// const boatSchema = z.object({
+//   name: z.string().min(1, "Boat name is required"),
+//   size: z.string().min(1, "Size is required"),
+//   available_no: z.number().int().positive("Available number must be positive"),
+//   booked_status: z.string().min(1, "Booked status is required"),
+//   booked_start_date: z.string().optional(),
+//   booked_end_date: z.string().optional(),
+//   booked_by_name: z.string().optional(),
+//   booked_by_email: z.string().email().optional().or(z.literal("")),
+//   booked_by_phone: z.string().optional(),
+//   availability_time: z.string().min(1, "Availability time is required"),
+// });
+
 const boatSchema = z.object({
   name: z.string().min(1, "Boat name is required"),
   size: z.string().min(1, "Size is required"),
   available_no: z.number().int().positive("Available number must be positive"),
   booked_status: z.string().min(1, "Booked status is required"),
-  booked_start_date: z.string().optional(),
-  booked_end_date: z.string().optional(),
-  booked_by_name: z.string().optional(),
-  booked_by_email: z.string().email().optional().or(z.literal("")),
-  booked_by_phone: z.string().optional(),
+  booked_start_date: z.string().nullable().optional(), // Allows string, null, or undefined
+  booked_end_date: z.string().nullable().optional(),
+  booked_by_name: z.string().nullable().optional(),
+  booked_by_email: z.string().email().nullable().optional().or(z.literal("")),
+  booked_by_phone: z.string().nullable().optional(),
   availability_time: z.string().min(1, "Availability time is required"),
 });
 
@@ -70,6 +83,7 @@ export default function AdminBoatTable() {
     },
   });
 
+  console.log(errors);
   useEffect(() => {
     fetchBoats();
   }, []);
@@ -102,7 +116,7 @@ export default function AdminBoatTable() {
       } else {
         setEditingId(null);
         fetchBoats();
-        toast.success("Boat updated successfully");
+        // toast.success("Boat updated successfully");
       }
     }
   };

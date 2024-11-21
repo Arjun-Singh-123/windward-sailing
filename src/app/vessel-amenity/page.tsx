@@ -394,7 +394,7 @@ export default function Component() {
   );
 
   return (
-    <div className=" w-full pt-40  ">
+    <div className=" w-full pt-40 overflow-x-scroll ">
       <div className="flex justify-between items-center mb-6 m-2 ">
         <h2 className="text-2xl font-bold  ">Vessel Amenities</h2>
         <Button onClick={handleCreateNew} className="mr-4">
@@ -407,9 +407,9 @@ export default function Component() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">Actions</TableHead>
+                <TableHead className=" ">Actions</TableHead>
                 {columns?.map((column) => (
-                  <TableHead key={column} className="whitespace-nowrap">
+                  <TableHead key={column} className={`whitespace-nowrap `}>
                     {column
                       .replace(/_/g, " ")
                       .replace(/\b\w/g, (l) => l.toUpperCase())}
@@ -475,12 +475,10 @@ export default function Component() {
                         ? "text-right"
                         : "text-start";
 
-                    console.log(vessel["max_persons"]);
-
                     return (
                       <TableCell
                         key={column}
-                        className={`${alignmentClass} ${
+                        className={`  ${alignmentClass} ${
                           typeof vessel[column] === "boolean"
                             ? "font-bold text-green-600  "
                             : ""

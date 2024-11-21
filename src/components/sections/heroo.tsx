@@ -29,6 +29,9 @@ export default function Hero() {
   }, [data.length]);
 
   if (!data?.length) return null;
+  const filteredData = data?.filter(
+    (item) => item?.sectionName !== null && item?.sectionName !== undefined
+  );
 
   return (
     <div
@@ -44,10 +47,10 @@ export default function Hero() {
           transition={{ delay: 0.5, duration: 1.5, ease: "easeOut" }}
           className="absolute inset-0 dark-overlay"
         >
-          {data?.[currentSlide]?.imageUrl && (
+          {filteredData?.[currentSlide]?.imageUrl && (
             <Image
-              src={data[currentSlide].imageUrl ?? ""}
-              alt={data[currentSlide].title || "Slide image"}
+              src={filteredData[currentSlide]?.imageUrl ?? ""}
+              alt={filteredData[currentSlide]?.title || "Slide image"}
               fill
               priority
               className="object-cover"
@@ -63,18 +66,20 @@ export default function Hero() {
             <div className="max-w-2xl mx-auto text-center text-white">
               <h1 className="text-5xl font-bold mb-6 tracking-tight">
                 {
-                  titleFormatter((data[currentSlide].title as string) || " ")
-                    .firstPart
+                  titleFormatter(
+                    (filteredData[currentSlide]?.title as string) || " "
+                  ).firstPart
                 }
               </h1>
               <p className="text-xl mb-8 text-gray-200">
                 {
-                  titleFormatter((data[currentSlide].title as string) || " ")
-                    .secondPart
+                  titleFormatter(
+                    (filteredData[currentSlide]?.title as string) || " "
+                  ).secondPart
                 }
               </p>
               <Link
-                href={`/boats/${data[currentSlide]?.slug || ""}/${
+                href={`/boats/${filteredData[currentSlide]?.slug || "#"}/${
                   data[currentSlide]?.link || ""
                 }`}
                 passHref
