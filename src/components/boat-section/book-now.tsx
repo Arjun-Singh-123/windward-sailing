@@ -4,6 +4,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { CalendarDays } from "lucide-react";
+import BoatReservationForm from "../sections/boat-reservation";
 
 const BookNow = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -218,7 +218,7 @@ export default function Header() {
     queryFn: fetchNavItems,
   });
 
-  const { isHidden, isTransparent, isDark } = useHeaderState(pathname);
+  const { isHidden, isTransparent } = useHeaderState();
 
   useEffect(() => {
     const session = getSession();
@@ -244,7 +244,7 @@ export default function Header() {
           "-translate-y-full": isHidden,
           "translate-y-0": !isHidden,
           "bg-transparent": isTransparent,
-          "bg-fontColor backdrop-blur-sm": !isTransparent || isDark,
+          "bg-fontColor backdrop-blur-sm": !isTransparent,
         }
       )}
     >
@@ -483,7 +483,7 @@ export default function Header() {
               <SheetTrigger asChild>
                 <Button
                   className={`${
-                    !isTransparent || isDark
+                    !isTransparent
                       ? "bg-fontColor backdrop-blur-sm text-white"
                       : "md:border-l border-gray-200 bg-white hover:bg-gray-50 text-gray-700"
                   } hidden lg:flex h-24 btnplr-50 rounded-none`}
