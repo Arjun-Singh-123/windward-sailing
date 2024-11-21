@@ -30,7 +30,7 @@ export default function Hero() {
 
   if (!data?.length) return null
  
-
+  console.log("checking")
 
 
 
