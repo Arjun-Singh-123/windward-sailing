@@ -145,10 +145,10 @@ export default function SailingServices() {
   ].slice(currentIndex, currentIndex + cardsToShow);
 
   return (
-    <div className="w-full py-16">
+    <div className="w-full section-py-80">
       <div className="">
         <h2
-          className={`text-4xl md:text-5xl lg:text-6xl text-blue-900 font-bold text-center mb-12 ${cursiveHeadingFont.className}`}
+          className={`text-4xl md:text-5xl lg:text-6xl text-darkBlue font-bold text-center mb-4 ${cursiveHeadingFont.className}`}
         >
           Newport Sailing Club
         </h2>
@@ -156,7 +156,7 @@ export default function SailingServices() {
           <div className="relative overflow-hidden">
             <div
               ref={scrollRef}
-              className="flex     overflow-x-scroll space-x-6 pb-6 pt-2"
+              className="flex overflow-x-scroll space-x-6 py-2"
               style={{
                 width: "100%",
                 scrollbarWidth: "none",
@@ -170,14 +170,19 @@ export default function SailingServices() {
                   return (
                     <Card
                       key={`${boat.product_id}-${index}`}
-                      className="flex flex-col justify-between shrink-0 p-2 overflow-hidden bg-lightSky transition-all duration-300 hover:shadow-2xl hover:bg-darkBlue hover:text-white text-black  rounded-md"
+                      className="flex flex-col justify-between shrink-0 p-2 overflow-hidden bg-lightSky transition-all duration-300 hover:shadow-2xl hover:bg-darkBlue hover:text-white text-darkBlue rounded-md relative cardbox"
                       style={{
                         width: `${cardWidth}px`,
-                        height: `${cardHeight}px`,
+                        // height: `${cardHeight}px`,
                         boxShadow: "0 0 5px rgba(0,0,0,0.2)",
                       }}
                     >
-                      <CardContent className="p-6 flex-grow">
+                      <Link
+                        href={`/boats/${boat.slug || ""}/${boat.link || ""}`}
+                        passHref
+                        className="box-link"
+                      ></Link>
+                      <CardContent className="p-6 pb-0 flex-grow">
                         <CardTitle className="text-2xl font-semibold mb-4">
                           <div className={`${contentFont.className}  `}>
                             <p className="text-xs uppercase font-regular400 tracking-widest  ">
@@ -203,10 +208,9 @@ export default function SailingServices() {
                         >
                           <Button
                             variant="outline"
-                            className="w-full      text-lg py-3   hover:shadow-md"
+                            className="w-full text-lg py-3 rounded-full hover:shadow-md"
                           >
                             View Details
-                            <ChevronRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
                           </Button>
                         </Link>
                       </CardFooter>
@@ -237,14 +241,19 @@ export default function SailingServices() {
               return (
                 <Card
                   key={`${boat.product_id}-${index}`}
-                  className="flex flex-col justify-between shrink-0 p-2 overflow-hidden bg-lightSky transition-all duration-300 hover:shadow-2xl hover:bg-darkBlue hover:text-white text-black  rounded-md"
+                  className="flex flex-col justify-between shrink-0 p-2 overflow-hidden bg-lightSky transition-all duration-300 hover:shadow-2xl hover:bg-darkBlue hover:text-white text-black rounded-md relative"
                   style={{
                     width: `${cardWidth}px`,
-                    height: `${cardHeight}px`,
+                    // height: `${cardHeight}px`,
                     boxShadow: "0 0 5px rgba(0,0,0,0.2)",
                   }}
                 >
-                  <CardContent className="p-6 flex-grow">
+                  <Link
+                    href={`/boats/${boat.slug || ""}/${boat.link || ""}`}
+                    passHref
+                    className="box-link"
+                  ></Link>
+                  <CardContent className="p-6 pb-0 flex-grow">
                     <CardTitle className="text-2xl   mb-4">
                       <div className={`${contentFont.className}  `}>
                         <p className="text-xs uppercase font-regular400 tracking-widest  ">

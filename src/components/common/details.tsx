@@ -141,7 +141,8 @@ const Detail: React.FC<DetailProps> = ({
   }, []);
 
   return (
-    <div className={`  container mx-auto  `}>
+    // <div className={`  container mx-auto  `}>
+    <div>
       {(heading || description || mediaUrl) && (
         <>
           <Card className="mb-8      overflow-hidden bg-[#ebf8fc] border-none">
@@ -273,7 +274,7 @@ const Detail: React.FC<DetailProps> = ({
       )}
 
       {benefitsData && (
-        <div className="  mb-8">
+        <div className="mb-8">
           <div className="text-start space-y-2 mb-6">
             {/* <h1
               className={` text-start  text-xl text-flatBlue  `}
@@ -281,7 +282,7 @@ const Detail: React.FC<DetailProps> = ({
             >
               Benefits
             </h1> */}
-            <h2 className={`text-4xl ${mainHeadingFont.className}`}>
+            <h2 className={`text-4xl text-darkBlue ${mainHeadingFont.className}`}>
               What You Get
             </h2>
             {/* <DecoratorLine /> */}
@@ -291,7 +292,7 @@ const Detail: React.FC<DetailProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {benefitsData?.map((benefit, index) => (
                   <div key={index} className="flex items-start space-x-4">
-                    <div className="flex-shrink-0">
+                    <div className="flex-shrink-0 text-flatBlue">
                       <span>{benefit?.icon}</span>
                     </div>
                     <div>

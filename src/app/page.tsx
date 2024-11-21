@@ -37,7 +37,7 @@ const fetchSections = async (): Promise<Section[]> => {
   return data as Section[];
 };
 const description =
-  "Since 1972, Windward's has been Windward Beach's first choice for sailing. Over more than 50 years, we've earned an excellent reputation under the same family management. Our goal is to meet the needs of all sailing enthusiasts, from the novice to the seasoned skipper—all while remaining affordable.  With affordable vessels, we’re proud to offer a sailing experience you can trust. Let our boats take you on a journey where passion meets the open sea!";
+  "Since 1972, Newport's has been Newport Beach's first choice for sailing. Over more than 50 years, we've earned an excellent reputation under the same family management. Our goal is to meet the needs of all sailing enthusiasts, from the novice to the seasoned skipper—all while remaining affordable.  With affordable vessels, we’re proud to offer a sailing experience you can trust. Let our boats take you on a journey where passion meets the open sea!";
 export default function Home() {
   const {
     data: sections,
@@ -65,14 +65,14 @@ export default function Home() {
   const iconStyle = { width: "40px", height: "40px" };
 
   return (
-    <div className="flex flex-col items-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)] home-page    ">
+    <div className="flex flex-col items-center min-h-screen p-0 home-page   ">
       {visibilityMap["hero-image"] && <Heroo />}
       {visibilityMap["sailing-services"] && <SailingServices />}
       {/* <HeroSection /> */}
 
       {visibilityMap["benefits-section"] && (
-        <section className="w-full p-4 bg-lightSky">
-          <div className="container mx-auto w-full max-w-[1630px] px-[15px]  ">
+        <section className="w-full bg-lightSky section-py-80">
+          <div className="container mx-auto w-full max-w-[1630px] px-[15px]">
             <Detail
               benefits={false}
               benefitsData={[
@@ -128,16 +128,16 @@ export default function Home() {
       {visibilityMap["statistics"] && <StatsSlider />}
       {visibilityMap["testimonials"] && (
         <section className="w-full p-4">
-          <div className="container mx-auto w-full max-w-[1630px] px-[15px]  ">
+          <div className="container mx-auto w-full max-w-[1630px] px-[15px]">
             <MemberCarousel />
           </div>
         </section>
       )}
       {visibilityMap["membership"] && (
-        <section className="w-full p-4 bg-lightSky ">
+        <section className="w-full bg-lightSky section-py-80">
           <CommonMembershipAbout
             subtitle="What We Do"
-            title="Welcome to Windward Sailing Club"
+            title="Welcome to Newport Sailing Club"
             description={description}
             imageUrl="/images/about.jpg"
             image={true}

@@ -150,9 +150,9 @@ export default function ContinuousStatsSlider() {
   }, []);
 
   return (
-    <div className="relative w-full bg-blue-600 bg-opacity-80 bg-custom      p-8">
-      <div className="max-w-screen-xl mx-auto py-8  ">
-        <div className="relative  " ref={containerRef}>
+    <div className="relative w-full bg-blue-600 bg-opacity-80 bg-custom overflow-hidden section-py-80">
+      <div className="max-w-screen-xl mx-auto">
+        <div className="relative" ref={containerRef}>
           <div
             className="flex whitespace-nowrap"
             style={{
@@ -171,7 +171,6 @@ export default function ContinuousStatsSlider() {
           </div>
         </div>
       </div>
-      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-blue-600 to-transparent pointer-events-none" />
     </div>
   );
 }

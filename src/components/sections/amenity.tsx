@@ -14,7 +14,7 @@ interface AmenitiesDisplayProps {
 const LegendComponent = ({ text }: { text: string }) => {
   return (
     <div className="relative inline-block">
-      <legend className="inline-block p-2 -top-8 left-16 md:left-[10.875rem] w-auto px-5 mb-0 ml-4 text-sm leading-normal text-white bg-darkBlue rounded-b-lg relative before:absolute before:top-0 before:left-[-10px] before:border-[5px] before:border-solid before:border-transparent before:border-r-[#8f8f8f] before:border-b-[#8f8f8f] after:absolute after:top-0 after:right-[-10px] after:border-[5px] after:border-solid after:border-transparent after:border-l-[#8f8f8f] after:border-b-[#8f8f8f]">
+      <legend className="inline-block p-2 -top-[36px] left-16 md:left-[10.875rem] w-auto px-5 mb-0 ml-4 text-sm leading-normal text-white bg-darkBlue rounded-b-lg relative before:absolute before:top-0 before:left-[-10px] before:border-[5px] before:border-solid before:border-transparent before:border-r-[#8f8f8f] before:border-b-[#8f8f8f] after:absolute after:top-0 after:right-[-10px] after:border-[5px] after:border-solid after:border-transparent after:border-l-[#8f8f8f] after:border-b-[#8f8f8f]">
         {text}
       </legend>
     </div>
@@ -23,9 +23,9 @@ const LegendComponent = ({ text }: { text: string }) => {
 
 const AmenitiesDisplay: React.FC<AmenitiesDisplayProps> = ({ amenities }) => {
   return (
-    <div className="  p-6 rounded-lg shadow-md">
+    <div className="p-6 rounded-lg shadow-md">
       {/* <h2 className="text-2xl font-bold mb-6 text-gray-800">Amenities</h2> */}
-      <div className="columns-1 md:columns-2 space-y-4">
+      <div className="columns-1 md:columns-2">
         {amenities?.map((item, index) => (
           <div
             key={index}

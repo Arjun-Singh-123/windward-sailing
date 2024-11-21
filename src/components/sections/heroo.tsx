@@ -41,10 +41,10 @@ export default function Hero() {
       <AnimatePresence initial={false}>
         <motion.div
           key={currentSlide}
-          initial={{ opacity: 0, x: "100%" }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 1, x: "-100%" }}
-          transition={{ delay: 0.5, duration: 1.5, ease: "easeOut" }}
+          initial={{ x: "100%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "-100%" }}
+          transition={{ delay: 0.5, duration: 0.5, ease: "easeOut" }}
           className="absolute inset-0 dark-overlay"
         >
           {filteredData?.[currentSlide]?.imageUrl && (
@@ -85,10 +85,7 @@ export default function Hero() {
                 passHref
                 className="w-28"
               >
-                <Button
-                  variant="outline"
-                  className="       text-lg py-3   hover:shadow-md"
-                >
+                <Button variant="solidWhiteOnDark" className="py-3">
                   View Details
                   <ChevronRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
