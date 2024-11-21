@@ -5,22 +5,11 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Providers from "./providers";
 import ScrollToTop from "@/components/common/scroll-to-top";
 import type { Viewport } from "next";
-import { inter } from "@/app/ui/fonts";
+import { contentFont, inter, mainHeadingFont } from "@/app/ui/fonts";
 import { Toaster } from "sonner";
 import StickyHeader from "@/components/common/sticky-header";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Header, { DynamicFooter } from "@/components/common/header";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export const metadata: Metadata = {
   title: "Newport Sailinlg Club",
@@ -42,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} antialiased flex flex-col min-h-screen    `}
+        className={`${inter.className} antialiased flex flex-col min-h-screen ${contentFont.className} `}
       >
         <Providers>
           <Header />

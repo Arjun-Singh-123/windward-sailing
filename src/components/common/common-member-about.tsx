@@ -11,6 +11,8 @@ import CustomImage from "../custom-image";
 import useMobileCheck from "@/hooks/mobile-check";
 import BoatFeatures from "./boat-features";
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "../ui/button";
 
 interface AboutProps {
   subtitle: string;
@@ -38,31 +40,38 @@ const CommonMembershipAbout = ({
   const { isMobile } = useMobileCheck();
   console.log(rentalFeesBg);
   return (
-    <div className="w-full  pt-20  rental-fees-bg">
-      <div className="container w-full max-w-[1630px] px-[15px] mx-auto    ">
-        <section
-          className={` flex flex-col-reverse md:flex-row   gap-6        `}
+    <div className="w-full rental-fees-bg">
+      <div className="container max-w-[1630px] px-[15px] mx-auto">
+        <h3 className={`text-4xl ${mainHeadingFont.className} space-mb-30 m-only`}>
+          {title && title}
+        </h3>
+        <div
+          className={`flex flex-col-reverse md:flex-row gap-6`}
         >
-          <div className=" relative flex flex-col w-full md:w-[68%]   md:p-4">
-            {/* <h2
-            className={`mt-4  md:mt-10    text-2xl text-flatBlue ${cursiveHeadingFont.className}`}
-          >
-            {subtitle && subtitle}
-          </h2> */}
-
-            <h3 className={`text-4xl ${mainHeadingFont.className} pt-6`}>
+          <div className=" relative flex flex-col w-full md:w-[68%]">
+            <h3 className={`text-4xl ${mainHeadingFont.className} mb-4 d-only`}>
               {title && title}
-            </h3>
-            {/* <DecoratorLine /> */}
-            <br />
-            <div className={`${contentFont.className}  mb-4     `}>
-              <p className="mb-2">{description && description}</p>
+            </h3>           
+            <p>{description && description}</p>
+            <div>
+              <Button variant="outlineDarkblue"> 
+                <Link href="/about-us">About us</Link>
+              </Button>
+            </div>
               {membership && <BoatClubPricing />}
               {boatFeatures && <BoatFeatures />}
-            </div>
           </div>
 
-          <div className="relative w-full md:w-auto md:h-auto overflow-visible">
+          <div className="relative w-full flex-1 md:w-auto md:h-auto overflow-visible mob-minh300"
+            style={
+              imageUrl
+                ? {
+                  backgroundImage: `url(${imageUrl})`,
+                  backgroundPosition: "right center",
+                }
+                : undefined
+            }
+          >
             {video ? (
               <div className="relative w-full h-full">
                 <video
@@ -77,17 +86,20 @@ const CommonMembershipAbout = ({
               "
                 />
               </div>
-            ) : (
-              image && (
-                <Image
-                  src={imageUrl ?? ""}
-                  alt="Side"
-                  className=" w-full h-full object-cover border-spacing-12 border-blue-500"
-                  height={863}
-                  width={576}
-                />
-              )
-            )}
+            )
+              // : (
+              // image && (
+              //   <Image
+              //     src={imageUrl ?? ""}
+              //     alt="Side"
+              //     className=" w-full h-full object-cover border-spacing-12 border-blue-500"
+              //     height={863}
+              //     width={576}
+              //   />
+              // )
+              // )
+              : ""
+            }
 
             {!image && (
               <style jsx>{`
@@ -106,7 +118,7 @@ const CommonMembershipAbout = ({
           `}</style>
             )}
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );

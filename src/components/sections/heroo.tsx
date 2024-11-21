@@ -28,7 +28,11 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [data.length]);
 
-  if (!data?.length) return null;
+  if (!data?.length) return null
+ 
+
+
+
 
   return (
     <div
@@ -38,10 +42,10 @@ export default function Hero() {
       <AnimatePresence initial={false}>
         <motion.div
           key={currentSlide}
-          initial={{ opacity: 0, x: "100%" }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 1, x: "-100%" }}
-          transition={{ delay: 0.5, duration: 1.5, ease: "easeOut" }}
+          initial={{ x: "100%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "-100%" }}
+          transition={{ delay: 0.5, duration: 0.5, ease: "easeOut" }}
           className="absolute inset-0 dark-overlay"
         >
           {data?.[currentSlide]?.imageUrl && (
@@ -62,21 +66,21 @@ export default function Hero() {
           >
             <div className="max-w-2xl mx-auto text-center text-white">
               <h1 className="text-5xl font-bold mb-6 tracking-tight">
-                {data[currentSlide].title}
+                {data?.[currentSlide]?.title}
               </h1>
               <p className="text-xl mb-8 text-gray-200">
-                {data[currentSlide]?.title}
+                {data?.[currentSlide]?.title}
               </p>
               <Link
-                href={`/boats/${data[currentSlide]?.slug || ""}/${
+                href={`/boats/${data?.[currentSlide]?.slug || ""}/${
                   data[currentSlide]?.link || ""
                 }`}
                 passHref
                 className="w-28"
               >
                 <Button
-                  variant="outline"
-                  className="       text-lg py-3   hover:shadow-md"
+                  variant="solidWhiteOnDark"
+                  className="py-3"
                 >
                   View Details
                   <ChevronRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />

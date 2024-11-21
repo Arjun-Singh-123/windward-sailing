@@ -53,6 +53,8 @@ import { clearSession, getSession } from "@/lib/auth";
 import { useHeaderState } from "@/hooks/user-header-state";
 import { EXCLUDED_LABELS, EXCLUDED_PATHNAMES } from "@/constants";
 import { SettingsPanel, SocialMediaItems } from "./footer-contact-items";
+import BoatReservation from "../sections/boat-reservation";
+import { ScrollArea } from "../ui/scroll-area";
 
 export const fetchNavItems = async () => {
   const { data: navItems, error: navItemsError } = await supabase
@@ -246,10 +248,10 @@ export default function Header() {
         }
       )}
     >
-      <div className="h-24 border-b border-white/10">
-        <div className="flex  justify-between h-24">
-          <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0 pl-8">
+      <div>
+        <div className="flex justify-between">
+          <div className="flex items-center btnplr-30tb15">
+            <Link href="/" className="flex-shrink-0">
               <Image
                 src="/images/Logo_black.png"
                 alt="Logo"
@@ -258,60 +260,62 @@ export default function Header() {
                 className="h-auto w-auto"
               />
             </Link>
-            <Separator
-              orientation="vertical"
-              className="hidden md:block h-24 mx-8 "
-            />
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-8">
             {menuItems?.map((item) => (
-              <div key={item.id} className="relative group flex ">
+              <div key={item.id} className="group flex ">
                 {item.nav_sections.length > 0 ? (
-                  <div className="relative flex z-200 ">
-                    <span className="text-white cursor-pointer py-2     transition-all duration-200 flex items-center border-transparent border-b-2 hover:border-white">
+                  <div className="flex z-200 ">
+                    <span className="text-white cursor-pointer py-2 transition-all duration-200 flex items-center border-transparent border-b-2 hover:border-white group-hover:border-white">
                       {item.name}
                     </span>
 
-                    <div className="absolute  left-0 hidden group-hover:block min-w-[200px] top-[5.5rem]  shadow-lg rounded-md border-t-flatBlue  bg-[#c5dfff]  mt-2   ">
-                      {item.nav_sections.map((section) => (
-                        <div key={section.id} className="relative group/sub   ">
-                          <Link
-                            href={`/boats/${section.href}`}
-                            className={cn(
-                              "block px-4 py-2 text-sm w-full",
-                              isActive(`/boats/${section.href}`)
-                                ? "bg-gradient-to-r from-[#6edcfc] to-[#4facfe] text-black w-full"
-                                : "text-gray-800 hover:bg-gradient-to-b hover:from-[#6edcfc] hover:to-[#4facfe] hover:text-black w-full"
-                            )}
-                          >
-                            {section.name}
-                          </Link>
-                          {section.products && section.products.length > 0 && (
-                            <div className="absolute left-full border-t-flatBlue border-4 top-0 mt-0 w-64 bg-[#c5dfff] rounded-md shadow-lg opacity-0 group-hover/sub:opacity-100 transition-opacity duration-300 invisible group-hover/sub:visible">
-                              <div className="py-2">
-                                {section?.products?.map((product) => (
-                                  <Link
-                                    key={product.id}
-                                    href={`/boats/${section.href}/${product.href}`}
-                                    className={cn(
-                                      "block px-4 py-2 text-sm whitespace-nowrap w-full",
-                                      isActive(
-                                        `/boats/${section.href}/${product.href}`
-                                      )
-                                        ? "bg-gradient-to-r from-[#6edcfc] to-[#4facfe] text-black w-full"
-                                        : "text-gray-800 hover:bg-gradient-to-r hover:from-[#6edcfc] hover:to-[#4facfe] hover:text-black w-full"
-                                    )}
-                                  >
-                                    {product?.name}
-                                  </Link>
-                                ))}
+                    <div className="absolute left-0 w-full overflow-hidden menu-hani menuh-0 top-full group-hover:menuh-auto duration-500 shadow-lg bg-[#ffffff] rounded-b-lg">
+                      <div className="container mx-auto max-w-[1630px] px-[15px]">
+                        <div className="flex justify-center gap-8 py-4">
+                          {item.nav_sections.map((section) => (
+                            <div key={section.id} className="group/sub   ">
+                              <div className="py-2 flex">
+                              <Link
+                                href={`/boats/${section.href}`}
+                                className={cn(
+                                  "block text-sm font-bold w-full",
+                                  isActive(`/boats/${section.href}`)
+                                    ? "text-flatBlue"
+                                    : "text-darkBlue hover:text-flatBlue"
+                                )}
+                              >
+                                {section.name}
+                                </Link>
                               </div>
+                              {section.products && section.products.length > 0 && (
+                                <div className="py-1">
+                                  {section?.products?.map((product) => (
+                                    <div className="py-1 flex">
+                                      <Link
+                                        key={product.id}
+                                        href={`/boats/${section.href}/${product.href}`}
+                                        className={cn(
+                                          "block text-sm whitespace-nowrap w-full",
+                                          isActive(
+                                            `/boats/${section.href}/${product.href}`
+                                          )
+                                            ? "text-flatBlue"
+                                            : "text-darkBlue hover:text-flatBlue"
+                                        )}
+                                      >
+                                        {product?.name}
+                                        </Link>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
                             </div>
-                          )}
+                          ))}
                         </div>
-                      ))}
+                      </div>
                     </div>
                   </div>
                 ) : (
@@ -332,10 +336,10 @@ export default function Header() {
           </nav>
 
           {/* Right Side Actions */}
-          <div className="flex items-center  ">
+          <div className="flex">
             <SettingsPanel />
 
-            <div className="  lg:hidden flex items-center space-x-4">
+            <div className="lg:hidden flex items-center space-x-4">
               <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                 <SheetTrigger asChild>
                   <Button
@@ -461,23 +465,41 @@ export default function Header() {
                 </Button> */}
             </div>
 
-            <Button
-              className={`${
-                !isTransparent || isDark
-                  ? "bg-fontColor backdrop-blur-sm text-white"
-                  : " md:border-l border-gray-200 bg-white hover:bg-gray-50 text-gray-700"
-              } hidden lg:flex h-24  btnplr-50 rounded-none`}
-            >
-              <CalendarDays className="h-5 w-5" />
-              <Link
-                href="/trip-planning"
-                className={cn(
-                  "flex items-center h-full justify-between p-4 text-lg font-semibold "
-                )}
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button
+                  className={`${
+                    !isTransparent || isDark
+                      ? "backdrop-blur-sm"
+                      : ""
+                  } hidden lg:flex btnplr-30 h100 noshadow noborder bg-transparent hover:bg-white text-white hover:text-darkBlue rounded-none`}
+                  // onClick={() => setIsOpen(true)}
+                >
+                  <CalendarDays className="h-5 w-5" />
+                  <span className="flex items-center h-full justify-between p-4 text-lg font-semibold">
+                    Book Now
+                  </span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent
+                side="right"
+                className="w-full sm:max-w-[740px] bg-white"
               >
-                Book Now
-              </Link>
-            </Button>
+                <ScrollArea className="h-full">
+                  <div className="h-full flex flex-col">
+                    <BoatReservation />
+                    {/* <Button
+                      className="flex justify-center mt-8 items-center w-full px-4 py-2 text-white bg-flatBlue hover:bg-flatBlue hover:opacity-60 rounded-full"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <span className="flex items-center h-full justify-between p-4 text-lg font-semibold">
+                        Booking Now
+                      </span>
+                    </Button> */}
+                  </div>
+                </ScrollArea>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
@@ -517,9 +539,9 @@ const FooterField = ({ field }: { field: FooterField }) => {
         <Image
           src={field.value as string}
           alt={field.label}
-          width={200}
+          width={256}
           height={100}
-          className="h-[5.3125rem] w-auto"
+          className="footerLogo"
         />
       );
     case "links":
@@ -582,75 +604,53 @@ const DynamicFooter = () => {
 
   return (
     <footer
-      className="relative py-8 text-white"
+      className="relative text-white"
       style={{
         background: `linear-gradient(90deg,#072f6cc9 0%,#072f6cc9 100%), url(${
           backgroundField?.value || "/images/footer-bg.jpg"
-        }) center / cover`,
-        fontSize: "18px",
-        padding: "15px 0",
+          }) center / cover`,
+        padding: "30px 0",
+        
       }}
     >
-      <div className="container mx-auto px-4">
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to top, #00008b, #00008b, transparent)",
-            zIndex: -1,
-          }}
-        />
+      <div className="container mx-auto w-full max-w-[1630px] px-[15px] md:flex md:justify-center gap-8">
+        <div className="">
+          {logoField && (
+            <Link href="/" className="flex items-center space-x-2 mb-4">
+              <FooterField field={logoField} />
+            </Link>
+          )}
 
-        {!EXCLUDED_PATHNAMES.includes(pathname) && (
-          <BoatImage url={boatField?.value as string} />
-        )}
-
-        <section className="w-full p-4">
-          <div className="container mx-auto max-w-6xl md:flex md:justify-center gap-4">
-            <div className="flex-1">
-              {logoField && (
-                <Link href="/" className="flex items-center space-x-2 mb-4">
-                  <FooterField field={logoField} />
-                </Link>
-              )}
-
-              {Object.values(footerContent?.content ?? {}).map(
-                (field) =>
-                  !EXCLUDED_LABELS.includes(field.label) &&
-                  field.type !== "links" && (
-                    <div key={field.label} className="mb-4">
-                      <h3 className="text-xl font-bold mb-2">{field.label}</h3>
-                      <FooterField field={field} />
-                    </div>
-                  )
-              )}
-            </div>
-
-            <div className="flex-1 mt-2">
-              {Object.values(footerContent?.content ?? {})
-                .filter((field) => field.type === "links")
-                .map((field, index) => (
-                  <div key={index}>
-                    <FooterField field={field} />
-                  </div>
-                ))}
-
-              <div className="mt-8">
-                <Separator className="my-4 bg-black" />
-
-                <div className="text-start">
-                  <p>
-                    {getFieldByLabel("Copyright")
-                      ?.value.toString()
-                      .replace("{year}", currentYear.toString())}
-                  </p>
-
-                  <SocialMediaItems />
+          {Object.values(footerContent?.content ?? {}).map(
+            (field) =>
+              !EXCLUDED_LABELS.includes(field.label) &&
+              field.type !== "links" && (
+                <div key={field.label} className="address">
+                  <h5 className="text-xl font-bold mb-2">{field.label}</h5>
+                  <FooterField field={field} />
                 </div>
+              )
+          )}
+        </div>
+
+        <div className="flex-1 flex flex-col justify-end">
+          {/* {Object.values(footerContent?.content ?? {})
+            .filter((field) => field.type === "links")
+            .map((field, index) => (
+              <div key={index}>
+                <FooterField field={field} />
               </div>
+            ))} */}
+            <SocialMediaItems />
+            <Separator className="my-4 bg-[#ffffff] bg-opacity-25" />
+            <div className="text-start">
+              <p>
+                {getFieldByLabel("Copyright")
+                  ?.value.toString()
+                  .replace("{year}", currentYear.toString())}
+              </p>
             </div>
-          </div>
-        </section>
+        </div>
       </div>
     </footer>
   );

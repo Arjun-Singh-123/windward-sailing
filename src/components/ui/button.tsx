@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -19,6 +19,12 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        solidDarkblue: "bg-darkBlue text-white hover:bg-flatBlue hover:text-white",
+        outlineDarkblue: "border border-[#052449] bg-transparent text-darkBlue hover:bg-flatBlue hover:text-white hover:border-[#13afe2]",
+        solidFlatblue: "bg-flatBlue text-white hover:bg-darkBlue hover:text-white",
+        outlineFlatblue: "border border-[#13afe2] bg-transparent text-flatBlue hover:bg-darkBlue hover:text-white hover:border-[#052449]",
+        solidWhiteOnDark: "bg-white text-darkBlue hover:bg-flatBlue hover:text-white",
+        outlineWhiteOnDark: "border border-[#ffffff] bg-transparent text-white hover:bg-flatBlue hover:text-white hover:border-[#13afe2]",
       },
       size: {
         default: "h-9 px-4 py-2",

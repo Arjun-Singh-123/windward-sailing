@@ -24,12 +24,12 @@ const SocialMediaItems: React.FC = () => {
   const socialItems = contacts?.filter((item) => item.type === "social");
 
   return (
-    <div className="container mx-auto mt-2  max-w-6xl  flex flex-col items-start space-y-4  ">
+    <div className="max-w-6xl flex flex-col items-start space-y-4">
       {/* Email Section */}
       {emailItem && (
         <Link
           href={`mailto:${emailItem.value}`}
-          className="flex items-center space-x-2 text-xl hover:underline  "
+          className="flex items-center space-x-2 hover:underline  "
         >
           <IconComponent
             icon={emailItem.icon}
@@ -153,7 +153,7 @@ const SettingsPanel = () => {
         <Button
           variant="default"
           size="icon"
-          className="text-white h-24 w-24  rounded-none  md:border-l border-white/10 bg-transparent"
+          className="text-white rounded-none wh30 h100 noshadow borderlr1p-light bg-transparent hover:bg-white hover:text-darkBlue"
         >
           <Settings className="h-6 w-6" />
         </Button>
