@@ -117,7 +117,7 @@ export default function CategoryPage() {
                 {/* <h2
                   className={`mt-4  md:mt-10    text-2xl text-flatBlue   ${cursiveHeadingFont.className}  `}
                 >
-                  Windward Sailing Club
+                  Newport Sailing Club
                 </h2> */}
                 <h3 className={`text-2xl mb-4 ${mainHeadingFont.className}`}>
                   {formatTitle(params?.category as any)} Details

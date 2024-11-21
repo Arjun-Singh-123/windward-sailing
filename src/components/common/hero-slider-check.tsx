@@ -9,7 +9,7 @@ const HeroFallback: React.FC = () => {
     setIsHeroMissing(!heroExists);
   }, []);
 
-  return isHeroMissing && <div className="pt-20"> </div>;
+  return isHeroMissing && <div className="pt"> </div>;
 };
 
 export default HeroFallback;

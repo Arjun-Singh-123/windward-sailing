@@ -13,6 +13,9 @@
   --background: #ffffff;
   --foreground: #171717;
   --container-mw: 640px;
+  --logo-aspect: calc(var(--container-mw)/5*62/256);
+  --logo-padding: calc(var(--container-mw)/50);
+  --headerHeight: calc( var(--logo-padding) + var(--logo-aspect));
 }
 
 html,
@@ -24,12 +27,12 @@ body {
   font-size: 17px;
 }
 
-body:has(.rental-fees-bg) .rental-fees-bg {
-  background-color: var(--lightSky);
-}
 p { margin-bottom: 15px;}
 footer p { margin-bottom: 0;}
-header{ border-bottom: 1px solid #ffffff50;}
+header{ display: flex; border-bottom: 1px solid #ffffff50; height: var(--headerHeight);}
+main:not(:has(.slider-section)){
+  padding-top: var(--headerHeight);
+}
 .address:not(:last-child){ margin-bottom: 15px;}
 .footerLogo { max-width: 150px;}
 .rotate-x-90 { transform: rotateX(90deg);}
@@ -77,6 +80,14 @@ header img {
   border-style: solid;
   border-color: transparent #ffffff50 transparent #ffffff50;
 }
+
+table tbody td > div:has([type="text"]){
+  width: 200px;
+}
+table tbody td > div:has([type="number"]){
+  width: 80px;
+}
+
 /* Apply padding-top to main when body does not have the .hero class */
 
 /* @media (prefers-color-scheme: dark) {
