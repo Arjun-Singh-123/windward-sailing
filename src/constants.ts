@@ -26,3 +26,30 @@ export const EXCLUDED_LABELS = [
   "boat",
   "Background Image",
 ];
+
+export const desiredOrder = [
+  "Amore E. Sole",
+  "Arearea",
+  "Bliss",
+  "Evening Star",
+  "Liberty",
+  "Renaissance",
+  "Sand Dollar",
+  "Sea Renity",
+  "Sound Current",
+  "Tara",
+  "Teewinot",
+  "Rode Trip",
+  "Amp Phiban",
+  "Beacon Bay",
+  "Kristabelle",
+  "Shamrock",
+  "Splash",
+  "Southern Spark",
+
+  "Beacon Bay",
+  "Kristabelle",
+  "Shamrock",
+  "Splash",
+  "Southern Spark",
+];

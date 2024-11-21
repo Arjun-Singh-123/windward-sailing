@@ -113,14 +113,14 @@ export default function Members() {
       <HeroFallback />
       <div className="container mx-auto  py-12">
         <div className="text-start space-y-2 px-4  ">
-          <h1
+          {/* <h1
             className={` text-start  text-[1.375rem] text-flatBlue ${cursiveHeadingFont.className}`}
             style={{ marginTop: "1.25rem" }}
           >
             Windward Sailing Club
-          </h1>
+          </h1> */}
           <h2 className={`text-4xl ${mainHeadingFont.className}`}>Members</h2>
-          <DecoratorLine />
+          {/* <DecoratorLine /> */}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr mt-20">

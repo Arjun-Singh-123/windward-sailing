@@ -36,6 +36,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Pencil, Trash2, Check, X, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
+import { desiredOrder } from "@/constants";
 
 type Vessel = {
   id?: string;
@@ -180,7 +181,10 @@ export default function Component() {
       console.error("Error fetching vessels:", error);
       toast.error("Failed to fetch vessels");
     } else {
-      setVessels(data as Vessel[]);
+      const sortedVessels = data?.sort((a, b) => {
+        return desiredOrder.indexOf(a.vessel) - desiredOrder.indexOf(b.vessel);
+      });
+      setVessels(sortedVessels as Vessel[]);
       return data;
     }
   }
