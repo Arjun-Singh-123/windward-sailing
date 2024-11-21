@@ -119,7 +119,7 @@ export default function CategoryPage() {
                 >
                   Windward Sailing Club
                 </h2> */}
-                <h3 className={`text-4xl mb-4 ${mainHeadingFont.className}`}>
+                <h3 className={`text-2xl mb-4 ${mainHeadingFont.className}`}>
                   {formatTitle(params?.category as any)} Details
                 </h3>
                 {/* <DecoratorLine /> */}
@@ -210,7 +210,7 @@ export default function CategoryPage() {
                       {yacht.name}
                     </h2>
                     {/* <DecoratorLine /> */}
-                    <p className="text-gray-600 ">{yacht?.description}</p>
+                    <p className="text-gray-600 mb-2">{yacht?.description}</p>
 
                     <Link href={`/boats/category/${yacht?.href}`} passHref>
                       <Button
