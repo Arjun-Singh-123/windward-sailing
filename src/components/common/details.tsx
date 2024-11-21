@@ -197,7 +197,7 @@ const Detail: React.FC<DetailProps> = ({
                     ) : (
                       <CustomImage
                         src={mediaUrl}
-                        alt="Sailing at Windward Sailing Club"
+                        alt="Sailing at Newport Sailing Club"
                         width={460}
                         height={689}
                         // className="w-full h-auto object-cover"

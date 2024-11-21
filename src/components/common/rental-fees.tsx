@@ -66,7 +66,7 @@ export default function RentalFeesTable() {
   console.log("checking renals data", rentalData);
 
   const RentalTable: React.FC<RentalTableProps> = ({ data, type }) => (
-    <Card className="  container w-full max-w-[1630px] px-[15px] mx-auto">
+    <Card className="container w-full max-w-[1630px] px-[15px] mx-auto">
       <CardContent className="p-0">
         <ScrollArea className="w-full">
           <Table className="w-full">
@@ -371,20 +371,20 @@ export default function RentalFeesTable() {
   );
 
   return (
-    <div className="container w-full max-w-[1630px] px-[15px] mx-auto  space-y-6 mt-4 ">
-      <div className="text-start space-y-2 mt-8">
+    <div className="container w-full max-w-[1630px] px-[15px] mx-auto">
+      <div className="text-start">
         {/* <h1
           className={` text-start  text-xl text-flatBlue ${cursiveHeadingFont.className}`}
           style={{ marginTop: "1.25rem" }}
         >
-          Windward Sailing Club
+          Newport Sailing Club
         </h1> */}
-        <h2 className={`text-4xl mt-4 ${mainHeadingFont.className}`}>
+        <h2 className={`text-4xl mb-4 ${mainHeadingFont.className}`}>
           Rental Fees
         </h2>
         {/* <DecoratorLine /> */}
         <p
-          className={`text-start mt-8   mx-auto text-sm ${contentFont.className}`}
+          className={`text-start mx-auto text-sm ${contentFont.className}`}
         >
           Enjoy a day out on the waves—without owning your own boat! Our rental
           services are perfect for people looking to experience the joys of

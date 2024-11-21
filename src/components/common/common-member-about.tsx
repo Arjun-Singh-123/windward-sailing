@@ -13,6 +13,8 @@ import BoatFeatures from "./boat-features";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { usePathname } from "next/navigation";
+import path from "path";
 
 interface AboutProps {
   subtitle: string;
@@ -37,10 +39,11 @@ const CommonMembershipAbout = ({
   imageUrl,
   rentalFeesBg = false,
 }: AboutProps) => {
+  const pathname = usePathname()
   const { isMobile } = useMobileCheck();
   console.log(rentalFeesBg);
   return (
-    <div className="w-full rental-fees-bg">
+    <div className="w-full">
       <div className="container max-w-[1630px] px-[15px] mx-auto">
         <h3 className={`text-4xl ${mainHeadingFont.className} space-mb-30 m-only`}>
           {title && title}
@@ -54,9 +57,9 @@ const CommonMembershipAbout = ({
             </h3>           
             <p>{description && description}</p>
             <div>
-              <Button variant="outlineDarkblue"> 
+             {pathname ==="/" && <Button variant="outlineDarkblue"> 
                 <Link href="/about-us">About us</Link>
-              </Button>
+              </Button>}
             </div>
               {membership && <BoatClubPricing />}
               {boatFeatures && <BoatFeatures />}
@@ -68,6 +71,7 @@ const CommonMembershipAbout = ({
                 ? {
                   backgroundImage: `url(${imageUrl})`,
                   backgroundPosition: "right center",
+                  backgroundSize: "cover",
                 }
                 : undefined
             }

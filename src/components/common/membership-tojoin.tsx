@@ -1,6 +1,7 @@
 import { contentFont, mainHeadingFont } from "@/app/ui/fonts";
 import React from "react";
 import { ToJoinHeader } from "./to-join-header";
+import LegendComponent from "./left-triangle";
 
 const pricingData = {
   initialFee: 550,
@@ -32,14 +33,9 @@ const PricingItem = ({
 
 export default function BoatClubPricing() {
   return (
-    <div className="  w-full   ">
-      <div className="     overflow-visible bg-white border-2 border-black  w-full p-2 shadow-lg    ">
-        <ToJoinHeader
-          membershipFee={true}
-          specification={false}
-          text="To Join"
-        />
-
+    <div className="w-full pt-3">
+      <div className="bg-white border border-gray-200 rounded-lg shadow-md">
+      <LegendComponent text="To Join" />
         <div className="p-6">
           <PricingItem
             label="One-Time Initial Fee"
@@ -62,13 +58,15 @@ export default function BoatClubPricing() {
             <span>${pricingData.total}</span>
           </div>
         </div>
-        <div className="bg-[#17a2b8] text-white p-4 mt-4 rounded-md">
-          <p className="font-bold mb-2">Note:</p>
-          <p>
-            Monthly dues total ${pricingData.monthlyDues.total} ($
-            {pricingData.monthlyDues.administrationFee} per month administration
-            fee plus the ${pricingData.monthlyDues.membershipFee} membership fee
-            that is applied towards boat use or charter).
+        <div className="bg-lightSky text-darkBlue p-4">          
+          <p className="mb-0">
+            <strong>Note: </strong>
+            <small>
+              Monthly dues total ${pricingData.monthlyDues.total} ($
+              {pricingData.monthlyDues.administrationFee} per month administration
+              fee plus the ${pricingData.monthlyDues.membershipFee} membership fee
+              that is applied towards boat use or charter).
+            </small>
           </p>
         </div>
       </div>

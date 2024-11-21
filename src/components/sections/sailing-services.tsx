@@ -26,7 +26,7 @@ const services = [
   {
     title: "Learn To Be The Captain",
     description:
-      "At Windward Sailing Club, You are the Captain! All it takes to sail our boats is the successful completion of our thorough, private, and individualized instructional program or on-the-water certification ride. Before you know it, you'll be captaining one of our vessels as if it were your own.",
+      "At Newport Sailing Club, You are the Captain! All it takes to sail our boats is the successful completion of our thorough, private, and individualized instructional program or on-the-water certification ride. Before you know it, you'll be captaining one of our vessels as if it were your own.",
   },
   {
     title: "Everyone can Captain a Duffy Boat",
