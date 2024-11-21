@@ -334,7 +334,7 @@ export default function Component() {
 
         return (
           <FormItem>
-            <div className="grid grid-cols-2 gap-2 items-center py-2">
+            <div className="grid grid-cols-2 md:grid-cols-1 gap-2 md:gap-0 items-center">
               <FormLabel className="md:hidden font-medium text-sm text-right pr-2">
                 {column
                   .replace(/_/g, " ")
@@ -366,7 +366,8 @@ export default function Component() {
                   `}
                   />
                 ) : (
-                  <Input
+                    <Input
+                      type="text"
                     {...field}
                     value={field.value !== undefined ? String(field.value) : ""}
                     onChange={(e) => field.onChange(e.target.value)}
@@ -398,16 +399,16 @@ export default function Component() {
   );
 
   return (
-    <div className=" w-full pt-40 overflow-x-scroll ">
-      <div className="flex justify-between items-center mb-6 m-2 ">
+    <div className="w-full section-py-80 overflow-x-scroll px-[15px]">
+      <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold  ">Vessel Amenities</h2>
-        <Button onClick={handleCreateNew} className="mr-4">
+        <Button onClick={handleCreateNew} variant="outlineDarkblue">
           <Plus className="mr-2 h-4 w-4 " /> Create New Vessel
         </Button>
       </div>
 
       <FormProvider {...form}>
-        <div className="hidden md:block overflow-x-auto p-2">
+        <div className="hidden md:block overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>

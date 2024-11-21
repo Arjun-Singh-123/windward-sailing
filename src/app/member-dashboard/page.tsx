@@ -307,7 +307,7 @@ export default function Component() {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className="pt-40">
+    <div className="">
       <Toaster />
       <div className="flex justify-between items-center mb-6 pr-8">
         <h1 className="text-3xl font-bold ml-4">Members Dashboard</h1>

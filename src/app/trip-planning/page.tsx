@@ -18,7 +18,7 @@ const Trip = () => {
           <div className=" relative flex flex-col w-full md:w-[68%] p-4 md:p-4 ">
             <h3 className={`text-4xl mb-4 ${mainHeadingFont.className} pt-6`}>
               {/* {title && title} */}
-              Windward Sailing Club
+              Newport Sailing Club
             </h3>
             {/* <DecoratorLine /> */}
 

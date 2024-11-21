@@ -194,18 +194,18 @@ const SettingsPanel = () => {
           )}
 
           <div className="p-6">
-            <div className="space-y-2 mb-6">
+            <div className="">
               {routes?.map((route) => (
                 <Link
                   key={route.href}
                   href={route.href}
-                  className="block w-full py-2 px-4 hover:bg-white/10 rounded"
+                  className="block w-full py-1 hover:text-flatBlue"
                 >
                   {route.name}
                 </Link>
               ))}
             </div>
-            <Separator className="bg-white/10 my-6" />
+            <Separator className="bg-[#ffffff] opacity-25 my-6" />
 
             {/* Contact Information */}
             <div className="space-y-6">

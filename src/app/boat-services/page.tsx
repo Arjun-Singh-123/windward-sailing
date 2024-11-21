@@ -207,12 +207,12 @@ export default function AdminBoatTable() {
   };
 
   return (
-    <div className="w-full pt-40">
+    <div className="w-full section-py-80 overflow-x-scroll px-[15px]">
       <Toaster />
-      <div className="flex justify-between items-center mb-4 px-4">
+      <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Admin Boat Management</h1>
         <Button
-          className="bg-black text-white"
+          variant="outlineDarkblue"
           onClick={() => setCreateDialogOpen(true)}
         >
           <Plus className="mr-2 h-4 w-4" /> Add New Boat
@@ -236,7 +236,7 @@ export default function AdminBoatTable() {
           </TableHeader>
 
           <TableBody>
-            {boats.map((boat) => (
+            {boats?.map((boat) => (
               <TableRow key={boat.id}>
                 <TableCell>
                   <div className="flex space-x-2">
