@@ -21,6 +21,7 @@ body {
   width: 100dvw;
   margin: 0;
 }
+
 body:has(.rental-fees-bg) .rental-fees-bg {
   background-color: var(--lightSky);
 }
@@ -342,4 +343,7 @@ body {
   :root {
     --container-mw: 1380px;
   }
+}
+body[data-scroll-locked][data-scroll-locked] {
+  overflow: auto !important;
 }

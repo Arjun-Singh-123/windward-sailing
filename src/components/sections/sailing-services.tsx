@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ArrowBigRight, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { titleFormatter } from "@/lib/utils";
 const services = [
   {
     title: "Captain Your Own Boat",
@@ -166,21 +167,6 @@ export default function SailingServices() {
             >
               {[...(data || []), ...(data || []), ...(data || [])]?.map(
                 (boat, index) => {
-                  console.log("object", boat?.title?.split(" "));
-                  const titleParts = boat?.title
-                    ?.split(" ")
-                    .map((part) => part.replace(/\\/g, "").replace(/'/g, ""));
-
-                  console.log(titleParts);
-                  // const titleParts = boat?.title?.split(" ");
-                  const manufacturer = titleParts?.[0];
-                  // Combine first two parts and store the last part separately
-                  const combinedName = `${titleParts?.[0]}${titleParts?.[1]}`; // 'Duffield 18'
-                  const splashPart = titleParts?.[2]; // 'SPLASH'
-                  console.log(combinedName);
-                  // const model = titleParts?.slice(1, -1).join(" ");
-                  // console.log(model);
-                  const length = titleParts?.[titleParts.length - 1];
                   return (
                     <Card
                       key={`${boat.product_id}-${index}`}
@@ -195,9 +181,14 @@ export default function SailingServices() {
                         <CardTitle className="text-2xl font-semibold mb-4">
                           <div className={`${contentFont.className}  `}>
                             <p className="text-xs uppercase font-regular400 tracking-widest  ">
-                              {combinedName}
+                              {titleFormatter(boat?.title as string)?.firstPart}
                             </p>
-                            <p className=" font-regular400 ">{splashPart}</p>
+                            <p className=" font-regular400 ">
+                              {
+                                titleFormatter(boat?.title as string)
+                                  ?.secondPart
+                              }
+                            </p>
                           </div>
                         </CardTitle>
                         <p className="text-base line-clamp-6">

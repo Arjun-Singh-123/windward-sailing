@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn, titleFormatter } from "@/lib/utils";
 import { fetchSectionProducts } from "@/services/product-services";
 import { Button } from "../ui/button";
 import { ChevronRight } from "lucide-react";
@@ -32,7 +32,7 @@ export default function Hero() {
 
   return (
     <div
-      className="relative w-full overflow-hidden hero"
+      className="relative w-full overflow-hidden hero slider-section"
       style={{ height: "calc(100vh)" }}
     >
       <AnimatePresence initial={false}>
@@ -62,10 +62,16 @@ export default function Hero() {
           >
             <div className="max-w-2xl mx-auto text-center text-white">
               <h1 className="text-5xl font-bold mb-6 tracking-tight">
-                {data[currentSlide].title}
+                {
+                  titleFormatter((data[currentSlide].title as string) || " ")
+                    .firstPart
+                }
               </h1>
               <p className="text-xl mb-8 text-gray-200">
-                {data[currentSlide]?.title}
+                {
+                  titleFormatter((data[currentSlide].title as string) || " ")
+                    .secondPart
+                }
               </p>
               <Link
                 href={`/boats/${data[currentSlide]?.slug || ""}/${

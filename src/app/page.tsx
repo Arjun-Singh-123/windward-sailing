@@ -65,7 +65,7 @@ export default function Home() {
   const iconStyle = { width: "40px", height: "40px" };
 
   return (
-    <div className="flex flex-col items-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)] home-page   ">
+    <div className="flex flex-col items-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)] home-page    ">
       {visibilityMap["hero-image"] && <Heroo />}
       {visibilityMap["sailing-services"] && <SailingServices />}
       {/* <HeroSection /> */}

@@ -116,6 +116,7 @@ import { userAgent } from "next/server";
 import SocialLinks from "./social-links";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
+import { ScrollArea } from "../ui/scroll-area";
 // Helper function to get session from localStorage
 const getSession = () => {
   if (typeof window !== "undefined") {
@@ -133,6 +134,7 @@ const SettingsPanel = () => {
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
+
   const contactInfo = {
     email: "support@newportsailingclub.com",
     phone: "(949) 675-9060",
@@ -146,6 +148,7 @@ const SettingsPanel = () => {
     { name: "Vessel Amenity", href: "/vessel-amenity" },
     { name: "Boats Dashboard", href: "/boats-dashboard" },
   ];
+
   console.log(session);
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -162,108 +165,109 @@ const SettingsPanel = () => {
         side="right"
         className="w-[400px] bg-[#052449] text-white p-0"
       >
-        {session && (
-          <SheetHeader className="p-6 pb-0">
-            <SheetTitle className="text-white">
+        <ScrollArea className="h-full">
+          {session && (
+            <SheetHeader className="p-6 pb-0">
+              <SheetTitle className="text-white">
+                <div className="flex items-center gap-3">
+                  <Avatar className="w-10 h-10">
+                    <AvatarImage
+                      src={session?.avatar}
+                      alt={session?.username || "Guest"}
+                    />
+                    <AvatarFallback>
+                      {session?.username?.charAt(0) || <User />}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col">
+                    <span className="font-semibold text-start">
+                      {session?.username?.charAt(0)?.toUpperCase() +
+                        session?.username?.slice(1) || "Guest"}
+                    </span>
+                    <span className="text-sm text-gray-400">
+                      {contactInfo.email}
+                    </span>
+                  </div>
+                </div>
+              </SheetTitle>
+            </SheetHeader>
+          )}
+
+          <div className="p-6">
+            <div className="space-y-2 mb-6">
+              {routes?.map((route) => (
+                <Link
+                  key={route.href}
+                  href={route.href}
+                  className="block w-full py-2 px-4 hover:bg-white/10 rounded"
+                >
+                  {route.name}
+                </Link>
+              ))}
+            </div>
+            <Separator className="bg-white/10 my-6" />
+
+            {/* Contact Information */}
+            <div className="space-y-6">
               <div className="flex items-center gap-3">
-                <Avatar className="w-10 h-10">
-                  <AvatarImage
-                    src={session?.avatar}
-                    alt={session?.username || "Guest"}
-                  />
-                  <AvatarFallback>
-                    {session?.username?.charAt(0) || <User />}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="flex items-center gap-2">
-                      <span className="font-semibold">
-                        {session?.username?.charAt(0)?.toUpperCase() +
-                          session?.username?.slice(1) || "Guest"}
-                      </span>
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56 bg-[#052449] text-white border-white/10">
-                      {routes?.map((route) => (
-                        <DropdownMenuItem key={route.href} className=" ">
-                          <Link href={route.href} className="w-full">
-                            {route.name}
-                          </Link>
-                        </DropdownMenuItem>
-                      ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                  <span className="text-sm text-gray-400">
-                    {contactInfo.email}
-                  </span>
+                <Phone className="h-5 w-5 text-gray-400" />
+                <div>
+                  <div className="text-sm text-gray-400">CALL US</div>
+                  <div className="font-semibold">{contactInfo.phone}</div>
                 </div>
               </div>
-            </SheetTitle>
-          </SheetHeader>
-        )}
 
-        <div className="p-6">
-          {/* Social Links */}
-
-          <Separator className="bg-white/10 my-6" />
-
-          {/* Contact Information */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <Phone className="h-5 w-5 text-gray-400" />
-              <div>
-                <div className="text-sm text-gray-400">CALL US</div>
-                <div className="font-semibold">{contactInfo.phone}</div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="h-5 w-5 text-gray-400">⏰</div>
-              <div>
-                <div className="text-sm text-gray-400">HOURS OF OPERATION</div>
-                {contactInfo.hours.split("\n").map((line, index) => (
-                  <div key={index} className="font-semibold">
-                    {line}
+              <div className="flex items-center gap-3">
+                <div className="h-5 w-5 text-gray-400">⏰</div>
+                <div>
+                  <div className="text-sm text-gray-400">
+                    HOURS OF OPERATION
                   </div>
-                ))}
+                  {contactInfo.hours.split("\n").map((line, index) => (
+                    <div key={index} className="font-semibold">
+                      {line}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <MapPin className="h-5 w-5 text-gray-400" />
+                <div>
+                  <div className="text-sm text-gray-400">
+                    COMPANY / LOCATION
+                  </div>
+                  <div className="font-semibold">{contactInfo.address}</div>
+                </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              <MapPin className="h-5 w-5 text-gray-400" />
-              <div>
-                <div className="text-sm text-gray-400">COMPANY / LOCATION</div>
-                <div className="font-semibold">{contactInfo.address}</div>
-              </div>
-            </div>
-          </div>
-
-          <Separator className="bg-white/10 my-6" />
-          <SocialLinks />
-          {/* Navigation Links */}
-          {session ? (
-            <Button
-              variant="outline"
-              className="w-full mt-4"
-              onClick={() => {
-                localStorage.removeItem("session");
-                toast.success("You have been successfully logged out!", {
-                  duration: 3000,
-                });
-                window.location.reload();
-              }}
-            >
-              Logout
-            </Button>
-          ) : (
-            <Link href="/login">
-              <Button variant="outline" className="w-full">
-                Login
+            <Separator className="bg-white/10 my-6" />
+            <SocialLinks />
+            {/* Navigation Links */}
+            {session ? (
+              <Button
+                variant="outline"
+                className="w-full mt-4"
+                onClick={() => {
+                  localStorage.removeItem("session");
+                  toast.success("You have been successfully logged out!", {
+                    duration: 3000,
+                  });
+                  window.location.reload();
+                }}
+              >
+                Logout
               </Button>
-            </Link>
-          )}
-        </div>
+            ) : (
+              <Link href="/login">
+                <Button variant="outline" className="w-full">
+                  Login
+                </Button>
+              </Link>
+            )}
+          </div>
+        </ScrollArea>
       </SheetContent>
     </Sheet>
   );

@@ -53,6 +53,8 @@ import { clearSession, getSession } from "@/lib/auth";
 import { useHeaderState } from "@/hooks/user-header-state";
 import { EXCLUDED_LABELS, EXCLUDED_PATHNAMES } from "@/constants";
 import { SettingsPanel, SocialMediaItems } from "./footer-contact-items";
+import BoatReservation from "../sections/boat-reservation";
+import { ScrollArea } from "../ui/scroll-area";
 
 export const fetchNavItems = async () => {
   const { data: navItems, error: navItemsError } = await supabase
@@ -289,7 +291,7 @@ export default function Header() {
                             {section.name}
                           </Link>
                           {section.products && section.products.length > 0 && (
-                            <div className="absolute left-full border-t-flatBlue border-4 top-0 mt-0 w-64 bg-[#c5dfff] rounded-md shadow-lg opacity-0 group-hover/sub:opacity-100 transition-opacity duration-300 invisible group-hover/sub:visible">
+                            <div className="absolute left-full border-t-flatBlue transform rotate-45 border-4 top-0 mt-0 w-64 bg-[#c5dfff] rounded-md shadow-lg opacity-0 group-hover/sub:opacity-100 transition-opacity duration-300 invisible group-hover/sub:visible">
                               <div className="py-2">
                                 {section?.products?.map((product) => (
                                   <Link
@@ -331,7 +333,6 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Right Side Actions */}
           <div className="flex items-center  ">
             <SettingsPanel />
 
@@ -436,16 +437,33 @@ export default function Header() {
                           )}
                         </React.Fragment>
                       ))}
-                      <Button className="flex justify-center mt-8  items-center w-full px-4 py-2 text-white bg-flatBlue hover:bg-flatBlue hover:opacity-60 rounded-full">
-                        <Link
-                          href="/trip-planning"
-                          className={cn(
-                            "flex items-center h-full justify-between p-4 text-lg font-semibold "
-                          )}
+
+                      <Sheet>
+                        <SheetTrigger asChild>
+                          <Button
+                            onClick={(e) => e.stopPropagation()}
+                            className="flex justify-center mt-8  items-center w-full px-4 py-2 text-white bg-flatBlue hover:bg-flatBlue hover:opacity-60 rounded-full"
+                          >
+                            <span
+                              className={cn(
+                                "flex items-center h-full justify-between p-4 text-lg font-semibold "
+                              )}
+                            >
+                              Booking Now
+                            </span>
+                          </Button>
+                        </SheetTrigger>
+                        <SheetContent
+                          side="right"
+                          className="w-full sm:max-w-[740px]  bg-white"
                         >
-                          Booking Now
-                        </Link>
-                      </Button>
+                          <ScrollArea className="h-full">
+                            <div className="h-full flex flex-col">
+                              <BoatReservation />
+                            </div>
+                          </ScrollArea>
+                        </SheetContent>
+                      </Sheet>
                     </div>
                   </nav>
                 </SheetContent>
@@ -461,7 +479,43 @@ export default function Header() {
                 </Button> */}
             </div>
 
-            <Button
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button
+                  className={`${
+                    !isTransparent || isDark
+                      ? "bg-fontColor backdrop-blur-sm text-white"
+                      : "md:border-l border-gray-200 bg-white hover:bg-gray-50 text-gray-700"
+                  } hidden lg:flex h-24 btnplr-50 rounded-none`}
+                  // onClick={() => setIsOpen(true)}
+                >
+                  <CalendarDays className="h-5 w-5" />
+                  <span className="flex items-center h-full justify-between p-4 text-lg font-semibold">
+                    Book Now
+                  </span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent
+                side="right"
+                className="w-full sm:max-w-[740px]  bg-white"
+              >
+                <ScrollArea className="h-full">
+                  <div className="h-full flex flex-col">
+                    <BoatReservation />
+                    {/* <Button
+                      className="flex justify-center mt-8 items-center w-full px-4 py-2 text-white bg-flatBlue hover:bg-flatBlue hover:opacity-60 rounded-full"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <span className="flex items-center h-full justify-between p-4 text-lg font-semibold">
+                        Booking Now
+                      </span>
+                    </Button> */}
+                  </div>
+                </ScrollArea>
+              </SheetContent>
+            </Sheet>
+
+            {/* <Button
               className={`${
                 !isTransparent || isDark
                   ? "bg-fontColor backdrop-blur-sm text-white"
@@ -477,7 +531,7 @@ export default function Header() {
               >
                 Book Now
               </Link>
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>

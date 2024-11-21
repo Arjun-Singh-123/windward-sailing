@@ -1,6 +1,7 @@
 // import { supabase } from "@/lib/supabase";
 
 import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
 
 // // // Fetch function
 // // export const fetchProductDetails = async (): Promise<Product[]> => {
@@ -169,3 +170,14 @@ export const fetchContacts = async () => {
   if (error) throw error;
   return data || [];
 };
+
+export async function fetchVesselsData() {
+  const { data, error } = await supabase.from("vessels").select("*");
+  if (error) {
+    console.error("Error fetching vessels:", error);
+    toast.error("Failed to fetch vessels");
+  } else {
+    // setVessels(data as Vessel[]);
+    return data;
+  }
+}

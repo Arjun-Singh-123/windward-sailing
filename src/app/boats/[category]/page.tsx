@@ -107,7 +107,7 @@ export default function CategoryPage() {
 
   return (
     <>
-      <div className="  flex flex-col items-center min-h-screen">
+      <div className="  flex flex-col items-center min-h-screen slider-section">
         <main className="w-full flex flex-col items-center    mx-auto">
           <Heroo />
 

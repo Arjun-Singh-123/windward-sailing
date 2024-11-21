@@ -92,7 +92,7 @@ export default async function SubcategoryPage({
 
   return (
     <>
-      <div className="flex flex-col items-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)]">
+      <div className="flex flex-col items-center min-h-screen p-0 font-[family-name:var(--font-geist-sans)] slider-section">
         <main className="w-full flex flex-col items-center sm:items-start gap-4">
           <section className="w-full">
             <Heroo />

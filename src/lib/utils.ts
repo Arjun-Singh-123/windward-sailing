@@ -17,3 +17,11 @@ export function convertSpecificationData(
     specs: Array.isArray(specs) ? specs : [],
   }));
 }
+
+export function titleFormatter(title: string) {
+  const titleParts = title.split(" - ");
+  const firstPart = titleParts[0].toUpperCase();
+  const secondPart = titleParts[1];
+
+  return { firstPart, secondPart };
+}
