@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -12,13 +12,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import {
-  contentFont,
-  cursiveHeadingFont,
-  mainHeadingFont,
-} from "@/app/ui/fonts";
-import DecoratorLine from "./decorator-icon-line";
-import { supabase } from "@/lib/supabase";
+import { contentFont, mainHeadingFont } from "@/app/ui/fonts";
+
 // Define the interface for a rental entry
 interface RentalEntry {
   vesselName: string;
@@ -46,24 +41,8 @@ interface Rental {
   non_members: Vessel[];
 }
 
-export default function RentalFeesTable() {
+export default function RentalFeesTable({ rentalData }: any) {
   const [activeTab, setActiveTab] = useState("member");
-  const [rentalData, setRentalData] = useState<any>({});
-
-  // Fetch Rentals
-  useEffect(() => {
-    const fetchRentals = async () => {
-      const { data, error } = await supabase
-        .from("rentals")
-        .select("*")
-        .single();
-      if (error) console.error("Error fetching rentals:", error);
-      else setRentalData(data || []);
-    };
-
-    fetchRentals();
-  }, []);
-  console.log("checking renals data", rentalData);
 
   const RentalTable: React.FC<RentalTableProps> = ({ data, type }) => (
     <Card className="container w-full max-w-[1630px] px-[15px] mx-auto">
@@ -168,7 +147,7 @@ export default function RentalFeesTable() {
                 </TableRow>
 
                 {rentalData?.members?.map((memberRow: any, index: number) => {
-                  const nonMemberRow = rentalData.non_members[index];
+                  const nonMemberRow = rentalData?.non_members?.[index];
                   return (
                     <React.Fragment key={index}>
                       <TableRow>
@@ -227,7 +206,7 @@ export default function RentalFeesTable() {
                         </TableCell>
                       </TableRow>
                       {rentalData &&
-                        rentalData.members &&
+                        rentalData?.members &&
                         index < rentalData.members.length - 1 && (
                           <TableRow>
                             <TableCell
@@ -351,8 +330,8 @@ export default function RentalFeesTable() {
                       </TableCell>
                     </TableRow>
                     {rentalData &&
-                      rentalData.members &&
-                      index < rentalData.members.length - 1 && (
+                      rentalData?.members &&
+                      index < rentalData?.members.length - 1 && (
                         <TableRow>
                           <TableCell
                             colSpan={5}
@@ -383,9 +362,7 @@ export default function RentalFeesTable() {
           Rental Fees
         </h2>
         {/* <DecoratorLine /> */}
-        <p
-          className={`text-start mx-auto text-sm ${contentFont.className}`}
-        >
+        <p className={`text-start mx-auto text-sm ${contentFont.className}`}>
           Enjoy a day out on the waves—without owning your own boat! Our rental
           services are perfect for people looking to experience the joys of
           sailing without worrying about the upkeep, capital investment, and
@@ -416,10 +393,10 @@ export default function RentalFeesTable() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="member">
-          <RentalTable data={rentalData.members} type="Member" />
+          <RentalTable data={rentalData?.members} type="Member" />
         </TabsContent>
         <TabsContent value="nonMember">
-          <RentalTable data={rentalData.non_members} type="Non-Member" />
+          <RentalTable data={rentalData?.non_members} type="Non-Member" />
         </TabsContent>
         <TabsContent value="compare">
           <CompareTable />

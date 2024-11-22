@@ -125,23 +125,25 @@ export const fetchSectionProducts = async (sectionName: string) => {
         name  ,
         image_url  ,
         price,
-        href,nav_sections(slug)
+        href, description,nav_sections(slug)
+       
       ),
       sections (
         name 
       )
     `
     )
-    .eq("sections.id", "bd024ca4-e72a-499b-8237-c875f6429409");
+    .eq("sections.name", sectionName);
 
   if (error) throw error;
 
   return (
     data
-      ?.filter((item) => item.sections?.name === "Banner Section")
+      ?.filter((item) => item.sections?.name === sectionName)
       .map((item) => ({
         product_id: item.product_id,
         title: item?.products?.name,
+        description: item?.products?.description,
         imageUrl: item?.products?.image_url,
         price: item?.products?.price,
         link: item?.products?.href,

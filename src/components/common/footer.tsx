@@ -1,13 +1,10 @@
-import {
-  fetchFooterContent,
-  fetchNavItems,
-} from "@/services/header-footer-services";
+import { fetchFooterContent } from "@/services/header-footer-services";
 import {
   HydrationBoundary,
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import Header from "./dynamic-header";
+import DynamicFooter from "./dynamic-footer";
 
 const DynamicHeader = async () => {
   const queryClient = new QueryClient();
@@ -16,19 +13,14 @@ const DynamicHeader = async () => {
     queryKey: ["footer-data"],
     queryFn: fetchFooterContent,
   });
-  await queryClient.prefetchQuery({
-    queryKey: ["menuitems-data"],
-    queryFn: fetchNavItems,
-  });
+
   const data = queryClient.getQueryData(["footer-data"]);
-  const data1 = queryClient.getQueryData(["menuitems-data"]);
 
   console.log(data);
-  console.log(data1);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Header />
+      <DynamicFooter />
     </HydrationBoundary>
   );
 };

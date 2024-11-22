@@ -1,20 +1,10 @@
-"use client";
 import React from "react";
-import DecoratorLine from "./decorator-icon-line";
-import {
-  contentFont,
-  cursiveHeadingFont,
-  mainHeadingFont,
-} from "@/app/ui/fonts";
+import { mainHeadingFont } from "@/app/ui/fonts";
 import BoatClubPricing from "./membership-tojoin";
-import CustomImage from "../custom-image";
-import useMobileCheck from "@/hooks/mobile-check";
+
 import BoatFeatures from "./boat-features";
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { usePathname } from "next/navigation";
-import path from "path";
 
 interface AboutProps {
   subtitle: string;
@@ -26,6 +16,7 @@ interface AboutProps {
   image?: boolean; // New prop for video
   imageUrl?: string;
   rentalFeesBg?: boolean;
+  isHomePage?: boolean;
 }
 
 const CommonMembershipAbout = ({
@@ -38,41 +29,43 @@ const CommonMembershipAbout = ({
   image,
   imageUrl,
   rentalFeesBg = false,
+  isHomePage = false,
 }: AboutProps) => {
-  const pathname = usePathname()
-  const { isMobile } = useMobileCheck();
-  console.log(rentalFeesBg);
+  console.log(isHomePage);
   return (
     <div className="w-full">
       <div className="container max-w-[1630px] px-[15px] mx-auto">
-        <h3 className={`text-4xl ${mainHeadingFont.className} space-mb-30 m-only`}>
+        <h3
+          className={`text-4xl ${mainHeadingFont.className} space-mb-30 m-only`}
+        >
           {title && title}
         </h3>
-        <div
-          className={`flex flex-col-reverse md:flex-row gap-6`}
-        >
+        <div className={`flex flex-col-reverse md:flex-row gap-6`}>
           <div className=" relative flex flex-col w-full md:w-[68%]">
             <h3 className={`text-4xl ${mainHeadingFont.className} mb-4 d-only`}>
               {title && title}
-            </h3>           
+            </h3>
             <p>{description && description}</p>
             <div>
-             {pathname ==="/" && <Button variant="outlineDarkblue"> 
-                <Link href="/about-us">About us</Link>
-              </Button>}
+              {isHomePage && (
+                <Button variant="outlineDarkblue">
+                  <Link href="/about-us">About us</Link>
+                </Button>
+              )}
             </div>
-              {membership && <BoatClubPricing />}
-              {boatFeatures && <BoatFeatures />}
+            {membership && <BoatClubPricing />}
+            {boatFeatures && <BoatFeatures />}
           </div>
 
-          <div className="relative w-full flex-1 md:w-auto md:h-auto overflow-visible mob-minh300"
+          <div
+            className="relative w-full flex-1 md:w-auto md:h-auto overflow-visible mob-minh300"
             style={
               imageUrl
                 ? {
-                  backgroundImage: `url(${imageUrl})`,
-                  backgroundPosition: "right center",
-                  backgroundSize: "cover",
-                }
+                    backgroundImage: `url(${imageUrl})`,
+                    backgroundPosition: "right center",
+                    backgroundSize: "cover",
+                  }
                 : undefined
             }
           >
@@ -90,7 +83,7 @@ const CommonMembershipAbout = ({
               "
                 />
               </div>
-            )
+            ) : (
               // : (
               // image && (
               //   <Image
@@ -102,24 +95,7 @@ const CommonMembershipAbout = ({
               //   />
               // )
               // )
-              : ""
-            }
-
-            {!image && (
-              <style jsx>{`
-            div::before {
-              content: "";
-              position: absolute;
-              top: -3.875rem; /* Position at the top */
-              left: -40px; /* Move it to the left */
-              border-left: 40px solid transparent; /* Transparent left border */
-              border-bottom: 40px solid #001135; /* Bottom border color */
-              width: 0; /* No width */
-              height: 0; /* No height */
-              z-index: 2; /* Ensure it appears above the video */
-              display:   ${isMobile} ? "block" : "none"};
-            }
-          `}</style>
+              ""
             )}
           </div>
         </div>
@@ -129,3 +105,19 @@ const CommonMembershipAbout = ({
 };
 
 export default CommonMembershipAbout;
+// {!image && (
+//   <style jsx>{`
+// div::before {
+//   content: "";
+//   position: absolute;
+//   top: -3.875rem; /* Position at the top */
+//   left: -40px; /* Move it to the left */
+//   border-left: 40px solid transparent; /* Transparent left border */
+//   border-bottom: 40px solid #001135; /* Bottom border color */
+//   width: 0; /* No width */
+//   height: 0; /* No height */
+//   z-index: 2; /* Ensure it appears above the video */
+//   display:   ${isMobile} ? "block" : "none"};
+// }
+// `}</style>
+// )}

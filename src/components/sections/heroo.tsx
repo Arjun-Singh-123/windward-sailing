@@ -35,8 +35,8 @@ export default function Hero() {
 
   return (
     <div
-      className="relative w-full overflow-hidden hero slider-section"
-      style={{ height: "calc(100vh)" }}
+      className="relative w-full overflow-hidden hero slider-section h-screen "
+      // style={{ height: "calc(100vh)" }}
     >
       <AnimatePresence initial={false}>
         <motion.div
@@ -54,6 +54,7 @@ export default function Hero() {
               fill
               priority
               className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           )}
           <div className="absolute inset-0 bg-black/20" />

@@ -1,53 +1,85 @@
-// "use client";
-
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 export const useHeaderState = () => {
-  // Check if current page has slider
-  const hasSlider = () => {
-    if (typeof document === "undefined") return false;
-    return !!document.querySelector(".slider-section"); // Change this class based on your slider
-  };
+  const pathname = usePathname();
+
+  const lastScrollY = useRef(0);
+  const SCROLL_THRESHOLD = 50;
 
   const [state, setState] = useState({
     isHidden: false,
-    isTransparent: hasSlider(),
-    hasPageSlider: hasSlider(),
+    isTransparent: true,
+    hasPageSlider: false,
   });
+
+  const checkSlider = useRef(() => {
+    if (typeof window === "undefined") return false;
+    return !!document.querySelector(".slider-section");
+  });
+
+  const handleScroll = useRef(() => {
+    requestAnimationFrame(() => {
+      const currentScrollY = window.scrollY;
+      const isScrollingDown = currentScrollY > lastScrollY.current;
+      const hasSliderNow = checkSlider.current();
+
+      setState((prev) => {
+        const newTransparent =
+          hasSliderNow && currentScrollY <= SCROLL_THRESHOLD;
+        const newHidden = isScrollingDown && currentScrollY > SCROLL_THRESHOLD;
+
+        if (
+          prev.isTransparent === newTransparent &&
+          prev.isHidden === newHidden &&
+          prev.hasPageSlider === hasSliderNow
+        ) {
+          return prev;
+        }
+
+        return {
+          isHidden: newHidden,
+          isTransparent: newTransparent,
+          hasPageSlider: hasSliderNow,
+        };
+      });
+
+      lastScrollY.current = currentScrollY;
+    });
+  }).current;
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    let lastScrollY = window.scrollY;
-    const SCROLL_THRESHOLD = 50;
+    const hasSlider = checkSlider.current();
+    setState({
+      isHidden: false,
+      isTransparent: hasSlider && window.scrollY <= SCROLL_THRESHOLD,
+      hasPageSlider: hasSlider,
+    });
 
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const isScrollingDown = currentScrollY > lastScrollY;
-
-      setState((prev) => ({
-        isHidden: isScrollingDown && currentScrollY > SCROLL_THRESHOLD,
-        isTransparent: prev.hasPageSlider && currentScrollY <= SCROLL_THRESHOLD,
-        hasPageSlider: prev.hasPageSlider,
-      }));
-
-      lastScrollY = currentScrollY;
+    let ticking = false;
+    const throttledScrollHandler = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+      }
     };
 
-    // Initial check
-    setState((prev) => ({
-      ...prev,
-      hasPageSlider: hasSlider(),
-      isTransparent: hasSlider() && window.scrollY <= SCROLL_THRESHOLD,
-    }));
+    window.addEventListener("scroll", throttledScrollHandler, {
+      passive: true,
+    });
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener("scroll", throttledScrollHandler);
+    };
+  }, [pathname]);
 
   return state;
 };
-
 // import { useState, useEffect } from "react";
 // import { DARK_HEADER_PATHS, SCROLL_THRESHOLD } from "../constants";
 

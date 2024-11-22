@@ -53,3 +53,37 @@ export const desiredOrder = [
   "Splash",
   "Southern Spark",
 ];
+
+export const MembersdDesiredOrder = [
+  "Randy Treas",
+  "John Schaaf",
+  "Senjalkumar",
+  "Amanda Martin",
+  "Brian Taylor",
+  "Christopher Brown",
+  "Daniel Davis",
+  "David Thompson",
+  "Emily Turner",
+  "Jason Wilson",
+  "Jennifer Smith",
+  "Jessica Martinez",
+  "Jessica Turner",
+  "John Williams",
+  "Kevin Davis",
+  "Laura Hernandez",
+  "Lisa Baker",
+  "Melissa Jackson",
+  "Member1",
+  "Member2",
+  "Michael Davis",
+  "Robert Johnson",
+  "Sarah Anderson",
+];
+
+export const stats = [
+  { emoji: "🌍", value: 775, label: "DESTINATION", bgColor: "bg-blue-200" },
+  { emoji: "😊", value: 5125, label: "SATISFIED", bgColor: "bg-green-200" },
+  { emoji: "⛵", value: 100, label: "SKIPPERS", bgColor: "bg-yellow-200" },
+  { emoji: "🚢", value: 200, label: "BOATS", bgColor: "bg-red-200" },
+  { emoji: "🏴", value: 50, label: "COUNTRIES", bgColor: "bg-purple-200" },
+];

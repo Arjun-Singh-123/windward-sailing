@@ -17,63 +17,42 @@ import { Button } from "@/components/ui/button";
 import { ArrowBigRight, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { titleFormatter } from "@/lib/utils";
-const services = [
-  {
-    title: "Captain Your Own Boat",
-    description:
-      "Experienced sailors can select any boat from our fleet. Our mechanics keep the boats in top condition. Members rent boats for a day cruise or a trip to Catalina or other coastal ports. We will help you with how docking works, where to go and good places at the destinations. Show up, load up and go. We take care of all the boat preparation.",
-  },
-  {
-    title: "Learn To Be The Captain",
-    description:
-      "At Newport Sailing Club, You are the Captain! All it takes to sail our boats is the successful completion of our thorough, private, and individualized instructional program or on-the-water certification ride. Before you know it, you'll be captaining one of our vessels as if it were your own.",
-  },
-  {
-    title: "Everyone can Captain a Duffy Boat",
-    description:
-      "Renting a Duffy boat in Newport Beach Bay offers a relaxing and enjoyable way to explore the scenic waterfront. These electric boats glide smoothly across the calm waters, allowing you to take in the beauty of the surrounding homes, yachts, and nature at your own pace. Enjoy a tranquil experience as you cruise past charming waterfront homes, harbors, and the iconic Balboa Island. Whether you're with friends, family, work team building or on a romantic outing, a Duffy boat provides a cozy and intimate setting to enjoy a picnic, sip on drinks, and soak in the sunset over the bay. The ease of operation makes it accessible for all, adding to the carefree enjoyment of Newport Beach’s coastal charm.",
-  },
-  {
-    title: "Your Cruise — With our Captain at the Helm ",
-    description:
-      "As soon as you board, you can customize your sailing charter to suit your preferences. One option is to swim, snorkel, and unwind on a Catalina. Alternatively, you can use Windward's vessels to entertain clients, mark special occasions, amuse your family, and then have dinner at one of the many establishments that offer guest docking. Our fleet consists of a wide range of boats that can hold 6-8 passengers overnight and range in size from 28-44 feet.",
-  },
-];
+import { fetchSectionProducts } from "@/services/product-services";
 
-export const fetchSectionProducts = async (sectionName: string) => {
-  const { data, error } = await supabase
-    .from("user_selections")
-    .select(
-      `
-      product_id,
-      products (
-        id,
-        name  ,
-        image_url  ,
-        price,
-        description,
-        href,nav_sections(slug)
-        
-      ),
-      sections (
-        name 
-      )
-    `
-    )
-    .eq("section_id", "8af6b308-d7a6-4f02-9f96-b11567aaa3b6");
+// export const fetchSectionProducts = async (sectionName: string) => {
+//   const { data, error } = await supabase
+//     .from("user_selections")
+//     .select(
+//       `
+//       product_id,
+//       products (
+//         id,
+//         name  ,
+//         image_url  ,
+//         price,
+//         description,
+//         href,nav_sections(slug)
 
-  if (error) throw error;
+//       ),
+//       sections (
+//         name
+//       )
+//     `
+//     )
+//     .eq("section_id", "8af6b308-d7a6-4f02-9f96-b11567aaa3b6");
 
-  return data.map((item) => ({
-    product_id: item?.product_id,
-    title: item?.products?.name,
-    imageUrl: item?.products?.image_url,
-    price: item?.products?.price,
-    link: item?.products?.href,
-    slug: item?.products?.nav_sections?.slug,
-    description: item.products?.description,
-  }));
-};
+//   if (error) throw error;
+
+//   return data.map((item) => ({
+//     product_id: item?.product_id,
+//     title: item?.products?.name,
+//     imageUrl: item?.products?.image_url,
+//     price: item?.products?.price,
+//     link: item?.products?.href,
+//     slug: item?.products?.nav_sections?.slug,
+//     description: item.products?.description,
+//   }));
+// };
 
 export default function SailingServices() {
   const [currentIndex, setCurrentIndex] = useState(0);

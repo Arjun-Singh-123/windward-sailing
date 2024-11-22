@@ -102,8 +102,8 @@ const Detail: React.FC<DetailProps> = ({
       ?.map((item) => {
         const images = item?.images?.[0]?.images;
         console.log("images images", item);
-        const { external, internal } = (images as any) ?? {};
-        const firstImage = internal[0] || external[0] || null;
+        const { external = [], internal = [] } = (images as any) ?? {};
+        const firstImage = internal?.[0] || external?.[0] || null;
         return firstImage;
 
         //  const firstImage =  images?.external?.[0] ||  images?.internal?.[0] || ""
@@ -282,7 +282,9 @@ const Detail: React.FC<DetailProps> = ({
             >
               Benefits
             </h1> */}
-            <h2 className={`text-4xl text-darkBlue ${mainHeadingFont.className}`}>
+            <h2
+              className={`text-4xl text-darkBlue ${mainHeadingFont.className}`}
+            >
               What You Get
             </h2>
             {/* <DecoratorLine /> */}

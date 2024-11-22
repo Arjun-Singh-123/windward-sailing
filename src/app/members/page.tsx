@@ -1,87 +1,27 @@
-"use client";
-
-import { useQuery } from "@tanstack/react-query";
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from "@tanstack/react-query";
+import Members from "./components/member";
 import { fetchVehicleAmenities } from "@/lib/services";
-import { SkeletonCard } from "@/components/skeleton";
-import MemberCard from "@/components/common/member-card";
-import DecoratorLine from "@/components/common/decorator-icon-line";
-import { cursiveHeadingFont, mainHeadingFont } from "../ui/fonts";
- 
- 
 
+const Page = async () => {
+  const queryClient = new QueryClient();
 
-const desiredOrder = [
-  "Randy Treas",
-  "John Schaaf",
-  "Senjalkumar",
-  "Amanda Martin",
-  "Brian Taylor",
-  "Christopher Brown",
-  "Daniel Davis",
-  "David Thompson",
-  "Emily Turner",
-  "Jason Wilson",
-  "Jennifer Smith",
-  "Jessica Martinez",
-  "Jessica Turner",
-  "John Williams",
-  "Kevin Davis",
-  "Laura Hernandez",
-  "Lisa Baker",
-  "Melissa Jackson",
-  "Member1",
-  "Member2",
-  "Michael Davis",
-  "Robert Johnson",
-  "Sarah Anderson",
-];
-export default function Members() {
-  const { data: members } = useQuery({
+  await queryClient.prefetchQuery({
     queryKey: ["members-info"],
     queryFn: () => fetchVehicleAmenities(),
   });
 
-  const orderedMembers = desiredOrder
-    .map((name) => {
-      return members?.find((member) => member.name === name);
-    })
-    .filter((member) => member !== undefined);
+  const data = queryClient.getQueryData(["members-info"]);
+  console.log(data);
 
-  console.log("member memeber", members);
   return (
-    <section className="w-full p-4 max-w-6xl mx-auto">
-      
-      <div className="container mx-auto  py-12">
-        <div className="text-start space-y-2 px-4  ">
-          {/* <h1
-            className={` text-start  text-[1.375rem] text-flatBlue ${cursiveHeadingFont.className}`}
-            style={{ marginTop: "1.25rem" }}
-          >
-            Newport Sailing Club
-          </h1> */}
-          <h2 className={`text-4xl ${mainHeadingFont.className}`}>Members</h2>
-          {/* <DecoratorLine /> */}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr mt-20">
-          {members ? (
-            orderedMembers?.map((member, index) => (
-              <MemberCard
-                key={index}
-                name={member.name}
-                image={member.image ?? ""}
-                profession={member.profession ?? ""}
-                about={member?.about ?? ""}
-                email={member?.email}
-                phone={member?.phone ?? ""}
-                index={index}
-              />
-            ))
-          ) : (
-            <SkeletonCard />
-          )}
-        </div>
-      </div>
-    </section>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Members />
+    </HydrationBoundary>
   );
-}
+};
+
+export default Page;
