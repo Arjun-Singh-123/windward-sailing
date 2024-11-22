@@ -92,90 +92,6 @@ export const menuItemss = (items: any) => {
   });
 };
 
-const IconComponent = ({
-  icon,
-  className,
-}: {
-  icon: string;
-  className?: string;
-}) => {
-  const props = { className: className || "w-10 h-10" };
-  switch (icon) {
-    case "phone":
-      return <Phone {...props} />;
-    case "clock":
-      return <Clock {...props} />;
-    case "map-pin":
-      return <MapPin {...props} />;
-    case "email":
-      return <Mail {...props} />;
-    case "facebook":
-      return <Facebook {...props} />;
-    case "twitter":
-      return <Twitter {...props} />;
-    case "instagram":
-      return <Instagram {...props} />;
-    default:
-      return null;
-  }
-};
-
-interface ContactItem {
-  id: string;
-  icon: string;
-  label: string;
-  value: any;
-  type: string;
-  display_order: number;
-}
-
-interface ContactHeaderProps {
-  contacts: ContactItem[];
-  setIsDetailsOpen: (isOpen: boolean) => void;
-}
-
-const IconComponent1: React.FC<{ icon: string; className?: string }> = ({
-  icon,
-  className,
-}) => {
-  const props = { className: className || "w-10 h-10" };
-  const icons = {
-    phone: Phone,
-    clock: Clock,
-    "map-pin": MapPin,
-    email: Mail,
-    facebook: Facebook,
-    twitter: Twitter,
-    instagram: Instagram,
-  };
-
-  const IconElement = icons[icon as keyof typeof icons];
-  return IconElement ? <IconElement {...props} /> : null;
-};
-
-const formatHours = (hours: { [key: string]: string }) => {
-  const days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-  return days.map((day) => `${day}: ${hours[day]}`).join("\n");
-};
-
-const darkHeaderPaths = [
-  "/member-dashboard",
-  "/boat-services",
-  "/vessel-amenity",
-  "/members",
-  "/about-us",
-  "/rental-fees",
-  "/membership-fees",
-];
-
 export default function Header() {
   const pathname = usePathname();
   const [isSticky, setIsSticky] = useState(false);
@@ -232,6 +148,7 @@ export default function Header() {
               width={140}
               height={40}
               className="h-auto w-auto"
+              priority={true}
             />
           </Link>
         </div>
