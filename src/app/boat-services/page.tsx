@@ -26,6 +26,8 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast, Toaster } from "sonner";
 import { supabase } from "@/lib/supabase";
+import { getSession } from "@/lib/auth";
+import { useRouter } from "next/navigation";
 
 // const boatSchema = z.object({
 //   name: z.string().min(1, "Boat name is required"),
@@ -61,7 +63,13 @@ export default function AdminBoatTable() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
-
+  const router = useRouter();
+  useEffect(() => {
+    const session = getSession();
+    if (!session) {
+      router.push("/login");
+    }
+  }, []);
   const {
     control,
     handleSubmit,

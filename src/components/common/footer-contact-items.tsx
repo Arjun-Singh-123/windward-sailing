@@ -82,17 +82,7 @@ interface ContactItemsProps {
   contactItems: ContactItem[];
 }
 
-import {
-  ChevronDown,
-  Facebook,
-  Instagram,
-  MapPin,
-  Phone,
-  PinIcon as Pinterest,
-  Settings,
-  Twitter,
-  User,
-} from "lucide-react";
+import { MapPin, Phone, Settings, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -104,21 +94,13 @@ import {
 } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { motion, AnimatePresence } from "framer-motion";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { userAgent } from "next/server";
 import SocialLinks from "./social-links";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { ScrollArea } from "../ui/scroll-area";
-// Helper function to get session from localStorage
-const getSession = () => {
+
+export const getSession = () => {
   if (typeof window !== "undefined") {
     const session = localStorage.getItem("session");
     return session ? JSON.parse(session) : null;
@@ -194,20 +176,21 @@ const SettingsPanel = () => {
           )}
 
           <div className="p-6">
-            <div className="">
-              {routes?.map((route) => (
-                <Link
-                  key={route.href}
-                  href={route.href}
-                  className="block w-full py-1 hover:text-flatBlue"
-                >
-                  {route.name}
-                </Link>
-              ))}
-            </div>
-            <Separator className="bg-[#ffffff] opacity-25 my-6" />
+            {session && (
+              <div className="">
+                {routes?.map((route) => (
+                  <Link
+                    key={route.href}
+                    href={route.href}
+                    className="block w-full py-1 hover:text-flatBlue"
+                  >
+                    {route.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+            {session && <Separator className="bg-[#ffffff] opacity-25 my-6" />}
 
-            {/* Contact Information */}
             <div className="space-y-6">
               <div className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-gray-400" />

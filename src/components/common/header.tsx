@@ -20,11 +20,6 @@ const DynamicHeader = async () => {
     queryKey: ["menuitems-data"],
     queryFn: fetchNavItems,
   });
-  const data = queryClient.getQueryData(["footer-data"]);
-  const data1 = queryClient.getQueryData(["menuitems-data"]);
-
-  console.log(data);
-  console.log(data1);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

@@ -37,6 +37,8 @@ import { Pencil, Trash2, Check, X, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import { desiredOrder } from "@/constants";
+import { useRouter } from "next/navigation";
+import { getSession } from "@/lib/auth";
 
 export type Vessel = {
   id?: string;
@@ -132,7 +134,13 @@ export default function Component() {
   const [editingVessel, setEditingVessel] = useState<string | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [vesselToDelete, setVesselToDelete] = useState<string | null>(null);
-
+  const router = useRouter();
+  useEffect(() => {
+    const session = getSession();
+    if (!session) {
+      router.push("/login");
+    }
+  }, []);
   const form = useForm<Vessel>({
     resolver: zodResolver(vesselSchema),
     defaultValues: {
@@ -366,8 +374,8 @@ export default function Component() {
                   `}
                   />
                 ) : (
-                    <Input
-                      type="text"
+                  <Input
+                    type="text"
                     {...field}
                     value={field.value !== undefined ? String(field.value) : ""}
                     onChange={(e) => field.onChange(e.target.value)}

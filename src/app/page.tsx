@@ -1,12 +1,9 @@
 import CommonMembershipAbout from "@/components/common/common-member-about";
 import Detail from "@/components/common/details";
-import ResponsiveImageCarousel from "@/components/common/image-slider";
 import StatsSlider from "@/components/common/stats";
 
 import Heroo from "@/components/sections/heroo";
 import SailingServices from "@/components/sections/sailing-services";
-import { supabase } from "@/lib/supabase";
-import { useQuery } from "@tanstack/react-query";
 import {
   Bath,
   Bed,
@@ -16,9 +13,16 @@ import {
   ShieldCheck,
   Wifi,
 } from "lucide-react";
-import { useMemo } from "react";
-import MemberCarousel from "./slick/page";
-
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from "@tanstack/react-query";
+import { fetchSectionProducts } from "@/services/product-services";
+import {
+  fetchFooterContent,
+  fetchNavItems,
+} from "@/services/header-footer-services";
 type Section = {
   id: number;
   section_name: string;
@@ -26,41 +30,9 @@ type Section = {
   page: string;
 };
 
-// const fetchSections = async (): Promise<Section[]> => {
-//   const { data, error } = await supabase
-//     .from("homepage_sections")
-//     .select("*")
-//     .eq("page", "home")
-//     .order("id");
-//   if (error) throw error;
-//   return data as Section[];
-// };
 const description =
   "Since 1972, Newport's has been Newport Beach's first choice for sailing. Over more than 50 years, we've earned an excellent reputation under the same family management. Our goal is to meet the needs of all sailing enthusiasts, from the novice to the seasoned skipper—all while remaining affordable.  With affordable vessels, we’re proud to offer a sailing experience you can trust. Let our boats take you on a journey where passion meets the open sea!";
 function Home() {
-  // const {
-  //   data: sections,
-  //   isLoading,
-  //   isError,
-  // } = useQuery({
-  //   queryKey: ["homeSections"],
-  //   queryFn: fetchSections,
-  // });
-
-  // const visibilityMap: Record<string, boolean> = (sections || []).reduce(
-  //   (acc: Record<string, boolean>, section: Section) => {
-  //     if (
-  //       section &&
-  //       section.section_name &&
-  //       typeof section.is_visible === "boolean"
-  //     ) {
-  //       acc[section.section_name] = section.is_visible;
-  //     }
-  //     return acc;
-  //   },
-  //   {}
-  // );
-
   const iconStyle = { width: "40px", height: "40px" };
 
   return (
@@ -137,17 +109,6 @@ function Home() {
     </div>
   );
 }
-
-import {
-  HydrationBoundary,
-  QueryClient,
-  dehydrate,
-} from "@tanstack/react-query";
-import { fetchSectionProducts } from "@/services/product-services";
-import {
-  fetchFooterContent,
-  fetchNavItems,
-} from "@/services/header-footer-services";
 
 const Page = async () => {
   const queryClient = new QueryClient();

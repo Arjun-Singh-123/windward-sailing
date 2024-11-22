@@ -18,6 +18,8 @@ import { toast } from "sonner";
 import SectionProducts from "./components/section-products-dashboard";
 import AboutEditor from "./components/about-section-editor";
 import StatsEditor from "./components/stats-section-editor";
+import { useRouter } from "next/navigation";
+import { getSession } from "@/lib/auth";
 
 const fetchSectionsAndNavItems = async () => {
   const { data: sections, error: sectionsError } = await supabase
@@ -68,7 +70,13 @@ const updateSectionStatus = async ({ sectionId, status }: any) => {
 function Dashboard() {
   const queryClient = useQueryClient();
   const [benefitsId, setBenefitsId] = useState(null);
-
+  const router = useRouter();
+  useEffect(() => {
+    const session = getSession();
+    if (!session) {
+      router.push("/login");
+    }
+  }, []);
   const { data, isLoading, error } = useQuery({
     queryKey: ["sectionsAndNavItems"],
     queryFn: fetchSectionsAndNavItems,
