@@ -14,9 +14,6 @@ const Page = async () => {
     queryFn: () => fetchVehicleAmenities(),
   });
 
-  const data = queryClient.getQueryData(["members-info"]);
-  console.log(data);
-
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Members />
