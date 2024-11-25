@@ -116,6 +116,8 @@ const DynamicFooter = () => {
           layout="fill"
           objectFit="cover"
           className="opacity-50"
+          priority
+          sizes="100vw"
         />
       </div>
 
