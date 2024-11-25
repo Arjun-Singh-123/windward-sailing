@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { ChevronsRight } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useInView } from "react-intersection-observer";
 
 import Image from "next/image";
 
@@ -87,6 +88,9 @@ const BoatImage = ({ url }: { url: string }) => {
 const DynamicFooter = () => {
   const pathname = usePathname();
   const currentYear = new Date().getFullYear();
+  const { ref, inView } = useInView({
+    threshold: 0.1, // Trigger when 10% of the footer is in view
+  });
 
   const { data: footerContent } = useQuery({
     queryKey: ["footer-data"],
@@ -104,6 +108,7 @@ const DynamicFooter = () => {
 
   return (
     <footer
+      ref={ref}
       className="relative text-white"
       style={{
         background: "linear-gradient(90deg,#072f6cc9 0%,#072f6cc9 100%)",
@@ -111,16 +116,18 @@ const DynamicFooter = () => {
       }}
     >
       <div className="absolute inset-0 z-[-1]">
-        <Image
-          src={backgroundField?.value || "/images/footer-bg.jpg"}
-          alt="Footer Background"
-          objectFit="cover"
-          className="opacity-50"
-          loading="lazy"
-          sizes="100vw"
-          width={1920}
-          height={1080}
-        />
+        {inView && (
+          <Image
+            src={backgroundField?.value || "/images/footer-bg.jpg"}
+            alt="Footer Background"
+            objectFit="cover"
+            className="opacity-50"
+            loading="lazy"
+            sizes="100vw"
+            width={1920}
+            height={1080}
+          />
+        )}
       </div>
 
       <div className="container mx-auto w-full max-w-[1630px] px-[15px] md:flex md:justify-center gap-8">
