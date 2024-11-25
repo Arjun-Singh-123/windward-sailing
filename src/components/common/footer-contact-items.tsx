@@ -177,9 +177,9 @@ const SettingsPanel = () => {
           <div className="p-6">
             {session && (
               <div className="">
-                {routes?.map((route) => (
+                {routes?.map((route, index) => (
                   <Link
-                    key={route.href}
+                    key={index}
                     href={route.href}
                     className="block w-full py-1 hover:text-flatBlue"
                   >

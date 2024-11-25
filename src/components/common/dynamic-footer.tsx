@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { ChevronsRight } from "lucide-react";
@@ -41,6 +41,14 @@ const FooterLink = ({ text, url }: { text: string; url: string }) => (
 );
 
 const FooterField = ({ field }: { field: FooterField }) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!field || !mounted) return null;
+
   switch (field.type) {
     case "text":
     case "textarea":
@@ -70,33 +78,39 @@ const FooterField = ({ field }: { field: FooterField }) => {
   }
 };
 
-const BoatImage = ({ url }: { url: string }) => {
-  console.log(url);
-  return (
-    <div className="absolute -top-[180px] left-5 lg:left-20 bottom-4 z-[3] w-[14.1875rem] h-[24.625rem] overflow-hidden hidden md:hidden 4xl:block">
-      <Image
-        src={url ?? "/"}
-        alt="Footer decoration"
-        className="object-cover w-full h-full"
-        height={227}
-        width={394}
-      />
-    </div>
-  );
-};
+// const BoatImage = ({ url }: { url: string }) => {
+//   console.log(url);
+//   return (
+//     <div className="absolute -top-[180px] left-5 lg:left-20 bottom-4 z-[3] w-[14.1875rem] h-[24.625rem] overflow-hidden hidden md:hidden 4xl:block">
+//       <Image
+//         src={url ?? "/"}
+//         alt="Footer decoration"
+//         className="object-cover w-full h-full"
+//         height={227}
+//         width={394}
+//       />
+//     </div>
+//   );
+// };
 
 const DynamicFooter = () => {
-  const pathname = usePathname();
-  const currentYear = new Date().getFullYear();
+  // const pathname = usePathname();
+  const [currentYear, setCurrentYear] = useState("");
+  const [mounted, setMounted] = useState(false);
+
+  // const currentYear = new Date().getFullYear();
   const { ref, inView } = useInView({
     threshold: 0.1, // Trigger when 10% of the footer is in view
   });
 
-  const { data: footerContent } = useQuery({
+  const { data: footerContent, isLoading } = useQuery({
     queryKey: ["footer-data"],
     queryFn: fetchFooterContent,
   });
-
+  useEffect(() => {
+    setMounted(true);
+    setCurrentYear(new Date().getFullYear().toString());
+  }, []);
   const getFieldByLabel = (label: string) =>
     Object.values(footerContent?.content ?? {}).find(
       (field) => field.label.toLowerCase() === label.toLowerCase()
@@ -105,7 +119,10 @@ const DynamicFooter = () => {
   const logoField = getFieldByLabel("Logo");
   const backgroundField = getFieldByLabel("Background Image");
   const boatField = getFieldByLabel("boat");
-
+  // Add loading state
+  if (isLoading || !mounted) {
+    return "loading";
+  }
   return (
     <footer
       ref={ref}
@@ -120,7 +137,7 @@ const DynamicFooter = () => {
           <Image
             src={backgroundField?.value || "/images/footer-bg.jpg"}
             alt="Footer Background"
-            objectFit="cover"
+            style={{ objectFit: "cover" }}
             className="opacity-50"
             loading="lazy"
             sizes="100vw"
@@ -138,16 +155,17 @@ const DynamicFooter = () => {
             </Link>
           )}
 
-          {Object.values(footerContent?.content ?? {}).map(
-            (field) =>
-              !EXCLUDED_LABELS.includes(field.label) &&
-              field.type !== "links" && (
-                <div key={field.label} className="address">
-                  <h5 className="text-xl font-bold mb-2">{field.label}</h5>
-                  <FooterField field={field} />
-                </div>
-              )
-          )}
+          {mounted &&
+            Object.values(footerContent?.content ?? {}).map(
+              (field) =>
+                !EXCLUDED_LABELS.includes(field.label) &&
+                field.type !== "links" && (
+                  <div key={field.label} className="address">
+                    <h5 className="text-xl font-bold mb-2">{field.label}</h5>
+                    <FooterField field={field} />
+                  </div>
+                )
+            )}
         </div>
 
         <div className="flex-1 flex flex-col justify-end">
@@ -161,11 +179,13 @@ const DynamicFooter = () => {
           <SocialMediaItems />
           <Separator className="my-4 bg-[#ffffff] bg-opacity-25" />
           <div className="text-start">
-            <p>
-              {getFieldByLabel("Copyright")
-                ?.value.toString()
-                .replace("{year}", currentYear.toString())}
-            </p>
+            {mounted && (
+              <p>
+                {getFieldByLabel("Copyright")
+                  ?.value.toString()
+                  .replace("{year}", currentYear)}
+              </p>
+            )}
           </div>
         </div>
       </div>

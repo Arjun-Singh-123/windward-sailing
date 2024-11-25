@@ -155,8 +155,8 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex space-x-8">
-          {menuItems?.map((item) => (
-            <div key={item.id} className="group flex ">
+          {menuItems?.map((item, index) => (
+            <div key={index} className="group flex ">
               {item.nav_sections.length > 0 ? (
                 <div className="flex z-200 ">
                   <span className="text-white cursor-pointer py-2 transition-all duration-200 flex items-center border-transparent border-b-2 hover:border-white group-hover:border-white">
@@ -166,8 +166,8 @@ export default function Header() {
                   <div className="absolute left-0 w-full overflow-hidden menu-hani menuh-0 top-full group-hover:menuh-auto duration-500 shadow-lg bg-[#ffffff] rounded-b-lg">
                     <div className="container mx-auto max-w-[1630px] px-[15px]">
                       <div className="flex justify-center gap-8 py-4">
-                        {item.nav_sections.map((section) => (
-                          <div key={section.id} className="group/sub   ">
+                        {item.nav_sections.map((section, index) => (
+                          <div key={index} className="group/sub   ">
                             <div className="py-2 flex">
                               <Link
                                 href={`/boats/${section.href}`}
@@ -184,10 +184,9 @@ export default function Header() {
                             {section.products &&
                               section.products.length > 0 && (
                                 <div className="py-1">
-                                  {section?.products?.map((product) => (
-                                    <div className="py-1 flex">
+                                  {section?.products?.map((product, index) => (
+                                    <div className="py-1 flex" key={index}>
                                       <Link
-                                        key={product.id}
                                         href={`/boats/${section.href}/${product.href}`}
                                         className={cn(
                                           "block text-sm whitespace-nowrap w-full",
@@ -247,8 +246,8 @@ export default function Header() {
                 </SheetHeader>
                 <nav className="flex flex-col h-[calc(100vh-4rem)] overflow-hidden">
                   <div className="overflow-y-auto flex-1">
-                    {menuItems?.map((item) => (
-                      <React.Fragment key={item.id}>
+                    {menuItems?.map((item, index) => (
+                      <div key={index}>
                         {item.nav_sections.length > 0 ? (
                           <Collapsible>
                             <CollapsibleTrigger className="flex items-center justify-between w-full p-4 text-left">
@@ -266,8 +265,8 @@ export default function Header() {
                               <ChevronRight className="h-4 w-4" />
                             </CollapsibleTrigger>
                             <CollapsibleContent>
-                              {item?.nav_sections?.map((section) => (
-                                <Collapsible key={section.id}>
+                              {item?.nav_sections?.map((section, index) => (
+                                <Collapsible key={index}>
                                   <CollapsibleTrigger className="flex items-center font-bold justify-between w-full p-4 pl-8 text-left">
                                     <span
                                       className={cn(
@@ -292,22 +291,24 @@ export default function Header() {
                                     >
                                       All {section.name}
                                     </Link>
-                                    {section?.products?.map((product) => (
-                                      <Link
-                                        key={product.id}
-                                        // href={product.href ?? "#"}
-                                        href={`/boats/${section.href}/${product.href}`}
-                                        onClick={() => setIsSheetOpen(false)}
-                                        className={cn(
-                                          "block p-4 pl-12 text-sm  ",
-                                          isActive(product.href ?? "")
-                                            ? "text-[#00bfff]"
-                                            : "text-black"
-                                        )}
-                                      >
-                                        {product.name}
-                                      </Link>
-                                    ))}
+                                    {section?.products?.map(
+                                      (product, index) => (
+                                        <Link
+                                          key={index}
+                                          // href={product.href ?? "#"}
+                                          href={`/boats/${section.href}/${product.href}`}
+                                          onClick={() => setIsSheetOpen(false)}
+                                          className={cn(
+                                            "block p-4 pl-12 text-sm  ",
+                                            isActive(product.href ?? "")
+                                              ? "text-[#00bfff]"
+                                              : "text-black"
+                                          )}
+                                        >
+                                          {product.name}
+                                        </Link>
+                                      )
+                                    )}
                                   </CollapsibleContent>
                                 </Collapsible>
                               ))}
@@ -328,7 +329,7 @@ export default function Header() {
                             <ChevronRight className="h-4 w-4" />
                           </Link>
                         )}
-                      </React.Fragment>
+                      </div>
                     ))}
 
                     <Sheet>

@@ -60,92 +60,94 @@ const Hero = () => {
   useEffect(() => {
     console.log("useEffect: Initializing Swiper...");
 
-    // Enforcing proper initialization without the conditional
-    swiperRef.current = new Swiper(".swiper-container", {
-      loop: true, // Ensure the slider loops
-      autoplay: {
-        delay: 5000, // Delay between slides
-        disableOnInteraction: false, // Allow autoplay to continue even after user interaction
-      },
-      speed: 1000, // Slide transition speed
-      parallax: true,
-      observer: true,
-      observeParents: true,
-      watchSlidesProgress: true,
-      pagination: {
-        el: ".hero-slider .swiper-pagination",
-        clickable: true,
-        type: "fraction",
-        formatFractionCurrent: function (number: number) {
-          return ("0" + number).slice(-2);
+    if (typeof window !== "undefined") {
+      // Enforcing proper initialization without the conditional
+      swiperRef.current = new Swiper(".swiper-container", {
+        loop: true, // Ensure the slider loops
+        autoplay: {
+          delay: 5000, // Delay between slides
+          disableOnInteraction: false, // Allow autoplay to continue even after user interaction
         },
-        formatFractionTotal: function (number: number) {
-          return ("0" + number).slice(-2);
-        },
-      },
-
-      on: {
-        init() {
-          const swiper: any = this;
-          console.log("Swiper Initialized");
-          var autoplayduration = swiper?.params?.autoplay.delay;
-          slidedashfilled(
-            ".hero-slider .swiper-pagination-current",
-            autoplayduration
-          );
-        },
-        slideChange() {
-          const swiper: any = this;
-          console.log("Slide Changed");
-          var autoplayduration = swiper.params?.autoplay.delay;
-          slidedashfilled(
-            ".hero-slider .swiper-pagination-current",
-            autoplayduration
-          );
+        speed: 1000, // Slide transition speed
+        parallax: true,
+        observer: true,
+        observeParents: true,
+        watchSlidesProgress: true,
+        pagination: {
+          el: ".hero-slider .swiper-pagination",
+          clickable: true,
+          type: "fraction",
+          formatFractionCurrent: function (number: number) {
+            return ("0" + number).slice(-2);
+          },
+          formatFractionTotal: function (number: number) {
+            return ("0" + number).slice(-2);
+          },
         },
 
-        progress() {
-          console.log("Swiper Progress Event Triggered");
-          const swiper: any = this;
-          var swiperSlides = Array.from(swiper?.slides);
-          swiperSlides.forEach((slide: any) => {
-            var slideProgress = slide.progress;
-            var innerOffset = swiper.width * 0.5;
-            var innerTranslate = slideProgress * innerOffset;
-            slide.querySelector(
-              ".slide-inner"
-            )!.style.transform = `translate3d(${innerTranslate}px, 0, 0)`;
-          });
-        },
+        on: {
+          init() {
+            const swiper: any = this;
+            console.log("Swiper Initialized");
+            var autoplayduration = swiper?.params?.autoplay.delay;
+            slidedashfilled(
+              ".hero-slider .swiper-pagination-current",
+              autoplayduration
+            );
+          },
+          slideChange() {
+            const swiper: any = this;
+            console.log("Slide Changed");
+            var autoplayduration = swiper.params?.autoplay.delay;
+            slidedashfilled(
+              ".hero-slider .swiper-pagination-current",
+              autoplayduration
+            );
+          },
 
-        touchStart() {
-          console.log("Swiper Touch Started");
-          const swiper: any = this;
-          var swiperSlides = Array.from(swiper.slides);
-          swiperSlides.forEach((slide: any) => {
-            slide.style.transition = "";
-          });
-        },
+          progress() {
+            console.log("Swiper Progress Event Triggered");
+            const swiper: any = this;
+            var swiperSlides = Array.from(swiper?.slides);
+            swiperSlides.forEach((slide: any) => {
+              var slideProgress = slide.progress;
+              var innerOffset = swiper.width * 0.5;
+              var innerTranslate = slideProgress * innerOffset;
+              slide.querySelector(
+                ".slide-inner"
+              )!.style.transform = `translate3d(${innerTranslate}px, 0, 0)`;
+            });
+          },
 
-        setTransition(speed: number) {
-          console.log("Setting Swiper Transition Speed");
-          const swiper: any = this;
-          var swiperSlides = Array.from(swiper.slides);
-          swiperSlides.forEach((slide: any) => {
-            slide.style.transition = `${speed}ms`;
-            slide.querySelector(
-              ".slide-inner"
-            )!.style.transition = `${speed}ms`;
-          });
-        },
-      },
-    });
+          touchStart() {
+            console.log("Swiper Touch Started");
+            const swiper: any = this;
+            var swiperSlides = Array.from(swiper.slides);
+            swiperSlides.forEach((slide: any) => {
+              slide.style.transition = "";
+            });
+          },
 
-    // Cleanup on component unmount
-    return () => {
-      console.log("Destroying Swiper instance");
-      (swiperRef?.current as any)?.destroy();
-    };
+          setTransition(speed: number) {
+            console.log("Setting Swiper Transition Speed");
+            const swiper: any = this;
+            var swiperSlides = Array.from(swiper.slides);
+            swiperSlides.forEach((slide: any) => {
+              slide.style.transition = `${speed}ms`;
+              slide.querySelector(
+                ".slide-inner"
+              )!.style.transition = `${speed}ms`;
+            });
+          },
+        },
+      });
+
+      // Cleanup on component unmount
+      return () => {
+        console.log("Destroying Swiper instance");
+        (swiperRef?.current as any)?.destroy();
+      };
+    }
   }, [data]);
 
   return (
@@ -159,7 +161,7 @@ const Hero = () => {
                   src={slide.imageUrl ?? " "}
                   alt={`Slide ${index}`}
                   fill
-                  priority
+                  loading="lazy"
                 />
               </div>
               <div className="info">

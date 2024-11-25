@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressContentEditableWarning={true}>
+    <html lang="en" suppressHydrationWarning={true}>
       <body
         className={`${inter.className} antialiased flex flex-col min-h-screen ${contentFont.className} `}
       >
@@ -37,6 +37,7 @@ export default function RootLayout({
 
           <main className="flex-grow   ">
             <SpeedInsights />
+
             {children}
           </main>
           <ReactQueryDevtools initialIsOpen={false} />
