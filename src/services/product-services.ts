@@ -184,6 +184,7 @@ export async function fetchVesselsData() {
   if (error) {
     console.error("Error fetching vessels:", error);
     toast.error("Failed to fetch vessels");
+    return [];
   } else {
     // setVessels(data as Vessel[]);
     return data;

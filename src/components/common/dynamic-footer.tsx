@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { EXCLUDED_LABELS } from "@/constants";
 import { SocialMediaItems } from "./footer-contact-items";
 import { fetchFooterContent } from "@/services/header-footer-services";
+import { fetchContacts } from "@/services/product-services";
 
 type FieldType = "text" | "textarea" | "image" | "links";
 

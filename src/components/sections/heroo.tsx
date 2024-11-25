@@ -8,6 +8,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Swiper, { SwiperOptions } from "swiper";
 import "swiper/dist/css/swiper.min.css";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
 const Hero = () => {
   const { data = [] } = useQuery({
@@ -154,7 +155,12 @@ const Hero = () => {
           {data?.map((slide, index) => (
             <div className="swiper-slide" key={index}>
               <div className="slide-inner dark-overlay">
-                <img src={slide.imageUrl ?? " "} alt={`Slide ${index}`} />
+                <Image
+                  src={slide.imageUrl ?? " "}
+                  alt={`Slide ${index}`}
+                  fill
+                  priority
+                />
               </div>
               <div className="info">
                 <p className="text-5xl text-white font-bold mb-6 tracking-tight">

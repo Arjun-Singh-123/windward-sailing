@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 
 import React, { useEffect, useState } from "react";
@@ -25,7 +26,6 @@ const SocialMediaItems: React.FC = () => {
 
   return (
     <div className="max-w-6xl flex flex-col items-start space-y-4">
-      {/* Email Section */}
       {emailItem && (
         <Link
           href={`mailto:${emailItem.value}`}
@@ -39,7 +39,6 @@ const SocialMediaItems: React.FC = () => {
         </Link>
       )}
 
-      {/* Social Icons */}
       <SocialLinks />
       {/* <div className="flex   space-y-2 mt-4 gap-4   ">
         {socialItems.map((item) => (
