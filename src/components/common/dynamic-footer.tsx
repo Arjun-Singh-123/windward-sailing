@@ -116,7 +116,7 @@ const DynamicFooter = () => {
           alt="Footer Background"
           objectFit="cover"
           className="opacity-50"
-          priority
+          loading="lazy"
           sizes="100vw"
           width={1920}
           height={1080}
