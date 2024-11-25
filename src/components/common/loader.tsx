@@ -1,10 +1,17 @@
+import Image from "next/image";
 import React from "react";
 
 const Loader = () => {
   return (
     <div className="loading">
-      <img src="/images/loading.svg" alt="Loading..." className="w-46 h-46" />
-      <p>Loading...</p>
+      <Image
+        src="/images/loading.svg"
+        alt="Loading..."
+        width={184}
+        height={184}
+        className="object-contain"
+      />
+      {/* <p>Loading...</p> */}
     </div>
   );
 };

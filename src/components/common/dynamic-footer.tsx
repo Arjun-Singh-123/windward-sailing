@@ -106,12 +106,19 @@ const DynamicFooter = () => {
     <footer
       className="relative text-white"
       style={{
-        background: `linear-gradient(90deg,#072f6cc9 0%,#072f6cc9 100%), url(${
-          backgroundField?.value || "/images/footer-bg.jpg"
-        }) center / cover`,
         padding: "30px 0",
       }}
     >
+      <div className="absolute inset-0 z-[-1]">
+        <Image
+          src={backgroundField?.value || "/images/footer-bg.jpg"}
+          alt="Footer Background"
+          layout="fill"
+          objectFit="cover"
+          className="opacity-50"
+        />
+      </div>
+
       <div className="container mx-auto w-full max-w-[1630px] px-[15px] md:flex md:justify-center gap-8">
         <div className="">
           {logoField && (
