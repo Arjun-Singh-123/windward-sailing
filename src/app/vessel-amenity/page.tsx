@@ -95,9 +95,9 @@ const vesselSchema = z.object({
   stove: z.boolean().default(false),
   sails: z.boolean().default(false),
   bbq: z.boolean().default(false),
-  fuel_tank_size: z.number().positive("Fuel tank size must be positive"),
-  water_tank_size: z.number().positive("Water tank size must be positive"),
-  max_persons: z.number().positive("Maximum persons must be positive"),
+  fuel_tank_size: z.number().min(0, "Cabins must be non-negative").optional(),
+  water_tank_size: z.number().min(0, "Cabins must be non-negative").optional(),
+  max_persons: z.number().min(0, "Cabins must be non-negative").optional(),
 });
 
 const columns: (keyof Vessel)[] = [
@@ -173,6 +173,7 @@ export default function Component() {
     },
   });
 
+  console.log(form.formState.errors);
   // const data = useQuery({
   //   queryKey:["vessels-data"],
   //   queryFn:fetchVessels
@@ -333,6 +334,9 @@ export default function Component() {
       render={({ field }) => {
         console.log(field);
         // const inputType =
+
+        console.log(field);
+        console.log(field.value);
         const inputType =
           typeof field?.value === "number"
             ? "number"
@@ -351,7 +355,7 @@ export default function Component() {
               <FormControl>
                 {inputType === "checkbox" ? (
                   <Checkbox
-                    checked={field.value === "true"}
+                    checked={field.value === true}
                     onCheckedChange={(checked) => {
                       field.onChange(checked);
                     }}
@@ -361,11 +365,9 @@ export default function Component() {
                   <Input
                     type="number"
                     {...field}
-                    value={typeof field.value === "number" ? field.value : " "}
+                    value={typeof field.value === "number" ? field.value : 0}
                     onChange={(e) => {
-                      const value = e.target.value
-                        ? Number(e.target.value)
-                        : null;
+                      const value = e.target.value ? Number(e.target.value) : 0;
                       field.onChange(value);
                     }}
                     className={`
@@ -478,7 +480,7 @@ export default function Component() {
                         : typeof vessel[column] === "boolean"
                         ? vessel[column]
                           ? "✓"
-                          : null
+                          : " "
                         : vessel[column];
 
                     const alignmentClass =
@@ -661,7 +663,7 @@ export default function Component() {
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-4 pr-2"
                   >
-                    {columns.map((column) => (
+                    {columns?.map((column) => (
                       <div
                         key={column}
                         className="py-1 border-b border-gray-100 last:border-b-0  items-center "

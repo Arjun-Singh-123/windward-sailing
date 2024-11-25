@@ -134,13 +134,14 @@ function Dashboard() {
               <span>{section.name}</span>
               {/* <div className="flex items-center space-x-2">
                 <span className="text-sm font-normal">Publish</span>
-                <Switch
+                <input
+                  type="checkbox"
                   checked={section.status === "published"}
                   className="switch"
-                  onCheckedChange={(isPublished) =>
+                  onChange={(e) =>
                     handleStatusChange(
                       section.id,
-                      isPublished ? "published" : "draft"
+                      e.target.checked ? "published" : "draft"
                     )
                   }
                 />

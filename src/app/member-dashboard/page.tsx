@@ -61,6 +61,27 @@ type Member = {
   emergency_contact_phone: string;
 };
 
+const validateMember = (member: Omit<Member, "id">): boolean => {
+  const requiredFields: { key: keyof Omit<Member, "id">; message: string }[] = [
+    { key: "name", message: "Name is required." },
+    { key: "email", message: "Email is required." },
+    { key: "phone", message: "Phone number is required." },
+    { key: "address1", message: "Address is required." },
+    { key: "city", message: "City is required." },
+    { key: "state", message: "State is required." },
+    { key: "zipcode", message: "Zipcode is required." },
+    { key: "country", message: "Country is required." },
+  ];
+
+  for (const field of requiredFields) {
+    if (!member[field.key]) {
+      // toast.error(field.message);
+      return false;
+    }
+  }
+  return true;
+};
+
 const fetchMembers = async (): Promise<Member[]> => {
   const { data, error } = await supabase.from("members_new").select("*");
   if (error) throw error;
@@ -83,6 +104,10 @@ const deleteMember = async (id: string): Promise<void> => {
 };
 
 const createMember = async (member: Omit<Member, "id">): Promise<Member> => {
+  if (!validateMember(member)) {
+    toast.error("Please fill all the fields ! ");
+    throw new Error("Validation failed");
+  }
   const { data, error } = await supabase
     .from("members_new")
     .insert([member])
@@ -187,7 +212,7 @@ export default function Component() {
       toast.success("Member created successfully");
     },
     onError: () => {
-      toast.error("Failed to create member");
+      toast.error("Failed to create member , Please fill all the fields");
     },
   });
 
@@ -308,7 +333,6 @@ export default function Component() {
 
   return (
     <div className="">
-      <Toaster />
       <div className="flex justify-between items-center mb-6 pr-8">
         <h1 className="text-3xl font-bold ml-4">Members Dashboard</h1>
         <Button

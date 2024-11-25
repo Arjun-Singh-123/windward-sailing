@@ -244,7 +244,11 @@ const SettingsPanel = () => {
               </Button>
             ) : (
               <Link href="/login">
-                <Button variant="outline" className="w-full">
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => setIsOpen(false)}
+                >
                   Login
                 </Button>
               </Link>

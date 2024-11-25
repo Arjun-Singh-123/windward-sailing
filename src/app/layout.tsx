@@ -41,7 +41,7 @@ export default function RootLayout({
           </main>
           <ReactQueryDevtools initialIsOpen={false} />
           <ScrollToTop />
-          <Toaster richColors={true} duration={3000} position="top-right" />
+          <Toaster richColors={true} duration={2000} position="top-right" />
           <DynamicFooter />
         </Providers>
       </body>

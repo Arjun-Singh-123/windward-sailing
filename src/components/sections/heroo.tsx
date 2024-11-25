@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
 
-import Swiper from "swiper";
+import Swiper, { SwiperOptions } from "swiper";
 import "swiper/dist/css/swiper.min.css";
 import { Button } from "../ui/button";
 
@@ -15,7 +15,7 @@ const Hero = () => {
     queryFn: () => fetchSectionProducts("Banner Section"),
   });
 
-  const swiperRef = useRef<null>(null); // Ref to store Swiper instance
+  const swiperRef = useRef<any>(null); // Ref to store Swiper instance
 
   // const slides = (data || []).filter((slide) => slide && slide.imageUrl);
 
@@ -85,16 +85,18 @@ const Hero = () => {
 
       on: {
         init() {
+          const swiper: any = this;
           console.log("Swiper Initialized");
-          var autoplayduration = this.params?.autoplay.delay;
+          var autoplayduration = swiper?.params?.autoplay.delay;
           slidedashfilled(
             ".hero-slider .swiper-pagination-current",
             autoplayduration
           );
         },
         slideChange() {
+          const swiper: any = this;
           console.log("Slide Changed");
-          var autoplayduration = this.params?.autoplay.delay;
+          var autoplayduration = swiper.params?.autoplay.delay;
           slidedashfilled(
             ".hero-slider .swiper-pagination-current",
             autoplayduration
@@ -103,9 +105,9 @@ const Hero = () => {
 
         progress() {
           console.log("Swiper Progress Event Triggered");
-          const swiper = this;
-          var swiperSlides = Array.from(this.slides);
-          swiperSlides.forEach((slide) => {
+          const swiper: any = this;
+          var swiperSlides = Array.from(swiper?.slides);
+          swiperSlides.forEach((slide: any) => {
             var slideProgress = slide.progress;
             var innerOffset = swiper.width * 0.5;
             var innerTranslate = slideProgress * innerOffset;
@@ -117,18 +119,18 @@ const Hero = () => {
 
         touchStart() {
           console.log("Swiper Touch Started");
-          const swiper = this;
-          var swiperSlides = Array.from(this.slides);
-          swiperSlides.forEach((slide) => {
+          const swiper: any = this;
+          var swiperSlides = Array.from(swiper.slides);
+          swiperSlides.forEach((slide: any) => {
             slide.style.transition = "";
           });
         },
 
         setTransition(speed: number) {
           console.log("Setting Swiper Transition Speed");
-          const swiper = this;
-          var swiperSlides = Array.from(this.slides);
-          swiperSlides.forEach((slide) => {
+          const swiper: any = this;
+          var swiperSlides = Array.from(swiper.slides);
+          swiperSlides.forEach((slide: any) => {
             slide.style.transition = `${speed}ms`;
             slide.querySelector(
               ".slide-inner"
@@ -141,7 +143,7 @@ const Hero = () => {
     // Cleanup on component unmount
     return () => {
       console.log("Destroying Swiper instance");
-      swiperRef.current?.destroy();
+      (swiperRef?.current as any)?.destroy();
     };
   }, [data]);
 

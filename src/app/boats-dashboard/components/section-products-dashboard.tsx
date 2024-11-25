@@ -185,11 +185,14 @@ const SectionProducts = ({ sectionId, benefitsId }: any) => {
                       <span>{product.name}</span>
                     </div>
                     {sectionId === benefitsId && (
-                      <Switch
+                      <input
+                        type="checkbox"
+                        title="Click to select an external image"
                         checked={userSelection?.is_external_image as boolean}
-                        onCheckedChange={(isExternalImage) =>
-                          handleSwitchChange(product.id, isExternalImage)
-                        }
+                        onChange={(e) => {
+                          console.log(e.target.checked);
+                          handleSwitchChange(product.id, e.target.checked);
+                        }}
                       />
                     )}
                   </div>

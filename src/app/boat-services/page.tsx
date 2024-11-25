@@ -45,16 +45,21 @@ import { useRouter } from "next/navigation";
 const boatSchema = z.object({
   name: z.string().min(1, "Boat name is required"),
   size: z.string().min(1, "Size is required"),
-  available_no: z.number().int().positive("Available number must be positive"),
+  available_no: z
+    .number()
+
+    .optional(),
   booked_status: z.string().min(1, "Booked status is required"),
-  booked_start_date: z.string().nullable().optional(), // Allows string, null, or undefined
+  booked_start_date: z.string().nullable().optional(),
   booked_end_date: z.string().nullable().optional(),
   booked_by_name: z.string().nullable().optional(),
   booked_by_email: z.string().email().nullable().optional().or(z.literal("")),
   booked_by_phone: z.string().nullable().optional(),
-  availability_time: z.string().min(1, "Availability time is required"),
+  availability_time: z
+    .string()
+    .min(1, "Availability time is required")
+    .optional(),
 });
-
 type BoatFormData = z.infer<typeof boatSchema>;
 
 export default function AdminBoatTable() {
@@ -124,7 +129,7 @@ export default function AdminBoatTable() {
       } else {
         setEditingId(null);
         fetchBoats();
-        // toast.success("Boat updated successfully");
+        toast.success("Boat updated successfully");
       }
     }
   };
@@ -154,7 +159,8 @@ export default function AdminBoatTable() {
   };
 
   const handleCreate = async (data: BoatFormData) => {
-    const { error } = await supabase.from("boats").insert([data]);
+    console.log(data);
+    const { error } = await supabase.from("boats").insert([data as any]);
 
     if (error) {
       console.error("Error creating boat:", error);
@@ -175,17 +181,27 @@ export default function AdminBoatTable() {
     <Controller
       name={name}
       control={control}
-      render={({ field }) => (
-        <div className="grid grid-cols-2 gap-2 items-center py-2">
-          <span className="font-medium text-sm text-right pr-2">{label}:</span>
-          <Input
-            {...field}
-            value={field.value ?? ""}
-            type={type}
-            className="w-full"
-          />
-        </div>
-      )}
+      render={({
+        field: { ref, ...field },
+        fieldState: { error, invalid },
+      }) => {
+        return (
+          <div className="grid grid-cols-2 gap-2 items-center py-2">
+            <span className="font-medium text-sm text-right pr-2">
+              {label}:
+            </span>
+            <Input
+              {...field}
+              value={field.value ?? ""}
+              type={type}
+              className="w-full"
+            />
+            {/* {errors[name] && (
+            <span className="text-red-500 text-sm">{errors[name].message}</span>
+          )} */}
+          </div>
+        );
+      }}
     />
   );
 
@@ -216,7 +232,6 @@ export default function AdminBoatTable() {
 
   return (
     <div className="w-full section-py-80 overflow-x-scroll px-[15px]">
-      <Toaster />
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Admin Boat Management</h1>
         <Button

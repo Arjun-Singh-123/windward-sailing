@@ -1,10 +1,10 @@
-// src/components/Loading.tsx
 import React from "react";
 
-const Loader: React.FC = () => {
+const Loader = () => {
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="loading">
       <img src="/images/loading.svg" alt="Loading..." className="w-46 h-46" />
+      <p>Loading...</p>
     </div>
   );
 };
