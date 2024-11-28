@@ -117,10 +117,10 @@ const SettingsPanel = () => {
   }, [pathname]);
 
   const contactInfo = {
-    email: "support@newportsailingclub.com",
+    email: "support@windwardsailingclub.com",
     phone: "(949) 675-9060",
-    hours: "Monday — Sunday\n9:00 a.m. — 5:00 p.m.",
-    address: "3300 Via Lido, Windward Beach, CA 92663",
+    hours: "Monday — Sunday\n9:00 a.m. — 6:00 p.m.",
+    address: "3300 Via Lido, Newport Beach, CA 92663",
   };
 
   const routes = [

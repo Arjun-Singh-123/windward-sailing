@@ -9,6 +9,7 @@ import { Toaster } from "sonner";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import DynamicHeader from "@/components/common/header";
 import DynamicFooter from "@/components/common/dynamic-footer";
+import FooterBottom from "@/components/common/footer";
 
 export const metadata: Metadata = {
   title: "Newport Sailing Club",
@@ -43,7 +44,7 @@ export default function RootLayout({
           <ReactQueryDevtools initialIsOpen={false} />
           <ScrollToTop />
           <Toaster richColors={true} duration={2000} position="top-right" />
-          <DynamicFooter />
+          <FooterBottom />
         </Providers>
       </body>
     </html>

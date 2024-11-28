@@ -1,7 +1,7 @@
 import CommonMembershipAbout from "@/components/common/common-member-about";
 
 const description =
-  " Become a Newport Sailing Club member to take advantage of all our great Sailing opportunities. Don't hesitate to contact us with any questions about membership.";
+  " Become a Windward Sailing Club member to take advantage of all our great Sailing opportunities. Don't hesitate to contact us with any questions about membership.";
 let membershipFees = true;
 export default function MemberShipFees() {
   return (
@@ -14,8 +14,8 @@ export default function MemberShipFees() {
           membership={true}
           imageUrl="/images/membership-fee.png"
           image={true}
-          />
-        </div>
+        />
+      </div>
     </>
   );
 }

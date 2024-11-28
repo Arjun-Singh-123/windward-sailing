@@ -7,11 +7,12 @@ const About = () => {
   return (
     <section className="w-full section-py-80">
       <CommonMembershipAbout
-        subtitle=" Newport Sailing Club"
+        subtitle="Windward Sailing Club"
         title="About Us"
         description={description}
         imageUrl="/images/about.jpg"
         image={true}
+        isAboutPage={true}
       />
     </section>
   );

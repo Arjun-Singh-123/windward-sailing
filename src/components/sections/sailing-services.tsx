@@ -62,7 +62,8 @@ export default function SailingServices() {
   const [shouldScroll, setShouldScroll] = useState(false);
   const { data } = useQuery({
     queryKey: ["cards-data"],
-    queryFn: () => fetchSectionProducts("HIghlighted Cards") ?? [],
+    queryFn: () =>
+      fetchSectionProducts("8af6b308-d7a6-4f02-9f96-b11567aaa3b6") ?? [],
   });
 
   useEffect(() => {

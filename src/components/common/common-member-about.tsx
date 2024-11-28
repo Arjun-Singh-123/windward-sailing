@@ -5,6 +5,7 @@ import BoatClubPricing from "./membership-tojoin";
 import BoatFeatures from "./boat-features";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { aboutContent } from "@/constants";
 
 interface AboutProps {
   subtitle: string;
@@ -17,8 +18,15 @@ interface AboutProps {
   imageUrl?: string;
   rentalFeesBg?: boolean;
   isHomePage?: boolean;
+  isAboutPage?: boolean;
 }
+export const t1 = "Sailing the “Windward” Way";
+export const t2 = "Get Involved With Sailing";
+export const t3 = "Your Cruise — Your Boat";
+export const t4 = "Our Goals";
 
+export const d1 =
+  "Are you looking for an exhilarating day on the open sea, carefree cruising, an exciting vacation experience, comfort, and a well maintained yacht? Do you appreciate personalized service, provided by a warm, friendly and helpful staff? Windward Sailing has been offering all this and more to its members for 47 years in beautiful Newport Beach. When you sail with Windward you benefit from a wide variety of vessels ranging in size from 28’ - 43’. You sail our vessels without the large capital investment, hard work, and hassles involved with ownership. Our professionally maintained yachts possess accommodations for 5- 8 guests for overnight trips, and for 2-12 guests for day sails. These yachts are inspected regularly to efficiently and consistently monitor our equipment.";
 const CommonMembershipAbout = ({
   subtitle,
   title,
@@ -30,8 +38,11 @@ const CommonMembershipAbout = ({
   imageUrl,
   rentalFeesBg = false,
   isHomePage = false,
+  isAboutPage = false,
 }: AboutProps) => {
   console.log(isHomePage);
+  console.log(title);
+  console.log(isAboutPage);
   return (
     <div className="w-full">
       <div className="container max-w-[1630px] px-[15px] mx-auto">
@@ -46,6 +57,21 @@ const CommonMembershipAbout = ({
               {title && title}
             </h3>
             <p>{description && description}</p>
+
+            {isAboutPage && (
+              <>
+                {aboutContent?.map((item, index) => (
+                  <div key={index} className="mb-8 pt-4">
+                    <h4
+                      className={`text-3xlxl ${mainHeadingFont.className} mb-4 d-only`}
+                    >
+                      {item.title}
+                    </h4>
+                    <p>{item.description}</p>
+                  </div>
+                ))}
+              </>
+            )}
             <div>
               {isHomePage && (
                 <Button variant="outlineDarkblue">

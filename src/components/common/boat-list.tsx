@@ -40,8 +40,8 @@ export default function AlternatingCards() {
           </div>
           <div className="md:w-1/2">
             <Image
-              src={card.imageUrl}
-              alt={card.title}
+              src={card.imageUrl ?? " "}
+              alt={card.title || "default"}
               width={300}
               height={200}
               className="w-full h-full object-cover"

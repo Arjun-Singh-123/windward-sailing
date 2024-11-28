@@ -1,160 +1,65 @@
 import { useState, useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { DARK_HEADER_PATHS, SCROLL_THRESHOLD } from "../constants";
 
-export const useHeaderState = () => {
-  const pathname = usePathname();
+const calculateHeaderState = (
+  pathname: string,
+  scrollY: number,
+  hasSliderNow: boolean
+) => {
+  return {
+    isHidden: scrollY > SCROLL_THRESHOLD,
+    isTransparent: hasSliderNow && scrollY <= SCROLL_THRESHOLD,
+    isDark:
+      DARK_HEADER_PATHS.includes(pathname as any) || scrollY > SCROLL_THRESHOLD,
+  };
+};
 
-  const lastScrollY = useRef(0);
-  const SCROLL_THRESHOLD = 50;
+export function useHeaderState(pathname: string) {
+  const [state, setState] = useState(() => {
+    const initialScrollY = typeof window !== "undefined" ? window.scrollY : 0;
 
-  const [state, setState] = useState({
-    isHidden: false,
-    isTransparent: true,
-    hasPageSlider: false,
+    return calculateHeaderState(pathname, initialScrollY, true);
   });
 
-  const checkSlider = useRef(() => {
-    if (typeof window === "undefined") return false;
-    return !!document.querySelector(".slider-section");
-  });
+  const hasSliderRef = useRef(false);
 
-  const handleScroll = useRef(() => {
-    requestAnimationFrame(() => {
-      const currentScrollY = window.scrollY;
-      const isScrollingDown = currentScrollY > lastScrollY.current;
-      const hasSliderNow = checkSlider.current();
-
-      setState((prev) => {
-        const newTransparent =
-          hasSliderNow && currentScrollY <= SCROLL_THRESHOLD;
-        const newHidden = isScrollingDown && currentScrollY > SCROLL_THRESHOLD;
-
-        if (
-          prev.isTransparent === newTransparent &&
-          prev.isHidden === newHidden &&
-          prev.hasPageSlider === hasSliderNow
-        ) {
-          return prev;
-        }
-
-        return {
-          isHidden: newHidden,
-          isTransparent: newTransparent,
-          hasPageSlider: hasSliderNow,
-        };
-      });
-
-      lastScrollY.current = currentScrollY;
-    });
-  }).current;
+  console.log(state);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" && typeof document === "undefined")
+      return;
 
-    const hasSlider = checkSlider.current();
-    setState({
-      isHidden: false,
-      isTransparent: hasSlider && window.scrollY <= SCROLL_THRESHOLD,
-      hasPageSlider: hasSlider,
-    });
+    hasSliderRef.current =
+      typeof document !== "undefined" &&
+      !!document.querySelector(".slider-section");
 
-    let ticking = false;
-    const throttledScrollHandler = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-      }
+    setState(
+      calculateHeaderState(pathname, window.scrollY, hasSliderRef.current)
+    );
+
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const isScrollingDown = currentScrollY > lastScrollY;
+
+      setState({
+        isHidden: isScrollingDown && currentScrollY > SCROLL_THRESHOLD,
+        isTransparent:
+          hasSliderRef.current && currentScrollY <= SCROLL_THRESHOLD,
+        isDark:
+          DARK_HEADER_PATHS.includes(pathname as any) ||
+          currentScrollY > SCROLL_THRESHOLD,
+      });
+
+      lastScrollY = currentScrollY;
     };
 
-    window.addEventListener("scroll", throttledScrollHandler, {
-      passive: true,
-    });
+    handleScroll();
 
-    return () => {
-      window.removeEventListener("scroll", throttledScrollHandler);
-    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [pathname]);
 
   return state;
-};
-// import { useState, useEffect } from "react";
-// import { DARK_HEADER_PATHS, SCROLL_THRESHOLD } from "../constants";
-
-// const calculateHeaderState = (pathname: string, scrollY: number) => ({
-//   isHidden: scrollY > SCROLL_THRESHOLD,
-//   isTransparent: pathname === "/" && scrollY <= SCROLL_THRESHOLD,
-//   isDark:
-//     DARK_HEADER_PATHS.includes(pathname as any) || scrollY > SCROLL_THRESHOLD,
-// });
-
-// export function useHeaderState(pathname: string) {
-//   const [state, setState] = useState(() => {
-//     const initialScrollY = typeof window !== "undefined" ? window.scrollY : 0;
-//     return calculateHeaderState(pathname, 0);
-//   });
-
-//   useEffect(() => {
-//     if (typeof window === "undefined") return;
-//     // Immediately update state on route change
-//     setState(calculateHeaderState(pathname, window.scrollY));
-
-//     let lastScrollY = window.scrollY;
-//     const handleScroll = () => {
-//       const currentScrollY = window.scrollY;
-//       const isScrollingDown = currentScrollY > lastScrollY;
-
-//       setState({
-//         isHidden: isScrollingDown && currentScrollY > SCROLL_THRESHOLD,
-//         isTransparent: pathname === "/" && currentScrollY <= SCROLL_THRESHOLD,
-//         isDark:
-//           DARK_HEADER_PATHS.includes(pathname as any) ||
-//           currentScrollY > SCROLL_THRESHOLD,
-//       });
-
-//       lastScrollY = currentScrollY;
-//     };
-
-//     // Initial check
-//     handleScroll();
-
-//     window.addEventListener("scroll", handleScroll);
-//     return () => window.removeEventListener("scroll", handleScroll);
-//   }, [pathname]);
-
-//   return state;
-// }
-
-// export function useHeaderState(pathname: string) {
-//   const [state, setState] = useState<HeaderState>({
-//     isHidden: false,
-//     isTransparent: pathname === "/",
-//     isDark: DARK_HEADER_PATHS.includes(pathname),
-//   });
-
-//   useEffect(() => {
-//     let lastScrollY = window.scrollY;
-
-//     const handleScroll = () => {
-//       const currentScrollY = window.scrollY;
-//       const isScrollingDown = currentScrollY > lastScrollY;
-//       const hasScrolledPastThreshold = currentScrollY > SCROLL_THRESHOLD;
-
-//       setState((prev) => ({
-//         isHidden: isScrollingDown && hasScrolledPastThreshold,
-//         isTransparent: pathname === "/" && !hasScrolledPastThreshold,
-//         isDark:
-//           DARK_HEADER_PATHS.includes(pathname) || hasScrolledPastThreshold,
-//       }));
-
-//       lastScrollY = currentScrollY;
-//     };
-
-//     window.addEventListener("scroll", handleScroll);
-//     return () => window.removeEventListener("scroll", handleScroll);
-//   }, [pathname]);
-
-//   return state;
-// }
+}

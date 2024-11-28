@@ -113,8 +113,8 @@ export async function fetchBannerProducts() {
   // console.log("Banner Products:", productsData);
 }
 
-export const fetchSectionProducts = async (sectionName: string) => {
-  console.log(sectionName);
+export const fetchSectionProducts = async (sectionId: string) => {
+  console.log(sectionId);
   const { data, error } = await supabase
     .from("user_selections")
     .select(
@@ -129,27 +129,26 @@ export const fetchSectionProducts = async (sectionName: string) => {
        
       ),
       sections (
-        name 
+        name ,
+        id
       )
     `
     )
-    .eq("sections.name", sectionName);
+    .eq("section_id", sectionId);
 
   if (error) throw error;
 
   return (
-    data
-      ?.filter((item) => item.sections?.name === sectionName)
-      .map((item) => ({
-        product_id: item.product_id,
-        title: item?.products?.name,
-        description: item?.products?.description,
-        imageUrl: item?.products?.image_url,
-        price: item?.products?.price,
-        link: item?.products?.href,
-        slug: item?.products?.nav_sections?.slug,
-        sectionName: item.sections?.name,
-      })) ?? []
+    data?.map((item) => ({
+      product_id: item.product_id,
+      title: item?.products?.name,
+      description: item?.products?.description,
+      imageUrl: item?.products?.image_url,
+      price: item?.products?.price,
+      link: item?.products?.href,
+      slug: item?.products?.nav_sections?.slug,
+      sectionName: item.sections?.name,
+    })) ?? []
   );
 };
 
@@ -190,3 +189,39 @@ export async function fetchVesselsData() {
     return data;
   }
 }
+
+export const fetchBenefitSectionProducts = async (sectionId: string) => {
+  const { data, error } = await supabase
+    .from("user_selections")
+    .select(
+      `
+      product_id,
+      products (
+        id,
+        name  ,
+        image_url  ,
+        price,
+        description,
+        href,nav_sections(slug),
+        product_details(images)
+      ),
+      sections (
+        name 
+      )
+    `
+    )
+    .eq("section_id", sectionId);
+  console.log(data);
+  if (error) throw error;
+
+  return data?.map((item) => ({
+    product_id: item.product_id,
+    title: item?.products?.name,
+    imageUrl: item?.products?.image_url,
+    price: item?.products?.price,
+    link: item?.products?.href,
+    slug: item?.products?.nav_sections?.slug,
+    description: item.products?.description,
+    images: item.products?.product_details,
+  }));
+};

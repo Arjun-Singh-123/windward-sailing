@@ -106,8 +106,8 @@ export default function Component() {
             <Card className="overflow-hidden">
               <CardContent className="p-0">
                 <Image
-                  src={image.src}
-                  alt={image.alt}
+                  src={image.src ?? " "}
+                  alt={image.alt || "default"}
                   width={400}
                   height={300}
                   className="w-full h-auto object-cover"

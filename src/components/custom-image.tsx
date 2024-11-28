@@ -30,7 +30,7 @@ const CustomImage = ({ src, alt, width, height }: CustomImageProps) => {
   return (
     <Image
       src={src}
-      alt={alt}
+      alt={alt || "default"}
       width={width}
       height={height}
       placeholder="blur"

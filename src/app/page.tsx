@@ -2,8 +2,6 @@ import CommonMembershipAbout from "@/components/common/common-member-about";
 import Detail from "@/components/common/details";
 import StatsSlider from "@/components/common/stats";
 
-import Heroo from "@/components/sections/heroo";
-import SailingServices from "@/components/sections/sailing-services";
 import {
   Bath,
   Bed,
@@ -23,6 +21,9 @@ import {
   fetchFooterContent,
   fetchNavItems,
 } from "@/services/header-footer-services";
+import BannerSection from "@/components/sections/hero-section";
+import HighlightedCards from "@/components/sections/sailing-cards";
+import BenefitSection from "@/components/common/benefit-detail-images";
 type Section = {
   id: number;
   section_name: string;
@@ -37,12 +38,12 @@ function Home() {
 
   return (
     <div className="flex flex-col items-center min-h-screen p-0 home-page   ">
-      <Heroo />
-      <SailingServices />
+      <BannerSection />
+      <HighlightedCards />
 
       <section className="w-full bg-lightSky section-py-80">
         <div className="container mx-auto w-full max-w-[1630px] px-[15px]">
-          <Detail
+          <BenefitSection
             benefits={false}
             benefitsData={[
               {
@@ -98,7 +99,7 @@ function Home() {
       <section className="w-full bg-lightSky section-py-80">
         <CommonMembershipAbout
           subtitle="What We Do"
-          title="Welcome to Newport Sailing Club"
+          title="Welcome to Windward Sailing Club"
           description={description}
           imageUrl="/images/about.jpg"
           image={true}

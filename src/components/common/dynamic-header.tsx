@@ -2,25 +2,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Phone,
-  Clock,
-  MapPin,
-  Youtube,
-  Mail,
-  X,
-  ChevronsRight,
-  MailIcon,
-  Globe,
-  Settings,
-  VoicemailIcon,
-  CalendarDays,
-} from "lucide-react";
-import { useParams, usePathname } from "next/navigation";
+import { CalendarDays } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 import {
   Sheet,
@@ -29,9 +12,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, MoreHorizontal, ChevronRight } from "lucide-react";
+import { Menu, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import CombinedNavigation from "./combined-header";
 
 import {
   Collapsible,
@@ -41,24 +23,16 @@ import {
 
 import { cn } from "@/lib/utils";
 // import { FooterContent } from "../sections/admin-footer";
-import { supabase } from "@/lib/supabase";
 import { useQuery } from "@tanstack/react-query";
-import { contentFont } from "@/app/ui/fonts";
-import MobileOverlay from "./mobile-overlay";
-import AnimatedButton from "./animated-button";
 // import useHeaderStore from "@/store/header-height";
 // import MainNav from "../sections/main-nav";
 // import TopBar from "../sections/top-nav";
-import { clearSession, getSession } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { useHeaderState } from "@/hooks/user-header-state";
-import { EXCLUDED_LABELS, EXCLUDED_PATHNAMES } from "@/constants";
-import { SettingsPanel, SocialMediaItems } from "./footer-contact-items";
+import { SettingsPanel } from "./footer-contact-items";
 import BoatReservation from "../sections/boat-reservation";
 import { ScrollArea } from "../ui/scroll-area";
-import {
-  fetchFooterContent,
-  fetchNavItems,
-} from "@/services/header-footer-services";
+import { fetchNavItems } from "@/services/header-footer-services";
 
 export const menuItemss = (items: any) => {
   console.log("item of nav", items);
@@ -99,16 +73,24 @@ export default function Header() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const headerRef = useRef(null);
   const [session, setSession] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
 
-  const [hideHeader, setHideHeader] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   const [lastScrollY, setLastScrollY] = useState(0);
   const { data: menuItems } = useQuery({
     queryKey: ["menuitems-data"],
     queryFn: fetchNavItems,
   });
 
-  const { isHidden, isTransparent, hasPageSlider } = useHeaderState();
+  const { isHidden, isTransparent, isDark } = useHeaderState(pathname);
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   useEffect(() => {
     const session = getSession();
 
@@ -124,26 +106,41 @@ export default function Header() {
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
-  console.log(isHidden, isTransparent, hasPageSlider);
+  console.log(isTransparent);
+  const isTransparentFallback =
+    isTransparent !== undefined ? isTransparent : true;
+
+  // if (!isClient) {
+  //   <header className="fixed top-0 left-0 right-0 z-50">
+  //     <div className="h-16 bg-transparent"></div>
+  //   </header>;
+  // }
+
   return (
     <header
       ref={headerRef}
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        {
-          "-translate-y-full": isHidden,
-          "translate-y-0": !isHidden,
-          "bg-transparent": true,
-          "bg-fontColor backdrop-blur-sm": !isTransparent,
-          "bg-fontColor": !hasPageSlider,
-        }
-      )}
+      className={`
+        fixed top-0 left-0 right-0 z-50 transition-all duration-300 
+        ${isHidden ? "-translate-y-full" : "translate-y-0"}
+        ${isDark ? "bg-fontColor backdrop-blur-sm" : "bg-transparent"}
+        
+      `}
+
+      // className={cn(
+      //   "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ",
+      //   {
+      //     "-translate-y-full": isHidden,
+      //     "translate-y-0": !isHidden,
+      //     "bg-transparent": isTransparentFallback,
+      //     "bg-fontColor backdrop-blur-sm": isDark,
+      //   }
+      // )}
     >
       <div className="flex flex-1 justify-between">
         <div className="flex items-center btnplr-30tb15">
           <Link href="/" className="flex-shrink-0">
             <Image
-              src="/images/Logo_black.png"
+              src="/images/logoo.png"
               alt="Logo"
               width={140}
               height={40}
@@ -376,9 +373,7 @@ export default function Header() {
           <Sheet>
             <SheetTrigger asChild>
               <Button
-                className={`${
-                  !isTransparent ? "backdrop-blur-sm" : ""
-                } hidden lg:flex btnplr-30 h100 noshadow noborder bg-transparent hover:bg-white text-white hover:text-darkBlue rounded-none`}
+                className={`  hidden lg:flex btnplr-30 h100 noshadow noborder bg-transparent hover:bg-white text-white hover:text-darkBlue rounded-none`}
                 // onClick={() => setIsOpen(true)}
               >
                 <CalendarDays className="h-5 w-5" />

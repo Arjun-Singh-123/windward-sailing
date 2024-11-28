@@ -122,7 +122,7 @@ export default function ImprovedTestimonialsCarousel() {
                       <div className="w-24 h-24 rounded-full overflow-hidden border-blue-500 ">
                         <Image
                           src={testimonial.image}
-                          alt={testimonial.name}
+                          alt={testimonial.name || "default"}
                           className="w-full h-full object-cover"
                           width={96}
                           height={96}

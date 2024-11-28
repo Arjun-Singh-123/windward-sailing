@@ -121,7 +121,7 @@ const SpecificationsSection = ({ specificationData }: any) => {
   console.log("specification");
   return (
     <div className="mb-8    ">
-      <h2 className="text-2xl sm:text-3xl font-bold ml-3    mb-4 text-black dark:text-white">
+      <h2 className="text-2xl pt-4 sm:text-3xl font-bold ml-3    mb-8 text-black dark:text-white">
         Specifications
       </h2>
       {/* <DecoratorLine /> */}
@@ -164,7 +164,7 @@ const SpecificationsSection = ({ specificationData }: any) => {
             )
           )}
       </div> */}
-      <div className="p-4 bg-sky-50">
+      <div className="bg-sky-50">
         <div className="flex flex-wrap gap-8  ">
           {transformSpecifications(specificationData)?.map((section, index) => (
             <div
@@ -313,7 +313,7 @@ const ImageModal = ({ isOpen, onClose, image }: any) => {
         </button>
         <Image
           src="https://pknbhkxuqdmghngwniok.supabase.co/storage/v1/object/public/images/windward-images/IMG_4546.jpg"
-          alt={image.alt}
+          alt={image.alt || "default"}
           layout="fill"
           objectFit="cover"
           className="rounded-lg"
@@ -470,7 +470,7 @@ export default function YachtGallery({
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className=" ">
       <h2 className="text-2xl sm:text-3xl font-bold   text-[#1e3a8a] flex items-center mb-6">
         <Compass className="mr-2 h-6 w-6 sm:h-8 sm:w-8 " /> {title}
       </h2>
@@ -489,7 +489,7 @@ export default function YachtGallery({
                 >
                   <Image
                     src={image ?? ""}
-                    alt={image.alt}
+                    alt={image.alt || "default"}
                     width={1600}
                     height={800}
                     objectFit="cover"
@@ -582,8 +582,8 @@ export default function YachtGallery({
                 />
                 {isCardboardView && (
                   <Image
-                    src={images[selectedImageIndex].src}
-                    alt={images[selectedImageIndex].alt}
+                    src={images[selectedImageIndex].src ?? " "}
+                    alt={images[selectedImageIndex].alt || "default"}
                     layout="fill"
                     objectFit="contain"
                     className="rounded-lg w-1/2 ml-1/2"

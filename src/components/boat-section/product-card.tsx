@@ -20,7 +20,7 @@ export default function ProductCard({
     <div className="border rounded-lg overflow-hidden shadow-lg flex flex-col h-full">
       <Image
         src={image_url ?? ""}
-        alt={name}
+        alt={name || "default"}
         width={300}
         height={200}
         className="w-full h-48 object-cover"

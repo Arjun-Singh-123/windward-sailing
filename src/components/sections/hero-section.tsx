@@ -3,22 +3,23 @@ import {
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import RentalFees from "./components/rental-fees";
 import { fetchRentals } from "@/services/rental-services";
+import Hero from "./heroo";
+import { fetchSectionProducts } from "@/services/product-services";
 
-const Page = async () => {
+const BannerSection = async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["rental-fees"],
-    queryFn: () => fetchRentals(),
+    queryKey: ["hero-banner-images"],
+    queryFn: () => fetchSectionProducts("bd024ca4-e72a-499b-8237-c875f6429409"),
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <RentalFees />
+      <Hero />
     </HydrationBoundary>
   );
 };
 
-export default Page;
+export default BannerSection;

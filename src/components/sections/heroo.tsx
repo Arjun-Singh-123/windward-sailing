@@ -13,7 +13,7 @@ import Image from "next/image";
 const Hero = () => {
   const { data = [] } = useQuery({
     queryKey: ["hero-banner-images"],
-    queryFn: () => fetchSectionProducts("Banner Section"),
+    queryFn: () => fetchSectionProducts("bd024ca4-e72a-499b-8237-c875f6429409"),
   });
 
   const swiperRef = useRef<any>(null); // Ref to store Swiper instance
@@ -159,7 +159,7 @@ const Hero = () => {
               <div className="slide-inner dark-overlay">
                 <Image
                   src={slide.imageUrl ?? " "}
-                  alt={`Slide ${index}`}
+                  alt={`Slide ${index}` || "default"}
                   fill
                   loading="lazy"
                 />

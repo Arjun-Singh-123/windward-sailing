@@ -23,7 +23,12 @@ export default function ProfileCard({
     <div className="w-full max-w-sm bg-white shadow-lg rounded-lg overflow-hidden">
       <div className={`relative w-full h-48 ${borderColor}`}>
         <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-32 h-32 rounded-full overflow-hidden border-4 border-white">
-          <Image src={imageUrl} alt={name} layout="fill" objectFit="cover" />
+          <Image
+            src={imageUrl}
+            alt={name || "default"}
+            layout="fill"
+            objectFit="cover"
+          />
         </div>
       </div>
       <div className="pt-16 pb-8 px-5 text-sky text-center">

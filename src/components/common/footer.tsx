@@ -7,21 +7,20 @@ import {
 import DynamicFooter from "./dynamic-footer";
 import { fetchContacts } from "@/services/product-services";
 
-const DynamicHeader = async () => {
+const FooterBottom = async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
     queryKey: ["footer-data"],
-    queryFn: fetchFooterContent,
+    queryFn: () => fetchFooterContent(),
   });
   await queryClient.prefetchQuery({
     queryKey: ["contacts"],
-    queryFn: fetchContacts,
+    queryFn: () => fetchContacts(),
   });
 
-  const data = queryClient.getQueryData(["footer-data"]);
-
-  console.log(data);
+  console.log("data", queryClient.getQueryData(["footer-data"]));
+  console.log("data", queryClient.getQueryData(["contacts"]));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
@@ -30,4 +29,4 @@ const DynamicHeader = async () => {
   );
 };
 
-export default DynamicHeader;
+export default FooterBottom;

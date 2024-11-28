@@ -48,38 +48,36 @@ export default function YachtDescription({
   console.log("checking ameniteis", amenities);
 
   return (
-    <section className="w-full p-4">
-      <div className="container mx-auto max-w-6xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 auto-cols-fr">
-          <div className={`${!amenities?.length && "md:col-span-2"}`}>
-            <div className="text-start space-y-2 mb-6">
-              <h2 className="text-4xl">{title}</h2>
-            </div>
-            <p className="text-sm mb-4 whitespace-pre-line">{description}</p>
+    <div className="container mx-auto   max-w-[1630px] px-[15px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 auto-cols-fr">
+        <div className={`${!amenities?.length && "md:col-span-2"}`}>
+          <div className="text-start space-y-2 mb-6">
+            <h2 className="text-4xl">{title}</h2>
           </div>
+          <p className="text-sm mb-4 whitespace-pre-line">{description}</p>
+        </div>
 
-          {/* Amenities Section - only renders if amenities exist */}
-          {amenities?.length > 0 && (
-            <div className="h-full">
-              <div className="bg-sky p-6 pb-20 rounded-lg shadow-lg relative h-full">
-                <LegendComponent text="Vessel Amenities" />
-                <div className="bg-sky rounded-lg overflow-hidden gap-4">
-                  <AmenitiesDisplay amenities={amenities} />
-                </div>
-                <div className="absolute md:-bottom-7 md:right-4 bottom-0 right-4 w-28 h-28 transform rotate-[335deg]">
-                  <Image
-                    src="/images/spec-boat-icon.png"
-                    alt="Sailboat logo"
-                    width={84}
-                    height={84}
-                    className="rounded-full"
-                  />
-                </div>
+        {/* Amenities Section - only renders if amenities exist */}
+        {amenities?.length > 0 && (
+          <div className="h-full">
+            <div className="bg-sky p-6 pb-20 rounded-lg shadow-lg relative h-full">
+              <LegendComponent text="Vessel Amenities" />
+              <div className="bg-sky rounded-lg overflow-hidden gap-4">
+                <AmenitiesDisplay amenities={amenities} />
+              </div>
+              <div className="absolute md:-bottom-7 md:right-4 bottom-0 right-4 w-28 h-28 transform rotate-[335deg]">
+                <Image
+                  src="/images/spec-boat-icon.png"
+                  alt="Sailboat logo"
+                  width={84}
+                  height={84}
+                  className="rounded-full"
+                />
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
-    </section>
+    </div>
   );
 }

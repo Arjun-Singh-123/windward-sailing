@@ -13,6 +13,8 @@ import {
 import DecoratorLine from "./decorator-icon-line";
 import { supabase } from "@/lib/supabase";
 import { useQuery } from "@tanstack/react-query";
+import { fetchBenefitSectionProducts } from "@/services/product-services";
+// import { fetchSectionProducts } from "@/services/product-services";
 
 interface Specification {
   name: string;
@@ -42,42 +44,6 @@ interface DetailProps {
   benefits?: boolean;
 }
 
-export const fetchSectionProducts = async (sectionName: string) => {
-  const { data, error } = await supabase
-    .from("user_selections")
-    .select(
-      `
-      product_id,
-      products (
-        id,
-        name  ,
-        image_url  ,
-        price,
-        description,
-        href,nav_sections(slug),
-        product_details(images)
-      ),
-      sections (
-        name 
-      )
-    `
-    )
-    .eq("section_id", "e19f92fb-5d0b-49a8-9fff-a64a3fe80a80");
-
-  if (error) throw error;
-
-  return data.map((item) => ({
-    product_id: item.product_id,
-    title: item?.products?.name,
-    imageUrl: item?.products?.image_url,
-    price: item?.products?.price,
-    link: item?.products?.href,
-    slug: item?.products?.nav_sections?.slug,
-    description: item.products?.description,
-    images: item.products?.product_details,
-  }));
-};
-
 const Detail: React.FC<DetailProps> = ({
   title,
   heading,
@@ -94,9 +60,11 @@ const Detail: React.FC<DetailProps> = ({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { data } = useQuery({
     queryKey: ["benefit-images"],
-    queryFn: () => fetchSectionProducts("Benefits"),
+    queryFn: () =>
+      fetchBenefitSectionProducts("e19f92fb-5d0b-49a8-9fff-a64a3fe80a80"),
   });
 
+  console.log(data);
   const benefitImages =
     data
       ?.map((item) => {

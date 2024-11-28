@@ -47,7 +47,7 @@ const MemberCard: React.FC<MemberProps> = ({
         >
           <Image
             src={image ?? ""}
-            alt={name}
+            alt={name || "default"}
             className="w-full h-full object-cover -rotate-45"
             width={96}
             height={96}
