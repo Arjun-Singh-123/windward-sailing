@@ -37,7 +37,7 @@ export default function SubcategoryPage({
   } = useQuery({
     queryKey: ["product-details", subcategory],
     queryFn: () => fetchProductDetails(subcategory),
-    // enabled: !!params.subcategory, // Only run query if subcategory exists
+    enabled: !!subcategory, // Only run query if subcategory exists
   });
 
   if (isLoading) return <Loader />;

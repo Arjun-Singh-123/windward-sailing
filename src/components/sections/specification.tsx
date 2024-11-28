@@ -381,12 +381,12 @@ export default function YachtGallery({
   const containerRef = useRef<HTMLDivElement>(null);
 
   const nextSlide = () => {
-    setStartIndex((prevIndex) => (prevIndex + 1) % (images.length - 3));
+    setStartIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
   const prevSlide = () => {
     setStartIndex(
-      (prevIndex) => (prevIndex - 1 + (images.length - 3)) % (images.length - 3)
+      (prevIndex) => (prevIndex - 1 + images.length) % images.length
     );
   };
 

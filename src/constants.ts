@@ -8,6 +8,7 @@ export const DARK_HEADER_PATHS = [
   "/rental-fees",
   "/membership-fees",
   "/boats-dashboard",
+  "/login",
 ] as const;
 
 export const SCROLL_THRESHOLD = 50;
@@ -19,6 +20,7 @@ export const EXCLUDED_PATHNAMES = [
   "/membership-fees",
   "/rental-fees",
   "/boats-dashboard",
+  "/login",
 ];
 export const EXCLUDED_LABELS = [
   "Copyright",

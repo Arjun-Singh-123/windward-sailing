@@ -168,7 +168,7 @@ export default function SailingServices() {
                             <p className="text-xs uppercase font-regular400 tracking-widest  ">
                               {titleFormatter(boat?.title as string)?.firstPart}
                             </p>
-                            <p className=" font-regular400 ">
+                            <p className="uppercase font-regular400 ">
                               {
                                 titleFormatter(boat?.title as string)
                                   ?.secondPart

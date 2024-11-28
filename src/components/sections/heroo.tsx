@@ -165,10 +165,10 @@ const Hero = () => {
                 />
               </div>
               <div className="info">
-                <p className="text-5xl text-white font-bold mb-6 tracking-tight">
+                <p className="text-xl text-white font-bold mb-4 tracking-tight">
                   {titleFormatter(slide?.title as string).firstPart}
                 </p>
-                <h1 className="text-xl mb-8 text-gray-200">
+                <h1 className="text-5xl mb-4 text-gray-200">
                   {titleFormatter(slide?.title as string).secondPart}
                 </h1>
                 <Button variant="solidWhiteOnDark">

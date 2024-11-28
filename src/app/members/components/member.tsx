@@ -19,7 +19,7 @@ export default function Members() {
   }).filter((member) => member !== undefined);
 
   return (
-    <section className="w-full p-4 max-w-6xl mx-auto">
+    <section className="p-4 container mx-auto w-full max-w-[1630px] px-[15px]">
       <div className="container mx-auto  py-12">
         <div className="text-start space-y-2 px-4  ">
           {/* <h1

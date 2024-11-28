@@ -39,10 +39,10 @@ const MemberCard: React.FC<MemberProps> = ({
         <div
           className={`w-44 h-44 rounded-full overflow-hidden border-[0.625rem] ${
             index === 0
-              ? "border-b-green-500 border-r-green-500"
+              ? "border-b-green-500 border-r-green-500 border-t-transparent border-l-transparent"
               : index === 1
-              ? "border-b-blue-500 border-r-blue-500"
-              : "border-b-black border-r-black"
+              ? "border-b-blue-500  border-r-blue-500 border-t-transparent border-l-transparent"
+              : "border-b-black border-r-black border-t-transparent border-l-transparent"
           } transform rotate-45 -mt-[3.125rem]`}
         >
           <Image
@@ -69,7 +69,7 @@ const MemberCard: React.FC<MemberProps> = ({
           </span>
           {about}
         </p>
-        <div className="flex flex-col gap-2 items-start w-full px-4 mt-auto whitespace-nowrap mb-2">
+        <div className="flex flex-col gap-2 items-start w-full px-4 mt-auto whitespace-nowrap mb-4">
           <a
             href="mailto:amanda.martin@example.com"
             className="flex items-center text-primary hover:underline"

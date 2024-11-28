@@ -54,7 +54,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 flex items-center justify-center h-[calc(100vh-5rem)] ">
+    <div className="flex items-center justify-center section-py-80 px-[15px] bodylightsky">
       <Card className="w-full max-w-md shadow-lg p-6  border-gray-100 border-[1px] rounded-md">
         <form onSubmit={handleSubmit} className="space-y-6">
           <CardHeader className="space-y-1">
@@ -111,7 +111,8 @@ export default function LoginPage() {
           <CardFooter>
             <Button
               type="submit"
-              className="w-full bg-black text-white hover:bg-gray-800"
+              variant="solidDarkblue"
+              className="w-full   text-white"
             >
               Login
             </Button>
