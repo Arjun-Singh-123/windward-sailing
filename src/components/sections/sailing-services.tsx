@@ -19,41 +19,6 @@ import { useEffect, useRef, useState } from "react";
 import { titleFormatter } from "@/lib/utils";
 import { fetchSectionProducts } from "@/services/product-services";
 
-// export const fetchSectionProducts = async (sectionName: string) => {
-//   const { data, error } = await supabase
-//     .from("user_selections")
-//     .select(
-//       `
-//       product_id,
-//       products (
-//         id,
-//         name  ,
-//         image_url  ,
-//         price,
-//         description,
-//         href,nav_sections(slug)
-
-//       ),
-//       sections (
-//         name
-//       )
-//     `
-//     )
-//     .eq("section_id", "8af6b308-d7a6-4f02-9f96-b11567aaa3b6");
-
-//   if (error) throw error;
-
-//   return data.map((item) => ({
-//     product_id: item?.product_id,
-//     title: item?.products?.name,
-//     imageUrl: item?.products?.image_url,
-//     price: item?.products?.price,
-//     link: item?.products?.href,
-//     slug: item?.products?.nav_sections?.slug,
-//     description: item.products?.description,
-//   }));
-// };
-
 export default function SailingServices() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const cardsToShow = 4;
@@ -163,12 +128,15 @@ export default function SailingServices() {
                         className="box-link"
                       ></Link>
                       <CardContent className="p-6 pb-0 flex-grow">
-                        <CardTitle className="text-2xl font-semibold mb-4">
-                          <div className={`${contentFont.className}  `}>
+                        <CardTitle
+                          className={`text-2xl font-semibold ${contentFont.className}`}
+                        >
+                          <div className="flex flex-col ">
+                            {" "}
                             <p className="text-xs uppercase font-regular400 tracking-widest  ">
                               {titleFormatter(boat?.title as string)?.firstPart}
                             </p>
-                            <p className="uppercase font-regular400 ">
+                            <p className="uppercase font-regular400 -mt-3 ">
                               {
                                 titleFormatter(boat?.title as string)
                                   ?.secondPart

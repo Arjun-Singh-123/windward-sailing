@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CalendarDays } from "lucide-react";
 import { usePathname } from "next/navigation";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 import {
   Sheet,
@@ -386,6 +387,12 @@ export default function Header() {
               side="right"
               className="w-full sm:max-w-[740px]  bg-white"
             >
+              <VisuallyHidden.Root>
+                {" "}
+                <SheetHeader className="p-4 border-b text-black">
+                  <SheetTitle>Menu</SheetTitle>
+                </SheetHeader>
+              </VisuallyHidden.Root>
               <ScrollArea className="h-full">
                 <div className="h-full flex flex-col">
                   <BoatReservation />

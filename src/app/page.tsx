@@ -24,6 +24,8 @@ import {
 import BannerSection from "@/components/sections/hero-section";
 import HighlightedCards from "@/components/sections/sailing-cards";
 import BenefitSection from "@/components/common/benefit-detail-images";
+import DynamicHeader from "@/components/common/header";
+import FooterBottom from "@/components/common/footer";
 type Section = {
   id: number;
   section_name: string;

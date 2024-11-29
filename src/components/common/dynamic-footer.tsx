@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { ChevronsRight } from "lucide-react";
-import { usePathname } from "next/navigation";
 import { useInView } from "react-intersection-observer";
 
 import Image from "next/image";
@@ -16,7 +15,6 @@ import { useQuery } from "@tanstack/react-query";
 import { EXCLUDED_LABELS } from "@/constants";
 import { SocialMediaItems } from "./footer-contact-items";
 import { fetchFooterContent } from "@/services/header-footer-services";
-import { fetchContacts } from "@/services/product-services";
 
 type FieldType = "text" | "textarea" | "image" | "links";
 
@@ -119,10 +117,11 @@ const DynamicFooter = () => {
   const logoField = getFieldByLabel("Logo");
   const backgroundField = getFieldByLabel("Background Image");
   const boatField = getFieldByLabel("boat");
-  // Add loading state
-  if (isLoading || !mounted) {
-    return "loading";
-  }
+
+  // if (isLoading || !mounted) {
+  //   return "loading";
+  // }
+
   return (
     <footer
       ref={ref}

@@ -19,9 +19,6 @@ const FooterBottom = async () => {
     queryFn: () => fetchContacts(),
   });
 
-  console.log("data", queryClient.getQueryData(["footer-data"]));
-  console.log("data", queryClient.getQueryData(["contacts"]));
-
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <DynamicFooter />

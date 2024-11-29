@@ -130,7 +130,7 @@ const SettingsPanel = () => {
     { name: "Boats Dashboard", href: "/boats-dashboard" },
   ];
 
-  console.log(session);
+  // console.log(session);
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
@@ -147,9 +147,9 @@ const SettingsPanel = () => {
         className="w-[400px] bg-[#052449] text-white p-0"
       >
         <ScrollArea className="h-full">
-          {session && (
-            <SheetHeader className="p-6 pb-0">
-              <SheetTitle className="text-white">
+          <SheetHeader className="p-6 pb-0">
+            <SheetTitle className="text-white">
+              {session && (
                 <div className="flex items-center gap-3">
                   <Avatar className="w-10 h-10">
                     <AvatarImage
@@ -170,9 +170,9 @@ const SettingsPanel = () => {
                     </span>
                   </div>
                 </div>
-              </SheetTitle>
-            </SheetHeader>
-          )}
+              )}
+            </SheetTitle>
+          </SheetHeader>
 
           <div className="p-6">
             {session && (

@@ -21,8 +21,6 @@ const DynamicHeader = async () => {
     queryFn: fetchNavItems,
   });
 
-  console.log(queryClient.getQueryData(["footer-data"]));
-
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Header />
