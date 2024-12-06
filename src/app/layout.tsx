@@ -9,7 +9,7 @@ import { Toaster } from "sonner";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import DynamicHeader from "@/components/common/header";
 import FooterBottom from "@/components/common/footer";
-import ConditionalLayout from "@/components/sections/conditional-layout";
+import ConditionalLayout from "@/components/sections/conditional-layou";
 
 export const metadata: Metadata = {
   title: "Newport Sailing Club",
