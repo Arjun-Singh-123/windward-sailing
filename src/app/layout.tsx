@@ -8,8 +8,8 @@ import { contentFont, inter } from "@/app/ui/fonts";
 import { Toaster } from "sonner";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import DynamicHeader from "@/components/common/header";
-import DynamicFooter from "@/components/common/dynamic-footer";
 import FooterBottom from "@/components/common/footer";
+import ConditionalLayout from "@/components/sections/conditional-layou";
 
 export const metadata: Metadata = {
   title: "Newport Sailing Club",
@@ -34,17 +34,18 @@ export default function RootLayout({
         className={`${inter.className} antialiased flex flex-col min-h-screen ${contentFont.className} `}
       >
         <Providers>
-          <DynamicHeader />
+          {/* <DynamicHeader /> */}
+          <ConditionalLayout>
+            <main className="flex-grow   ">
+              <SpeedInsights />
 
-          <main className="flex-grow   ">
-            <SpeedInsights />
-
-            {children}
-          </main>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <ScrollToTop />
-          <Toaster richColors={true} duration={2000} position="top-right" />
-          <FooterBottom />
+              {children}
+            </main>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <ScrollToTop />
+            <Toaster richColors={true} duration={2000} position="top-right" />
+          </ConditionalLayout>
+          {/* <FooterBottom /> */}
         </Providers>
       </body>
     </html>
