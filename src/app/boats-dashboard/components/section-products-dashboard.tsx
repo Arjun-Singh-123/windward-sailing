@@ -11,84 +11,12 @@ import {
 } from "@/components/ui/accordion";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
-
-const fetchUserSelections = async (sectionId: any) => {
-  const { data, error } = await supabase
-    .from("user_selections")
-    .select("*")
-    .eq("section_id", sectionId);
-
-  if (error) throw new Error(error.message);
-  return data;
-};
-
-const updateUserSelection = async ({
-  sectionId,
-  productId,
-  isSelected,
-  isExternalImage,
-}: any) => {
-  if (isSelected) {
-    const { error } = await supabase.from("user_selections").upsert({
-      section_id: sectionId,
-      product_id: productId,
-      is_external_image: isExternalImage,
-    });
-    if (error) throw new Error(error.message);
-  } else {
-    const { error } = await supabase
-      .from("user_selections")
-      .delete()
-      .match({ section_id: sectionId, product_id: productId });
-    if (error) throw new Error(error.message);
-  }
-};
-
-const updateExternalImageStatus = async ({
-  sectionId,
-  productId,
-  isExternalImage,
-}: any) => {
-  try {
-    const { error } = await supabase
-      .from("user_selections")
-      .update({ is_external_image: isExternalImage })
-      .match({ section_id: sectionId, product_id: productId });
-
-    if (error) {
-      throw new Error(error.message);
-    }
-  } catch (error) {
-    console.error("Error updating external image status:", error);
-    throw error;
-  }
-};
-const fetchBoatsNavItem = async () => {
-  const { data, error } = await supabase
-    .from("nav_items")
-    .select(
-      `
-      id,
-      name,
-      nav_sections (
-        id,
-        name,
-        products (
-          id,
-          name,
-          product_details (
-            images
-          )
-        )
-      )
-    `
-    )
-    .eq("name", "Boats")
-    .single();
-
-  if (error) throw new Error(error.message);
-  return data;
-};
+import {
+  fetchDashBoardBoatsNavItem,
+  fetchDashBoardUserSelections,
+  updateDashBoardExternalImageStatus,
+  updateDashBoardUserSelection,
+} from "@/services/dashboard-manage-services";
 
 const SectionProducts = ({ sectionId, benefitsId }: any) => {
   const queryClient = useQueryClient();
@@ -98,16 +26,16 @@ const SectionProducts = ({ sectionId, benefitsId }: any) => {
 
   const { data: userSelections = [] } = useQuery({
     queryKey: ["userSelections", sectionId],
-    queryFn: () => fetchUserSelections(sectionId),
+    queryFn: () => fetchDashBoardUserSelections(sectionId),
   });
 
   const { data: boatsNavItem } = useQuery({
     queryKey: ["boatsNavItem"],
-    queryFn: fetchBoatsNavItem,
+    queryFn: fetchDashBoardBoatsNavItem,
   });
 
   const mutation = useMutation({
-    mutationFn: updateUserSelection,
+    mutationFn: updateDashBoardUserSelection,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["userSelections", sectionId],
@@ -119,7 +47,7 @@ const SectionProducts = ({ sectionId, benefitsId }: any) => {
     },
   });
   const imageMutation = useMutation({
-    mutationFn: updateExternalImageStatus,
+    mutationFn: updateDashBoardExternalImageStatus,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["userSelections", sectionId],
